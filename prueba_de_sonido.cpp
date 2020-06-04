@@ -30,7 +30,6 @@ void close(SDL_Window** gWindow){
 
 int main( int argc, char* args[] ){
 	SDL_Window* gWindow = NULL;
-	//Start up SDL and create window
 	init(&gWindow);
 	MusicPlayer music_player;
 	music_player.add(1,"music/cave.wav");
@@ -39,48 +38,27 @@ int main( int argc, char* args[] ){
 	music_player.add(4,"music/main_menu.wav");
 	SoundEffectPlayer sound_player;
 	sound_player.add(1,"sound_effects/sword.wav");
-	sound_player.add(2,"sound_effects/high.wav");
-	sound_player.add(3,"sound_effects/medium.wav");
-	sound_player.add(4,"sound_effects/low.wav");
+	sound_player.add(2,"sound_effects/hammer.wav");
+	sound_player.add(3,"sound_effects/potion.wav");
+	sound_player.add(4,"sound_effects/axe.wav");
 
-	//Main loop flag
 	bool quit = false;
-
-	//Event handler
 	SDL_Event e;
-
-	//While application is running
-	while( !quit )
-	{
-		//Handle events on queue
-		while( SDL_PollEvent( &e ) != 0 )
-		{
-			//User requests quit
-			if( e.type == SDL_QUIT )
-			{
+	while( !quit ){
+		while( SDL_PollEvent( &e ) != 0 ){
+			if( e.type == SDL_QUIT ){
 				quit = true;
-			}
-			//Handle key press
-			else if( e.type == SDL_KEYDOWN )
-			{
-				switch( e.key.keysym.sym )
-				{
-					//Play high sound effect
+			} else if( e.type == SDL_KEYDOWN ){
+				switch( e.key.keysym.sym ){
 					case SDLK_1:
 					sound_player.play(1);
 					break;
-					
-					//Play medium sound effect
 					case SDLK_2:
 					sound_player.play(2);
 					break;
-					
-					//Play low sound effect
 					case SDLK_3:
 					sound_player.play(3);
 					break;
-					
-					//Play scratch sound effect
 					case SDLK_4:
 					sound_player.play(4);
 					break;
@@ -96,17 +74,14 @@ int main( int argc, char* args[] ){
 					case SDLK_9:
 					music_player.play(4);
 					break;
-					
 					case SDLK_0:
-					//Stop the music
 					music_player.stop();
 					break;
 				}
 			}
 		}
-}
+	}
 
-	//Free resources and close SDL
 	close(&gWindow);
 
 	return 0;
