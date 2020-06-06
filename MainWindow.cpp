@@ -2,6 +2,7 @@
 #include "SDLError.h"
 #include "MusicPlayer.h"
 #include "SoundEffectPlayer.h"
+#include "Layout.h"
 
 /* CAMBIAR COMENTARIOS A ESPAÑOL O SACAR */
 
@@ -64,7 +65,7 @@ MainWindow::MainWindow() : BGTexture(NULL) {
     }
 
     this->BGTexture.setRenderer(this->mainRenderer);
-    this->BGTexture.loadFromFile(BACKGROUND_PATH);
+    //this->BGTexture.loadFromFile(BACKGROUND_PATH);
 }
 
 MainWindow::~MainWindow() {
@@ -87,7 +88,7 @@ void MainWindow::run() {
 	sound_player.add(2,"sound_effects/hammer.wav");
 	sound_player.add(3,"sound_effects/potion.wav");
 	sound_player.add(4,"sound_effects/axe.wav"); 
-
+    Layout layout(mainRenderer);
     //The dot that will be moving around on the screen
     //Dot dot(this->mainRenderer); //sacar
 
@@ -163,8 +164,10 @@ void MainWindow::run() {
         SDL_RenderClear(mainRenderer);
 
         //Render background
-        this->BGTexture.render(0, 0);
+        //this->BGTexture.render(0, 0);
         //text.render(text.getWidth()/2,text.getHeight()/2);
+        layout.render();
+        
 
         //Render objects
         //dot.render(camera.x, camera.y);
