@@ -8,6 +8,16 @@ Image::Image(SDL_Renderer *aRenderer, Uint8 aKeyRed, Uint8 aKeyGreen,
     this->loadFromFile(path);             
 }
 
+Image::Image(Image&& other) : Texture(std::move(other)){
+
+
+}
+
+Image& Image::operator=(Image&& other){
+    Texture::operator=(std::move(other));
+    return *this;
+}
+
 void Image::loadFromFile(std::string path) {
     //Libero imagen anterior si la había
     this->free();
@@ -16,7 +26,7 @@ void Image::loadFromFile(std::string path) {
     SDL_Surface *loadedSurface = IMG_Load(path.c_str());
 
     if (loadedSurface == NULL) {
-        //printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
+        printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
         //throw Exception
     } else {
         SDL_SetColorKey(loadedSurface, SDL_TRUE, 
@@ -25,7 +35,7 @@ void Image::loadFromFile(std::string path) {
 
         newTexture = SDL_CreateTextureFromSurface(this->renderer, loadedSurface);
         if (newTexture == NULL) {
-            //printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+            printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
             //throw Exception
         } else {
             //Get image dimensions

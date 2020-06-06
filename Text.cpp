@@ -8,6 +8,13 @@ Uint8 aKeyBlue, std::string text,int size) :
         this->loadText(text,size);
 }        
 
+Text::Text(Text&& other) : Texture(std::move(other)) {}
+
+Text& Text::operator=(Text&& other) {
+    Texture::operator=(std::move(other));
+    return *this;
+}
+
 
 void Text::loadText(std::string text,int size){
     this->free();
@@ -18,14 +25,14 @@ void Text::loadText(std::string text,int size){
 
     SDL_Surface* textSurface = TTF_RenderText_Blended(gFont, text.c_str(), textColor);
     if( textSurface == NULL ){
-        //printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
+        printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
         //throw Exception
     }
     else{
         //Create texture from surface pixels
         newTexture = SDL_CreateTextureFromSurface(this->renderer, textSurface);
         if(newTexture == NULL){
-            //printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
+            printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
             //throw Exception
         }
         else{

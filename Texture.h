@@ -40,6 +40,8 @@ class Texture {
           Texture(SDL_Renderer *aRenderer);
           Texture(SDL_Renderer *aRenderer, Uint8 aKeyRed, Uint8 aKeyGreen,
                   Uint8 aKeyBlue);
+          Texture(Texture&& other);
+          Texture& operator=(Texture&& other);        
           ~Texture();
           void free();
 
