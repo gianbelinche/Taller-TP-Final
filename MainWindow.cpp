@@ -1,72 +1,72 @@
 #include "MainWindow.h"
+#include "SDLError.h"
+
+#include "Dot.h" //sacar
 
 /* CAMBIAR COMENTARIOS A ESPAÑOL O SACAR */
 
 /* CAMBIAR CONSTANTES DE LUGAR */
 
-MainWindow::MainWindow() : mainWindow(NULL), mainRenderer(NULL) {
+/* TAMAÑO DE LA PANTALLA */
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
+
+/* NOMBRE DE LA PANTALLA */
+#define WINDOW_NAME "Main"
+
+/* RUTA DEL BACKGROUND */
+#define BACKGROUND_PATH "background.png"
+
+MainWindow::MainWindow() : BGTexture(NULL) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        //printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
-        // throw SDLException
-    } else {
-        //Set texture filtering to linear
-        if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
-            // printf( "Warning: Linear texture filtering not enabled!" );
-            // hacer WARNING
-        }
-
-        //Create window
-        mainWindow = SDL_CreateWindow(WINDOW_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (mainWindow == NULL) {
-            //printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
-            // throw SDLException
-        } else {
-            //Create vsynced renderer for window
-            mainRenderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-            if (mainRenderer == NULL) {
-                //printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
-                // throw SDLException
-            } else {
-                //Initialize renderer color
-                SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
-                //Initialize PNG loading
-                int imgFlags = IMG_INIT_PNG;
-                if (!(IMG_Init(imgFlags) & imgFlags)) {
-                    //printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
-                    // throw SDLException
-                }
-            }
-        }
+        throw SDLError("Error: SDL no pudo inicializarse. SDL_Error: %s", 
+                       SDL_GetError());
     }
+
+    //Set texture filtering to linear
+    if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
+        // printf( "Warning: Linear texture filtering not enabled!" );
+    }
+
+    this->mainWindow = SDL_CreateWindow(WINDOW_NAME, SDL_WINDOWPOS_UNDEFINED, 
+                                    SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, 
+                                    SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    if (this->mainWindow == NULL) {
+        throw SDLError("Error: no se pudo crear ventana. SDL_Error: %s",
+                        SDL_GetError());
+    }
+
+    this->mainRenderer = SDL_CreateRenderer(this->mainWindow, -1, 
+                        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
+    if (this->mainRenderer == NULL) {
+        throw SDLError("Error: no se pudo crear render. SDL_Error: %s",
+                        SDL_GetError());
+    }
+
+    SDL_SetRenderDrawColor(this->mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF); //CAMBIAR!!
+
+    int imgFlags = IMG_INIT_PNG;
+    if (!(IMG_Init(imgFlags) & imgFlags)) {
+        throw SDLError("Error: SDL_image no pudo inicializarse. SDL_Error: %s",
+                        SDL_GetError());
+    }
+
+    this->BGTexture.setRenderer(this->mainRenderer);
+    this->BGTexture.loadFromFile(BACKGROUND_PATH);
 }
 
 MainWindow::~MainWindow() {
-}
-
-void MainWindow::loadMedia() {
-    //Load dot texture
-    if (!gDotTexture.loadFromFile("30_scrolling/dot.bmp")) {
-        printf("Failed to load dot texture!\n");
-        success = false;
-    }
-
-    //Load background texture
-    if (!gBGTexture.loadFromFile("30_scrolling/bg.png")) {
-        printf("Failed to load background texture!\n");
-        success = false;
-    }
+    IMG_Quit();
+	SDL_Quit();
 }
 
 void MainWindow::run() {
     //Main loop flag
     bool quit = false;
 
-    //Event handler
-    
-
     //The dot that will be moving around on the screen
-    Dot dot;
+    Dot dot(this->mainRenderer); //sacar
 
     //The camera area
     SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
@@ -110,7 +110,7 @@ void MainWindow::run() {
         SDL_RenderClear(mainRenderer);
 
         //Render background
-        gBGTexture.render(0, 0, &camera);
+        this->BGTexture.render(0, 0, &camera);
 
         //Render objects
         dot.render(camera.x, camera.y);
