@@ -1,6 +1,8 @@
 #include "MainWindow.h"
 #include "SDLError.h"
 
+#include "Player.h"
+
 /* CAMBIAR COMENTARIOS A ESPAÑOL O SACAR */
 
 /* CAMBIAR CONSTANTES DE LUGAR */
@@ -8,6 +10,10 @@
 /* TAMAÑO DE LA PANTALLA */
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
+
+/* TAMAÑO DEL NIVEL */
+#define LEVEL_WIDTH 1280
+#define LEVEL_HEIGHT 960
 
 /* NOMBRE DE LA PANTALLA */
 #define WINDOW_NAME "Main"
@@ -22,6 +28,10 @@ MainWindow::MainWindow() : BGTexture(NULL) {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         throw SDLError("Error: SDL no pudo inicializarse. SDL_Error: %s", 
                        SDL_GetError());
+    }
+
+    if(TTF_Init() == -1){
+        throw SDLError("No se pudo inciliazar la Font, SDL_ttf Error: %s\n", TTF_GetError());
     }
 
     //Set texture filtering to linear
@@ -65,6 +75,7 @@ MainWindow::~MainWindow() {
     IMG_Quit();
     Mix_Quit();
 	SDL_Quit();
+    TTF_Quit();
 }
 
 void MainWindow::run() {
@@ -72,7 +83,7 @@ void MainWindow::run() {
     bool quit = false;
 
     //The dot that will be moving around on the screen
-    Dot dot(this->mainRenderer); //sacar
+    Player player(this->mainRenderer); //sacar
 
     //The camera area
     SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
@@ -86,16 +97,12 @@ void MainWindow::run() {
                 quit = true;
             }
 
-            //Handle input for the dot
-            dot.handleEvent(eventHandler);
+            player.move(eventHandler);
         }
 
-        //Move the dot
-        dot.move();
-
-        //Center the camera over the dot
-        camera.x = (dot.getPosX() + Dot::DOT_WIDTH / 2) - SCREEN_WIDTH / 2;
-        camera.y = (dot.getPosY() + Dot::DOT_HEIGHT / 2) - SCREEN_HEIGHT / 2;
+        //Center the camera over the player
+        camera.x = (player.getPosX() + PLAYER_WIDTH / 2) - SCREEN_WIDTH / 2;
+        camera.y = (player.getPosY() + PLAYER_HEIGHT / 2) - SCREEN_HEIGHT / 2;
 
         //Keep the camera in bounds
         if (camera.x < 0) {
@@ -119,7 +126,7 @@ void MainWindow::run() {
         this->BGTexture.render(0, 0, &camera);
 
         //Render objects
-        dot.render(camera.x, camera.y);
+        player.render(camera.x, camera.y);
 
         //Update screen
         SDL_RenderPresent(mainRenderer);
