@@ -31,6 +31,7 @@ class Texture {
           Uint8 keyRed;
           Uint8 keyGreen;
           Uint8 keyBlue;
+          // Funcion privada para poder setear Render en MainWindow
           void setRenderer(SDL_Renderer *aRenderer);
           friend class MainWindow;
         
@@ -39,11 +40,7 @@ class Texture {
           Texture(SDL_Renderer *aRenderer, Uint8 aKeyRed, Uint8 aKeyGreen,
                   Uint8 aKeyBlue, std::string path);
           ~Texture();
-
-          //Loads image at specified path
           void loadFromFile(std::string path);
-
-          //Deallocates texture
           void free();
 
           //Set color modulation
@@ -55,13 +52,11 @@ class Texture {
           //Set alpha modulation
           //void setAlpha(Uint8 alpha);
 
-          //Set KeyColor
           void setKeyColor(Uint8 red, Uint8 green, Uint8 blue);
 
-          //Renders texture at given point
+          //Renderiza textura en el punto indicado
           void render(int x, int y, SDL_Rect *clip = NULL);
-
-          /*Se puede cambiar por Friends*/
+          
           int getWidth();
           int getHeight();
 };

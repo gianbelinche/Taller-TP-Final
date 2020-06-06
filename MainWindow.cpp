@@ -1,8 +1,6 @@
 #include "MainWindow.h"
 #include "SDLError.h"
 
-#include "Dot.h" //sacar
-
 /* CAMBIAR COMENTARIOS A ESPAÑOL O SACAR */
 
 /* CAMBIAR CONSTANTES DE LUGAR */
