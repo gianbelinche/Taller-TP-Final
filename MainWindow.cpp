@@ -166,7 +166,7 @@ void MainWindow::run() {
         //Render background
         //this->BGTexture.render(0, 0);
         //text.render(text.getWidth()/2,text.getHeight()/2);
-        layout.render();
+        layout.render(SCREEN_WIDTH,SCREEN_HEIGHT);
         
 
         //Render objects

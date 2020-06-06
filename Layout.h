@@ -19,7 +19,7 @@ public:
     void changeLife(int life, int max_life);
     void changeMana(int mana, int max_mana);
     void changeLevel(int level);
-    void render();
+    void render(int screen_width,int screen_height);
 
 };
 
