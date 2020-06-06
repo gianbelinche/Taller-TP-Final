@@ -64,7 +64,7 @@ MainWindow::MainWindow() : BGTexture(NULL) {
     }
 
     this->BGTexture.setRenderer(this->mainRenderer);
-    this->BGTexture.loadText(BACKGROUND_PATH,28);
+    this->BGTexture.loadFromFile(BACKGROUND_PATH);
 }
 
 MainWindow::~MainWindow() {
@@ -86,11 +86,7 @@ void MainWindow::run() {
 	sound_player.add(1,"sound_effects/sword.wav");
 	sound_player.add(2,"sound_effects/hammer.wav");
 	sound_player.add(3,"sound_effects/potion.wav");
-	sound_player.add(4,"sound_effects/axe.wav");
-
-    //Texture text(this->mainRenderer);
-    //text.loadText("Esto es un texto",28);
-    
+	sound_player.add(4,"sound_effects/axe.wav"); 
 
     //The dot that will be moving around on the screen
     //Dot dot(this->mainRenderer); //sacar

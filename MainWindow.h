@@ -3,7 +3,7 @@
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
-#include "Texture.h"
+#include "Image.h"
 
 /* CAMBIAR COMENTARIOS A ESPAÑOL O SACAR */
 
@@ -14,7 +14,7 @@ class MainWindow {
         SDL_Window* mainWindow;
         SDL_Renderer* mainRenderer;
         SDL_Event eventHandler;
-        Texture BGTexture;
+        Image BGTexture;
 
     public:
         MainWindow();

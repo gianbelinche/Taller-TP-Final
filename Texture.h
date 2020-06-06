@@ -22,7 +22,7 @@
  * la textura.
 */
 class Texture {
-     private:
+     protected:
           SDL_Renderer *renderer;
           SDL_Texture *texture;
           // Dimension de la imagen
@@ -39,12 +39,9 @@ class Texture {
      public:
           Texture(SDL_Renderer *aRenderer);
           Texture(SDL_Renderer *aRenderer, Uint8 aKeyRed, Uint8 aKeyGreen,
-                  Uint8 aKeyBlue, std::string path);
+                  Uint8 aKeyBlue);
           ~Texture();
-          void loadFromFile(std::string path);
           void free();
-
-          void loadText(std::string text,int size);
 
           //Set color modulation
           //void setColor(Uint8 red, Uint8 green, Uint8 blue);
