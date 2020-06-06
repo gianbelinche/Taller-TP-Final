@@ -15,8 +15,11 @@
 /* RUTA DEL BACKGROUND */
 #define BACKGROUND_PATH "background.png"
 
+/* FRECUENCIA DE SONIDO */
+#define FRECUENCY 22050
+
 MainWindow::MainWindow() : BGTexture(NULL) {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         throw SDLError("Error: SDL no pudo inicializarse. SDL_Error: %s", 
                        SDL_GetError());
     }
@@ -50,12 +53,17 @@ MainWindow::MainWindow() : BGTexture(NULL) {
                         SDL_GetError());
     }
 
+    if(Mix_OpenAudio(FRECUENCY, MIX_DEFAULT_FORMAT, 2, 2048) < 0 ){ //No me acuerdo que son los otros dos numeros, despues me fijo y pongo defines
+		throw SDLError("No se pudo inicializar el sonido: %S\n", Mix_GetError());
+	}
+
     this->BGTexture.setRenderer(this->mainRenderer);
     this->BGTexture.loadFromFile(BACKGROUND_PATH);
 }
 
 MainWindow::~MainWindow() {
     IMG_Quit();
+    Mix_Quit();
 	SDL_Quit();
 }
 
