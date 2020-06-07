@@ -12,7 +12,8 @@ private:
     Text gold;
     Text life;
     Text mana;
-    Text level;    
+    Text level;
+    TTF_Font* gFont;    
 public:
     Layout(SDL_Renderer* mainRenderer);
     void changeGold(int gold);
@@ -20,6 +21,7 @@ public:
     void changeMana(int mana, int max_mana);
     void changeLevel(int level);
     void render(int screen_width,int screen_height);
+    ~Layout();
 
 };
 
