@@ -4,7 +4,7 @@
 
 /* CAMBIAR CONSTANTES DE LUGAR */
 
-#define RBLACK 0
+#define RBLACK 10
 #define GBLACK 0
 #define BBLACK 0
 
