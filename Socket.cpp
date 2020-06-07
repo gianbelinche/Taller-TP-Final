@@ -4,8 +4,8 @@
 #include <cstring>
 #include <stdexcept>
 
-#include "common_Socket.h"
-#include "common_SocketExcept.h"
+#include "Socket.h"
+#include "SocketException.h"
 
 #define LISTEN_QUEUE_SIZE 10
 
@@ -14,6 +14,7 @@ Socket::Socket(Socket &&other) : fd(other.fd) { // Para el accept
 }
 
 Socket& Socket::operator=(Socket &&other) {
+  if (this->fd != -1) {close(this->fd);}
   this->fd = other.fd;
   other.fd = -1;
   return *this;
@@ -27,10 +28,11 @@ Socket::~Socket() {
   if (fd != -1) {
     shutdown(fd, SHUT_RDWR);
     close(fd);
+    fd = -1;
   }
 }
 
-void Socket::s_connect(const char* host, const char* service) {
+void Socket::connect(const char* host, const char* service) {
   struct addrinfo *adr_l, *ptr;
   get_addr_list(&adr_l, host, service, 0);
   bool connected = false;
@@ -40,7 +42,7 @@ void Socket::s_connect(const char* host, const char* service) {
     if (fd == -1) {
       fprintf(stderr, "Socket error: %s\n", strerror(errno));
     } else {
-      status = connect(fd, ptr->ai_addr, ptr->ai_addrlen);
+      status = ::connect(fd, ptr->ai_addr, ptr->ai_addrlen);
       if (status == -1) {
         fprintf(stderr, "Connect error: %s\n", strerror(errno));
       }
@@ -67,7 +69,7 @@ void Socket::get_addr_list(struct addrinfo **addr_list,
   }
 }
 
-void Socket::s_bind(const char* serv) {
+void Socket::bind(const char* serv) {
   struct addrinfo *adr_l, *ptr;
   int status;
   int val = 1;
@@ -80,7 +82,7 @@ void Socket::s_bind(const char* serv) {
       fprintf(stderr, "Socket error: %s\n", strerror(errno));
     } else {
       setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
-      status = bind(fd, ptr->ai_addr, ptr->ai_addrlen);
+      status = ::bind(fd, ptr->ai_addr, ptr->ai_addrlen);
       if (status == -1) {
         fprintf(stderr, "Binding error: %s\n", strerror(errno));
       }
@@ -93,25 +95,25 @@ void Socket::s_bind(const char* serv) {
   }
 }
 
-void Socket::s_listen() {
-  if ( listen(fd, LISTEN_QUEUE_SIZE) == -1 ) {
+void Socket::listen() {
+  if ( ::listen(fd, LISTEN_QUEUE_SIZE) == -1 ) {
     throw SocketException("Error en listen");
   }
 }
 
-Socket Socket::s_accept() {
-  int new_fd = accept(fd, NULL, NULL);
+Socket Socket::accept() {
+  int new_fd = ::accept(fd, NULL, NULL);
   if (new_fd == -1) {
     throw SocketException("Error al aceptar");
   }
   return Socket(new_fd);
 }
 
-void Socket::s_send(const char* msg, size_t length) {
+void Socket::send(const char* msg, size_t length) {
   size_t bytes_sent = 0;
   int s;
   while ( bytes_sent < length ) {
-    s = send(fd, msg + bytes_sent, length - bytes_sent, MSG_NOSIGNAL);
+    s = ::send(fd, msg + bytes_sent, length - bytes_sent, MSG_NOSIGNAL);
     if (s == 0) {
       break;
     } else if (s < 0) {
@@ -122,11 +124,11 @@ void Socket::s_send(const char* msg, size_t length) {
   }
 }
 
-void Socket::s_recv(char* buffer, size_t length) {
+int Socket::recv(char* buffer, size_t length) {
   size_t bytes_recv = 0;
   int s;
   while ( bytes_recv < length ) {
-    s = recv(fd, buffer + bytes_recv, length - bytes_recv, 0);
+    s = ::recv(fd, buffer + bytes_recv, length - bytes_recv, 0);
     if (s == 0) {
       break;
     } else if (s < 0) {
@@ -135,6 +137,7 @@ void Socket::s_recv(char* buffer, size_t length) {
       bytes_recv += s;
     }
   }
+  return bytes_recv;
 }
 
 void Socket::shutdown_close() {

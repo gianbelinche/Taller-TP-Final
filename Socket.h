@@ -22,17 +22,17 @@ public:
 
   Socket& operator=(Socket &&other);
 
-  void s_connect(const char* host, const char* service);
+  void connect(const char* host, const char* service);
 
-  void s_bind(const char* serv);
+  void bind(const char* serv);
 
-  void s_listen();
+  void listen();
 
-  Socket s_accept();
+  Socket accept();
 
-  void s_send(const char* msg, size_t length);
+  void send(const char* msg, size_t length);
 
-  void s_recv(char* buffer, size_t length);
+  int recv(char* buffer, size_t length);
 
   void shutdown_close();
 
