@@ -89,6 +89,8 @@ void MainWindow::run() {
 	sound_player.add(3,"sound_effects/potion.wav");
 	sound_player.add(4,"sound_effects/axe.wav"); 
     Layout layout(mainRenderer);
+    int gold = 0;
+    layout.changeGold(gold);
     //The dot that will be moving around on the screen
     //Dot dot(this->mainRenderer); //sacar
 
@@ -167,6 +169,8 @@ void MainWindow::run() {
         //this->BGTexture.render(0, 0);
         //text.render(text.getWidth()/2,text.getHeight()/2);
         layout.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+        gold++;
+        layout.changeGold(gold);
         
 
         //Render objects
