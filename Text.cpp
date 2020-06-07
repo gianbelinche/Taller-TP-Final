@@ -3,9 +3,9 @@
 Text::Text(SDL_Renderer *aRenderer) : Texture(aRenderer) {}
 
 Text::Text(SDL_Renderer *aRenderer, Uint8 aKeyRed, Uint8 aKeyGreen,
-Uint8 aKeyBlue, std::string text,int size) : 
+Uint8 aKeyBlue, std::string text,TTF_Font* gFont) : 
         Texture(aRenderer,aKeyRed,aKeyGreen,aKeyBlue){
-        this->loadText(text,size);
+        this->loadText(text,gFont);
 }        
 
 Text::Text(Text&& other) : Texture(std::move(other)) {}
@@ -16,11 +16,11 @@ Text& Text::operator=(Text&& other) {
 }
 
 
-void Text::loadText(std::string text,int size){
+void Text::loadText(std::string text,TTF_Font* gFont){
     this->free();
 
     SDL_Texture *newTexture = NULL;
-    TTF_Font *gFont = TTF_OpenFont("Fonts/OpenSans.ttf", size);
+    //TTF_Font *gFont = TTF_OpenFont("Fonts/OpenSans.ttf", size);
     SDL_Color textColor = {keyRed, keyGreen, keyBlue};
 
     SDL_Surface* textSurface = TTF_RenderText_Blended(gFont, text.c_str(), textColor);
