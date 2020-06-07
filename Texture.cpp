@@ -61,16 +61,21 @@ void Texture::setKeyColor(Uint8 red, Uint8 green, Uint8 blue) {
     this->keyBlue = blue;
 }
 
-void Texture::render(int x, int y, SDL_Rect *clip) {
-	SDL_Rect renderQuad = {x, y, this->tWidth, this->tHeight};
+void Texture::render(int x, int y, SDL_Rect *clip,SDL_Rect *renderQuad) {
+    if (renderQuad == NULL){
+        SDL_Rect render_Quad = {x, y, this->tWidth, this->tHeight};
+        renderQuad = & render_Quad;
+    }
+    renderQuad->x = x;
+    renderQuad->y = y;
 
-	if( clip != NULL ) {
+	/*if( clip != NULL ) {
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
-	}
+	}*/
 
     /* Uso renderizado sin rotaciones */
-	SDL_RenderCopy(this->renderer, this->texture, clip, &renderQuad);
+	SDL_RenderCopy(this->renderer, this->texture, clip, renderQuad);
 }
 
 int Texture::getWidth() {

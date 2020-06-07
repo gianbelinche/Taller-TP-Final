@@ -57,7 +57,7 @@ class Texture {
           void setKeyColor(Uint8 red, Uint8 green, Uint8 blue);
 
           //Renderiza textura en el punto indicado
-          void render(int x, int y, SDL_Rect *clip = NULL);
+          void render(int x, int y, SDL_Rect *clip = NULL,SDL_Rect* renderQuad = NULL);
           
           int getWidth();
           int getHeight();
