@@ -90,12 +90,13 @@ void MainWindow::run() {
 	sound_player.add(4,"sound_effects/axe.wav"); 
     Layout layout(mainRenderer);
     int gold = 0;
+    int level = 0;
+    int life = 1000;
+    int mana = 2000;
     layout.changeGold(gold);
-    //The dot that will be moving around on the screen
-    //Dot dot(this->mainRenderer); //sacar
-
-    //The camera area
-    //SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+    layout.changeLevel(level);
+    layout.changeLife(life,life);
+    layout.changeMana(mana,mana);
 
     //While application is running
     while (!quit) {
@@ -136,45 +137,25 @@ void MainWindow::run() {
 				}
 			}
 
-            //Handle input for the dot
-            //dot.handleEvent(eventHandler);
         }
-
-        //Move the dot
-        //dot.move();
-
-        //Center the camera over the dot
-        //camera.x = (dot.getPosX() + Dot::DOT_WIDTH / 2) - SCREEN_WIDTH / 2;
-        //camera.y = (dot.getPosY() + Dot::DOT_HEIGHT / 2) - SCREEN_HEIGHT / 2;
-
-        //Keep the camera in bounds
-        //if (camera.x < 0) {
-        //    camera.x = 0;
-        //}
-        //if (camera.y < 0) {
-        //    camera.y = 0;
-        //}
-        //if (camera.x > LEVEL_WIDTH - camera.w) {
-         //   camera.x = LEVEL_WIDTH - camera.w;
-        //}
-        //if (camera.y > LEVEL_HEIGHT - camera.h) {
-         //   camera.y = LEVEL_HEIGHT - camera.h;
-        //}
 
         //Clear screen
         SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(mainRenderer);
 
         //Render background
-        //this->BGTexture.render(0, 0);
-        //text.render(text.getWidth()/2,text.getHeight()/2);
         layout.render(SCREEN_WIDTH,SCREEN_HEIGHT);
         gold++;
+        level++;
+        if (life > 0) life--;
+        if (mana > 0) mana--;
         layout.changeGold(gold);
+        layout.changeLevel(level);
+        layout.changeLife(life,1000);
+        layout.changeMana(mana,2000);
         
 
         //Render objects
-        //dot.render(camera.x, camera.y);
 
         //Update screen
         SDL_RenderPresent(mainRenderer);

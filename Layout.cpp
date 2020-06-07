@@ -8,13 +8,21 @@ layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL) {
     layout.loadFromFile("Layout_graphics/layout_prototype2.png");
     this->gFont = TTF_OpenFont("Fonts/OpenSans.ttf", 50);
     this->layout = std::move(layout);
-    std::stringstream s;
-    s << "Oro: " << 0;
-    Text text(mainRenderer);
-    text.loadText(s.str(),gFont);
-    this->gold = std::move(text);
-    this->changeLife(100,200);
-    this->changeMana(50,100);
+
+    Text gold(mainRenderer);
+    this->gold = std::move(gold);
+    this->changeGold(1000);
+
+    Text life(mainRenderer);
+    this->life = std::move(life);
+    this->changeLife(1000,1000);
+
+    Text mana(mainRenderer);
+    this->mana = std::move(mana);
+    this->changeMana(2000,2000);
+
+    Text level(mainRenderer);
+    this->level = std::move(level);
     this->changeLevel(3);
 }
 
@@ -31,25 +39,19 @@ void Layout::changeGold(int gold){
 void Layout::changeLife(int life, int max_life){
     std::stringstream s;
     s << "Vida: " << life << "/" << max_life;
-    Text text(mainRenderer);
-    text.loadText(s.str(),gFont);
-    this->life = std::move(text);
+    this->life.loadText(s.str(),gFont);
 }
 
 void Layout::changeMana(int mana, int max_mana){
     std::stringstream s;
     s << "Mana: " << mana << "/" << max_mana;
-    Text text(mainRenderer);
-    text.loadText(s.str(),gFont);
-    this->mana = std::move(text);
+    this->mana.loadText(s.str(),gFont);
 }
 
 void Layout::changeLevel(int level){
     std::stringstream s;
     s << "Nivel: " << level;
-    Text text(mainRenderer);
-    text.loadText(s.str(),gFont);
-    this->level = std::move(text);
+    this->level.loadText(s.str(),gFont);
 }
 
 void Layout::render(int screen_width,int screen_heigth){
