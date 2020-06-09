@@ -5,6 +5,7 @@
 Layout::Layout(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer), 
 layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL) {
     Image layout(mainRenderer);
+    layout.setKeyColor(10,0,0);
     layout.loadFromFile("Layout_graphics/layout_prototype2.png");
     this->gFont = TTF_OpenFont("Fonts/OpenSans.ttf", 50);
     this->layout = std::move(layout);
