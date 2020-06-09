@@ -18,7 +18,7 @@ std::string ProtectedStrQueue::pop() {
   return frontElement;
 }
 
-void ProtectedStrQueue::empty_queue(std::vector<std::string> &events) {
+void ProtectedStrQueue::emptyQueue(std::vector<std::string> &events) {
   std::unique_lock<std::mutex> l(m);
   while (!q.empty()) {
     events.push_back(std::move(q.front()));

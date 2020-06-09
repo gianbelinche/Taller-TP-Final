@@ -23,7 +23,7 @@ public:
 
   bool empty();
 
-  void empty_queue(std::vector<std::string> &events);
+  void emptyQueue(std::vector<std::string> &events);
 };
 
 #endif
