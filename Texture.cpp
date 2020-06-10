@@ -29,6 +29,14 @@ Texture::~Texture() {
 Texture::Texture(Texture&& other){
     this->texture = other.texture;
     other.texture = NULL;
+    this->renderer = other.renderer;
+    this->tHeight = other.tHeight;
+    this->tWidth = other.tWidth;
+    other.tHeight = 0;
+    other.tWidth = 0;
+    this->keyRed = other.keyRed;
+    this->keyBlue = other.keyBlue;
+    this->keyGreen = other.keyGreen;
 }
 
 Texture& Texture::operator=(Texture&& other){

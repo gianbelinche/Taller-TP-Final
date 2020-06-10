@@ -4,6 +4,7 @@
 #include "SDL2/SDL_image.h"
 #include "Image.h"
 #include "Text.h"
+#include "GraphicInventory.h"
 
 class Layout {
 private:
@@ -14,6 +15,7 @@ private:
     Text mana;
     Text level;
     TTF_Font* gFont;    
+    GraphicInventory inventory;
 public:
     Layout(SDL_Renderer* mainRenderer);
     void changeGold(int gold);

@@ -3,10 +3,10 @@
 #include <string>
 
 Layout::Layout(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer), 
-layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL) {
+layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL), inventory(mainRenderer) {
     Image layout(mainRenderer);
     layout.setKeyColor(10,0,0);
-    layout.loadFromFile("Layout_graphics/layout_prototype2.png");
+    layout.loadFromFile("Layout_graphics/layout_prototype3.png");
     this->gFont = TTF_OpenFont("Fonts/OpenSans.ttf", 50);
     this->layout = std::move(layout);
 
@@ -25,6 +25,28 @@ layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL) {
     Text level(mainRenderer);
     this->level = std::move(level);
     this->changeLevel(3);
+
+    inventory.addImage("sword");
+    inventory.addImage("axe");
+    inventory.addImage("hammer");
+    inventory.addImage("axe");
+    inventory.addImage("hammer");
+    inventory.addImage("axe");
+    inventory.addImage("sword");
+    inventory.addImage("sword");
+    inventory.addImage("sword");
+    inventory.addImage("sword");
+    inventory.addImage("sword");
+    inventory.addImage("sword");
+    inventory.addImage("sword");
+    inventory.addImage("sword");
+    inventory.addImage("sword");
+    inventory.addImage("sword");
+    inventory.addImage("sword");
+    inventory.addImage("sword");
+    inventory.addImage("sword");
+    inventory.addImage("sword");
+
 }
 
 Layout::~Layout(){
@@ -64,4 +86,5 @@ void Layout::render(int screen_width,int screen_heigth){
     life.render(screen_width - layout.getWidth() * 0.95,layout.getHeight() / 22,&clip,&rq);
     mana.render(screen_width - layout.getWidth() * 0.95/2,layout.getHeight() / 22,&clip,&rq);
     level.render(screen_width - layout.getWidth() * 0.95/2,0,&clip,&rq);
+    inventory.render(screen_width,screen_heigth,layout.getWidth(),layout.getHeight());
 }
