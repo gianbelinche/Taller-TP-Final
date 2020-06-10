@@ -5,7 +5,7 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
 #include "SDL2/SDL_mixer.h"
-#include "Texture.h"
+#include "Image.h"
 
 /* CAMBIAR COMENTARIOS A ESPAÑOL O SACAR */
 
@@ -16,7 +16,7 @@ class MainWindow {
         SDL_Window* mainWindow;
         SDL_Renderer* mainRenderer;
         SDL_Event eventHandler;
-        Texture BGTexture;
+        Image BGImage;
 
     public:
         MainWindow();

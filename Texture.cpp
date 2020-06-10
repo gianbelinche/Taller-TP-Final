@@ -4,61 +4,38 @@
 
 /* CAMBIAR CONSTANTES DE LUGAR */
 
-#define RBLACK 0
-#define GBLACK 0
-#define BBLACK 0
-
 Texture::Texture(SDL_Renderer *aRenderer) : renderer(aRenderer), texture(NULL),
-                                            tWidth(0), tHeight(0), 
-                                            keyRed(RBLACK), keyGreen(GBLACK), 
-                                            keyBlue(BBLACK) {}
-
-Texture::Texture(SDL_Renderer *aRenderer, Uint8 aKeyRed, Uint8 aKeyGreen,
-                 Uint8 aKeyBlue, std::string path) : renderer(aRenderer), 
-                                                     texture(NULL), 
-                                                     tWidth(0),
-                                                     tHeight(0),
-                                                     keyRed(aKeyRed),
-                                                     keyGreen(aKeyGreen), 
-                                                     keyBlue(aKeyBlue) {
-    this->loadFromFile(path);
-}
+                                            tWidth(0), tHeight(0) {}
 
 Texture::~Texture() {
     this->free();
 }
 
-void Texture::loadFromFile(std::string path) {
-    //Libero imagen anterior si la había
-    this->free();
+Texture::Texture(Texture&& other){
+    this->texture = other.texture;
+    other.texture = NULL;
+    this->renderer = other.renderer;
+    this->tHeight = other.tHeight;
+    this->tWidth = other.tWidth;
+    other.tHeight = 0;
+    other.tWidth = 0;
+}
 
-    SDL_Texture *newTexture = NULL;
-    SDL_Surface *loadedSurface = IMG_Load(path.c_str());
-
-    if (loadedSurface == NULL) {
-        //printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
-        //throw Exception
-    } else {
-        SDL_SetColorKey(loadedSurface, SDL_TRUE, 
-                        SDL_MapRGB(loadedSurface->format, this->keyRed, 
-                                   this->keyGreen, this->keyBlue));
-
-        newTexture = SDL_CreateTextureFromSurface(this->renderer, loadedSurface);
-        if (newTexture == NULL) {
-            //printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
-            //throw Exception
-        } else {
-            //Get image dimensions
-            this->tWidth = loadedSurface->w;
-            this->tHeight = loadedSurface->h;
-        }
-
-        //Get rid of old loaded surface
-        SDL_FreeSurface(loadedSurface);
+Texture& Texture::operator=(Texture&& other){
+    if (this == &other) {
+        return *this;
     }
 
-    this->texture = newTexture;
+    this->texture = other.texture;
+    other.texture = NULL;
+    this->renderer = other.renderer;
+    this->tHeight = other.tHeight;
+    this->tWidth = other.tWidth;
+    other.tHeight = 0;
+    other.tWidth = 0;
+    return *this;
 }
+
 
 void Texture::free() {
     if(this->texture != NULL) {
@@ -69,22 +46,16 @@ void Texture::free() {
 	}
 }
 
-void Texture::setKeyColor(Uint8 red, Uint8 green, Uint8 blue) {
-    this->keyRed = red;
-    this->keyGreen = green;
-    this->keyBlue = blue;
-}
-
-void Texture::render(int x, int y, SDL_Rect *clip) {
-	SDL_Rect renderQuad = {x, y, this->tWidth, this->tHeight};
-
-	if( clip != NULL ) {
-		renderQuad.w = clip->w;
-		renderQuad.h = clip->h;
-	}
+void Texture::render(int x, int y, SDL_Rect *clip, SDL_Rect *renderQuad) {
+    if (renderQuad == NULL){
+        SDL_Rect render_Quad = {x, y, this->tWidth, this->tHeight};
+        renderQuad = &render_Quad;
+    }
+    renderQuad->x = x;
+    renderQuad->y = y;
 
     /* Uso renderizado sin rotaciones */
-	SDL_RenderCopy(this->renderer, this->texture, clip, &renderQuad);
+	SDL_RenderCopy(this->renderer, this->texture, clip, renderQuad);
 }
 
 int Texture::getWidth() {

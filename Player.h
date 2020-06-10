@@ -2,7 +2,7 @@
 #define __PLAYER_H__
 
 #include "SDL2/SDL_events.h"
-#include "Texture.h"
+#include "FilteredImage.h"
 
 /* VELOCIDAD DEL JUGADOR */
 #define SPEED 6
@@ -24,7 +24,7 @@ class Player {
         int posY;
         int frameX;
         int frameY;
-        Texture plTexture;
+        FilteredImage plImage;
         SDL_Rect spriteClips[WALKING_ANIMATION_FRAMES];
 
     public:

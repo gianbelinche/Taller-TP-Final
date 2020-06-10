@@ -7,6 +7,7 @@
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
+#include <SDL2/SDL_ttf.h>
 #include <string>
 
 /*
@@ -21,42 +22,29 @@
  * la textura.
 */
 class Texture {
-     private:
+     protected:
           SDL_Renderer *renderer;
           SDL_Texture *texture;
           // Dimension de la imagen
           int tWidth;
           int tHeight;
-          // Color Key
-          Uint8 keyRed;
-          Uint8 keyGreen;
-          Uint8 keyBlue;
           // Funcion privada para poder setear Render en MainWindow
           void setRenderer(SDL_Renderer *aRenderer);
-          friend class MainWindow;
+          friend class MainWindow; //AMIGOS DEL PADRE NO SON AMIGOS DEL HIJO, CAMBIAR O SACAR (pero funciona en mainwindow)
+          // SE PODRIA HACER UNA CLASE MAP O BACKGROUND PARA EL MAINWINDOW
         
      public:
           Texture(SDL_Renderer *aRenderer);
-          Texture(SDL_Renderer *aRenderer, Uint8 aKeyRed, Uint8 aKeyGreen,
-                  Uint8 aKeyBlue, std::string path);
+
+          Texture(Texture &copy) = delete;
+
+          Texture(Texture&& other);
+          Texture& operator=(Texture&& other);
+
           ~Texture();
-          void loadFromFile(std::string path);
+
           void free();
-
-          //Set color modulation
-          //void setColor(Uint8 red, Uint8 green, Uint8 blue);
-
-          //Set blending
-          //void setBlendMode(SDL_BlendMode blending);
-
-          //Set alpha modulation
-          //void setAlpha(Uint8 alpha);
-
-          void setKeyColor(Uint8 red, Uint8 green, Uint8 blue);
-
-          //Renderiza textura en el punto indicado
-          void render(int x, int y, SDL_Rect *clip = NULL);
-          
+          void render(int x, int y, SDL_Rect *clip, SDL_Rect* renderQuad);
           int getWidth();
           int getHeight();
 };

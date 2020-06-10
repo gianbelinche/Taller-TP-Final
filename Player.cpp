@@ -2,8 +2,8 @@
 
 Player::Player(SDL_Renderer *aRenderer) : speed(SPEED), posX(0), posY(0),
                                           frameX(0), frameY(0),
-                                          plTexture(aRenderer) {
-    this->plTexture.loadFromFile(PLAYER_PATH);
+                                          plImage(aRenderer, 0, 0, 0) {
+    this->plImage.loadFromFile(PLAYER_PATH);
 
     this->spriteClips[0].x = 0;
     this->spriteClips[0].y = 0;
@@ -92,7 +92,8 @@ void Player::move(SDL_Event& event) {
 
 void Player::render(int camX, int camY) {
     SDL_Rect* currentClip = &(this->spriteClips[frameX / 4]);
-    this->plTexture.render(this->posX - camX, this->posY - camY, currentClip);
+    SDL_Rect renderQuad = {this->posX - camX, this->posY - camY, PLAYER_WIDTH, PLAYER_HEIGHT}; // chequear
+    this->plImage.render(this->posX - camX, this->posY - camY, currentClip, &renderQuad); //chequear
 }
 
 int Player::getPosX() {

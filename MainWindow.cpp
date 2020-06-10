@@ -24,14 +24,15 @@
 /* FRECUENCIA DE SONIDO */
 #define FRECUENCY 22050
 
-MainWindow::MainWindow() : BGTexture(NULL) {
+MainWindow::MainWindow() : BGImage(NULL) {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         throw SDLError("Error: SDL no pudo inicializarse. SDL_Error: %s", 
                        SDL_GetError());
     }
 
     if(TTF_Init() == -1){
-        throw SDLError("No se pudo inciliazar la Font, SDL_ttf Error: %s\n", TTF_GetError());
+        throw SDLError("No se pudo inicializar la Font. SDL_ttf Error: %s\n", 
+                       TTF_GetError());
     }
 
     //Set texture filtering to linear
@@ -67,8 +68,8 @@ MainWindow::MainWindow() : BGTexture(NULL) {
 		throw SDLError("No se pudo inicializar el sonido: %S\n", Mix_GetError());
 	}
 
-    this->BGTexture.setRenderer(this->mainRenderer);
-    this->BGTexture.loadFromFile(BACKGROUND_PATH);
+    this->BGImage.setRenderer(this->mainRenderer);
+    this->BGImage.loadFromFile(BACKGROUND_PATH);
 }
 
 MainWindow::~MainWindow() {
@@ -123,7 +124,7 @@ void MainWindow::run() {
         SDL_RenderClear(mainRenderer);
 
         //Render background
-        this->BGTexture.render(0, 0, &camera);
+        this->BGImage.render(0, 0, &camera, NULL); // chequear
 
         //Render objects
         player.render(camera.x, camera.y);
