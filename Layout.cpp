@@ -26,27 +26,6 @@ layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL), inventory(mainRen
     this->level = std::move(level);
     this->changeLevel(3);
 
-    inventory.addImage("sword");
-    inventory.addImage("axe");
-    inventory.addImage("hammer");
-    inventory.addImage("axe");
-    inventory.addImage("hammer");
-    inventory.addImage("axe");
-    inventory.addImage("sword");
-    inventory.addImage("sword");
-    inventory.addImage("sword");
-    inventory.addImage("sword");
-    inventory.addImage("sword");
-    inventory.addImage("sword");
-    inventory.addImage("sword");
-    inventory.addImage("sword");
-    inventory.addImage("sword");
-    inventory.addImage("sword");
-    inventory.addImage("sword");
-    inventory.addImage("sword");
-    inventory.addImage("sword");
-    inventory.addImage("sword");
-
 }
 
 Layout::~Layout(){
@@ -75,6 +54,14 @@ void Layout::changeLevel(int level){
     std::stringstream s;
     s << "Nivel: " << level;
     this->level.loadText(s.str(),gFont);
+}
+
+void Layout::addItem(std::string item){
+    inventory.addImage(item);
+}
+
+void Layout::removeItem(std::string item){
+    inventory.removeImage(item);
 }
 
 void Layout::render(int screen_width,int screen_heigth){

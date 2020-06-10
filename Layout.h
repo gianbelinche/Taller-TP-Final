@@ -22,6 +22,8 @@ public:
     void changeLife(int life, int max_life);
     void changeMana(int mana, int max_mana);
     void changeLevel(int level);
+    void addItem(std::string item);
+    void removeItem(std::string item);
     void render(int screen_width,int screen_height);
     ~Layout();
 

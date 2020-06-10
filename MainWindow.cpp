@@ -97,6 +97,11 @@ void MainWindow::run() {
     layout.changeLevel(level);
     layout.changeLife(life,life);
     layout.changeMana(mana,mana);
+    layout.addItem("baculo nudoso");
+    layout.addItem("composed bow");
+    layout.addItem("fresno rod");
+    int items = 0;
+    int removes = 0;
 
     //While application is running
     while (!quit) {
@@ -153,6 +158,18 @@ void MainWindow::run() {
         layout.changeLevel(level);
         layout.changeLife(life,1000);
         layout.changeMana(mana,2000);
+        items++;
+        removes++;
+        if (items == 200){
+            layout.addItem("baculo engarzado");
+            items = 0;
+        }
+        if (removes == 500){
+            layout.removeItem("composed bow");
+        }
+        if (removes == 1000){
+            layout.removeItem("baculo nudoso");
+        }
         
 
         //Render objects

@@ -20,17 +20,17 @@ void GraphicInventory::insert(std::string key,std::string path){
 }
 
 void GraphicInventory::addImage(std::string key){
-    present_images.push_back(std::pair<std::string,Image&>(key,images.at(key)));
+    present_images.push_back(key);
 }
 
 void GraphicInventory::removeImage(std::string key){
-    /*std::vector<std::pair<std::string,Image&>>::iterator it;
+    std::vector<std::string>::iterator it;
     for (it = present_images.begin(); it != present_images.end(); it++){
-        if (((*it).first) == key){
+        if (*it == key){
             present_images.erase(it);
             break;
         }
-    }*/
+    }
 }
 
 void GraphicInventory::render(int screen_w,int screen_h,int layout_w, int layout_h){
@@ -40,7 +40,7 @@ void GraphicInventory::render(int screen_w,int screen_h,int layout_w, int layout
     int x = screen_w - layout_w * 95 / 100;
     int y = layout_h / 10; //ver este num
     for (auto& it : present_images){
-        it.second.render(x,y,&clip,&rQuad);
+        images.at(it).render(x,y,&clip,&rQuad);
         i++;
         x += screen_w / 16; //mismo 5 que arriba
         if (i == 5 || i == 10 || i == 15){
