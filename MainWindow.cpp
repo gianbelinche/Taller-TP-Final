@@ -75,8 +75,8 @@ MainWindow::MainWindow() : BGImage(NULL) {
 MainWindow::~MainWindow() {
     IMG_Quit();
     Mix_Quit();
-	SDL_Quit();
-    TTF_Quit();
+  	TTF_Quit();
+    SDL_Quit();
 }
 
 void MainWindow::run() {

@@ -45,6 +45,7 @@ class Texture {
 
           void free();
           void render(int x, int y, SDL_Rect *clip, SDL_Rect* renderQuad);
+  
           int getWidth();
           int getHeight();
 };

@@ -12,7 +12,7 @@ Image& Image::operator=(Image&& other) {
     if (this == &other) {
         return *this;
     }
-
+  
     Texture::operator=(std::move(other));
     return *this;
 }
