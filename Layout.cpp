@@ -1,11 +1,10 @@
 #include "Layout.h"
 #include <sstream>
 #include <string>
-#include <iostream>
+
 Layout::Layout(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer), 
 layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL), inventory(mainRenderer) {
     Image layout(mainRenderer);
-    layout.setKeyColor(10,0,0);
     layout.loadFromFile("Layout_graphics/layout_prototype_r.png");
     this->gFont = TTF_OpenFont("Fonts/OpenSans.ttf", 50);
     this->layout = std::move(layout);
@@ -65,14 +64,11 @@ void Layout::removeItem(std::string item){
 }
 
 void Layout::render(int screen_width,int screen_heigth){
-    std::cout << layout.getWidth() << std::endl << layout.getHeight() << std::endl;
-    std::cout << screen_width << std::endl << screen_heigth << std::endl;
     SDL_Rect clip = {0,0,screen_width,screen_heigth};
     SDL_Rect rq = {0,0,screen_width / 3,screen_heigth};
     int lay_w = screen_width * layout.getWidth() / 640;
     int lay_h = screen_heigth * layout.getHeight() / 480;
     layout.render(screen_width - lay_w,0,&clip,&rq);
-    std::cout << lay_w << std::endl << lay_h << std::endl;
     rq = {0,0,lay_w * 40 / 100, lay_h / 22};
     gold.render(screen_width - lay_w * 0.95, 0, &clip,&rq);
     life.render(screen_width - lay_w * 0.95,screen_heigth / 24,&clip,&rq); // l_h / 22

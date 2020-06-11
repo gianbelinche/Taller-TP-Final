@@ -1,14 +1,14 @@
 #ifndef CLASS_GRAPHIC_INVENTORY
 #define CLASS_GRAPHIC_INVENTORY
 #include <map>
-#include "Image.h"
+#include "FilteredImage.h"
 #include <string>
 #include <vector>
 
 class GraphicInventory {
 private:
     SDL_Renderer* mainRenderer;
-    std::map<std::string,Image> images;
+    std::map<std::string,FilteredImage> images;
     std::vector<std::string> present_images;
     void insert(std::string key,std::string path);
 public:

@@ -9,7 +9,7 @@ public:
     Image(SDL_Renderer *aRenderer);
     Image(SDL_Renderer *aRenderer, std::string path);
 
-    Image(Image &copy) = delete;
+    Image(const Image &copy) = delete;
 
     Image(Image&& other);
     Image& operator=(Image&& other);

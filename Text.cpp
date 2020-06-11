@@ -19,7 +19,7 @@ Text& Text::operator=(Text&& other) {
     return *this;
 }
 
-void Text::loadText(std::string &text,TTF_Font* gFont){
+void Text::loadText(std::string text,TTF_Font* gFont){
     this->free();
 
     SDL_Texture *newTexture = NULL;

@@ -14,9 +14,9 @@ mainRenderer(mainRenderer) {
 }
 
 void GraphicInventory::insert(std::string key,std::string path){
-    Image image(mainRenderer);
+    FilteredImage image(mainRenderer);
     image.loadFromFile(path);
-    images.insert(std::pair<std::string,Image>(key,std::move(image)));
+    images.insert(std::pair<std::string,FilteredImage>(key,std::move(image)));
 }
 
 void GraphicInventory::addImage(std::string key){

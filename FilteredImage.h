@@ -13,11 +13,11 @@ class FilteredImage : public Texture {
         Uint8 keyBlue;
     
     public:
-        FilteredImage(SDL_Renderer *aRenderer, Uint8 keyRed, Uint8 keyGreen, 
-                      Uint8 keyBlue);
+        FilteredImage(SDL_Renderer *aRenderer, Uint8 keyRed = 0, Uint8 keyGreen = 0, 
+                      Uint8 keyBlue = 0);
         ~FilteredImage();
 
-        FilteredImage(FilteredImage &copy) = delete;
+        FilteredImage(const FilteredImage &copy) = delete;
 
         FilteredImage(FilteredImage&& other);
         FilteredImage& operator=(FilteredImage&& other);
