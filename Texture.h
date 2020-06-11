@@ -36,7 +36,7 @@ class Texture {
      public:
           Texture(SDL_Renderer *aRenderer);
 
-          Texture(Texture &copy) = delete;
+          Texture(const Texture &copy) = delete;
 
           Texture(Texture&& other);
           Texture& operator=(Texture&& other);

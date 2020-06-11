@@ -91,7 +91,7 @@ void Player::move(SDL_Event& event) {
 }
 
 void Player::render(int camX, int camY) {
-    SDL_Rect* currentClip = &(this->spriteClips[frameX / 4]);
+    SDL_Rect* currentClip = &(this->spriteClips[frameX]);
     SDL_Rect renderQuad = {this->posX - camX, this->posY - camY, PLAYER_WIDTH, PLAYER_HEIGHT}; // chequear
     this->plImage.render(this->posX - camX, this->posY - camY, currentClip, &renderQuad); //chequear
 }
