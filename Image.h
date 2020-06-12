@@ -5,16 +5,16 @@
 #include "SDLError.h"
 
 class Image : public Texture {
-public:    
-    Image(SDL_Renderer *aRenderer);
-    Image(SDL_Renderer *aRenderer, std::string path);
+    public:    
+        Image(SDL_Renderer *aRenderer);
+        Image(SDL_Renderer *aRenderer, std::string path);
 
-    Image(const Image &copy) = delete;
+        Image(const Image &copy) = delete;
 
-    Image(Image&& other);
-    Image& operator=(Image&& other);
+        Image(Image&& other);
+        Image& operator=(Image&& other);
 
-    void loadFromFile(std::string path);
+        void loadFromFile(std::string path);
 };
 
 #endif

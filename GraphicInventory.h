@@ -10,7 +10,6 @@ class GraphicInventory {
 private:
     SDL_Renderer* mainRenderer;
     std::map<std::string,FilteredImage> images;
-    std::map<std::string,Image> images;
     std::vector<std::string> present_images;
     void insert(std::string key,std::string path);
 public:

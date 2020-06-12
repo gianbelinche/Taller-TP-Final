@@ -19,7 +19,7 @@
 
 class Player {
     private:
-        const int speed;
+        int speed;
         int posX;
         int posY;
         int frameX;
@@ -30,8 +30,14 @@ class Player {
     public:
         Player(SDL_Renderer *aRenderer);
         ~Player();
+
+        Player(const Player &copy) = delete;
+        Player(Player&& other);
+        Player& operator=(Player&& other);
+
         void move(SDL_Event& event);
         void render(int camX, int camY);
+
         int getPosX();
         int getPosY();
 };

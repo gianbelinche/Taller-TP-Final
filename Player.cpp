@@ -5,30 +5,44 @@ Player::Player(SDL_Renderer *aRenderer) : speed(SPEED), posX(0), posY(0),
                                           plImage(aRenderer, 0, 0, 0) {
     this->plImage.loadFromFile(PLAYER_PATH);
 
-    this->spriteClips[0].x = 0;
-    this->spriteClips[0].y = 0;
-    this->spriteClips[0].w = PLAYER_WIDTH;
-    this->spriteClips[0].h = PLAYER_HEIGHT;
+    for (int i = 0; i < WALKING_ANIMATION_FRAMES; i++) {
+        this->spriteClips[i].x = i * PLAYER_WIDTH;
+        this->spriteClips[i].y = 0;
+        this->spriteClips[i].w = PLAYER_WIDTH;
+        this->spriteClips[i].h = PLAYER_HEIGHT;
+    }
+}
 
-    this->spriteClips[1].x = PLAYER_WIDTH;
-    this->spriteClips[1].y = 0;
-    this->spriteClips[1].w = PLAYER_WIDTH;
-    this->spriteClips[1].h = PLAYER_HEIGHT;
+Player::Player(Player&& other) : speed(other.speed), posX(other.posX),
+                                 posY(other.posY), frameX(other.frameX),
+                                 frameY(other.frameY),
+                                 plImage(std::move(other.plImage)) {
+    for (int i = 0; i < WALKING_ANIMATION_FRAMES; i++) {
+        this->spriteClips[i].x = other.spriteClips[i].x;
+        this->spriteClips[i].y = other.spriteClips[i].y;
+        this->spriteClips[i].w = other.spriteClips[i].w;
+        this->spriteClips[i].h = other.spriteClips[i].h;
+    }
+}
 
-    this->spriteClips[2].x = PLAYER_WIDTH * 2;
-    this->spriteClips[2].y = 0;
-    this->spriteClips[2].w = PLAYER_WIDTH;
-    this->spriteClips[2].h = PLAYER_HEIGHT;
+Player& Player::operator=(Player&& other) {
+    if (this == &other) {
+        return *this;
+    }
 
-    this->spriteClips[3].x = PLAYER_WIDTH * 3;
-    this->spriteClips[3].y = 0;
-    this->spriteClips[3].w = PLAYER_WIDTH;
-    this->spriteClips[3].h = PLAYER_HEIGHT;
+    this->speed = other.speed;
+    this->posX = other.posX;
+    this->posY = other.posY;
+    this->frameX = other.frameX;
+    this->frameY = other.frameY;
+    this->plImage = std::move(other.plImage);
 
-    this->spriteClips[4].x = PLAYER_WIDTH * 4;
-    this->spriteClips[4].y = 0;
-    this->spriteClips[4].w = PLAYER_WIDTH;
-    this->spriteClips[4].h = PLAYER_HEIGHT;
+    for (int i = 0; i < WALKING_ANIMATION_FRAMES; i++) {
+        this->spriteClips[i].x = other.spriteClips[i].x;
+        this->spriteClips[i].y = other.spriteClips[i].y;
+        this->spriteClips[i].w = other.spriteClips[i].w;
+        this->spriteClips[i].h = other.spriteClips[i].h;
+    }
 }
 
 Player::~Player() {}

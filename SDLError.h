@@ -1,5 +1,6 @@
 #ifndef CLASS_SDLERROR
 #define CLASS_SDLERROR
+
 #define BUF_LEN 256
 #include <typeinfo>
 
