@@ -1,5 +1,8 @@
 #include "Test_gian.h"
 #include "SDLError.h"
+#include "MusicPlayer.h"
+#include "SoundEffectPlayer.h"
+#include "Layout.h"
 
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
@@ -71,21 +74,93 @@ TestGian::~TestGian() {
 
 void TestGian::run() {
     bool quit = false;
+    MusicPlayer music_player;
+	music_player.add(1,"music/cave.wav");
+	music_player.add(2,"music/city.wav");
+	music_player.add(3,"music/walk.wav");
+	music_player.add(4,"music/main_menu.wav");
+	SoundEffectPlayer sound_player;
+	sound_player.add(1,"sound_effects/sword.wav");
+	sound_player.add(2,"sound_effects/hammer.wav");
+	sound_player.add(3,"sound_effects/potion.wav");
+	sound_player.add(4,"sound_effects/axe.wav"); 
+    Layout layout(mainRenderer);
+    int gold = 0;
+    int level = 0;
+    int life = 1000;
+    int mana = 2000;
+    layout.changeGold(gold);
+    layout.changeLevel(level);
+    layout.changeLife(life,life);
+    layout.changeMana(mana,mana);
+    layout.addItem("baculo nudoso");
+    layout.addItem("composed bow");
+    layout.addItem("fresno rod");
+    int items = 0;
+    int removes = 0;
+
 
     while (!quit) {
         while (SDL_PollEvent(&eventHandler) != 0) {
             if (eventHandler.type == SDL_QUIT) {
                 quit = true;
-            }
-
-
-
+            }else if( eventHandler.type == SDL_KEYDOWN ){
+				switch( eventHandler.key.keysym.sym ){
+					case SDLK_1:
+					sound_player.play(1);
+					break;
+					case SDLK_2:
+					sound_player.play(2);
+					break;
+					case SDLK_3:
+					sound_player.play(3);
+					break;
+					case SDLK_4:
+					sound_player.play(4);
+					break;
+					case SDLK_6:
+					music_player.play(1);
+					break;
+					case SDLK_7:
+					music_player.play(2);
+					break;
+					case SDLK_8:
+					music_player.play(3);
+					break;
+					case SDLK_9:
+					music_player.play(4);
+					break;
+					case SDLK_0:
+					music_player.stop();
+					break;
+				}
+			}
         }
 
         SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(mainRenderer);
 
-
+        layout.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+        gold++;
+        level++;
+        if (life > 0) life--;
+        if (mana > 0) mana--;
+        layout.changeGold(gold);
+        layout.changeLevel(level);
+        layout.changeLife(life,1000);
+        layout.changeMana(mana,2000);
+        items++;
+        removes++;
+        if (items == 200){
+            layout.addItem("baculo engarzado");
+            items = 0;
+        }
+        if (removes == 500){
+            layout.removeItem("composed bow");
+        }
+        if (removes == 1000){
+            layout.removeItem("baculo nudoso");
+        }
 
         SDL_RenderPresent(mainRenderer);
     }
