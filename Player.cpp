@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(SDL_Renderer *aRenderer) : speed(SPEED), posX(1000), posY(1000),
+Player::Player(SDL_Renderer *aRenderer) : speed(SPEED), posX(4640), posY(1408),
                                           frameX(0), frameY(0),
                                           plImage(aRenderer, 0, 0, 0) {
     this->plImage.loadFromFile(PLAYER_PATH);
@@ -46,6 +46,7 @@ Player& Player::operator=(Player&& other) {
 }
 
 Player::~Player() {}
+#include <iostream>
 
 void Player::move(SDL_Event& event) {
     if (event.type == SDL_KEYDOWN) {
@@ -54,8 +55,8 @@ void Player::move(SDL_Event& event) {
                 this->posY -= this->speed;
                 this->frameX++;
                 if (this->frameX >= WALKING_ANIMATION_FRAMES) frameX = 0;
-                frameY = PLAYER_HEIGHT;
-                this->spriteClips[frameX].y = frameY;
+                this->frameY = PLAYER_HEIGHT;
+                this->spriteClips[frameX].y = this->frameY;
                 // chequear que no se vaya del mapa
                 break;
 
@@ -63,8 +64,8 @@ void Player::move(SDL_Event& event) {
                 this->posX -= this->speed;
                 this->frameX++;
                 if (this->frameX >= WALKING_ANIMATION_FRAMES) frameX = 0;
-                frameY = PLAYER_HEIGHT * 2;
-                this->spriteClips[frameX].y = frameY;
+                this->frameY = PLAYER_HEIGHT * 2;
+                this->spriteClips[frameX].y = this->frameY;
                 // chequear que no se vaya del mapa
                 break;
 
@@ -72,8 +73,8 @@ void Player::move(SDL_Event& event) {
                 this->posY += this->speed;
                 this->frameX++;
                 if (this->frameX >= WALKING_ANIMATION_FRAMES) frameX = 0;
-                frameY = 0;
-                this->spriteClips[frameX].y = frameY;
+                this->frameY = 0;
+                this->spriteClips[frameX].y = this->frameY;
                 // chequear que no se vaya del mapa
                 break;
 
@@ -81,8 +82,8 @@ void Player::move(SDL_Event& event) {
                 this->posX += this->speed;
                 this->frameX++;
                 if (this->frameX >= WALKING_ANIMATION_FRAMES) frameX = 0;
-                frameY = PLAYER_HEIGHT * 3;
-                this->spriteClips[frameX].y = frameY;
+                this->frameY = PLAYER_HEIGHT * 3;
+                this->spriteClips[frameX].y = this->frameY;
                 // chequear que no se vaya del mapa
                 break;
             
@@ -96,6 +97,7 @@ void Player::move(SDL_Event& event) {
             case SDLK_s:
             case SDLK_d:
                 this->frameX = 0;
+                spriteClips[frameX].y = this->frameY;
                 break;
             
             default:
