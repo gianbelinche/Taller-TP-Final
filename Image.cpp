@@ -2,18 +2,17 @@
 
 Image::Image(SDL_Renderer *aRenderer) : Texture(aRenderer) {}
 
-Image::Image(SDL_Renderer *aRenderer, Uint8 aKeyRed, Uint8 aKeyGreen,
-            Uint8 aKeyBlue, std::string path) : 
-            Texture(aRenderer,aKeyRed,aKeyGreen,aKeyBlue) {
+Image::Image(SDL_Renderer *aRenderer, std::string path) : Texture(aRenderer) {
     this->loadFromFile(path);             
 }
 
-Image::Image(Image&& other) : Texture(std::move(other)){
+Image::Image(Image&& other) : Texture(std::move(other)) {}
 
-
-}
-
-Image& Image::operator=(Image&& other){
+Image& Image::operator=(Image&& other) {
+    if (this == &other) {
+        return *this;
+    }
+  
     Texture::operator=(std::move(other));
     return *this;
 }
@@ -26,24 +25,21 @@ void Image::loadFromFile(std::string path) {
     SDL_Surface *loadedSurface = IMG_Load(path.c_str());
 
     if (loadedSurface == NULL) {
-        printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
-        //throw Exception
+        throw SDLError("No se pudo cargar imagen de %s. SDL_Error: %s\n",
+                           path.c_str(), SDL_GetError());
     } else {
-        SDL_SetColorKey(loadedSurface, SDL_TRUE, 
-                        SDL_MapRGB(loadedSurface->format, this->keyRed, 
-                                   this->keyGreen, this->keyBlue));
-
+        //Creo textura desde la superficie cargada
         newTexture = SDL_CreateTextureFromSurface(this->renderer, loadedSurface);
+
         if (newTexture == NULL) {
-            printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
-            //throw Exception
+            throw SDLError("No se pudo crear textura de %s. SDL_Error: %s\n",
+                           path.c_str(), SDL_GetError());
         } else {
-            //Get image dimensions
             this->tWidth = loadedSurface->w;
             this->tHeight = loadedSurface->h;
         }
-
-        //Get rid of old loaded surface
+        
+        //Libero la superficie cargada
         SDL_FreeSurface(loadedSurface);
     }
 
