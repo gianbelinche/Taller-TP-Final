@@ -10,8 +10,12 @@
 #include "Player.h"
 
 /* TAMAÑO DE LA PANTALLA */
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+#ifndef SCREEN_WIDTH
+#define SCREEN_WIDTH 640
+#endif
+#ifndef SCREEN_HEIGHT
+#define SCREEN_HEIGHT 420
+#endif
 #define CHARACTER_POSITION_X 0
 #define CHARACTER_POSITION_Y 0
 
