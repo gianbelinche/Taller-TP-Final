@@ -1,3 +1,10 @@
 prueba
 a.out
 .vscode/
+.gitignore
+CMakeFiles
+*.cmake
+CMakeCache.txt
+CMakeLists.txt
+Makelife
+
