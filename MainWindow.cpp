@@ -157,9 +157,9 @@ MainMap prueba(SDL_Renderer *mainRenderer) {
     /* Matriz de capa 1 */
 
     cont = 0;
-    for (Json::Value::UInt i = 0; i < width1.asUInt(); i++) {
+    for (Json::Value::UInt i = 0; i < height1.asUInt(); i++) {
         std::vector<uint32_t> row;
-        for (Json::Value::UInt j = 0; j < height1.asUInt(); j++) {
+        for (Json::Value::UInt j = 0; j < width1.asUInt(); j++) {
             row.emplace_back(layer1[cont].asUInt());
             cont++;
         }
@@ -192,15 +192,29 @@ MainMap prueba(SDL_Renderer *mainRenderer) {
         tiles[key] = v;
     }
 
-    MainMap mainMap(tiles, mainRenderer, matrixLayer0);
+    MainMap mainMap(tiles, mainRenderer, matrixLayer0, matrixLayer1);
     return std::move(mainMap);
 }
 
 void MainWindow::run() {
     MainMap mainMap = std::move(prueba(mainRenderer));
-    SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-    SDL_RenderClear(mainRenderer);
-    mainMap.render();
-    SDL_RenderPresent(mainRenderer);
-    //getc(stdin); //lo uso en reemplazo del loop de eventos para probar
+
+    bool quit = false;
+
+    while (!quit) {
+        while (SDL_PollEvent(&eventHandler) != 0) {
+            if (eventHandler.type == SDL_QUIT) {
+                quit = true;
+            }
+
+            mainMap.handleEvent(eventHandler); //temporal, es solo para probar el movimiento del pj
+        }
+
+        SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_RenderClear(mainRenderer);
+
+        mainMap.render();
+
+        SDL_RenderPresent(mainRenderer);
+    }
 }

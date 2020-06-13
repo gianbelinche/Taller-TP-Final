@@ -19,18 +19,21 @@ class MainMap {
     private:
         SDL_Rect camera;
         std::map<uint32_t, MapImage> textures;
-        std::vector<std::vector<uint32_t>> map;
+        std::vector<std::vector<uint32_t>> texMap;
+        std::vector<std::vector<uint32_t>> strMap;
         Player player;
         
     public:
         MainMap(std::map<uint32_t, std::vector<std::string>> &tiles, 
-                SDL_Renderer *aRenderer, std::vector<std::vector<uint32_t>> aMap);
+                SDL_Renderer *aRenderer, std::vector<std::vector<uint32_t>> aTexMap,
+                std::vector<std::vector<uint32_t>> aStrMap);
         ~MainMap();
 
         MainMap(const MainMap &copy) = delete;
         MainMap(MainMap&& other);
         MainMap& operator=(MainMap&& other);
 
+        void handleEvent(SDL_Event &event);
         void render();
 };
 

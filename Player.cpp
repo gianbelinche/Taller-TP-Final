@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(SDL_Renderer *aRenderer) : speed(SPEED), posX(0), posY(0),
+Player::Player(SDL_Renderer *aRenderer) : speed(SPEED), posX(1000), posY(1000),
                                           frameX(0), frameY(0),
                                           plImage(aRenderer, 0, 0, 0) {
     this->plImage.loadFromFile(PLAYER_PATH);

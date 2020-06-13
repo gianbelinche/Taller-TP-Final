@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# except these which we want crlf
+*.json eol=crlf
