@@ -1,7 +1,7 @@
 
 
 #include "Thread.h"
-#include "UserMoved.h"
+#include "Events/UserMoved.h"
 
 class ServerEventHandler {
 private:
