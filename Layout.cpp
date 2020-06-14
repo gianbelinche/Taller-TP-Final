@@ -3,7 +3,8 @@
 #include <string>
 
 Layout::Layout(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer), 
-layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL), inventory(mainRenderer) {
+layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL),
+inventory(mainRenderer), expBar(mainRenderer) {
     Image layout(mainRenderer);
     layout.loadFromFile("Layout_graphics/layout_prototype_r.png");
     this->gFont = TTF_OpenFont("Fonts/OpenSans.ttf", 50);
@@ -55,6 +56,10 @@ void Layout::changeLevel(int level){
     this->level.loadText(s.str(),gFont);
 }
 
+void Layout::changeExp(int exp,int max_exp){
+    expBar.changeExp(exp,max_exp);
+}
+
 void Layout::addItem(std::string item){
     inventory.addImage(item);
 }
@@ -79,4 +84,5 @@ void Layout::render(int screen_width,int screen_heigth){
     mana.render(screen_width - lay_w * 0.95/2,screen_heigth / 24,&clip,&rq);
     level.render(screen_width - lay_w * 0.95/2,0,&clip,&rq);
     inventory.render(screen_width,screen_heigth,lay_w,lay_h);
+    expBar.render(screen_width,screen_heigth);
 }

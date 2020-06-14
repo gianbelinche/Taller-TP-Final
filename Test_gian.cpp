@@ -94,6 +94,7 @@ void TestGian::run() {
     layout.changeLife(life,life);
     layout.changeMana(mana,mana);
     layout.addItem("sword");
+    layout.addItem("axe");
     layout.addItem("baculo nudoso");
     layout.addItem("composed bow");
     layout.addItem("fresno rod");
@@ -104,6 +105,9 @@ void TestGian::run() {
     layout.selectItem("iron helmet");
     layout.addItem("iron shield");
     layout.selectItem("iron shield");
+    int exp = 0;
+    int max_exp = 100;
+    layout.changeExp(exp,max_exp);
     int items = 0;
     int removes = 0;
 
@@ -150,21 +154,28 @@ void TestGian::run() {
 
         layout.render(SCREEN_WIDTH,SCREEN_HEIGHT);
         gold++;
-        level++;
         if (life > 0) life--;
         if (mana > 0) mana--;
         layout.changeGold(gold);
-        layout.changeLevel(level);
         layout.changeLife(life,1000);
         layout.changeMana(mana,2000);
         items++;
         removes++;
+        exp++;
+        if (exp == max_exp){
+            exp = 0;
+            max_exp *= 2;
+            level++;
+        }
+        layout.changeExp(exp,max_exp);
+        layout.changeLevel(level);
         if (items == 200){
             layout.addItem("baculo engarzado");
             items = 0;
         }
         if (removes == 500){
             layout.removeItem("composed bow");
+            layout.selectItem("axe");
         }
         if (removes == 1000){
             layout.removeItem("baculo nudoso");
