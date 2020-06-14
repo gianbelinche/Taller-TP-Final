@@ -4,8 +4,8 @@
 #include "SoundEffectPlayer.h"
 #include "Layout.h"
 
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 
 /* TAMAÑO DEL NIVEL */
 #define LEVEL_WIDTH 1280
@@ -93,9 +93,17 @@ void TestGian::run() {
     layout.changeLevel(level);
     layout.changeLife(life,life);
     layout.changeMana(mana,mana);
+    layout.addItem("sword");
     layout.addItem("baculo nudoso");
     layout.addItem("composed bow");
     layout.addItem("fresno rod");
+    layout.addItem("leather armor");
+    layout.selectItem("leather armor");
+    layout.selectItem("sword");
+    layout.addItem("iron helmet");
+    layout.selectItem("iron helmet");
+    layout.addItem("iron shield");
+    layout.selectItem("iron shield");
     int items = 0;
     int removes = 0;
 

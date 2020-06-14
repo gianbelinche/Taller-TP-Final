@@ -63,6 +63,10 @@ void Layout::removeItem(std::string item){
     inventory.removeImage(item);
 }
 
+void Layout::selectItem(std::string item){
+    inventory.select(item);
+}
+
 void Layout::render(int screen_width,int screen_heigth){
     SDL_Rect clip = {0,0,screen_width,screen_heigth};
     SDL_Rect rq = {0,0,screen_width / 3,screen_heigth};
