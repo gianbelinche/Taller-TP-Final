@@ -1,4 +1,5 @@
-
+#ifndef USERMOVED_H
+#define USERMOVED_H
 
 #include "Event.h"
 
@@ -11,3 +12,4 @@ public:
   ~UserMoved();
 };
 
+#endif // USERMOVED_H

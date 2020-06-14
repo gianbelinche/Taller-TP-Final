@@ -1,4 +1,7 @@
+#ifndef PLAYERNET_H
+#define PLAYERNET_H
 
+class GameState;
 
 class PlayerNet {
 private:
@@ -18,3 +21,5 @@ public:
             int currExp, int currGold);
   ~PlayerNet();
 };
+
+#endif // PLAYERNET_H
