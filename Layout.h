@@ -6,6 +6,7 @@
 #include "Text.h"
 #include "GraphicInventory.h"
 #include "ExpBar.h"
+#include "MiniChat.h"
 
 class Layout {
 private:
@@ -18,6 +19,7 @@ private:
     TTF_Font* gFont;    
     GraphicInventory inventory;
     ExpBar expBar;
+    MiniChat chat;
 public:
     Layout(SDL_Renderer* mainRenderer);
     void changeGold(int gold);
@@ -28,6 +30,8 @@ public:
     void addItem(std::string item);
     void removeItem(std::string item);
     void selectItem(std::string item);
+    void sendCharacter(std::string c);
+    void removeCharacter();
     void render(int screen_width,int screen_height);
     ~Layout();
 

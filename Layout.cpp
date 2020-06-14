@@ -4,7 +4,7 @@
 
 Layout::Layout(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer), 
 layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL),
-inventory(mainRenderer), expBar(mainRenderer) {
+inventory(mainRenderer), expBar(mainRenderer), chat(mainRenderer) {
     Image layout(mainRenderer);
     layout.loadFromFile("Layout_graphics/layout_prototype_r.png");
     this->gFont = TTF_OpenFont("Fonts/OpenSans.ttf", 50);
@@ -72,6 +72,14 @@ void Layout::selectItem(std::string item){
     inventory.select(item);
 }
 
+void Layout::sendCharacter(std::string c){
+    chat.putCharacter(c);
+
+}
+void Layout::removeCharacter(){
+    chat.deleteCharacter();
+}
+
 void Layout::render(int screen_width,int screen_heigth){
     SDL_Rect clip = {0,0,screen_width,screen_heigth};
     SDL_Rect rq = {0,0,screen_width / 3,screen_heigth};
@@ -85,4 +93,5 @@ void Layout::render(int screen_width,int screen_heigth){
     level.render(screen_width - lay_w * 0.95/2,0,&clip,&rq);
     inventory.render(screen_width,screen_heigth,lay_w,lay_h);
     expBar.render(screen_width,screen_heigth);
+    chat.render(screen_width,screen_heigth,gFont);
 }

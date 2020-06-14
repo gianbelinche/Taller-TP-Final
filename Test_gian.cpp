@@ -110,9 +110,10 @@ void TestGian::run() {
     layout.changeExp(exp,max_exp);
     int items = 0;
     int removes = 0;
-
+    int cant_items = 8;
 
     while (!quit) {
+        SDL_StartTextInput();
         while (SDL_PollEvent(&eventHandler) != 0) {
             if (eventHandler.type == SDL_QUIT) {
                 quit = true;
@@ -145,8 +146,13 @@ void TestGian::run() {
 					case SDLK_0:
 					music_player.stop();
 					break;
+                    case SDLK_BACKSPACE:
+                    layout.removeCharacter();
+                    break;
 				}
-			}
+			}else if(eventHandler.type == SDL_TEXTINPUT){
+                layout.sendCharacter(eventHandler.text.text);
+            }
         }
 
         SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -169,18 +175,22 @@ void TestGian::run() {
         }
         layout.changeExp(exp,max_exp);
         layout.changeLevel(level);
-        if (items == 200){
+        if (items == 200 && cant_items < 20){
             layout.addItem("baculo engarzado");
             items = 0;
+            cant_items++;
         }
         if (removes == 500){
             layout.removeItem("composed bow");
             layout.selectItem("axe");
+            cant_items--;
         }
         if (removes == 1000){
             layout.removeItem("baculo nudoso");
+            cant_items--;
         }
 
         SDL_RenderPresent(mainRenderer);
+        SDL_StopTextInput();
     }
 }
