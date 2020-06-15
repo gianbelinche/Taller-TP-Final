@@ -4,8 +4,8 @@ MainMap::MainMap(std::map<uint32_t, std::vector<std::string>> &tiles,
                  SDL_Renderer *aRenderer, std::vector<std::vector<uint32_t>> aTexMap,
                  std::vector<std::vector<uint32_t>> aStrMap)
                  : player(aRenderer), texMap(std::move(aTexMap)), strMap(std::move(aStrMap)) {
-    camera.x = (player.getPosX() + PLAYER_WIDTH / 2) - SCREEN_WIDTH / 2;
-    camera.y = (player.getPosY() + PLAYER_HEIGHT / 2) - SCREEN_HEIGHT / 2;
+    camera.x = (player.getPosX() + BODY_WIDTH / 2) - SCREEN_WIDTH / 2;
+    camera.y = (player.getPosY() + BODY_HEIGHT / 2) - SCREEN_HEIGHT / 2;
     camera.h = SCREEN_HEIGHT;
     camera.w = SCREEN_WIDTH;
 
@@ -57,21 +57,21 @@ void MainMap::handleEvent(SDL_Event &event) {
 
 void MainMap::render() {
 
-    camera.x = (player.getPosX() + PLAYER_WIDTH / 2) - SCREEN_WIDTH / 2;
-    camera.y = (player.getPosY() + PLAYER_HEIGHT / 2) - SCREEN_HEIGHT / 2;
+    camera.x = (player.getPosX() + BODY_WIDTH / 2) - SCREEN_WIDTH / 2;
+    camera.y = (player.getPosY() + BODY_HEIGHT / 2) - SCREEN_HEIGHT / 2;
 
     if (camera.x < 0) {
             camera.x = 0;
     }
     if (camera.y < 0) {
         camera.y = 0;
-    }/*
+    }
     if (camera.x > LEVEL_WIDTH - camera.w) {
         camera.x = LEVEL_WIDTH - camera.w;
     }
     if (camera.y > LEVEL_HEIGHT - camera.h) {
         camera.y = LEVEL_HEIGHT - camera.h;
-    }*/
+    }
 
     int x = 0 - camera.x;
     int y = 0 - camera.y;

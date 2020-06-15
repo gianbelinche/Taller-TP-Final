@@ -1,27 +1,44 @@
 #include "Player.h"
 
 Player::Player(SDL_Renderer *aRenderer) : speed(SPEED), posX(4640), posY(1408),
-                                          frameX(0), frameY(0),
-                                          plImage(aRenderer, 0, 0, 0) {
-    this->plImage.loadFromFile(PLAYER_PATH);
+                                          bodyFrameX(0), bodyFrameY(0),
+                                          bodyImage(aRenderer, 0, 0, 0),
+                                          headImage(aRenderer, 0, 0, 0) { /*cambiar 0,0,0 por BLACK, BLACK, BLACK O ALGO ASI*/
+    this->bodyImage.loadFromFile(PLAYER_BODY_PATH);
+    this->headImage.loadFromFile(PLAYER_HEAD_PATH);
 
-    for (int i = 0; i < WALKING_ANIMATION_FRAMES; i++) {
-        this->spriteClips[i].x = i * PLAYER_WIDTH;
-        this->spriteClips[i].y = 0;
-        this->spriteClips[i].w = PLAYER_WIDTH;
-        this->spriteClips[i].h = PLAYER_HEIGHT;
+    for (int i = 0; i < BODY_ANIMATION_FRAMES; i++) {
+        this->bodyClips[i].x = i * BODY_WIDTH;
+        this->bodyClips[i].y = 0;
+        this->bodyClips[i].w = BODY_WIDTH;
+        this->bodyClips[i].h = BODY_HEIGHT;
+    }
+
+    for (int i = 0; i < HEAD_ANIMATION_FRAMES; i++) {
+        this->headClips[i].x = i * HEAD_WIDTH;
+        this->headClips[i].y = 0;
+        this->headClips[i].w = HEAD_WIDTH;
+        this->headClips[i].h = HEAD_HEIGHT;
     }
 }
 
 Player::Player(Player&& other) : speed(other.speed), posX(other.posX),
-                                 posY(other.posY), frameX(other.frameX),
-                                 frameY(other.frameY),
-                                 plImage(std::move(other.plImage)) {
-    for (int i = 0; i < WALKING_ANIMATION_FRAMES; i++) {
-        this->spriteClips[i].x = other.spriteClips[i].x;
-        this->spriteClips[i].y = other.spriteClips[i].y;
-        this->spriteClips[i].w = other.spriteClips[i].w;
-        this->spriteClips[i].h = other.spriteClips[i].h;
+                                 posY(other.posY), bodyFrameX(other.bodyFrameX),
+                                 bodyFrameY(other.bodyFrameY),
+                                 bodyImage(std::move(other.bodyImage)),
+                                 headImage(std::move(other.headImage)) {
+    for (int i = 0; i < BODY_ANIMATION_FRAMES; i++) {
+        this->bodyClips[i].x = other.bodyClips[i].x;
+        this->bodyClips[i].y = other.bodyClips[i].y;
+        this->bodyClips[i].w = other.bodyClips[i].w;
+        this->bodyClips[i].h = other.bodyClips[i].h;
+    }
+
+    for (int i = 0; i < HEAD_ANIMATION_FRAMES; i++) {
+        this->headClips[i].x = other.headClips[i].x;
+        this->headClips[i].y = other.headClips[i].y;
+        this->headClips[i].w = other.headClips[i].w;
+        this->headClips[i].h = other.headClips[i].h;
     }
 }
 
@@ -33,57 +50,68 @@ Player& Player::operator=(Player&& other) {
     this->speed = other.speed;
     this->posX = other.posX;
     this->posY = other.posY;
-    this->frameX = other.frameX;
-    this->frameY = other.frameY;
-    this->plImage = std::move(other.plImage);
+    this->bodyFrameX = other.bodyFrameX;
+    this->bodyFrameY = other.bodyFrameY;
+    this->headImage = std::move(other.headImage);
+    this->bodyImage = std::move(other.bodyImage);
 
-    for (int i = 0; i < WALKING_ANIMATION_FRAMES; i++) {
-        this->spriteClips[i].x = other.spriteClips[i].x;
-        this->spriteClips[i].y = other.spriteClips[i].y;
-        this->spriteClips[i].w = other.spriteClips[i].w;
-        this->spriteClips[i].h = other.spriteClips[i].h;
+    for (int i = 0; i < BODY_ANIMATION_FRAMES; i++) {
+        this->bodyClips[i].x = other.bodyClips[i].x;
+        this->bodyClips[i].y = other.bodyClips[i].y;
+        this->bodyClips[i].w = other.bodyClips[i].w;
+        this->bodyClips[i].h = other.bodyClips[i].h;
+    }
+
+    for (int i = 0; i < HEAD_ANIMATION_FRAMES; i++) {
+        this->headClips[i].x = other.headClips[i].x;
+        this->headClips[i].y = other.headClips[i].y;
+        this->headClips[i].w = other.headClips[i].w;
+        this->headClips[i].h = other.headClips[i].h;
     }
 }
 
 Player::~Player() {}
-#include <iostream>
 
 void Player::move(SDL_Event& event) {
     if (event.type == SDL_KEYDOWN) {
         switch (event.key.keysym.sym) {
             case SDLK_w:
                 this->posY -= this->speed;
-                this->frameX++;
-                if (this->frameX >= WALKING_ANIMATION_FRAMES) frameX = 0;
-                this->frameY = PLAYER_HEIGHT;
-                this->spriteClips[frameX].y = this->frameY;
+                this->bodyFrameX++;
+                if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
+                this->bodyFrameY = BODY_HEIGHT;
+                this->bodyClips[bodyFrameX].y = this->bodyFrameY;
+                this->headFrameX = 3;
                 // chequear que no se vaya del mapa
                 break;
 
             case SDLK_a:
                 this->posX -= this->speed;
-                this->frameX++;
-                if (this->frameX >= WALKING_ANIMATION_FRAMES) frameX = 0;
-                this->frameY = PLAYER_HEIGHT * 2;
-                this->spriteClips[frameX].y = this->frameY;
+                this->bodyFrameX++;
+                if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
+                this->bodyFrameY = BODY_HEIGHT * 2;
+                this->bodyClips[bodyFrameX].y = this->bodyFrameY;
+                this->headFrameX = 2;
                 // chequear que no se vaya del mapa
                 break;
 
             case SDLK_s:
                 this->posY += this->speed;
-                this->frameX++;
-                if (this->frameX >= WALKING_ANIMATION_FRAMES) frameX = 0;
-                this->frameY = 0;
-                this->spriteClips[frameX].y = this->frameY;
+                this->bodyFrameX++;
+                if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
+                this->bodyFrameY = 0;
+                this->bodyClips[bodyFrameX].y = this->bodyFrameY;
+                this->headFrameX = 0;
                 // chequear que no se vaya del mapa
                 break;
 
             case SDLK_d:
                 this->posX += this->speed;
-                this->frameX++;
-                if (this->frameX >= WALKING_ANIMATION_FRAMES) frameX = 0;
-                this->frameY = PLAYER_HEIGHT * 3;
-                this->spriteClips[frameX].y = this->frameY;
+                this->bodyFrameX++;
+                if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
+                this->bodyFrameY = BODY_HEIGHT * 3;
+                this->bodyClips[bodyFrameX].y = this->bodyFrameY;
+                this->headFrameX = 1;
                 // chequear que no se vaya del mapa
                 break;
             
@@ -96,8 +124,8 @@ void Player::move(SDL_Event& event) {
             case SDLK_a:
             case SDLK_s:
             case SDLK_d:
-                this->frameX = 0;
-                spriteClips[frameX].y = this->frameY;
+                this->bodyFrameX = 0;
+                bodyClips[bodyFrameX].y = this->bodyFrameY;
                 break;
             
             default:
@@ -107,9 +135,12 @@ void Player::move(SDL_Event& event) {
 }
 
 void Player::render(int camX, int camY) {
-    SDL_Rect* currentClip = &(this->spriteClips[frameX]);
-    SDL_Rect renderQuad = {this->posX - camX, this->posY - camY, PLAYER_WIDTH, PLAYER_HEIGHT}; // chequear
-    this->plImage.render(this->posX - camX, this->posY - camY, currentClip, &renderQuad); //chequear
+    SDL_Rect* currentBodyClip = &(this->bodyClips[bodyFrameX]);
+    SDL_Rect* currentHeadClip = &(this->headClips[headFrameX]);
+    SDL_Rect bodyQuad = {this->posX - camX, this->posY - camY, BODY_WIDTH, BODY_HEIGHT}; // chequear
+    SDL_Rect headQuad = {this->posX - camX + HEAD_WIDTH / 4, this->posY - camY - HEAD_HEIGHT / 2 + 1, HEAD_WIDTH, HEAD_HEIGHT}; // chequear
+    this->bodyImage.render(bodyQuad.x, bodyQuad.y, currentBodyClip, &bodyQuad); //chequear
+    this->headImage.render(headQuad.x, headQuad.y, currentHeadClip, &headQuad); //chequear
 }
 
 int Player::getPosX() {

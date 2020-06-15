@@ -8,24 +8,31 @@
 #define SPEED 6
 
 /* RUTA A LA IMAGEN DEL JUGADOR */
-#define PLAYER_PATH "13.png"
+#define PLAYER_BODY_PATH "img/cuerpoelfo.png"
+#define PLAYER_HEAD_PATH "img/cabezaelfo.png"
 
 /* MEDIDAS DEL JUGADOR */
-#define PLAYER_WIDTH 25
-#define PLAYER_HEIGHT 47
+#define BODY_WIDTH 25
+#define BODY_HEIGHT 45
+#define HEAD_WIDTH 17
+#define HEAD_HEIGHT 17
 
 /* CANTIDAD DE CUADROS POR ANIMACIÓN */
-#define WALKING_ANIMATION_FRAMES 5
+#define BODY_ANIMATION_FRAMES 5
+#define HEAD_ANIMATION_FRAMES 4
 
 class Player {
     private:
         int speed;
         int posX;
         int posY;
-        int frameX;
-        int frameY;
-        FilteredImage plImage;
-        SDL_Rect spriteClips[WALKING_ANIMATION_FRAMES];
+        int bodyFrameX;
+        int bodyFrameY;
+        int headFrameX;
+        FilteredImage bodyImage;
+        FilteredImage headImage;
+        SDL_Rect bodyClips[BODY_ANIMATION_FRAMES];
+        SDL_Rect headClips[HEAD_ANIMATION_FRAMES];
 
     public:
         Player(SDL_Renderer *aRenderer);

@@ -23,8 +23,8 @@
 #endif
 
 /* TAMAÑO DEL NIVEL */
-#define LEVEL_WIDTH 1280
-#define LEVEL_HEIGHT 960
+//#define LEVEL_WIDTH 1280
+//#define LEVEL_HEIGHT 960
 
 /* NOMBRE DE LA PANTALLA */
 #define WINDOW_NAME "Main"
