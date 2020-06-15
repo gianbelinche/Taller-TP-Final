@@ -3,7 +3,7 @@
 
 class Event
 {
-private:
+protected:
   int originUserId;
 public:
   Event(int id);
