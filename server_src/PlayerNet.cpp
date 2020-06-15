@@ -1,12 +1,15 @@
 
 
 #include "PlayerNet.h"
+#include "PlayerState.h"
 
 PlayerNet::PlayerNet(int id, GameState &currState, int maxHP, int maxMana,
-                     int currExp, int currGold) :
+                     int velocity, int currExp, int currGold) :
                      id(id), world(currState), maxHp(maxHP), maxMana(maxMana),
-                     exp(currExp), gold(currGold) {}
+                     velocity(velocity), exp(currExp), gold(currGold) {}
 
-PlayerNet::~PlayerNet()
-{
+PlayerNet::~PlayerNet() {}
+
+void PlayerNet::move(int x, int y) {
+  state->move(*this, x, y);
 }
