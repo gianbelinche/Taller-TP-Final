@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "Entity.h"
+#include "GameState.h"
 // #include "UserMoved.h"
 #include "PlayerTestNet.h"
 #include "ProtectedStrQueue.h"
@@ -14,12 +15,11 @@
 
 class Game : public Thread {
 private:
-  // Lista de entidades(NPCs, bichos)
+  GameState &world;
   std::vector<Entity*> entities;
-  // Lista de jugadores o map
   std::unordered_map<int, PlayerTestNet> onlinePlayers;
   ProtectedStrQueue incomingEvents;
-  // ServerEventHandler handler;
+  ServerEventHandler handler;
   std::atomic<bool> keep_running;
 public:
   Game();
