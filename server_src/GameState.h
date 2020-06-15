@@ -7,6 +7,8 @@
 #include "Entity.h"
 #include "PlayerNet.h"
 
+#define TILE_SIZE 32
+
 class GameState
 {
 private:
@@ -14,8 +16,15 @@ private:
   std::unordered_map<int, PlayerNet*> players;
   std::unordered_map<int, Entity*> monsters; 
 public:
-  GameState(/* args */);
+  GameState();
+
   ~GameState();
+
+  PlayerNet* getPlayer(int id);
+
+  bool isValidPosition(int x, int y);
+
+  void playerMoved(int id);
 };
 
 #endif // GAMESTATE_H
