@@ -6,7 +6,7 @@ protected:
   int x;
   int y;
 public:
-  Entity();
+  Entity(int x, int y);
 
   ~Entity();
 

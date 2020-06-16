@@ -1,12 +1,10 @@
-#include <iostream>
+
 
 #include "Entity.h"
 
-Entity::Entity() {
+Entity::Entity(int x, int y) : x(x), y(y) {
 }
 
-Entity::~Entity() {
-}
+Entity::~Entity() {}
 
-void Entity::update() {
-}
+void Entity::update() {}
