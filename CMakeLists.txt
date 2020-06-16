@@ -47,6 +47,8 @@ add_executable (testgian
   GraphicInventory.cpp
   Test_gian.cpp 
   SDLError.cpp
+  ExpBar.cpp
+  MiniChat.cpp
 )
 
 
