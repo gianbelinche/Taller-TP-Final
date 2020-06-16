@@ -3,12 +3,16 @@
 
 class GameState;
 
+#include "Class.h"
+#include "Race.h"
 #include "PlayerState.h"
 
 class PlayerNet {
 private:
   int id; // Valor numerico que identifica al jugador en el cliente y el server
   PlayerState* state;
+  Class playerClass;
+  Race playerRace;
   int hp;
   int mana;
   int maxHp;
