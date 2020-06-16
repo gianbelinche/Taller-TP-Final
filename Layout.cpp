@@ -80,6 +80,14 @@ void Layout::removeCharacter(){
     chat.deleteCharacter();
 }
 
+void Layout::addMessage(std::string message){
+    chat.addMessage(message);
+}
+
+void Layout::sendMessage(){
+    chat.sendMessage();
+}
+
 void Layout::render(int screen_width,int screen_heigth){
     SDL_Rect clip = {0,0,screen_width,screen_heigth};
     SDL_Rect rq = {0,0,screen_width / 3,screen_heigth};

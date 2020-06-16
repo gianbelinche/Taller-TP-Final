@@ -32,6 +32,8 @@ public:
     void selectItem(std::string item);
     void sendCharacter(std::string c);
     void removeCharacter();
+    void addMessage(std::string message);
+    void sendMessage();
     void render(int screen_width,int screen_height);
     ~Layout();
 

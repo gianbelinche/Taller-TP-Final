@@ -111,6 +111,13 @@ void TestGian::run() {
     int items = 0;
     int removes = 0;
     int cant_items = 8;
+    layout.addMessage("mensaje de largo de mas de una linea si senor");
+    layout.addMessage("msj de una linea");
+    layout.addMessage("msj de una linea");
+    layout.addMessage("mensaje de largo de mas de una linea si senor");
+    layout.addMessage("msj de una linea");
+    layout.addMessage("mensaje de largo de mas de una linea si senor");
+
 
     while (!quit) {
         SDL_StartTextInput();
@@ -148,6 +155,9 @@ void TestGian::run() {
 					break;
                     case SDLK_BACKSPACE:
                     layout.removeCharacter();
+                    break;
+                    case SDLK_RETURN:
+                    layout.sendMessage();
                     break;
 				}
 			}else if(eventHandler.type == SDL_TEXTINPUT){
