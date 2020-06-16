@@ -117,49 +117,59 @@ void TestGian::run() {
     layout.addMessage("mensaje de largo de mas de una linea si senor");
     layout.addMessage("msj de una linea");
     layout.addMessage("mensaje de largo de mas de una linea si senor");
-
+    
+    bool writing = false;
+    SDL_StopTextInput();
 
     while (!quit) {
-        SDL_StartTextInput();
+
         while (SDL_PollEvent(&eventHandler) != 0) {
             if (eventHandler.type == SDL_QUIT) {
                 quit = true;
             }else if( eventHandler.type == SDL_KEYDOWN ){
-				switch( eventHandler.key.keysym.sym ){
-					case SDLK_1:
-					sound_player.play(1);
-					break;
-					case SDLK_2:
-					sound_player.play(2);
-					break;
-					case SDLK_3:
-					sound_player.play(3);
-					break;
-					case SDLK_4:
-					sound_player.play(4);
-					break;
-					case SDLK_6:
-					music_player.play(1);
-					break;
-					case SDLK_7:
-					music_player.play(2);
-					break;
-					case SDLK_8:
-					music_player.play(3);
-					break;
-					case SDLK_9:
-					music_player.play(4);
-					break;
-					case SDLK_0:
-					music_player.stop();
-					break;
-                    case SDLK_BACKSPACE:
+                if (eventHandler.key.keysym.sym == SDLK_RETURN){
+                    if (writing){
+                        layout.sendMessage();
+                        SDL_StopTextInput();
+                    } else {
+                        SDL_StartTextInput();
+                    }
+                    writing = !writing;
+                } else if(eventHandler.key.keysym.sym == SDLK_BACKSPACE){
                     layout.removeCharacter();
-                    break;
-                    case SDLK_RETURN:
-                    layout.sendMessage();
-                    break;
-				}
+                } else if(!writing){
+                    switch( eventHandler.key.keysym.sym ){
+ 
+                        break;
+                        case SDLK_1:
+                        sound_player.play(1);
+                        break;
+                        case SDLK_2:
+                        sound_player.play(2);
+                        break;
+                        case SDLK_3:
+                        sound_player.play(3);
+                        break;
+                        case SDLK_4:
+                        sound_player.play(4);
+                        break;
+                        case SDLK_6:
+                        music_player.play(1);
+                        break;
+                        case SDLK_7:
+                        music_player.play(2);
+                        break;
+                        case SDLK_8:
+                        music_player.play(3);
+                        break;
+                        case SDLK_9:
+                        music_player.play(4);
+                        break;
+                        case SDLK_0:
+                        music_player.stop();
+                        break;   
+                    }
+                }	
 			}else if(eventHandler.type == SDL_TEXTINPUT){
                 layout.sendCharacter(eventHandler.text.text);
             }
@@ -201,6 +211,5 @@ void TestGian::run() {
         }
 
         SDL_RenderPresent(mainRenderer);
-        SDL_StopTextInput();
     }
 }
