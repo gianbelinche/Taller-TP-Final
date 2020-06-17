@@ -1,6 +1,11 @@
 #include "ExpBar.h"
 #include <iostream>
 
+#define BAR_X (screen_w * 3 / 5)
+#define BAR_Y (screen_h * 74 / 200)
+#define EMPTY_BAR_W (screen_w / 15)
+#define EMPTY_BAR_H (screen_h * 127 / 200)
+
 ExpBar::ExpBar(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer),
 emptyBar(NULL), expBar(NULL), exp(0), max_exp(100) {
     Image emptyBar(mainRenderer);
@@ -18,11 +23,11 @@ void ExpBar::changeExp(int exp, int max_exp){
 
 void ExpBar::render(int screen_w,int screen_h){
     SDL_Rect clip = {0,0,screen_w,screen_h};
-    SDL_Rect rQuad = {0,0,screen_w / 15,screen_h * 127 / 200}; // ver este tamaño
-    emptyBar.render(screen_w * 3 / 5,screen_h * 74 / 200,&clip,&rQuad);
+    SDL_Rect rQuad = {0,0,EMPTY_BAR_W,EMPTY_BAR_H};
+    emptyBar.render(BAR_X,BAR_Y,&clip,&rQuad);
     float progress = ((float)exp / (float)max_exp);
     if (progress < 0.05 && progress != 0)
         progress = 0.05;
     rQuad.h = rQuad.h * progress;
-    expBar.render(screen_w * 3 / 5,screen_h * 74 / 200,&clip,&rQuad);
+    expBar.render(BAR_X,BAR_Y,&clip,&rQuad);
 }
