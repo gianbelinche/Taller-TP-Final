@@ -99,7 +99,7 @@ void Layout::render(int screen_width,int screen_heigth){
     life.render(screen_width - lay_w * 0.95,screen_heigth / 24,&clip,&rq); // l_h / 22
     mana.render(screen_width - lay_w * 0.95/2,screen_heigth / 24,&clip,&rq);
     level.render(screen_width - lay_w * 0.95/2,0,&clip,&rq);
-    inventory.render(screen_width,screen_heigth,lay_w,lay_h);
+    inventory.render(screen_width,screen_heigth);
     expBar.render(screen_width,screen_heigth);
     chat.render(screen_width,screen_heigth,gFont);
 }

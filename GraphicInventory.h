@@ -21,7 +21,7 @@ public:
     GraphicInventory(SDL_Renderer* mainRenderer);
     void addImage(std::string key);
     void removeImage(std::string key);
-    void render(int screen_width,int screen_heigth,int layout_w, int layout_h);
+    void render(int screen_width,int screen_heigth);
     void select(std::string key);
 
 };
