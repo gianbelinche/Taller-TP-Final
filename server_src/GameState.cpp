@@ -1,12 +1,11 @@
-
+#include <cmath>
+#include <limits>
 
 #include "GameState.h"
 
-GameState::GameState() {
-}
+GameState::GameState() {}
 
-GameState::~GameState() {
-}
+GameState::~GameState() {}
 
 PlayerNet* GameState::getPlayer(int id) {
   if (players.find(id) != players.end()) {
@@ -29,4 +28,28 @@ bool GameState::isValidPosition(int x, int y) {
 void GameState::playerMoved(int id) {
   // Aca se llama a algo que encole el mensaje del jugador en la cola de
   // mensajes salientes
+}
+
+PlayerNet* GameState::getNearestPlayer(Entity &ent) {
+  PlayerNet* nearest = nullptr;
+  float smallestDistance = std::numeric_limits<float>::infinity();
+  float curr;
+  for (auto &it: players) {
+    if ((curr = entitiesDistance(ent, *(it.second))) < smallestDistance) {
+      nearest = it.second;
+      smallestDistance = curr;
+    }
+  }
+  return nearest;
+}
+
+float entitiesDistance(Entity &ent1, Entity &ent2) {
+  int dist_x = abs(ent1.getX() - ent2.getX());
+  int dist_y = abs(ent1.getY() - ent2.getY());
+  return sqrt(pow(dist_x, 2) + pow(dist_y, 2));
+}
+
+void GameState::monsterMoved(int id) {
+  // Busca el bichito en el map de bichos(o no) y manda el mensaje
+  // Ver si no conviene mergear con el playerMoved  
 }

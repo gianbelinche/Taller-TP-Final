@@ -24,7 +24,13 @@ public:
 
   bool isValidPosition(int x, int y);
 
+  PlayerNet* getNearestPlayer(Entity &ent);
+
+  float entitiesDistance(Entity &ent1, Entity &ent2);
+
   void playerMoved(int id);
+
+  void monsterMoved(int id);
 };
 
 #endif // GAMESTATE_H
