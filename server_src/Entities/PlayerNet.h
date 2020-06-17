@@ -4,12 +4,12 @@
 class GameState;
 
 #include "Class.h"
+#include "Entity.h"
 #include "Race.h"
 #include "PlayerState.h"
 
-class PlayerNet {
+class PlayerNet : public Entity{
 private:
-  int id; // Valor numerico que identifica al jugador en el cliente y el server
   PlayerState* state;
   Class playerClass;
   Race playerRace;
@@ -17,17 +17,14 @@ private:
   int mana;
   int maxHp;
   int maxMana;
-  int x;
-  int y;
   int velocity;
   int level;
   int exp;
   int gold;
   GameState &world;
-  int currFrame;
 public:
-  PlayerNet(int id, GameState &currState, int maxHP, int maxMana, int velocity,
-            int currExp, int currGold);
+  PlayerNet(int x, int y, int id, GameState &currState, int maxHP, int maxMana,
+            int velocity, int currExp, int currGold);
 
   ~PlayerNet();
 

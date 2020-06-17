@@ -5,11 +5,9 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Entity.h"
+#include "Entities/Entity.h"
 #include "GameState.h"
-// #include "UserMoved.h"
-#include "PlayerTestNet.h"
-#include "ProtectedStrQueue.h"
+#include "Communication/ProtectedStrQueue.h"
 #include "ServerEventHandler.h"
 #include "Thread.h"
 
@@ -17,7 +15,7 @@ class Game : public Thread {
 private:
   GameState &world;
   std::vector<Entity*> entities;
-  std::unordered_map<int, PlayerTestNet> onlinePlayers;
+  std::unordered_map<int, PlayerNet> onlinePlayers;
   ProtectedStrQueue incomingEvents;
   ServerEventHandler handler;
   std::atomic<bool> keep_running;

@@ -1,0 +1,22 @@
+#ifndef ENTITY_H
+#define ENTITY_H
+
+class Entity {
+protected:
+  int x;
+  int y;
+  int currentFrame;
+  int id; // Valor numerico que identifica a la entida en el cliente y el server
+public:
+  Entity(int x, int y, int id);
+
+  ~Entity();
+
+  int getX();
+
+  int getY();
+
+  virtual void update();
+};
+
+#endif // ENTITY_H
