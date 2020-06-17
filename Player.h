@@ -1,8 +1,10 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
+#include <vector>
 #include "SDL2/SDL_events.h"
 #include "FilteredImage.h"
+#include "SpriteClipCreator.h"
 
 /* VELOCIDAD DEL JUGADOR */
 #define SPEED 6
@@ -19,6 +21,7 @@
 
 /* CANTIDAD DE CUADROS POR ANIMACIÓN */
 #define BODY_ANIMATION_FRAMES 5
+#define BODY_ANIMATION_STATES 4
 #define HEAD_ANIMATION_FRAMES 4
 
 class Player {
@@ -31,8 +34,8 @@ class Player {
         int headFrameX;
         FilteredImage bodyImage;
         FilteredImage headImage;
-        SDL_Rect bodyClips[BODY_ANIMATION_FRAMES];
-        SDL_Rect headClips[HEAD_ANIMATION_FRAMES];
+        std::vector <SDL_Rect> bodyClips;
+        std::vector <SDL_Rect> headClips;
 
     public:
         Player(SDL_Renderer *aRenderer);
@@ -43,7 +46,7 @@ class Player {
         Player& operator=(Player&& other);
 
         void move(SDL_Event& event);
-        void render(int camX, int camY);
+        void render(SDL_Rect &camera);
 
         int getPosX();
         int getPosY();

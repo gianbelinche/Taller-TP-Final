@@ -6,21 +6,14 @@
 #include <map>
 
 #include "MainMap.h"
+#include "EntityManager.h"
 
 /* RUTA AL ARCHIVO MAP.JSON */
-#define MAP_JSON_PATH "map.json" //CAMBIAR
-
-/* CAMBIAR COMENTARIOS A ESPAÑOL O SACAR */
-
-/* CAMBIAR CONSTANTES DE LUGAR */
+#define MAP_JSON_PATH "map.json"
 
 /* TAMAÑO DE LA PANTALLA */
-#ifndef SCREEN_WIDTH
-#define SCREEN_WIDTH 640
-#endif
-#ifndef SCREEN_HEIGHT
-#define SCREEN_HEIGHT 420
-#endif
+//#define SCREEN_WIDTH 640
+//#define SCREEN_HEIGHT 420
 
 /* TAMAÑO DEL NIVEL */
 //#define LEVEL_WIDTH 1280
@@ -29,13 +22,10 @@
 /* NOMBRE DE LA PANTALLA */
 #define WINDOW_NAME "Main"
 
-/* RUTA DEL BACKGROUND */
-#define BACKGROUND_PATH "background.png"
-
 /* FRECUENCIA DE SONIDO */
 #define FRECUENCY 22050
 
-MainWindow::MainWindow() : BGImage(NULL) {
+MainWindow::MainWindow() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         throw SDLError("Error: SDL no pudo inicializarse. SDL_Error: %s", 
                        SDL_GetError());
@@ -78,9 +68,6 @@ MainWindow::MainWindow() : BGImage(NULL) {
     if(Mix_OpenAudio(FRECUENCY, MIX_DEFAULT_FORMAT, 2, 2048) < 0 ){ //No me acuerdo que son los otros dos numeros, despues me fijo y pongo defines
 		throw SDLError("No se pudo inicializar el sonido: %S\n", Mix_GetError());
 	}
-
-    //this->BGImage.setRenderer(this->mainRenderer);
-    //this->BGImage.loadFromFile(BACKGROUND_PATH);
 }
 
 MainWindow::~MainWindow() {
@@ -136,15 +123,25 @@ MainMap prueba(SDL_Renderer *mainRenderer) {
         //throw JsonError("Error: no se encontró data de capa 1. JsonError: %s", jsonerror);
     }
 
+    const Json::Value& layer2 = layers[2]["data"];     // Array de enteros de capa 2
+    const Json::Value& width2 = layers[2]["width"];    // Ancho de la capa 2
+    const Json::Value& height2 = layers[2]["height"];  // Alto de la capa 2
+
+    if (!(layer2 && height2 && width2)) {
+        /* Buscar cómo obtener el error que genera jsoncpp */
+        //throw JsonError("Error: no se encontró data de capa 1. JsonError: %s", jsonerror);
+    }
+
     /*
      * Creo las matrices que tienen la data de las capas.
      * Estas matrices se deben guardar para enviar a los clientes
      * Además, se deben guardar los valores:
-     * height0, width0, height1 y width1
+     * height0, width0, height1 y width1 (no es necesario creo)
     */
 
     std::vector<std::vector<uint32_t>> matrixLayer0;
     std::vector<std::vector<uint32_t>> matrixLayer1;
+    std::vector<std::vector<uint32_t>> matrixLayer2;
     uint32_t cont = 0;
 
     /* Matriz de capa 0 */
@@ -168,6 +165,18 @@ MainMap prueba(SDL_Renderer *mainRenderer) {
             cont++;
         }
         matrixLayer1.emplace_back(row);
+    }
+
+    /* Matriz de capa de bloqueo */
+
+    cont = 0;
+    for (Json::Value::UInt i = 0; i < height2.asUInt(); i++) {
+        std::vector<uint32_t> row;
+        for (Json::Value::UInt j = 0; j < width2.asUInt(); j++) {
+            row.emplace_back(layer2[cont].asUInt());
+            cont++;
+        }
+        matrixLayer2.emplace_back(row);
     }
 
     /* 
@@ -200,25 +209,66 @@ MainMap prueba(SDL_Renderer *mainRenderer) {
     return std::move(mainMap);
 }
 
+#include <iostream>
+
 void MainWindow::run() {
     MainMap mainMap = std::move(prueba(mainRenderer));
+    Player player(mainRenderer);
+    EntityManager entMan(mainRenderer, player);
+
+    camera.x = (player.getPosX() + BODY_WIDTH / 2) - SCREEN_WIDTH / 2;
+    camera.y = (player.getPosY() + BODY_HEIGHT / 2) - SCREEN_HEIGHT / 2;
+    camera.h = SCREEN_HEIGHT;
+    camera.w = SCREEN_WIDTH;
+
+    if (camera.x < 0) {
+            camera.x = 0;
+    }
+    if (camera.y < 0) {
+        camera.y = 0;
+    }
 
     bool quit = false;
+    int contclicks = 0;
 
     while (!quit) {
         while (SDL_PollEvent(&eventHandler) != 0) {
             if (eventHandler.type == SDL_QUIT) {
                 quit = true;
+            } /*Prueba de clickeo*/
+            if (eventHandler.type == SDL_MOUSEBUTTONDOWN) {
+                entMan.addEntity(SPYDER, 1010, camera.x + 100, camera.y + 100, UP);
+                entMan.addEntity(SPYDER, 1010, camera.x + 300, camera.y + 300, DOWN);
+                contclicks += 2;
             }
 
-            mainMap.handleEvent(eventHandler); //temporal, es solo para probar el movimiento del pj
+            player.move(eventHandler); //temporal, es solo para probar el movimiento del pj
+        }
+
+        camera.x = (player.getPosX() + BODY_WIDTH / 2) - SCREEN_WIDTH / 2;
+        camera.y = (player.getPosY() + BODY_HEIGHT / 2) - SCREEN_HEIGHT / 2;
+
+        if (camera.x < 0) {
+                camera.x = 0;
+        }
+        if (camera.y < 0) {
+            camera.y = 0;
+        }
+        if (camera.x > LEVEL_WIDTH - camera.w) {
+            camera.x = LEVEL_WIDTH - camera.w;
+        }
+        if (camera.y > LEVEL_HEIGHT - camera.h) {
+            camera.y = LEVEL_HEIGHT - camera.h;
         }
 
         SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(mainRenderer);
 
-        mainMap.render();
+        mainMap.renderTerrain(camera);
+        entMan.renderEntities(camera);
+        mainMap.renderStructures(camera);
 
         SDL_RenderPresent(mainRenderer);
     }
+    std::cout << contclicks << '\n';
 }

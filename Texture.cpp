@@ -36,7 +36,6 @@ Texture& Texture::operator=(Texture&& other){
     return *this;
 }
 
-
 void Texture::free() {
     if(this->texture != NULL) {
 		SDL_DestroyTexture(this->texture);
@@ -64,8 +63,4 @@ int Texture::getWidth() {
 
 int Texture::getHeight() {
     return this->tHeight;
-}
-
-void Texture::setRenderer(SDL_Renderer *aRenderer) {
-    this->renderer = aRenderer;
 }

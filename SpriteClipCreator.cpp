@@ -8,7 +8,7 @@ SpriteClipCreator::SpriteClipCreator(int imgHeight, int imgWidth,
 
     for (int i = 0; i < files; i++) {
         for (int j = 0; j < columns; j++) {
-            spriteClip.emplace_back(SDL_Rect{j*tileHeight, i*tileWidth, 
+            spriteClip.emplace_back(SDL_Rect{j*tileWidth, i*tileHeight, 
                                              tileWidth, tileHeight});
         }
     }

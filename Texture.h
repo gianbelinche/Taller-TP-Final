@@ -28,10 +28,6 @@ class Texture {
           // Dimension de la imagen
           int tWidth;
           int tHeight;
-          // Funcion privada para poder setear Render en MainWindow
-          void setRenderer(SDL_Renderer *aRenderer);
-          friend class MainWindow; //AMIGOS DEL PADRE NO SON AMIGOS DEL HIJO, CAMBIAR O SACAR (pero funciona en mainwindow)
-          // SE PODRIA HACER UNA CLASE MAP O BACKGROUND PARA EL MAINWINDOW
         
      public:
           Texture(SDL_Renderer *aRenderer);

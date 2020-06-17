@@ -24,11 +24,9 @@
 
 class MainMap {
     private:
-        SDL_Rect camera;
         std::map<uint32_t, MapImage> textures;
         std::vector<std::vector<uint32_t>> texMap;
         std::vector<std::vector<uint32_t>> strMap;
-        Player player;
         
     public:
         MainMap(std::map<uint32_t, std::vector<std::string>> &tiles, 
@@ -40,8 +38,8 @@ class MainMap {
         MainMap(MainMap&& other);
         MainMap& operator=(MainMap&& other);
 
-        void handleEvent(SDL_Event &event);
-        void render();
+        void renderTerrain(SDL_Rect &camera);
+        void renderStructures(SDL_Rect &camera);
 };
 
 #endif
