@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include "Condition.h"
 #include "Entity.h"
 #include "PlayerNet.h"
 
@@ -27,7 +28,7 @@ public:
 
   bool isValidPosition(int x, int y);
 
-  PlayerNet* getNearestPlayer(Entity &ent);
+  PlayerNet* getNearestPlayer(Entity &ent, Condition &cond);
 
   float entitiesDistance(Entity &ent1, Entity &ent2);
 

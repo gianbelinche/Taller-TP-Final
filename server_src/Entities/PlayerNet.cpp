@@ -51,3 +51,7 @@ float PlayerNet::getMeditationFactor() {
 int PlayerNet::getCurrFrame() {
   return currentFrame;
 }
+
+bool PlayerNet::isAlive() {
+  return (hp == 0);
+}

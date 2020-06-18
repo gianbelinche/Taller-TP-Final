@@ -48,6 +48,8 @@ public:
   float getIntelligence();
 
   int getCurrFrame();
+
+  bool isAlive();
 };
 
 #endif // PLAYERNET_H

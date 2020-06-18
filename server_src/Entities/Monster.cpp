@@ -1,6 +1,8 @@
 #include <cmath>
 #include <random>
 
+#include "Condition.h"
+#include "IsAlive.h"
 #include "Monster.h"
 #include "MonsterType.h"
 #include "PlayerNet.h"
@@ -8,7 +10,6 @@
 #define MIN_DIST 150 // Esto debe ser configurable no se como
 #define ATK_DIST 20
 #define STEP 6
-
 
 Monster::Monster(MonsterType &type, int id, int x, int y, GameState &world) : 
                  Entity(x, y, id), hp(type.getHp()), kind(type), world(world) {}
@@ -18,7 +19,7 @@ Monster::~Monster() {}
 void Monster::update() {
   currentFrame++;
   if (currentFrame == 30) { // TODO: Hacer configurable el valor de alguna forma
-    PlayerNet* player = world.getNearestPlayer(*this);
+    PlayerNet* player = world.getNearestPlayer(*this, Condition::isAlive);
     int new_x = x;
     int new_y = y;
 
