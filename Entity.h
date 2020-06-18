@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "FilteredImage.h"
+#include "Camera.h"
 
 enum View {UP, DOWN, LEFT, RIGHT}; //chequear
 
@@ -39,10 +40,10 @@ class Entity {
         Entity& operator=(Entity&& other);
 
         void refreshPosition(MovementType move);
-        virtual void render(SDL_Rect &camera);
+        virtual void render(Camera &camera);
 
         bool isDead();
-        void kill();
+        void destroy();
 };
 
 #endif

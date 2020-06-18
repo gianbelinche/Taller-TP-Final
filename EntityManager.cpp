@@ -6,7 +6,7 @@ EntityManager::EntityManager(SDL_Renderer *aRenderer, Player &aPlayer) :
 
 EntityManager::~EntityManager() {}
 
-void EntityManager::addEntity(EntityType type, int anID, int aPosX, int aPosY, 
+void EntityManager::addNPC(NPCType type, int anID, int aPosX, int aPosY, 
                               View aView) {
     std::unique_lock<std::mutex> lk(mux);
     switch (type) {
@@ -44,12 +44,16 @@ void EntityManager::addEntity(EntityType type, int anID, int aPosX, int aPosY,
     }
 }
 
+void EntityManager::addDrop(ItemType type, int anID, int aPosX, int aPosY) {
+    entities.emplace_back(Item(renderer, anID, aPosX, aPosY, type));
+}
+
 void EntityManager::addPlayer() {
     std::unique_lock<std::mutex> lk(mux);
     /*COMPLETAR*/
 }
 
-void EntityManager::renderEntities(SDL_Rect &camera) {
+void EntityManager::renderEntities(Camera &camera) {
     std::unique_lock<std::mutex> lk(mux);
     for (auto& entity : entities) {
         entity.render(camera);

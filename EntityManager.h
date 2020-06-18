@@ -13,9 +13,11 @@
 #include "Merchant.h"
 #include "Banker.h"
 #include "Healer.h"
+#include "Camera.h"
+#include "Item.h"
 
 /* Entidades añadibles */
-enum EntityType {SPYDER, SKELETON, GOBLIN, ZOMBIE, BANKER, MERCHANT, HEALER}; //agregar los drops
+enum NPCType {SPYDER, SKELETON, GOBLIN, ZOMBIE, BANKER, MERCHANT, HEALER}; //agregar los drops
 
 class EntityManager {
     private:
@@ -33,11 +35,12 @@ class EntityManager {
         PASE EL COMANDO ENVIADO POR EL SERVIDOR
         Y DECODIFICARLO ADENTRO
         */
-        void addEntity(EntityType type, int anID, int aPosX, int aPosY,
+        void addNPC(NPCType type, int anID, int aPosX, int aPosY,
                        View aView);
+        void addDrop(ItemType type, int anID, int aPosX, int aPosY);
         void addPlayer();
 
-        void renderEntities(SDL_Rect &camera);
+        void renderEntities(Camera &camera);
 };
 
 #endif 

@@ -8,19 +8,7 @@
 
 #include "MapImage.h"
 #include "Player.h"
-
-/* TAMAÑO DE LA PANTALLA */
-#ifndef SCREEN_WIDTH
-#define SCREEN_WIDTH 1080
-#endif
-#ifndef SCREEN_HEIGHT
-#define SCREEN_HEIGHT 720
-#endif
-#define CHARACTER_POSITION_X 0
-#define CHARACTER_POSITION_Y 0
-
-#define LEVEL_WIDTH 9056
-#define LEVEL_HEIGHT 7392
+#include "Camera.h"
 
 class MainMap {
     private:
@@ -38,8 +26,8 @@ class MainMap {
         MainMap(MainMap&& other);
         MainMap& operator=(MainMap&& other);
 
-        void renderTerrain(SDL_Rect &camera);
-        void renderStructures(SDL_Rect &camera);
+        void renderTerrain(Camera &camera);
+        void renderStructures(Camera &camera);
 };
 
 #endif

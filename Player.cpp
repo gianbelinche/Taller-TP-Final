@@ -1,16 +1,61 @@
 #include "Player.h"
 
-Player::Player(SDL_Renderer *aRenderer) : speed(SPEED), posX(4640), posY(1408),
-                                          bodyFrameX(0), bodyFrameY(0),
-                                          bodyImage(aRenderer, 0, 0, 0),
+Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, int aPosX, int aPosY)
+                                        : bodyImage(aRenderer, 0, 0, 0),
                                           headImage(aRenderer, 0, 0, 0) { /*cambiar 0,0,0 por BLACK, BLACK, BLACK O ALGO ASI*/
-    this->bodyImage.loadFromFile(PLAYER_BODY_PATH);
-    this->headImage.loadFromFile(PLAYER_HEAD_PATH);
+    this->speed = PLAYER_SPEED;
+    this->posX = aPosX;
+    this->posY = aPosY;
+    this->bodyFrameX = 0;   //esto debería cambiar y que pasen por parametro cómo estaba mirando el personaje
+    this->bodyFrameY = 0;   //esto debería cambiar y que pasen por parametro cómo estaba mirando el personaje
+    this->headFrameX = 0;   //esto debería cambiar y que pasen por parametro cómo estaba mirando el personaje
+    this->dead = false;     //esto también debería cambiar, puede que el usuario se loguee y este como fantasma
+    
+    switch (aRace) {
+        case HUMAN:
+            this->bodyWidth = HUMAN_BODY_WIDTH;
+            this->bodyHeight = HUMAN_BODY_HEIGHT;
+            this->headWidth = HUMAN_HEAD_WIDTH;
+            this->headHeight = HUMAN_HEAD_HEIGHT;
+            this->bodyImage.loadFromFile(HUMAN_BODY_PATH);
+            this->headImage.loadFromFile(HUMAN_HEAD_PATH);
+            break;
+        
+        case ELF:
+            this->bodyWidth = ELF_BODY_WIDTH;
+            this->bodyHeight = ELF_BODY_HEIGHT;
+            this->headWidth = ELF_HEAD_WIDTH;
+            this->headHeight = ELF_HEAD_HEIGHT;
+            this->bodyImage.loadFromFile(ELF_BODY_PATH);
+            this->headImage.loadFromFile(ELF_HEAD_PATH);
+            break;
 
-    SpriteClipCreator(BODY_HEIGHT * BODY_ANIMATION_STATES, BODY_WIDTH * 
-                      BODY_ANIMATION_FRAMES, BODY_HEIGHT, BODY_WIDTH, bodyClips);
+        case DWARF:
+            this->bodyWidth = DWARF_BODY_WIDTH;
+            this->bodyHeight = DWARF_BODY_HEIGHT;
+            this->headWidth = DWARF_HEAD_WIDTH;
+            this->headHeight = DWARF_HEAD_HEIGHT;
+            this->bodyImage.loadFromFile(DWARF_BODY_PATH);
+            this->headImage.loadFromFile(DWARF_HEAD_PATH);
+            break;
 
-    SpriteClipCreator(HEAD_HEIGHT, HEAD_WIDTH * HEAD_ANIMATION_FRAMES, HEAD_HEIGHT, HEAD_WIDTH, headClips);
+        case GNOME:
+            this->bodyWidth = GNOME_BODY_WIDTH;
+            this->bodyHeight = GNOME_BODY_HEIGHT;
+            this->headWidth = GNOME_HEAD_WIDTH;
+            this->headHeight = GNOME_HEAD_HEIGHT;
+            this->bodyImage.loadFromFile(GNOME_BODY_PATH);
+            this->headImage.loadFromFile(GNOME_HEAD_PATH);
+            break;
+
+        default:
+            break;
+    }
+    
+    SpriteClipCreator(bodyHeight * BODY_ANIMATION_STATES, bodyWidth * 
+                      BODY_ANIMATION_FRAMES, bodyHeight, bodyWidth, bodyClips);
+
+    SpriteClipCreator(headHeight, headWidth * HEAD_ANIMATION_FRAMES, headHeight, headWidth, headClips);
 }
 
 Player::Player(Player&& other) : speed(other.speed), posX(other.posX),
@@ -97,11 +142,11 @@ void Player::move(SDL_Event& event) {
     }
 }
 
-void Player::render(SDL_Rect &camera) {
+void Player::render(Camera &camera) {
     SDL_Rect *currentBodyClip = &(this->bodyClips[bodyFrameX + bodyFrameY * BODY_ANIMATION_FRAMES]);
     SDL_Rect *currentHeadClip = &(this->headClips[headFrameX]);
-    SDL_Rect bodyQuad = {this->posX - camera.x, this->posY - camera.y, BODY_WIDTH, BODY_HEIGHT}; // chequear
-    SDL_Rect headQuad = {this->posX - camera.x + HEAD_WIDTH / 4, this->posY - camera.y - HEAD_HEIGHT / 2 + 1, HEAD_WIDTH, HEAD_HEIGHT}; // chequear
+    SDL_Rect bodyQuad = {this->posX - camera.getX(), this->posY - camera.getY(), bodyWidth, bodyHeight}; // chequear
+    SDL_Rect headQuad = {this->posX - camera.getX() + headWidth / 4, this->posY - camera.getY() - headHeight / 2 + 1, headWidth, headHeight}; // chequear
     this->bodyImage.render(bodyQuad.x, bodyQuad.y, currentBodyClip, &bodyQuad); //chequear
     this->headImage.render(headQuad.x, headQuad.y, currentHeadClip, &headQuad); //chequear
 }
@@ -112,4 +157,12 @@ int Player::getPosX() {
 
 int Player::getPosY() {
     return this->posY;
+}
+
+int Player::getHeight() {
+    return this->bodyHeight;
+}
+
+int Player::getWidth() {
+    return this->bodyWidth;
 }

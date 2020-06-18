@@ -7,13 +7,10 @@
 
 #include "MainMap.h"
 #include "EntityManager.h"
+#include "Camera.h"
 
 /* RUTA AL ARCHIVO MAP.JSON */
 #define MAP_JSON_PATH "map.json"
-
-/* TAMAÑO DE LA PANTALLA */
-//#define SCREEN_WIDTH 640
-//#define SCREEN_HEIGHT 420
 
 /* TAMAÑO DEL NIVEL */
 //#define LEVEL_WIDTH 1280
@@ -213,55 +210,27 @@ MainMap prueba(SDL_Renderer *mainRenderer) {
 
 void MainWindow::run() {
     MainMap mainMap = std::move(prueba(mainRenderer));
-    Player player(mainRenderer);
+    Player player(mainRenderer, ELF, 5664, 2496);
     EntityManager entMan(mainRenderer, player);
-
-    camera.x = (player.getPosX() + BODY_WIDTH / 2) - SCREEN_WIDTH / 2;
-    camera.y = (player.getPosY() + BODY_HEIGHT / 2) - SCREEN_HEIGHT / 2;
-    camera.h = SCREEN_HEIGHT;
-    camera.w = SCREEN_WIDTH;
-
-    if (camera.x < 0) {
-            camera.x = 0;
-    }
-    if (camera.y < 0) {
-        camera.y = 0;
-    }
+    Camera camera(player);
 
     bool quit = false;
-    int contclicks = 0;
 
     while (!quit) {
         while (SDL_PollEvent(&eventHandler) != 0) {
             if (eventHandler.type == SDL_QUIT) {
                 quit = true;
-            } /*Prueba de clickeo*/
-            if (eventHandler.type == SDL_MOUSEBUTTONDOWN) {
-                entMan.addEntity(SPYDER, 1010, camera.x + 100, camera.y + 100, UP);
-                entMan.addEntity(SPYDER, 1010, camera.x + 300, camera.y + 300, DOWN);
-                contclicks += 2;
             }
 
             player.move(eventHandler); //temporal, es solo para probar el movimiento del pj
+            entMan.addDrop(ESPADA, 1010, camera.getX(), camera.getY());
+            entMan.addDrop(BACULO_ENGARZADO, 1010, camera.getX() + 250, camera.getY() + 250);
+            entMan.addDrop(ARCO_COMPUESTO, 1010, camera.getX() + 150, camera.getY() + 150);
         }
 
-        camera.x = (player.getPosX() + BODY_WIDTH / 2) - SCREEN_WIDTH / 2;
-        camera.y = (player.getPosY() + BODY_HEIGHT / 2) - SCREEN_HEIGHT / 2;
+       camera.refresh();
 
-        if (camera.x < 0) {
-                camera.x = 0;
-        }
-        if (camera.y < 0) {
-            camera.y = 0;
-        }
-        if (camera.x > LEVEL_WIDTH - camera.w) {
-            camera.x = LEVEL_WIDTH - camera.w;
-        }
-        if (camera.y > LEVEL_HEIGHT - camera.h) {
-            camera.y = LEVEL_HEIGHT - camera.h;
-        }
-
-        SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        //SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF); //creo que no hace falta
         SDL_RenderClear(mainRenderer);
 
         mainMap.renderTerrain(camera);
@@ -270,5 +239,4 @@ void MainWindow::run() {
 
         SDL_RenderPresent(mainRenderer);
     }
-    std::cout << contclicks << '\n';
 }

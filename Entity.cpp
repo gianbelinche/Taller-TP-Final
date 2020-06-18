@@ -73,10 +73,13 @@ void Entity::refreshPosition(MovementType move) {
     }
 }
 
-void Entity::render(SDL_Rect &camera) {
-    quad.x = posX - camera.x;
-    quad.y = posY - camera.y;
-    SDL_Rect actClip = clips[view * horClips + frame];
+void Entity::render(Camera &camera) {
+    quad.x = posX - camera.getX();
+    quad.y = posY - camera.getY();
+
+    SDL_Rect actClip;
+    if (vertClips == 1) actClip = clips[frame];
+    else actClip = clips[view * horClips + frame];
 
     image.render(quad.x, quad.y, &actClip, &quad);
 }
@@ -85,6 +88,6 @@ bool Entity::isDead() {
     return dead;
 }
 
-void Entity::kill() {
+void Entity::destroy() {
     dead = true;
 }

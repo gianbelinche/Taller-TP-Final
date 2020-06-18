@@ -34,13 +34,13 @@ MainMap& MainMap::operator=(MainMap&& other) {
     return *this;
 }
 
-void MainMap::renderTerrain(SDL_Rect &camera) {
-    int x = 0 - camera.x;
-    int y = 0 - camera.y;
+void MainMap::renderTerrain(Camera &camera) {
+    int x = 0 - camera.getX();
+    int y = 0 - camera.getY();
 
     for (auto &row : this->texMap) {
         for (auto &index : row) {
-            if (!(x < -96 || x > (SCREEN_WIDTH + 96) || y < -96 || y > (SCREEN_HEIGHT + 96) || index == 0)) {
+            if (!(x < -96 || x > (camera.getWidth() + 96) || y < -96 || y > (camera.getHeight() + 96) || index == 0)) {
                 int key = index;
                 while (this->textures.find(key) == this->textures.end()) {
                     key--;
@@ -51,17 +51,17 @@ void MainMap::renderTerrain(SDL_Rect &camera) {
             x += 32;
         }
         y += 32;
-        x = 0 - camera.x;
+        x = 0 - camera.getX();
     }    
 }
 
-void MainMap::renderStructures(SDL_Rect &camera) {
-    int x = 0 - camera.x;
-    int y = 0 - camera.y;
+void MainMap::renderStructures(Camera &camera) {
+    int x = 0 - camera.getX();
+    int y = 0 - camera.getY();
 
     for (auto &row : this->strMap) {
         for (auto &index : row) {
-            if (!(x < -96 || x > (SCREEN_WIDTH + 96) || y < -96 || y > (SCREEN_HEIGHT + 96) || index == 0)) {
+            if (!(x < -96 || x > (camera.getWidth() + 96) || y < -96 || y > (camera.getHeight() + 96) || index == 0)) {
                 int key = index;
                 while (this->textures.find(key) == this->textures.end()) {
                     key--;
@@ -71,6 +71,6 @@ void MainMap::renderStructures(SDL_Rect &camera) {
             x += 32;
         }
         y += 32;
-        x = 0 - camera.x;
+        x = 0 - camera.getX();
     }
 }
