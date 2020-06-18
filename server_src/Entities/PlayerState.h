@@ -14,7 +14,7 @@ private:
 public:
   PlayerState();
 
-  ~PlayerState();
+  virtual ~PlayerState();
 
   void virtual update(PlayerNet &player);
 
