@@ -19,3 +19,19 @@ int Race::getRecoveryFactor() {
 int Race::getManaFactor() {
   return manaFactor;
 }
+
+int Race::getConstitution() {
+  return constitution;
+}
+
+int Race::getStrength() {
+  return strength;
+}
+
+int Race::getIntelligence() {
+  return intelligence;
+}
+
+int Race::getAgility() {
+  return agility;
+}
