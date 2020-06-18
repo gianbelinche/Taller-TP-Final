@@ -15,3 +15,11 @@ int Entity::getX() {
 int Entity::getY() {
   return y;    
 }
+
+void Entity::setX(int new_x) {
+  x = new_x;        
+}
+
+void Entity::setY(int new_y) {
+  y = new_y;    
+}

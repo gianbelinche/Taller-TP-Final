@@ -10,7 +10,7 @@ class GameState;
 
 class PlayerNet : public Entity{
 private:
-  PlayerState* state;
+  PlayerState* state; // Ver si puede ser una referencia
   Class playerClass;
   Race playerRace;
   int hp;
@@ -23,12 +23,15 @@ private:
   int gold;
   GameState &world;
 public:
-  PlayerNet(int x, int y, int id, GameState &currState, int maxHP, int maxMana,
+  PlayerNet(int x, int y, int id, GameState &currState, int hp, int mana,
             int velocity, int currExp, int currGold);
 
   ~PlayerNet();
 
+  // Pre: la posicion es valida(no colisiona)
   void move(int x, int y);
+
+  void changeState(PlayerState* new_state);
 };
 
 #endif // PLAYERNET_H

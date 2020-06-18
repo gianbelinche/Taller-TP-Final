@@ -16,6 +16,10 @@ public:
 
   int getY();
 
+  void setX(int new_x);
+
+  void setY(int new_y);
+
   virtual void update();
 };
 
