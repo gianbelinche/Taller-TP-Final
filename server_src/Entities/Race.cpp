@@ -1,22 +1,18 @@
 #include "Race.h"
 
-Race::Race(char race_t, int hpFac, int recFac, int manaFac) {
+Race::Race(char race_t, float hpFac, float recFac, float manaFac) {}
 
-}
+Race::~Race() {}
 
-Race::~Race() {
-    
-}
-
-int Race::getHpFactor() {
+float Race::getHpFactor() {
   return hpFactor;
 }
 
-int Race::getRecoveryFactor() {
+float Race::getRecoveryFactor() {
   return recoveryFactor;
 }
 
-int Race::getManaFactor() {
+float Race::getManaFactor() {
   return manaFactor;
 }
 

@@ -1,35 +1,35 @@
 #include "Class.h"
 
-Class::Class(char class_type, int hpFac, int manaFac, int meditFac) :
+Class::Class(char class_type, float hpFac, float manaFac, float meditFac) :
              class_type(class_type), hpFactor(hpFac), manaFactor(manaFac),
              meditationFactor(meditFac) {}
 
 Class::~Class() {}
 
-int Class::getHpFactor() {
+float Class::getHpFactor() {
   return hpFactor;
 }
 
-int Class::getManaFactor() {
+float Class::getManaFactor() {
   return manaFactor;
 }
 
-int Class::getmeditationFactor() {
+float Class::getmeditationFactor() {
   return meditationFactor;
 }
 
-int Class::Class::getStrengthFactor() {
+float Class::getStrengthFactor() {
   return stregthFactor;
 }
 
-int Class::Class::getConstitutionFactor() {
+float Class::getConstitutionFactor() {
   return constitutionFactor;
 }
 
-int Class::Class::getIntelligenceFactor() {
+float Class::getIntelligenceFactor() {
   return intelligenceFactor;
 }
 
-int Class::Class::getAgilityFactor() {
+float Class::getAgilityFactor() {
   return agilityFactor;
 }

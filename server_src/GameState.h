@@ -14,13 +14,16 @@ class GameState
 private:
   std::vector<std::vector<int>> colisionMap;
   std::unordered_map<int, PlayerNet*> players;
-  std::unordered_map<int, Entity*> monsters; 
+  std::unordered_map<int, Entity*> monsters;
+  int framesPerSecond;
 public:
-  GameState();
+  GameState(int fps);
 
   ~GameState();
 
   PlayerNet* getPlayer(int id);
+
+  int getFPS();
 
   bool isValidPosition(int x, int y);
 

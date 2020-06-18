@@ -13,4 +13,6 @@ public:
   ~MeditationState();
 
   void move(PlayerNet &player, int x, int y) override;
+
+  void manaRecover(PlayerNet &player) override;
 };

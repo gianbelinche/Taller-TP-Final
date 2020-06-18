@@ -2,7 +2,7 @@
 
 #include "Entity.h"
 
-Entity::Entity(int x, int y, int id) : x(x), y(y), id(id) {}
+Entity::Entity(int x, int y, int id) : x(x), y(y), id(id), currentFrame(0) {}
 
 Entity::~Entity() {}
 

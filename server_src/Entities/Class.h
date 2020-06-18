@@ -7,32 +7,32 @@ enum {WIZARD, CLERIC, PALADIN, WARRIOR}; // Esto seria class_type
 class Class {
 private:
   char class_type;
-  int hpFactor;
-  int manaFactor; // 0 para el guerrero
-  int meditationFactor; // idem
-  int stregthFactor;
-  int constitutionFactor;
-  int intelligenceFactor;
-  int agilityFactor;
+  float hpFactor;
+  float manaFactor; // 0 para el guerrero
+  float meditationFactor; // idem
+  float stregthFactor;
+  float constitutionFactor;
+  float intelligenceFactor;
+  float agilityFactor;
 
 public:
-  Class(char class_type, int hpFac, int manaFac, int meditFac);
+  Class(char class_type, float hpFac, float manaFac, float meditFac);
 
   ~Class();
 
-  int getHpFactor();
+  float getHpFactor();
 
-  int getManaFactor();
+  float getManaFactor();
 
-  int getmeditationFactor();
+  float getmeditationFactor();
 
-  int getStrengthFactor();
+  float getStrengthFactor();
 
-  int getConstitutionFactor();
+  float getConstitutionFactor();
 
-  int getIntelligenceFactor();
+  float getIntelligenceFactor();
 
-  int getAgilityFactor();
+  float getAgilityFactor();
 };
 
 #endif // CLASS_H

@@ -11,8 +11,8 @@ class GameState;
 class PlayerNet : public Entity{
 private:
   PlayerState* state; // Ver si puede ser una referencia
-  Class playerClass;
-  Race playerRace;
+  Class* playerClass;
+  Race* playerRace;
   int hp;
   int mana;
   int maxHp;
@@ -32,6 +32,20 @@ public:
   void move(int x, int y);
 
   void changeState(PlayerState* new_state);
+
+  float getRaceRecovery();
+
+  float getMeditationFactor();
+
+  int getFPS(); // Para la recuperacion se necesitan los segundos pasados
+
+  void heal(int points);
+
+  void recoverMana(int mPoints);
+
+  float getIntelligence();
+
+  int getCurrFrame();
 };
 
 #endif // PLAYERNET_H

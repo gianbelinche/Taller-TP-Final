@@ -1,4 +1,4 @@
-
+#include <algorithm>
 
 #include "PlayerNet.h"
 #include "PlayerState.h"
@@ -15,4 +15,32 @@ void PlayerNet::move(int x, int y) {
 }
 void PlayerNet::PlayerNet::changeState(PlayerState* new_state) {
   state = new_state;
+}
+
+float PlayerNet::getRaceRecovery() {
+  return playerRace->getRecoveryFactor();    
+}
+
+int PlayerNet::getFPS() {
+  return world.getFPS();   
+}
+
+void PlayerNet::heal(int points) {
+  hp = std::min(hp + points, maxHp);
+}
+
+void PlayerNet::recoverMana(int mPoints) {
+  mana = std::min(mana + mPoints, maxMana);
+}
+
+float PlayerNet::getIntelligence() {
+  return playerRace->getIntelligence() * playerClass->getIntelligenceFactor();
+}
+
+float PlayerNet::getMeditationFactor() {
+  return playerClass->getmeditationFactor();
+}
+
+int PlayerNet::getCurrFrame() {
+  return currentFrame;
 }

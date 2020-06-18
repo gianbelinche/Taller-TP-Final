@@ -7,23 +7,23 @@ enum {HUMAN, ELF, DWARF, GNOME};
 class Race {
 private:
   char race_type;
-  int hpFactor;
-  int recoveryFactor;
-  int manaFactor;
+  float hpFactor;
+  float recoveryFactor;
+  float manaFactor;
   int constitution;
   int strength;
   int intelligence;
   int agility;
 public:
-  Race(char race_t, int hpFac, int recFac, int manaFac);
+  Race(char race_t, float hpFac, float recFac, float manaFac);
 
   ~Race();
 
-  int getHpFactor();
+  float getHpFactor();
 
-  int getRecoveryFactor();
+  float getRecoveryFactor();
 
-  int getManaFactor();
+  float getManaFactor();
 
   int getConstitution();
 

@@ -3,7 +3,9 @@
 
 #include "GameState.h"
 
-GameState::GameState() {}
+#define FRAMES_PER_SECOND 30
+
+GameState::GameState(int fps) : framesPerSecond(fps) {}
 
 GameState::~GameState() {}
 
@@ -52,4 +54,8 @@ float entitiesDistance(Entity &ent1, Entity &ent2) {
 void GameState::monsterMoved(int id) {
   // Busca el bichito en el map de bichos(o no) y manda el mensaje
   // Ver si no conviene mergear con el playerMoved  
+}
+
+int GameState::getFPS() {
+  return framesPerSecond;    
 }

@@ -5,8 +5,8 @@ class Entity {
 protected:
   int x;
   int y;
-  int currentFrame;
   int id; // Valor numerico que identifica a la entida en el cliente y el server
+  int currentFrame;
 public:
   Entity(int x, int y, int id);
 
