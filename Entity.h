@@ -29,7 +29,7 @@ class Entity {
         int horClips;
         std::vector<SDL_Rect> clips;
         SDL_Rect quad;
-        bool dead;
+        bool destroyed;
 
     public:
         Entity(SDL_Renderer *renderer, int anID, int aPosX, int aPosY, View aView);
@@ -42,7 +42,7 @@ class Entity {
         void refreshPosition(MovementType move);
         virtual void render(Camera &camera);
 
-        bool isDead();
+        bool isDestroyed();
         void destroy();
 };
 

@@ -53,6 +53,14 @@ void EntityManager::addPlayer() {
     /*COMPLETAR*/
 }
 
+void EntityManager::destroyEntity(int ID) {
+    /* ACCEDERA LA ENTIDAD CON ESE ID Y DESTRUIRLA */
+}
+
+void EntityManager::refreshEntities() {
+    /* FOR DEL HASH CHEQUEANDO SI HAY ALGUNA ENTIDAD DESTRUIDA */
+}
+
 void EntityManager::renderEntities(Camera &camera) {
     std::unique_lock<std::mutex> lk(mux);
     for (auto& entity : entities) {

@@ -215,8 +215,11 @@ void MainWindow::run() {
     Camera camera(player);
 
     bool quit = false;
+    Uint32 time = SDL_GetTicks();
+    Uint32 frame = SDL_GetTicks();
 
     while (!quit) {
+        Uint32 frame = SDL_GetTicks();
         while (SDL_PollEvent(&eventHandler) != 0) {
             if (eventHandler.type == SDL_QUIT) {
                 quit = true;
@@ -237,6 +240,12 @@ void MainWindow::run() {
         entMan.renderEntities(camera);
         mainMap.renderStructures(camera);
 
-        SDL_RenderPresent(mainRenderer);
+        
+        std::cout << 1000 / (SDL_GetTicks() - frame) << '\n'; //fps (30~120)
+
+        if (SDL_GetTicks() - time > 30) { //renderizo si pasaron mas de 30ms (~30fps)
+            time = SDL_GetTicks();
+            SDL_RenderPresent(mainRenderer);
+        }
     }
 }

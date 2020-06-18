@@ -23,7 +23,7 @@ class EntityManager {
     private:
         Player &player;
         SDL_Renderer *renderer;
-        std::vector<Entity> entities;
+        std::vector<Entity> entities; //cambiar a hash ID : Entity
         std::mutex mux;
         
     public:
@@ -39,6 +39,9 @@ class EntityManager {
                        View aView);
         void addDrop(ItemType type, int anID, int aPosX, int aPosY);
         void addPlayer();
+        
+        void destroyEntity(int ID); //cambiar a uint32_t
+        void refreshEntities();
 
         void renderEntities(Camera &camera);
 };

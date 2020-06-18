@@ -3,7 +3,7 @@
 
 Entity::Entity(SDL_Renderer *renderer, int anID, int aPosX, int aPosY, 
          View aView) : image(renderer, 0, 0, 0), posX(aPosX), posY(aPosY), 
-         ID(anID), view(aView), frame(0), dead(false) {}
+         ID(anID), view(aView), frame(0), destroyed(false) {}
 
 Entity::~Entity() {}
 
@@ -15,7 +15,7 @@ Entity::Entity(Entity&& other) : ID(other.ID), posX(other.posX),
                                  horClips(other.horClips),
                                  clips(std::move(other.clips)),
                                  quad(other.quad), image(std::move(other.image)),
-                                 dead(other.dead) {}
+                                 destroyed(other.destroyed) {}
 
 Entity& Entity::operator=(Entity&& other) {
     ID = other.ID;
@@ -31,7 +31,7 @@ Entity& Entity::operator=(Entity&& other) {
     clips = std::move(other.clips);
     quad = other.quad;
     image = std::move(other.image);
-    dead = other.dead;
+    destroyed = other.destroyed;
 }
 
 void Entity::refreshPosition(MovementType move) {
@@ -84,10 +84,10 @@ void Entity::render(Camera &camera) {
     image.render(quad.x, quad.y, &actClip, &quad);
 }
 
-bool Entity::isDead() {
-    return dead;
+bool Entity::isDestroyed() {
+    return destroyed;
 }
 
 void Entity::destroy() {
-    dead = true;
+    destroyed = true;
 }
