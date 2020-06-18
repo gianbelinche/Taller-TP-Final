@@ -1,3 +1,5 @@
+#ifndef MEDITATIONSTATE_H
+#define MEDITATIONSTATE_H
 
 
 #include "PlayerState.h"
@@ -16,3 +18,5 @@ public:
 
   void manaRecover(PlayerNet &player) override;
 };
+
+#endif // MEDITATIONSTATE_H

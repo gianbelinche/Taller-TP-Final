@@ -53,5 +53,5 @@ int PlayerNet::getCurrFrame() {
 }
 
 bool PlayerNet::isAlive() {
-  return (hp == 0);
+  return (hp > 0);
 }
