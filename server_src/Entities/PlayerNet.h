@@ -28,6 +28,8 @@ public:
 
   ~PlayerNet();
 
+  void update() override;
+
   // Pre: la posicion es valida(no colisiona)
   void move(int x, int y);
 

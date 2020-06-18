@@ -1,7 +1,7 @@
 #ifndef GHOSTSTATE_H
 #define GHOSTSTATE_H
 
-
+#include "PlayerNet.h"
 #include "PlayerState.h"
 
 class GhostState : public PlayerState {
@@ -11,5 +11,6 @@ public:
 
   ~GhostState();
   
+  void update(PlayerNet &player) override;
 };
 #endif // GHOSTSTATE_H

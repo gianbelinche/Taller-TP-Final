@@ -10,6 +10,13 @@ PlayerNet::PlayerNet(int x, int y, int id, GameState &currState, int hp,
 
 PlayerNet::~PlayerNet() {}
 
+void PlayerNet::update() {
+  currentFrame++;
+  if (currentFrame == 30) {
+    state->update(*this);
+  }
+}
+
 void PlayerNet::move(int x, int y) {
   state->move(*this, x, y);
 }
