@@ -7,6 +7,7 @@ protected:
   int originUserId;
 public:
   Event(int id);
+  
   virtual ~Event();
 };
 
