@@ -14,15 +14,16 @@ private:
     std::vector<std::string> present_images;
     Image itemBoxes;
     std::map<std::string,int> image_positions;
-    std::vector<std::string> selected;
+    std::vector<std::string> equiped;
     void insert(std::string key,std::string path,int position);
-    void renderSelected(int screen_w,int screen_h);
+    void renderEquiped(int screen_w,int screen_h);
 public:
     GraphicInventory(SDL_Renderer* mainRenderer);
     void addImage(std::string key);
     void removeImage(std::string key);
     void render(int screen_width,int screen_heigth);
-    void select(std::string key);
+    void equip(std::string key);
+    std::string select(int x,int y,int screen_w,int screen_h);
 
 };
 

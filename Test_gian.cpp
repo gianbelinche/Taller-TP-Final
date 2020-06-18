@@ -3,6 +3,8 @@
 #include "MusicPlayer.h"
 #include "SoundEffectPlayer.h"
 #include "Layout.h"
+#include <string>
+#include <iostream>
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -103,13 +105,13 @@ void TestGian::run() {
     inventory.addImage("composed bow");
     inventory.addImage("fresno rod");
     inventory.addImage("leather armor");
-    inventory.select("leather armor");
-    inventory.select("sword");
+    inventory.equip("leather armor");
+    inventory.equip("sword");
     inventory.addImage("sword");
     inventory.addImage("iron helmet");
-    inventory.select("iron helmet");
+    inventory.equip("iron helmet");
     inventory.addImage("iron shield");
-    inventory.select("iron shield");
+    inventory.equip("iron shield");
     int exp = 0;
     int max_exp = 100;
     expBar.changeExp(exp,max_exp);
@@ -177,6 +179,10 @@ void TestGian::run() {
                 }	
 			}else if(eventHandler.type == SDL_TEXTINPUT){
                 chat.putCharacter(eventHandler.text.text);
+            }else if(eventHandler.type == SDL_MOUSEBUTTONDOWN){
+                std::string selected = inventory.select(eventHandler.button.x,eventHandler.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
+                if (selected != "")
+                    std::cout << selected << std::endl;
             }
         }
         
@@ -211,7 +217,7 @@ void TestGian::run() {
         }
         if (removes == 500){
             inventory.removeImage("composed bow");
-            inventory.select("axe");
+            inventory.equip("axe");
             cant_items--;
         }
         if (removes == 1000){

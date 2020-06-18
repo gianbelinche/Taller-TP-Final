@@ -28,10 +28,10 @@ mainRenderer(mainRenderer), itemBoxes(NULL) {
     Image itemBoxes(mainRenderer);
     itemBoxes.loadFromFile("Layout_graphics/Inventory/ItemBoxes.png");
     this->itemBoxes = std::move(itemBoxes);
-    selected.push_back("");
-    selected.push_back("");
-    selected.push_back("");
-    selected.push_back("");
+    equiped.push_back("");
+    equiped.push_back("");
+    equiped.push_back("");
+    equiped.push_back("");
     this->insert("sword","Layout_graphics/Inventory/espada.png",SELECTED_TYPE_0);
     this->insert("axe","Layout_graphics/Inventory/hacha.png",SELECTED_TYPE_0);
     this->insert("hammer","Layout_graphics/Inventory/martillo.png",SELECTED_TYPE_0);
@@ -68,7 +68,7 @@ void GraphicInventory::removeImage(std::string key){
 }
 
 void GraphicInventory::render(int screen_w,int screen_h){
-    this->renderSelected(screen_w,screen_h);
+    this->renderEquiped(screen_w,screen_h);
     SDL_Rect clip = {0,0,screen_w,screen_h};
     SDL_Rect rQuad = {0,0,INTERIOR_BOX_W,INTERIOR_BOX_H};
     int i = 0;
@@ -88,7 +88,7 @@ void GraphicInventory::render(int screen_w,int screen_h){
     }
 }
 
-void GraphicInventory::renderSelected(int screen_w,int screen_h){
+void GraphicInventory::renderEquiped(int screen_w,int screen_h){
     SDL_Rect clip = {0,0,screen_w,screen_h};
     SDL_Rect rQuad = {0,0,ITEM_BOXES_W,ITEM_BOXES_H};
     itemBoxes.render(ITEM_BOXES_X,0,&clip,&rQuad);
@@ -96,13 +96,35 @@ void GraphicInventory::renderSelected(int screen_w,int screen_h){
     int x = SELECTED_EXT_BOX_X;
     int y = SELECTED_EXT_BOX_Y;
     for (int i = 0; i < MAX_NUMBER_OF_SELECTED_ITEMS; i++){
-        if (selected[i] != ""){
-            images.at(selected[i]).render(x,y,&clip,&rQuad);
+        if (equiped[i] != ""){
+            images.at(equiped[i]).render(x,y,&clip,&rQuad);
         }
         y += SELECTED_EXT_BOX_H;
     }
 }
 
-void GraphicInventory::select(std::string key){
-    selected[image_positions.at(key)] = key;
+void GraphicInventory::equip(std::string key){
+    equiped[image_positions.at(key)] = key;
+}
+
+std::string GraphicInventory::select(int x,int y,int screen_w,int screen_h){
+    int selected = -1;
+    int actual_x = EXTERIOR_BOX_X;
+    int actual_y = EXTERIOR_BOX_Y; 
+
+    for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++){
+        if ((x > actual_x) && (x < (actual_x + EXTERIOR_BOX_W)) && (y > actual_y) && (y < (actual_y + EXTERIOR_BOX_H))){
+            selected = i;
+            break;
+        }
+        actual_x += EXTERIOR_BOX_W; 
+        if ((i+1) % NUMBER_OF_COLUMNS == 0){
+            actual_x = EXTERIOR_BOX_X;
+            actual_y += EXTERIOR_BOX_H; 
+        }
+    }
+    if (selected == -1 || selected >= present_images.size()){
+        return "";
+    }
+    return present_images[selected];
 }
