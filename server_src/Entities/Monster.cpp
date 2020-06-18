@@ -15,7 +15,8 @@ Monster::Monster(MonsterType &type, int id, int x, int y, GameState &world) :
 
 Monster::~Monster() {}
 
-void Monster::update() { 
+void Monster::update() {
+  currentFrame++;
   if (currentFrame == 30) { // TODO: Hacer configurable el valor de alguna forma
     PlayerNet* player = world.getNearestPlayer(*this);
     int new_x = x;
