@@ -1,5 +1,6 @@
 #include "MiniChat.h"
 #include "Text.h"
+#define FONT_SIZE 50
 #define MESSAGES_MAX_SIZE 10
 #define MAX_LETTERS_IN_A_WORD 21
 #define MESSAGES_X (screen_w * 205 / 300)
@@ -12,7 +13,13 @@
 
 
 
-MiniChat::MiniChat(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer){}
+MiniChat::MiniChat(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer){
+    this->gFont = TTF_OpenFont("Fonts/OpenSans.ttf", FONT_SIZE);
+}
+
+MiniChat::~MiniChat(){
+    TTF_CloseFont(gFont);
+}
 
 std::vector<std::string> MiniChat::getPartialString(std::string string,int n){
     std::vector<std::string> partial_strings;
@@ -22,7 +29,7 @@ std::vector<std::string> MiniChat::getPartialString(std::string string,int n){
     return std::move(partial_strings);
 }
 
-void MiniChat::renderWord(std::string to_render_word,TTF_Font* gFont,int x, int y, int screen_w,int screen_h){
+void MiniChat::renderWord(std::string to_render_word,int x, int y, int screen_w,int screen_h){
     Text word(mainRenderer);
     word.loadText(to_render_word,gFont);
     SDL_Rect clip = {0,0,screen_w,screen_h};
@@ -31,14 +38,14 @@ void MiniChat::renderWord(std::string to_render_word,TTF_Font* gFont,int x, int 
     word.render(x,y,&clip,&rQuad);
 }
 
-void MiniChat::render(int screen_w, int screen_h,TTF_Font* gFont){
+void MiniChat::render(int screen_w, int screen_h){
     int lines = 0;
     int x = MESSAGES_X;
     int y = MESSAGES_Y;
     for (int i = messages.size() - 1; i >= 0; i--){
         std::vector<std::string> partial_strings = this->getPartialString(messages[i],MAX_LETTERS_IN_A_WORD);
         for (int j = partial_strings.size() - 1; j >= 0;j--){
-            this->renderWord(partial_strings[j],gFont,x,y,screen_w,screen_h);
+            this->renderWord(partial_strings[j],x,y,screen_w,screen_h);
             lines++;
             y -= MESSAGES_H;
             if (lines > MESSAGES_MAX_SIZE) break;
@@ -52,7 +59,7 @@ void MiniChat::render(int screen_w, int screen_h,TTF_Font* gFont){
         if (writing_word.length() > MAX_LETTERS_IN_A_WORD){
             to_render_word = writing_word.substr(writing_word.length() - MAX_LETTERS_IN_A_WORD);
         }
-        this->renderWord(to_render_word,gFont,TO_RENDER_WORD_X,TO_RENDER_WORD_Y,screen_w,screen_h);
+        this->renderWord(to_render_word,TO_RENDER_WORD_X,TO_RENDER_WORD_Y,screen_w,screen_h);
     }
 }
 

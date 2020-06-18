@@ -19,6 +19,7 @@
 
 /* FRECUENCIA DE SONIDO */
 #define FRECUENCY 22050
+#define FONT_SIZE 50
 
 TestGian::TestGian() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
@@ -85,6 +86,9 @@ void TestGian::run() {
 	sound_player.add(3,"sound_effects/potion.wav");
 	sound_player.add(4,"sound_effects/axe.wav"); 
     Layout layout(mainRenderer);
+    GraphicInventory inventory(mainRenderer);
+    ExpBar expBar(mainRenderer);
+    MiniChat chat(mainRenderer);
     int gold = 0;
     int level = 0;
     int life = 1000;
@@ -93,30 +97,31 @@ void TestGian::run() {
     layout.changeLevel(level);
     layout.changeLife(life,life);
     layout.changeMana(mana,mana);
-    layout.addItem("sword");
-    layout.addItem("axe");
-    layout.addItem("baculo nudoso");
-    layout.addItem("composed bow");
-    layout.addItem("fresno rod");
-    layout.addItem("leather armor");
-    layout.selectItem("leather armor");
-    layout.selectItem("sword");
-    layout.addItem("iron helmet");
-    layout.selectItem("iron helmet");
-    layout.addItem("iron shield");
-    layout.selectItem("iron shield");
+    inventory.addImage("sword");
+    inventory.addImage("axe");
+    inventory.addImage("baculo nudoso");
+    inventory.addImage("composed bow");
+    inventory.addImage("fresno rod");
+    inventory.addImage("leather armor");
+    inventory.select("leather armor");
+    inventory.select("sword");
+    inventory.addImage("sword");
+    inventory.addImage("iron helmet");
+    inventory.select("iron helmet");
+    inventory.addImage("iron shield");
+    inventory.select("iron shield");
     int exp = 0;
     int max_exp = 100;
-    layout.changeExp(exp,max_exp);
+    expBar.changeExp(exp,max_exp);
     int items = 0;
     int removes = 0;
-    int cant_items = 8;
-    layout.addMessage("mensaje de largo de mas de una linea si senor");
-    layout.addMessage("msj de una linea");
-    layout.addMessage("msj de una linea");
-    layout.addMessage("mensaje de largo de mas de una linea si senor");
-    layout.addMessage("msj de una linea");
-    layout.addMessage("mensaje de largo de mas de una linea si senor");
+    int cant_items = 9;
+    chat.addMessage("mensaje de largo de mas de una linea si senor");
+    chat.addMessage("msj de una linea");
+    chat.addMessage("msj de una linea");
+    chat.addMessage("mensaje de largo de mas de una linea si senor");
+    chat.addMessage("msj de una linea");
+    chat.addMessage("mensaje de largo de mas de una linea si senor");
     
     bool writing = false;
     SDL_StopTextInput();
@@ -129,14 +134,14 @@ void TestGian::run() {
             }else if( eventHandler.type == SDL_KEYDOWN ){
                 if (eventHandler.key.keysym.sym == SDLK_RETURN){
                     if (writing){
-                        layout.sendMessage();
+                        chat.sendMessage();
                         SDL_StopTextInput();
                     } else {
                         SDL_StartTextInput();
                     }
                     writing = !writing;
                 } else if(eventHandler.key.keysym.sym == SDLK_BACKSPACE){
-                    layout.removeCharacter();
+                    chat.deleteCharacter();
                 } else if(!writing){
                     switch( eventHandler.key.keysym.sym ){
  
@@ -171,14 +176,18 @@ void TestGian::run() {
                     }
                 }	
 			}else if(eventHandler.type == SDL_TEXTINPUT){
-                layout.sendCharacter(eventHandler.text.text);
+                chat.putCharacter(eventHandler.text.text);
             }
         }
+        
 
         SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(mainRenderer);
 
         layout.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+        inventory.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+        expBar.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+        chat.render(SCREEN_WIDTH,SCREEN_HEIGHT);
         gold++;
         if (life > 0) life--;
         if (mana > 0) mana--;
@@ -193,20 +202,20 @@ void TestGian::run() {
             max_exp *= 2;
             level++;
         }
-        layout.changeExp(exp,max_exp);
+        expBar.changeExp(exp,max_exp);
         layout.changeLevel(level);
         if (items == 200 && cant_items < 20){
-            layout.addItem("baculo engarzado");
+            inventory.addImage("baculo engarzado");
             items = 0;
             cant_items++;
         }
         if (removes == 500){
-            layout.removeItem("composed bow");
-            layout.selectItem("axe");
+            inventory.removeImage("composed bow");
+            inventory.select("axe");
             cant_items--;
         }
         if (removes == 1000){
-            layout.removeItem("baculo nudoso");
+            inventory.removeImage("baculo nudoso");
             cant_items--;
         }
 

@@ -12,16 +12,17 @@ private:
     TTF_Font* gFont;
     std::string writing_word;
     std::vector<std::string> messages;
-    void renderWord(std::string to_render_word,TTF_Font* gFont,int x, int y, int screen_w,int screen_h);
+    void renderWord(std::string to_render_word,int x, int y, int screen_w,int screen_h);
     //Devuelve un vector con sub strings, donde cada una tiene un largo de n, excepto la ultima que tiene el largo restante
     std::vector<std::string> getPartialString(std::string string,int n);
 public:
     MiniChat(SDL_Renderer* mainRenderer);
-    void render(int screen_w, int screen_h,TTF_Font* gFont);
+    void render(int screen_w, int screen_h);
     void putCharacter(std::string c);
     void deleteCharacter();    
     void addMessage(std::string message);
     void sendMessage();
+    ~MiniChat();
 
 };
 

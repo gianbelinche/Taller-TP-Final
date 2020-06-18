@@ -14,8 +14,7 @@
 #define LIFE_MANA_Y (screen_heigth / 24)
 
 Layout::Layout(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer), 
-layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL),
-inventory(mainRenderer), expBar(mainRenderer), chat(mainRenderer) {
+layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL) {
     Image layout(mainRenderer);
     layout.loadFromFile("Layout_graphics/layout_prototype_r.png");
     this->gFont = TTF_OpenFont("Fonts/OpenSans.ttf", FONT_SIZE);
@@ -67,37 +66,6 @@ void Layout::changeLevel(int level){
     this->level.loadText(s.str(),gFont);
 }
 
-void Layout::changeExp(int exp,int max_exp){
-    expBar.changeExp(exp,max_exp);
-}
-
-void Layout::addItem(std::string item){
-    inventory.addImage(item);
-}
-
-void Layout::removeItem(std::string item){
-    inventory.removeImage(item);
-}
-
-void Layout::selectItem(std::string item){
-    inventory.select(item);
-}
-
-void Layout::sendCharacter(std::string c){
-    chat.putCharacter(c);
-
-}
-void Layout::removeCharacter(){
-    chat.deleteCharacter();
-}
-
-void Layout::addMessage(std::string message){
-    chat.addMessage(message);
-}
-
-void Layout::sendMessage(){
-    chat.sendMessage();
-}
 
 void Layout::render(int screen_width,int screen_heigth){
     SDL_Rect clip = {0,0,screen_width,screen_heigth};
@@ -109,7 +77,4 @@ void Layout::render(int screen_width,int screen_heigth){
     life.render(GOLD_LIFE_X,LIFE_MANA_Y,&clip,&rq);
     mana.render(MANA_LEVEL_X,LIFE_MANA_Y,&clip,&rq);
     level.render(MANA_LEVEL_X,0,&clip,&rq);
-    inventory.render(screen_width,screen_heigth);
-    expBar.render(screen_width,screen_heigth);
-    chat.render(screen_width,screen_heigth,gFont);
 }
