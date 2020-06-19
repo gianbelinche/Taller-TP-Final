@@ -4,6 +4,7 @@
 #include "GameState.h"
 #include "Thread.h"
 #include "Events/UserMoved.h"
+#include "Events/ClickEvent.h"
 
 class ServerEventHandler {
 private:
@@ -13,7 +14,9 @@ public:
 
   ~ServerEventHandler();
 
-  void handle(UserMoved ev);
+  void handle(UserMoved &ev);
+
+  void handleUserAttack(ClickEvent &ev);
 };
 
 #endif // SERVEREVENTHANDLER_H

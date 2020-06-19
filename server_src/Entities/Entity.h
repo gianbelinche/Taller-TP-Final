@@ -7,8 +7,9 @@ protected:
   int y;
   int id; // Valor numerico que identifica a la entida en el cliente y el server
   int currentFrame;
+  int hp;
 public:
-  Entity(int x, int y, int id);
+  Entity(int x, int y, int id, int hp);
 
   ~Entity();
 
@@ -21,6 +22,8 @@ public:
   void setY(int new_y);
 
   virtual void update();
+
+  bool isAlive();
 };
 
 #endif // ENTITY_H

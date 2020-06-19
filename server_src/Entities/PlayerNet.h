@@ -13,7 +13,6 @@ private:
   PlayerState* state; // Ver si puede ser una referencia
   Class* playerClass;
   Race* playerRace;
-  int hp;
   int mana;
   int maxHp;
   int maxMana;
@@ -48,8 +47,6 @@ public:
   float getIntelligence();
 
   int getCurrFrame();
-
-  bool isAlive();
 };
 
 #endif // PLAYERNET_H

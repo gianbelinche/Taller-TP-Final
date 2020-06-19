@@ -12,8 +12,6 @@ public:
 
   ~UserMoved();
 
-  int getUser();
-
   int getX();
 
   int getY();

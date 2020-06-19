@@ -11,8 +11,6 @@ public:
 
   ~ClickEvent();
 
-  int getOriginUserID();
-
   int getDestinyEntityID();
 };
 

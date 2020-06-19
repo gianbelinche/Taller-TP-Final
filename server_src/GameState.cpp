@@ -32,13 +32,13 @@ void GameState::playerMoved(int id) {
   // mensajes salientes
 }
 
-PlayerNet* GameState::getNearestPlayer(Entity &ent, Condition &cond) {
+PlayerNet* GameState::getNearestPlayer(Entity &ent, Condition* cond) {
   PlayerNet* nearest = nullptr;
   float smallestDistance = std::numeric_limits<float>::infinity();
   float curr;
   for (auto &it: players) {
     if ((curr = entitiesDistance(ent, *(it.second))) < smallestDistance && 
-        (cond.evaluate(it.second))) {
+        (cond->evaluate(it.second))) {
       nearest = it.second;
       smallestDistance = curr;
     }
@@ -59,4 +59,12 @@ void GameState::monsterMoved(int id) {
 
 int GameState::getFPS() {
   return framesPerSecond;    
+}
+
+Entity* GameState::getEntity(int id) {
+  if (entities.find(id) != entities.end()) {
+    return entities[id];
+  } else {
+    return nullptr;
+  }
 }

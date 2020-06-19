@@ -5,17 +5,16 @@
 #include <vector>
 
 #include "Condition.h"
-#include "Entity.h"
+#include "Entities/Entity.h"
 #include "PlayerNet.h"
 
 #define TILE_SIZE 32
 
-class GameState
-{
+class GameState {
 private:
   std::vector<std::vector<int>> colisionMap;
   std::unordered_map<int, PlayerNet*> players;
-  std::unordered_map<int, Entity*> monsters;
+  std::unordered_map<int, Entity*> entities; // Jugadores y mosntruos
   int framesPerSecond;
 public:
   GameState(int fps);
@@ -24,11 +23,13 @@ public:
 
   PlayerNet* getPlayer(int id);
 
+  Entity* getEntity(int id);
+
   int getFPS();
 
   bool isValidPosition(int x, int y);
 
-  PlayerNet* getNearestPlayer(Entity &ent, Condition &cond);
+  PlayerNet* getNearestPlayer(Entity &ent, Condition* cond = nullptr);
 
   float entitiesDistance(Entity &ent1, Entity &ent2);
 

@@ -19,7 +19,7 @@ Monster::~Monster() {}
 void Monster::update() {
   currentFrame++;
   if (currentFrame == 30) { // TODO: Hacer configurable el valor de alguna forma
-    PlayerNet* player = world.getNearestPlayer(*this, Condition::isAlive);
+    PlayerNet* player = world.getNearestPlayer(*this, &Condition::isAlive);
     int new_x = x;
     int new_y = y;
 

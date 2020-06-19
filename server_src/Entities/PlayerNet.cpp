@@ -5,7 +5,7 @@
 
 PlayerNet::PlayerNet(int x, int y, int id, GameState &currState, int hp,
                      int mana, int velocity, int currExp, int currGold) :
-                     Entity(x, y, id), hp(hp), mana(mana), world(currState),
+                     Entity(x, y, id, hp), mana(mana), world(currState),
                      velocity(velocity), exp(currExp), gold(currGold) {}
 
 PlayerNet::~PlayerNet() {}
@@ -50,8 +50,4 @@ float PlayerNet::getMeditationFactor() {
 
 int PlayerNet::getCurrFrame() {
   return currentFrame;
-}
-
-bool PlayerNet::isAlive() {
-  return (hp > 0);
 }

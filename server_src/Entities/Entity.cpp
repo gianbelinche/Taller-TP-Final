@@ -23,3 +23,7 @@ void Entity::setX(int new_x) {
 void Entity::setY(int new_y) {
   y = new_y;    
 }
+
+bool Entity::isAlive() {
+  return hp > 0;    
+}
