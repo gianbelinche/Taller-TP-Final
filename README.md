@@ -162,10 +162,22 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
         Aclaración: Si bien hay distintos llamados para crear distintos tipos de entidad, para la eliminación con uno solo alcanza. Se usa para todo tipo de entidad (jugador, mob o drop).
 
-5. **Mensajes que cliente debe imprimir** (05):
+5. **Cambiar estado de un personaje** (05):
+
+    - **Servidor a Cliente**:
+    
+        `05 + ID`
+
+        Ejemplo:
+
+        `{05, 123456}` -> `Murió` el jugador de ID `12345`
+
+        Aclaración: Este llamado es para indicar que un jugador pasó a ser fantasma. Si el jugador se desconectó el llamado es el (04).
+
+6. **Mensajes que cliente debe imprimir** (06):
 
 COMPLETAR
 
-6. **Daño** (06):
+7. **Daño** (07):
 
 COMPLETAR
