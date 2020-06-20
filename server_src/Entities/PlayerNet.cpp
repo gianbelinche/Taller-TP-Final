@@ -1,5 +1,6 @@
 #include <algorithm>
 
+#include "../config/Equations.h"
 #include "PlayerNet.h"
 #include "PlayerState.h"
 
@@ -44,6 +45,10 @@ float PlayerNet::getIntelligence() {
   return playerRace->getIntelligence() * playerClass->getIntelligenceFactor();
 }
 
+float PlayerNet::getStrength() {
+  return playerRace->getStrength() * playerClass->getStrengthFactor();
+}
+
 float PlayerNet::getMeditationFactor() {
   return playerClass->getmeditationFactor();
 }
@@ -51,3 +56,26 @@ float PlayerNet::getMeditationFactor() {
 int PlayerNet::getCurrFrame() {
   return currentFrame;
 }
+
+int PlayerNet::takeDamage(int dmgToTake) {
+  int defense = equation::playerDefense(armor->getMinDef(), armor->getMaxDef(),
+                                      shield->getMinDef(), shield->getMaxDef(),
+                                      helmet->getMinDef(),helmet->getMaxDef());
+  int finalDmg = std::max(0, dmgToTake - defense);
+  int oldHp = hp;
+  hp = std::max(0, hp - finalDmg);
+  // Mandar mensaje a game status sobre el daño recibido;
+  if (hp == 0) {
+    // jugador muerto, cambiar el estado a fantasma y mandar mensaje
+  }
+  return oldHp - hp; // Daño efectivo
+}
+
+int PlayerNet::attack(Entity* ent) {
+  // Se tiene que fijar si puede atacar, si el jugador esta dentro del rango
+  // Quizas hacer el chequeo de jugador vivo aca
+  int playerDmg = equation::causedDamage(getStrength(), weapon->getMinDmg(), 
+                                         weapon->getMaxDmg());
+  state->attack(*this, ent, playerDmg);
+}
+

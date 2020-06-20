@@ -3,6 +3,10 @@
 
 class GameState;
 
+#include "../Items/Armor.h"
+#include "../Items/Helmet.h"
+#include "../Items/Shield.h"
+#include "../Items/Weapon.h"
 #include "Class.h"
 #include "Entity.h"
 #include "Race.h"
@@ -21,6 +25,10 @@ private:
   int exp;
   int gold;
   GameState &world;
+  Weapon* weapon;
+  Armor* armor;
+  Helmet* helmet;
+  Shield* shield;
 public:
   PlayerNet(int x, int y, int id, GameState &currState, int hp, int mana,
             int velocity, int currExp, int currGold);
@@ -46,7 +54,14 @@ public:
 
   float getIntelligence();
 
+  float getStrength();
+
   int getCurrFrame();
+
+  int attack(Entity* ent);
+
+  int takeDamage(int dmgToTake) override;
+
 };
 
 #endif // PLAYERNET_H
