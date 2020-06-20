@@ -36,5 +36,8 @@ void ServerEventHandler::handleUserAttack(ClickEvent &ev) {
     return;
   }
   if (!entity->isAlive()) {return;}
-  
+
+  int damageDealt = player->attack(entity);
+  // Hay que mandar el daño causado fijandose si es mayor a cero, cero o 
+  // negativo
 }

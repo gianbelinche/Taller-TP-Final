@@ -1,6 +1,7 @@
 #ifndef PLAYERSTATE_H
 #define PLAYERSTATE_H
 
+#include "Entity.h"
 #include "../GameState.h"
 
 class PlayerNet;
@@ -19,6 +20,8 @@ public:
   void virtual update(PlayerNet &player);
 
   void virtual move(PlayerNet &player, int x, int y);
+
+  int virtual attack(PlayerNet &player, Entity* ent, int damage);
 
   void virtual lifeRecover(PlayerNet &player);
 

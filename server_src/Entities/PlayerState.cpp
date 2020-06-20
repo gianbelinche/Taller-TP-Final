@@ -33,3 +33,5 @@ void PlayerState::manaRecover(PlayerNet &player) {
 
   player.recoverMana(manaGain);
 }
+
+int PlayerState::attack(PlayerNet &player, Entity* ent, int damage) {}

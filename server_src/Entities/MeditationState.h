@@ -17,6 +17,8 @@ public:
   void move(PlayerNet &player, int x, int y) override;
 
   void manaRecover(PlayerNet &player) override;
+
+  int attack(PlayerNet &player, Entity* ent, int damage);
 };
 
 #endif // MEDITATIONSTATE_H

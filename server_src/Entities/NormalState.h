@@ -10,6 +10,8 @@ public:
   NormalState();
 
   ~NormalState();
+
+  int attack(PlayerNet &player, Entity* ent, int damage) override;
 };
 
 #endif // NORMALSTATE_H

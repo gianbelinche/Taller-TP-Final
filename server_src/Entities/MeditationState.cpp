@@ -14,3 +14,8 @@ void MeditationState::manaRecover(PlayerNet &player) {
                                               player.getFPS());
   player.recoverMana(manaGain);
 }
+
+int MeditationState::attack(PlayerNet &player, Entity* ent, int damage) {
+  player.changeState(&PlayerState::normal);
+  PlayerState::normal.attack(player, ent, damage);  
+}

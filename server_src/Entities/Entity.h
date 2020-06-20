@@ -24,6 +24,8 @@ public:
   virtual void update();
 
   bool isAlive();
+
+  int virtual takeDamage(int dmgToTake) = 0;
 };
 
 #endif // ENTITY_H
