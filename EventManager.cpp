@@ -101,5 +101,7 @@ void EventManager::checkKeyUp(SDL_Event &event) {
 
 void EventManager::checkClick(SDL_Event &event) {
     //chequear si clickeo inventario
+    //if click_en_inventario
     //si no chequeo inventario chequear si clickeo alguna entidad
+    //else entitymanager.check(xdelclick,ydelclick)
 }

@@ -1,11 +1,12 @@
 #ifndef __ENTITY_MANAGER_H__
 #define __ENTITY_MANAGER_H__
 
-#include <vector>
+#include <map>
 #include <mutex>
 #include <SDL2/SDL.h>
-#include "Player.h"
 #include "Entity.h"
+#include "Player.h"
+#include "NPC.h"
 #include "Spyder.h"
 #include "Skeleton.h"
 #include "Goblin.h"
@@ -16,34 +17,30 @@
 #include "Camera.h"
 #include "Item.h"
 
-/* Entidades añadibles */
-enum NPCType {SPYDER, SKELETON, GOBLIN, ZOMBIE, BANKER, MERCHANT, HEALER}; //agregar los drops
-
 class EntityManager {
     private:
         Player &player;
+        uint32_t playerID;
         SDL_Renderer *renderer;
-        std::vector<Entity> entities; //cambiar a hash ID : Entity
+        std::map<uint32_t, Entity*> entities;
+        std::map<uint32_t, Entity*> entitiesRender;
         std::mutex mux;
         
     public:
-        EntityManager(SDL_Renderer *aRenderer, Player &aPlayer);
+        EntityManager(SDL_Renderer *aRenderer, Player &aPlayer, uint32_t aPlayerID);
         ~EntityManager();
 
-        /*
-        ESTO SE PUEDE HACER ASI O SE PUEDE PEDIR QUE SE
-        PASE EL COMANDO ENVIADO POR EL SERVIDOR
-        Y DECODIFICARLO ADENTRO
-        */
-        void addNPC(NPCType type, int anID, int aPosX, int aPosY,
-                       View aView);
-        void addDrop(ItemType type, int anID, int aPosX, int aPosY);
-        void addPlayer();
+        void addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY, View aView);
+        void addDrop(ItemType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY);
+        void addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX, uint16_t aPosY);
         
-        void destroyEntity(int ID); //cambiar a uint32_t
+        void destroyEntity(uint32_t ID);
         void refreshEntities();
 
+        void moveEntity(uint32_t ID, MovementType moveType);
         void renderEntities(Camera &camera);
+
+        uint32_t checkClickEntities(Camera &camera, uint16_t x, uint16_t y);
 };
 
 #endif 

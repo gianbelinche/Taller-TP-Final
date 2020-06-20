@@ -1,9 +1,9 @@
 #include "Item.h"
 #include "SpriteClipCreator.h"
 
-/* CHEQUEAR QUE EL VIEW SEA EL QUE ES IGUAL A CERO!! */
-Item::Item(SDL_Renderer *renderer, int anID, int posX, int posY, 
-           ItemType type) : Entity(renderer, anID, posX, posY, UP) {
+Item::Item(SDL_Renderer *renderer, uint32_t anID, uint16_t aPosX, 
+           uint16_t aPosY, ItemType type) : Entity(anID, aPosX, aPosY), 
+                                            image(renderer, 0, 0, 0) {
     switch (type) {
         case ESPADA:
             image.loadFromFile(ESPADA_PATH);
@@ -77,13 +77,20 @@ Item::Item(SDL_Renderer *renderer, int anID, int posX, int posY,
             //ERROR
             break;
     }
-
-    height = ITEM_HEIGHT;
-    width = ITEM_WIDTH;
-    horClips = ITEM_HOR_SPRITES;
-    vertClips = ITEM_VERT_SPRITES;
-    quad = {0, 0, height, width};
-    SpriteClipCreator(height * vertClips, width * horClips, height, width, clips);
 }
 
 Item::~Item() {}
+
+void Item::refreshPosition(MovementType move) {
+    //DO NOTHING
+}
+
+void Item::render(Camera &camera) {
+    //CHEQUEAR COMPLETAR CAMBIAR
+    image.render(posX - camera.getX(), posY - camera.getY(), NULL, NULL);
+}
+
+bool Item::collision(uint16_t x, uint16_t y) {
+    //LOS ITEMS NO SON CLICKEABLES
+    return false;
+}

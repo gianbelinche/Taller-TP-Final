@@ -3,7 +3,7 @@
 
 class Camera;
 
-#include "Player.h"
+#include "stdint.h"
 
 #define SCREEN_WIDTH 1080
 #define SCREEN_HEIGHT 720
@@ -12,22 +12,23 @@ class Camera;
 
 class Camera {
     private:
-        Player &player;
-        int x;
-        int y;
-        int height;
-        int width;
+        uint16_t x;
+        uint16_t y;
+        uint16_t height;
+        uint16_t width;
+        uint16_t playerHeight;
+        uint16_t playerWidth;
 
     public:
-        Camera(Player &aPlayer);
+        Camera(uint16_t posX, uint16_t posY);
         ~Camera();
 
-        void refresh();
+        void refresh(uint16_t posX, uint16_t posY);
 
-        int getX();
-        int getY();
-        int getHeight();
-        int getWidth();
+        uint16_t getX();
+        uint16_t getY();
+        uint16_t getHeight();
+        uint16_t getWidth();
 };
 
 #endif

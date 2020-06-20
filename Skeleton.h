@@ -2,18 +2,19 @@
 #define __SKELETON_H__
 
 #include <SDL2/SDL.h>
-#include "Entity.h"
+#include "NPC.h"
 
 #define SKELETON_PATH "img/skeleton.png"
-#define SKELETON_HEIGHT 1 //cambiar
-#define SKELETON_WIDTH 1 //cambiar
-#define SKELETON_VERT_SPRITES 1 //cambiar
-#define SKELETON_HOR_SPRITES 1 //cambiar
-#define SKELETON_SPEED 1 //cambiar
+#define SKELETON_HEIGHT 52
+#define SKELETON_WIDTH 25
+#define SKELETON_VERT_SPRITES 4
+#define SKELETON_HOR_SPRITES 5
+#define SKELETON_SPEED 5 //cambiar
 
-class Skeleton : public Entity {
+class Skeleton : public NPC {
     public:
-        Skeleton(SDL_Renderer *renderer, int anID, int posX, int posY, View aView);
+        Skeleton(SDL_Renderer *renderer, uint32_t anID, uint16_t posX, 
+                 uint16_t posY, View aView);
         ~Skeleton();
 };
 

@@ -1,10 +1,5 @@
-#ifndef __NPC_H__
-#define __NPC_H__ 
-
-#include <vector>
-
-#include "FilteredImage.h"
-#include "Camera.h"
+#ifndef __ENTITY_H__
+#define __ENTITY_H__ 
 
 enum View {UP, DOWN, LEFT, RIGHT}; //chequear
 
@@ -12,38 +7,33 @@ enum MovementType {MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, STOP};
 /* CHEQUEAR SI CAMBIAR EL VALOR O NO (por protocolo), LA IDEA DEL STOP ES PARA DECIR QUE 
 DEJO DE MOVERSE Y ASI VOLVER AL FRAME 0 */
 
+#include <vector>
+
+#include "FilteredImage.h"
+#include "Camera.h"
+
 class Entity {
     protected:
-        FilteredImage image;
-        /*se pueden cambiar los ints por otros tipos
-        por ej, uint32 o uint16 o uint8*/
-        int ID;
-        int posX;
-        int posY;
-        int height;
-        int width;
-        int speed;
-        View view;
-        int frame;
-        int vertClips;
-        int horClips;
-        std::vector<SDL_Rect> clips;
-        SDL_Rect quad;
+        uint32_t ID;
+        uint16_t posX;
+        uint16_t posY;
         bool destroyed;
 
     public:
-        Entity(SDL_Renderer *renderer, int anID, int aPosX, int aPosY, View aView);
+        Entity(uint32_t anID, uint16_t aPosX, uint16_t aPosY);
         ~Entity();
 
         Entity(const Entity &copy) = delete;
         Entity(Entity&& other);
         Entity& operator=(Entity&& other);
 
-        void refreshPosition(MovementType move);
-        virtual void render(Camera &camera);
+        virtual void refreshPosition(MovementType move) = 0;
+        virtual void render(Camera &camera) = 0;
+        virtual bool collision(uint16_t x, uint16_t y) = 0;
 
         bool isDestroyed();
         void destroy();
+        uint32_t getID();
 };
 
 #endif

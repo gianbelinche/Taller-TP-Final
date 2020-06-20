@@ -26,8 +26,8 @@ class Texture {
           SDL_Renderer *renderer;
           SDL_Texture *texture;
           // Dimension de la imagen
-          int tWidth;
-          int tHeight;
+          uint16_t tWidth;
+          uint16_t tHeight;
         
      public:
           Texture(SDL_Renderer *aRenderer);
@@ -42,8 +42,8 @@ class Texture {
           void free();
           void render(int x, int y, SDL_Rect *clip, SDL_Rect* renderQuad);
   
-          int getWidth();
-          int getHeight();
+          uint16_t getWidth();
+          uint16_t getHeight();
 };
 
 #endif

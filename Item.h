@@ -22,12 +22,6 @@
 #define ESCUDO_HIERRO_PATH "img/escudo_hierro.png"
 #define SOMBRERO_MAGICO_PATH "img/sombrero_magico.png"
 
-#define ITEM_HEIGHT 32
-#define ITEM_WIDTH 32
-#define ITEM_VERT_SPRITES 1
-#define ITEM_HOR_SPRITES 1
-#define ITEM_SPEED 0
-
 //VER SI NO CAMBIAR A INGLES ESTO DE ABAJO
 enum ItemType {ESPADA, HACHA, MARTILLO, VARA_FRESNO, FLAUTA_ELFICA, BACULO_NUDOSO,
                BACULO_ENGARZADO, ARCO_SIMPLE, ARCO_COMPUESTO, ARMADURA_CUERO, 
@@ -35,9 +29,21 @@ enum ItemType {ESPADA, HACHA, MARTILLO, VARA_FRESNO, FLAUTA_ELFICA, BACULO_NUDOS
                ESCUDO_HIERRO, SOMBRERO_MAGICO};
 
 class Item : public Entity {
+    protected:
+        FilteredImage image;
+
     public:
-        Item(SDL_Renderer *renderer, int anID, int posX, int posY, ItemType type);
+        Item(SDL_Renderer *renderer, uint32_t anID, uint16_t aPosX, 
+             uint16_t aPosY, ItemType type);
         ~Item();
+
+        Item(const Item &copy) = delete;
+        Item(Item&& other);
+        Item& operator=(Item&& other);
+
+        virtual void refreshPosition(MovementType move) override;
+        virtual void render(Camera &camera) override;
+        virtual bool collision(uint16_t x, uint16_t y) override;
 };
 
 #endif

@@ -1,7 +1,10 @@
 #include "MapImage.h"
 
-MapImage::MapImage(SDL_Renderer *aRenderer, std::string path, int tileHeight, int tileWidth) : Image(aRenderer, path) {
-    SpriteClipCreator(this->tHeight, this->tWidth, tileHeight, tileWidth, this->spriteClips);
+MapImage::MapImage(SDL_Renderer *aRenderer, std::string path, 
+                   uint16_t tileHeight, uint16_t tileWidth) : Image(aRenderer, 
+                                                                    path) {
+    SpriteClipCreator(this->tHeight, this->tWidth, tileHeight, tileWidth, 
+                      this->spriteClips);
 }
 
 MapImage::~MapImage() {}
@@ -20,7 +23,7 @@ MapImage& MapImage::operator=(MapImage&& other) {
     return *this;
 }
 
-void MapImage::renderFromTile(int index, int x, int y) {
+void MapImage::renderFromTile(uint16_t index, int x, int y) {
     SDL_Rect clip = spriteClips[index];
     SDL_Rect renderQuad = {x, y, clip.w, clip.h};
     this->render(x, y, &clip, &renderQuad); 

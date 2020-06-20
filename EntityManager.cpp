@@ -1,41 +1,47 @@
 #include "EntityManager.h"
 
-EntityManager::EntityManager(SDL_Renderer *aRenderer, Player &aPlayer) : 
+EntityManager::EntityManager(SDL_Renderer *aRenderer, Player &aPlayer, uint32_t aPlayerID) : 
+                                                        playerID(aPlayerID),
                                                         player(aPlayer), 
                                                         renderer(aRenderer) {}
 
-EntityManager::~EntityManager() {}
+EntityManager::~EntityManager() {
+    for (auto &entity : entities) {
+        delete(entity.second);
+    }
+}
 
-void EntityManager::addNPC(NPCType type, int anID, int aPosX, int aPosY, 
+void EntityManager::addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY, 
                               View aView) {
     std::unique_lock<std::mutex> lk(mux);
+    /*DEBERIA ARMAR TAMBIEN EL OTRO HASH PARA RENDERIZAR EN ORDEN*/
     switch (type) {
         case SPYDER:
-            entities.emplace_back(Spyder(renderer, anID, aPosX, aPosY, aView));
+            entities[anID] = new Spyder(renderer, anID, aPosX, aPosY, aView);
             break;
         
         case SKELETON:
-            entities.emplace_back(Skeleton(renderer, anID, aPosX, aPosY, aView));
+            entities[anID] = new Skeleton(renderer, anID, aPosX, aPosY, aView);
             break;
 
         case GOBLIN:
-            entities.emplace_back(Goblin(renderer, anID, aPosX, aPosY, aView));
+            entities[anID] = new Goblin(renderer, anID, aPosX, aPosY, aView);
             break;
 
         case ZOMBIE:
-            entities.emplace_back(Zombie(renderer, anID, aPosX, aPosY, aView));
+            entities[anID] = new Zombie(renderer, anID, aPosX, aPosY, aView);
             break;
 
         case BANKER:
-            entities.emplace_back(Banker(renderer, anID, aPosX, aPosY, aView));
+            entities[anID] = new Banker(renderer, anID, aPosX, aPosY, aView);
             break;
 
         case MERCHANT:
-            entities.emplace_back(Merchant(renderer, anID, aPosX, aPosY, aView));
+            entities[anID] = new Merchant(renderer, anID, aPosX, aPosY, aView);
             break;
 
         case HEALER:
-            entities.emplace_back(Healer(renderer, anID, aPosX, aPosY, aView));
+            entities[anID] = new Healer(renderer, anID, aPosX, aPosY, aView);
             break;
 
         default:
@@ -44,28 +50,52 @@ void EntityManager::addNPC(NPCType type, int anID, int aPosX, int aPosY,
     }
 }
 
-void EntityManager::addDrop(ItemType type, int anID, int aPosX, int aPosY) {
-    entities.emplace_back(Item(renderer, anID, aPosX, aPosY, type));
+void EntityManager::addDrop(ItemType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY) {
+    entities[anID] = new Item(renderer, anID, aPosX, aPosY, type);
 }
 
-void EntityManager::addPlayer() {
+void EntityManager::addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX, uint16_t aPosY) {
     std::unique_lock<std::mutex> lk(mux);
-    /*COMPLETAR*/
+    entities[anID] = new Player(renderer, aRace, anID, aPosX, aPosY);
 }
 
-void EntityManager::destroyEntity(int ID) {
-    /* ACCEDERA LA ENTIDAD CON ESE ID Y DESTRUIRLA */
+void EntityManager::destroyEntity(uint32_t ID) {
+    std::unique_lock<std::mutex> lk(mux);
+    entities[ID]->destroy();
 }
 
 void EntityManager::refreshEntities() {
-    /* FOR DEL HASH CHEQUEANDO SI HAY ALGUNA ENTIDAD DESTRUIDA */
+    std::unique_lock<std::mutex> lk(mux);
+    for (auto& entity : entities) {
+        if (entity.second->isDestroyed()) {
+            entities.erase(entity.first);
+        }
+    }
+}
+
+void EntityManager::moveEntity(uint32_t ID, MovementType moveType) {
+    std::unique_lock<std::mutex> lk(mux); //necesario??
+    if (ID == playerID) player.refreshPosition(moveType);
+    else entities[ID]->refreshPosition(moveType);
 }
 
 void EntityManager::renderEntities(Camera &camera) {
     std::unique_lock<std::mutex> lk(mux);
     for (auto& entity : entities) {
-        entity.render(camera);
+        entity.second->render(camera);
     }
 
     player.render(camera);
+}
+
+uint32_t EntityManager::checkClickEntities(Camera &camera, uint16_t x, uint16_t y) {
+    std::unique_lock<std::mutex> lk(mux); //necesario??
+    uint16_t xCam = camera.getX();
+    uint16_t yCam = camera.getY();
+
+    for (auto &entity : entities) {
+        if (entity.second->collision(x + xCam, y + yCam)) {
+            return entity.second->getID();
+        }
+    }
 }
