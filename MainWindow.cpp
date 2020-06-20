@@ -76,7 +76,10 @@ void MainWindow::run() {
 
     bool quit = false;
 
+    //Uint32 time = SDL_GetTicks();
+
     while (!quit) {
+        //time = SDL_GetTicks();
         while (SDL_PollEvent(&eventHandler) != 0) { //el que se encargue de esto puede usar waitevent en vez de pollevent
             if (eventHandler.type == SDL_QUIT) {
                 quit = true;
@@ -93,5 +96,6 @@ void MainWindow::run() {
         mainMap.renderStructures(camera);
 
         SDL_RenderPresent(mainRenderer);
+        //std::cout << 1000 / (SDL_GetTicks() - time) << '\n';
     }
 }
