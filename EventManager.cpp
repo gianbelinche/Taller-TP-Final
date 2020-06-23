@@ -8,6 +8,10 @@ EventManager::~EventManager() {
 }
 
 void EventManager::handle(SDL_Event &event) {
+    //Hola guido te voy poniendo cosas que creo que vamos a necesitar
+    //Al principio de todo hay que poner un
+    //SDL_StopTextInput();
+    //Porque por default el text input esta activado
     // ver si tiene que ser bloqueante o no
     switch (event.type) {
         case SDL_QUIT:
@@ -37,7 +41,8 @@ void EventManager::handle(SDL_Event &event) {
         CLICKEADA
         */
         case SDL_TEXTINPUT:
-        
+        //Aca habria que hacer esto
+        //chat.putCharacter(event.text.text);
         default:
             break;
     }
@@ -71,6 +76,9 @@ void EventManager::checkKeyDown(SDL_Event &event) {
                 //hola gian, te hablo a vos
                 //no se si lo queres chequear aca o en otro lado
                 //aca iria el writing = true
+                //hola guido, aca iria un
+                //SDL_StartTextInput();
+                //writing = true;
                 break;
             
             default:
@@ -78,6 +86,18 @@ void EventManager::checkKeyDown(SDL_Event &event) {
         }
     } //gian, te vuelvo a hablar a vos, no se si queres poner aca un else
     //y chequear si es enter o backspace o lo haces en otro lado
+    //si guido, me parece buena idea, algo asi seria
+    /*else {
+        switch (event.key.keysym.sym){
+            case SDLK_RETURN:
+                chat.sendMessage();
+                SDL_StopTextInput();
+                break;
+            case SDLK_BACKSPACE:
+                chat.deleteCharacter();
+                break;    
+        }
+    }*/
 }
 
 void EventManager::checkKeyUp(SDL_Event &event) {
@@ -97,6 +117,7 @@ void EventManager::checkKeyUp(SDL_Event &event) {
     } //hola gian del futuro, te vuelvo a preguntar si pasa algo 
     //cuando el usuario suelta una tecla, avisame asi lo agrego
     //al else
+    //hola guido del pasado, no no pasa nada en este caso
 }
 
 void EventManager::checkClick(SDL_Event &event) {
@@ -104,4 +125,13 @@ void EventManager::checkClick(SDL_Event &event) {
     //if click_en_inventario
     //si no chequeo inventario chequear si clickeo alguna entidad
     //else entitymanager.check(xdelclick,ydelclick)
+    //Esto aun no lo tengo bien decidido pero, lo que tengo es esto
+    /*std::string selected = inventory.select(event.button.x,event.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
+    if (selected != "")
+    std::cout << selected << std::endl;*/
+    //es decir, le digo al inventario que seleccione el objeto de la pos x,y y devuelva el objeto de esa pos, si no hay ningun objeto
+    //o si clickeo afuera del inventario devuelve "", habria que diferenciar si clickeo afuera o en una casilla vacia, tal vez podria hacer que
+    //devuelva la casilla, eso lo resolveria, ya vere que hacer
+    //Saludos guido, que tengas un buen dia
+    
 }
