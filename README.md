@@ -47,21 +47,29 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
     - **Cliente a Servidor**:
 
-        `02 + ID + obj / slot` <- se debe decidir si mandar qué objeto o qué slot clickeo
+        `02 + ID + SLOT` 
 
         Ejemplo:
 
-        `Agregar ejemplo`
+        `{02,00}` <- Seleccionar slot 0
 
 3. **Comandos** (03):
 
     - **Cliente a Servidor**:
 
-        `03 + ID + comando` <- se debe decidir si mandar qué objeto o qué slot clickeo
+        `03 + comando`
 
         Ejemplo:
 
-        `Agregar ejemplo`
+        `{03, "/meditar"}` <- El usuario escribió "/meditar" en el chat
+
+        `{03, "@Personaje2 hola como estas?"}` <- El usuario escribió "@Personaje2 hola como estas?" en el chat
+
+
+      
+
+
+
 
 ### Comandos Servidor a Cliente
 
@@ -224,32 +232,110 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
       TBD
 
-7. **Ganancia de experiencia(07):**
+    - __Ganancia de experiencia(06):__
 
-    `07 + id + cant_exp`
+      `06 + 05 + id + cant_exp`
 
-    Ejemplo:
+      Ejemplo:
 
-    `{07, 445, 168}` --> El jugador `445` gano `168` de experiencia
+      `{06, 05, 445, 168}` --> El jugador `445` gano `168` de experiencia
 
-    Aclaración: `cant_exp` nunca va a ser mayor que la cantidad de experiencia que le falta al jugador para subir de nivel
+      Aclaración: `cant_exp` nunca va a ser mayor que la cantidad de experiencia que le falta al jugador para subir de nivel
 
-8. **Subida de nivel(08):**
+  - __Subida de nivel(07):__
 
-    _Mas que nada para resetear la barrita de experiencia._
+      _Mas que nada para resetear la barrita de experiencia._
 
-    TODO: Ver si hace falta mandar el nuevo nivel del jugador o si con solo decir que se incrementó alcanza
+      TODO: Ver si hace falta mandar el nuevo nivel del jugador o si con solo decir que se incrementó alcanza
 
-    `08 + id`
+      `06 + 07 + id`
 
-    Ejemplo:
+      Ejemplo:
 
-    `{08, 11}` --> El jugador `11` subió de nivel
+      `{06, 04, 11}` --> El jugador `11` subió de nivel
 
     
 
-9. **Daño** (0X):
+7. **Daño** (0X):
 
     TBD: Se puede hacer con el mensaje (06), del subtipo **Daño recibido(01)**
+
+8. **Comandos de inventario** (8):
+
+    `8 + ID + SLOT/OBJ`
+
+    Ejemplo:
+
+    `{8,00,00}` <- poner espada en inventario
+
+    `{8,01,02}` <- sacar objeto en slot 2 del inventario
+
+    IDs:
+      - 00 <- poner objeto
+      - 01 <- quitar objeto de slot
+      - 02 <- equipar objeto
+
+    OBJs:
+      - 00 -> Espada
+      - 01 -> Hacha
+      - 02 -> Martillo
+      - 03 -> Vara de Fresno
+      - 04 -> Flauta Elfica
+      - 05 -> Baculo Nudoso
+      - 06 -> Baculo Engarzado
+      - 07 -> Arco Simple
+      - 08 -> Arco Compuesto
+      - 09 -> Armadura de Cuero
+      - 10 -> Armadura de Placas
+      - 11 -> Tunica Azul
+      - 12 -> Capucha
+      - 13 -> Casco de Hierro
+      - 14 -> Escudo Tortuga
+      - 15 -> Escudo de Hierro
+      - 16 -> Sombrero Magico
+
+9. **Actualizar estado**:
+
+    `9 + ID + cantidad + cant_max(opcional)`
+
+    - __Oro(00)__:
+
+      `09 + 00 + oro`
+
+      Ejemplo:
+
+      `{09, 00, 150}` <- La cantidad de oro actual es 150
+
+    - __Vida(01)__:
+
+      `09 + 01 + vida + vida_max`
+
+      Ejemplo:
+
+      ´{09, 01, 150, 300} <- La cantidad de vida actual es 150 de 300
+
+    - __Mana(02)__:
+
+      `09 + 02 + mana + mana_max`
+
+      Ejemplo:
+
+      `{09, 02, 230, 570}` <- La cantidad de mana actual es 230 de 570
+
+    - __Nivel(03)__:
+
+      `09 + 03 + nivel`
+
+      Ejemplo:
+
+      `{09, 03, 5}` <- El nivel actual es 5
+
+    - __Experiencia(04)__:
+
+      `09 + 04 + experiencia + experiencia_max`
+
+      Ejemplo:
+
+      `{09, 04, 1020, 2500}` <- La cantidad de experiencia actual es 1020 de 2500     
 
 COMPLETAR
