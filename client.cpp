@@ -5,6 +5,10 @@
 #include "Sender.h"
 #include "Receiver.h"
 #include "Camera.h"
+#include "EntityManager.h"
+#include "EventManager.h"
+#include "ModelController.h"
+#include "Renderer.h"
 #include <exception>
 #include <iostream>
 
@@ -26,11 +30,17 @@ int main(int argc, char* argv[]) {
 
         Camera camera(player.getPosX(), player.getPosY()); //quizas sea mejor cambiar esto
 
-        //EntityManager
+        EntityManager entityManager(mainWindow.getRenderer(), player, player.getID());
 
-        //EventManager
-        //ModelController
-        //Renderer
+        EventManager eventManager(entityManager, player.getID(), senderQueue);
+        ModelController modelController(entityManager, receiverQueue);
+        Renderer renderer(camera, player, mainMap, entityManager, 
+                          mainWindow.getRenderer(), layout, inventory, 
+                          chat, expbar);
+        /*Camera &aCamera, Player &aPlayer, MainMap &aMainMap, 
+        EntityManager &anEntityManager, SDL_Renderer *aRenderer,
+        Layout &layout, GraphicInventory &inventory, MiniChat &chat,
+        ExpBar &expbar*/
         /*
         ClientProtocol <- eliminar esta clase (tiene cómo se crea mainmap)
         */

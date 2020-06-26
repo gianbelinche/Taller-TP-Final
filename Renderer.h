@@ -29,8 +29,8 @@ class Renderer : public Thread {
     public:
         Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap, 
                  EntityManager &anEntityManager, SDL_Renderer *aRenderer,
-                 Layout &layout, GraphicInventory &inventory, MiniChat &chat,
-                 ExpBar &expbar);
+                 Layout &aLayout, GraphicInventory &anInventory, 
+                 MiniChat &aChat, ExpBar &anExpbar);
         ~Renderer();
 
         void run();

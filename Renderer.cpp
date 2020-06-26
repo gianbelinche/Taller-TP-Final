@@ -3,15 +3,15 @@
 
 Renderer::Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap, 
                    EntityManager &anEntityManager, SDL_Renderer *aRenderer,
-                 Layout &layout, GraphicInventory &inventory, MiniChat &chat,
-                 ExpBar &expbar) : 
+                   Layout &aLayout, GraphicInventory &anInventory, 
+                   MiniChat &aChat, ExpBar &anExpbar) : 
                                             closed(false), camera(aCamera),
                                             player(aPlayer), mainMap(aMainMap),
                                             entityManager(anEntityManager),
-                                            renderer(aRenderer),
-                                            layout(layout), 
-                                            inventory(inventory),
-                                            chat(chat), expbar(expbar) {}
+                                            renderer(aRenderer), 
+                                            layout(aLayout), 
+                                            inventory(anInventory), chat(aChat),
+                                            expbar(anExpbar) {}
 
 Renderer::~Renderer() {}
 
