@@ -2,11 +2,11 @@
 #include <SDL2/SDL_mixer.h>
 #include <stdio.h>
 #include <string>
-#include "MainWindow.h"
+#include "Test_gian.h"
 
 
 int main( int argc, char* args[] ){
-	MainWindow mw;
+	TestGian mw;
 	mw.run();
 
 	return 0;

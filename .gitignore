@@ -1,7 +1,11 @@
 prueba
 a.out
-.vscode/
-CMakeFiles
+*.a
 testgian
-*cmake
+Makefile
+.vscode/
+.gitignore
+CMakeFiles
+*.cmake
 CMakeCache.txt
+Makelife
