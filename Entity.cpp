@@ -20,14 +20,6 @@ Entity& Entity::operator=(Entity&& other) {
     posY = other.posY;
 }
 
-bool Entity::isDestroyed() {
-    return destroyed;
-}
-
-void Entity::destroy() {
-    destroyed = true;
-}
-
 uint32_t Entity::getID() {
     return ID;
 }

@@ -1,13 +1,17 @@
 #include "Player.h"
 
+#define B 0
+
 Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID, 
-               uint16_t aPosX, uint16_t aPosY) : Entity(anID, aPosX, aPosY),
-                                                 bodyImage(aRenderer, 0, 0, 0),
-                                                 headImage(aRenderer, 0, 0, 0) { /*cambiar 0,0,0 por BLACK, BLACK, BLACK O ALGO ASI*/
+               uint16_t aPosX, uint16_t aPosY, bool isDead) : 
+                                                Entity(anID, aPosX, aPosY),
+                                                bodyImage(aRenderer, B, B, B),
+                                                headImage(aRenderer, B, B, B),
+                                                dead(isDead) {
     this->speed = PLAYER_SPEED;
-    this->bodyFrameX = 0;   //esto debería cambiar y que pasen por parametro cómo estaba mirando el personaje
-    this->bodyFrameY = 0;   //esto debería cambiar y que pasen por parametro cómo estaba mirando el personaje
-    this->headFrameX = 0;   //esto debería cambiar y que pasen por parametro cómo estaba mirando el personaje
+    this->bodyFrameX = 0;
+    this->bodyFrameY = 0;
+    this->headFrameX = 0;
     this->dead = false;     //esto también debería cambiar, puede que el usuario se loguee y este como fantasma
     this->bodyWidth = 25;   //cambiar numeros magicos
     this->bodyHeight = 45;  //cambiar numeros magicos
@@ -145,6 +149,10 @@ void Player::render(Camera &camera) {
 
 bool Player::collision(uint16_t x, uint16_t y) {
     //COMPLETAR CHEQUEAR CAMBIAR
+}
+
+void Player::kill() {
+    dead = true;
 }
 
 uint16_t Player::getPosX() {

@@ -94,3 +94,7 @@ bool Item::collision(uint16_t x, uint16_t y) {
     //LOS ITEMS NO SON CLICKEABLES
     return false;
 }
+
+void Item::kill() {
+    //DO NOTHING
+}

@@ -1,11 +1,16 @@
 #include "EventManager.h"
 #include "QuitException.h"
+#include <vector>
 
-EventManager::EventManager() {
-}
+#define MOVE_CHAR 0
 
-EventManager::~EventManager() {
-}
+EventManager::EventManager(EntityManager &anEntityManager, uint32_t aPlayerID, 
+                           MessageQueue &aMsgQueue) : 
+                                                entityManager(anEntityManager),
+                                                playerID(aPlayerID), 
+                                                msgQueue(aMsgQueue) {}
+
+EventManager::~EventManager() {}
 
 void EventManager::handle(SDL_Event &event) {
     // ver si tiene que ser bloqueante o no
@@ -14,29 +19,17 @@ void EventManager::handle(SDL_Event &event) {
             throw QuitException("Salida del programa.\n");
             break;
 
-        case SDL_KEYDOWN: //apreto una tecla
+        case SDL_KEYDOWN:
             checkKeyDown(event);
-        case SDL_KEYUP: //solto la tecla
-            if (!writing) //dejar de caminar si es wasd
-        /*
-        SI NO ESTA ACTIVADO EL CHAT, ENVIAR AL SERVIDOR LA ACCION DE
-        DEJAR DE MOVER AL PERSONAJE. esto hay que mandarlo para
-        que todos los usuarios se enteren que un pj se dejo de mover
 
-        SI ESTA ACTIVADO EL CHAT, NO HACER NADA EN PRINCIPIO
-        */
-        case SDL_MOUSEBUTTONDOWN: //hizo un click
-        /*
-        CHEQUEAR SI EL CLICK FUE EN EL INVENTARIO
+        case SDL_KEYUP:
+            checkKeyUp(event);
 
-        SI HIZO CLICK EN EL INVENTARIO ENVIAR AL SERVIDOR ESO
+        case SDL_MOUSEBUTTONDOWN:
+            checkClick(event);
 
-        SI NO FUE EN EL INVENTARIO CHEQUEAR SI CLICKEO ALGUNA ENTIDAD
-
-        SI CLICKEO EN ALGUNA ENTIDAD ENVIAR AL SERVIDOR EL ID DE LA IDENTIDAD
-        CLICKEADA
-        */
         case SDL_TEXTINPUT:
+            // GIAN
         
         default:
             break;
@@ -44,64 +37,80 @@ void EventManager::handle(SDL_Event &event) {
 }
 
 void EventManager::checkKeyDown(SDL_Event &event) {
+    std::vector<uint32_t> msg;
     if (!writing) {
         switch (event.key.keysym.sym) {
-            case SDLK_w: //arriba
-                //generar codigo protocolo
-                //enviar
+            case SDLK_w:
+                msg.emplace_back(MOVE_CHAR);
+                msg.emplace_back(playerID);
+                msg.emplace_back(MOVE_UP);
                 break;
 
-            case SDLK_a: //izquierda
-                //generar codigo protocolo
-                //enviar
+            case SDLK_a:
+                msg.emplace_back(MOVE_CHAR);
+                msg.emplace_back(playerID);
+                msg.emplace_back(MOVE_LEFT);
                 break;
 
-            case SDLK_s: //abajo
-                //generar codigo protocolo
-                //enviar
+            case SDLK_s:
+                msg.emplace_back(MOVE_CHAR);
+                msg.emplace_back(playerID);
+                msg.emplace_back(MOVE_DOWN);
                 break;
 
-            case SDLK_d: //derecha
-                //generar codigo protocolo
-                //enviar
+            case SDLK_d:
+                msg.emplace_back(MOVE_CHAR);
+                msg.emplace_back(playerID);
+                msg.emplace_back(MOVE_RIGHT);
                 break;
 
             case SDLK_KP_ENTER:
             case SDLK_RETURN:
-                //hola gian, te hablo a vos
-                //no se si lo queres chequear aca o en otro lado
-                //aca iria el writing = true
+                //Gian, haz lo tuyo
                 break;
             
             default:
                 break;
         }
-    } //gian, te vuelvo a hablar a vos, no se si queres poner aca un else
-    //y chequear si es enter o backspace o lo haces en otro lado
+        msgQueue.push(msg);
+    } else {
+        switch (event.key.keysym.sym) {
+            case SDLK_KP_ENTER:
+            case SDLK_RETURN:
+            case SDLK_BACKSPACE:
+                //Gian, haz lo tuyo
+                break;
+
+            default:
+                break;
+        }
+    }
 }
 
 void EventManager::checkKeyUp(SDL_Event &event) {
+    std::vector<uint32_t> msg;
     if (!writing) {
         switch (event.key.keysym.sym) {
-            case SDLK_w: //parar
-            case SDLK_a: //parar
-            case SDLK_s: //parar
-            case SDLK_d: //parar
-                //generar codigo protocolo
-                //enviar
+            case SDLK_w:
+            case SDLK_a:
+            case SDLK_s:
+            case SDLK_d:
+                msg.emplace_back(MOVE_CHAR);
+                msg.emplace_back(playerID);
+                msg.emplace_back(STOP);
+                msgQueue.push(msg);
                 break;
             
             default:
                 break;
         }
-    } //hola gian del futuro, te vuelvo a preguntar si pasa algo 
-    //cuando el usuario suelta una tecla, avisame asi lo agrego
-    //al else
+    }
 }
 
 void EventManager::checkClick(SDL_Event &event) {
-    //chequear si clickeo inventario
-    //if click_en_inventario
-    //si no chequeo inventario chequear si clickeo alguna entidad
-    //else entitymanager.check(xdelclick,ydelclick)
+    if (/*Click en inventario*/) {
+
+    } else {
+        //else entitymanager.checkClickEntities(camera, x, y);
+    }
 }

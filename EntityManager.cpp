@@ -51,30 +51,30 @@ void EntityManager::addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t
 }
 
 void EntityManager::addDrop(ItemType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY) {
+    std::unique_lock<std::mutex> lk(mux);
     entities[anID] = new Item(renderer, anID, aPosX, aPosY, type);
 }
 
-void EntityManager::addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX, uint16_t aPosY) {
+void EntityManager::addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX, 
+                              uint16_t aPosY, bool dead) {
     std::unique_lock<std::mutex> lk(mux);
-    entities[anID] = new Player(renderer, aRace, anID, aPosX, aPosY);
+    entities[anID] = new Player(renderer, aRace, anID, aPosX, aPosY, dead);
 }
 
 void EntityManager::destroyEntity(uint32_t ID) {
     std::unique_lock<std::mutex> lk(mux);
-    entities[ID]->destroy();
+    delete(entities[ID]);
+    entities.erase(ID);
 }
 
-void EntityManager::refreshEntities() {
+void EntityManager::killPlayer(uint32_t ID) {
     std::unique_lock<std::mutex> lk(mux);
-    for (auto& entity : entities) {
-        if (entity.second->isDestroyed()) {
-            entities.erase(entity.first);
-        }
-    }
+    if (ID == playerID) player.kill();
+    entities[ID]->kill();
 }
 
 void EntityManager::moveEntity(uint32_t ID, MovementType moveType) {
-    std::unique_lock<std::mutex> lk(mux); //necesario??
+    std::unique_lock<std::mutex> lk(mux);
     if (ID == playerID) player.refreshPosition(moveType);
     else entities[ID]->refreshPosition(moveType);
 }
@@ -89,7 +89,7 @@ void EntityManager::renderEntities(Camera &camera) {
 }
 
 uint32_t EntityManager::checkClickEntities(Camera &camera, uint16_t x, uint16_t y) {
-    std::unique_lock<std::mutex> lk(mux); //necesario??
+    std::unique_lock<std::mutex> lk(mux);
     uint16_t xCam = camera.getX();
     uint16_t yCam = camera.getY();
 

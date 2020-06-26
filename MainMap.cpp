@@ -4,7 +4,6 @@ MainMap::MainMap(std::map<uint32_t, std::vector<std::string>> &tiles,
                  SDL_Renderer *aRenderer, std::vector<std::vector<uint32_t>> aTexMap,
                  std::vector<std::vector<uint32_t>> aStrMap)
                  : texMap(std::move(aTexMap)), strMap(std::move(aStrMap)) {
-    
     for (auto& obj : tiles) {
         int tileWidth = std::stoi(obj.second.back());
         obj.second.pop_back();
@@ -67,7 +66,7 @@ void MainMap::renderTerrain(Camera &camera) {
         }
         y += 32;
         x = 0 - camera.getX();
-    } 
+    }
 }
 
 void MainMap::renderStructures(Camera &camera) {

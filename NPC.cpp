@@ -88,3 +88,5 @@ bool NPC::collision(uint16_t x, uint16_t y) {
     /*NO SE SI ESTA BIEN EL CUADRADO DONDE EVALUO O SI TIENE QUE HABER ALGUN /2*/
     return (x > posX) && (x < posX + width) && (y > posY) && (y < posY + width);
 }
+
+void NPC::kill() {}
