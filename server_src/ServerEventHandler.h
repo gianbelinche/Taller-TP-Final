@@ -1,15 +1,16 @@
 #ifndef SERVEREVENTHANDLER_H
 #define SERVEREVENTHANDLER_H
 
+#include "Events/ClickEvent.h"
+#include "Events/UserMoved.h"
 #include "GameState.h"
 #include "Thread.h"
-#include "Events/UserMoved.h"
-#include "Events/ClickEvent.h"
 
 class ServerEventHandler {
-private:
+ private:
   GameState &world;
-public:
+
+ public:
   ServerEventHandler(GameState &state);
 
   ~ServerEventHandler();
@@ -19,4 +20,4 @@ public:
   void handleUserAttack(ClickEvent &ev);
 };
 
-#endif // SERVEREVENTHANDLER_H
+#endif  // SERVEREVENTHANDLER_H

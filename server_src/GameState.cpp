@@ -32,12 +32,12 @@ void GameState::playerMoved(int id) {
   // mensajes salientes
 }
 
-PlayerNet* GameState::getNearestPlayer(Entity& ent, Condition* cond) {
+PlayerNet* GameState::getNearestPlayer(Entity* ent, Condition* cond) {
   PlayerNet* nearest = nullptr;
   float smallestDistance = std::numeric_limits<float>::infinity();
   float curr;
   for (auto& it : players) {
-    if ((curr = entitiesDistance(ent, *(it.second))) < smallestDistance &&
+    if ((curr = entitiesDistance(ent, it.second)) < smallestDistance &&
         (cond->evaluate(it.second))) {
       nearest = it.second;
       smallestDistance = curr;
@@ -46,9 +46,9 @@ PlayerNet* GameState::getNearestPlayer(Entity& ent, Condition* cond) {
   return nearest;
 }
 
-float entitiesDistance(Entity& ent1, Entity& ent2) {
-  int dist_x = abs(ent1.getX() - ent2.getX());
-  int dist_y = abs(ent1.getY() - ent2.getY());
+float entitiesDistance(Entity* ent1, Entity* ent2) {
+  int dist_x = abs(ent1->getX() - ent2->getX());
+  int dist_y = abs(ent1->getY() - ent2->getY());
   return sqrt(pow(dist_x, 2) + pow(dist_y, 2));
 }
 
@@ -65,4 +65,17 @@ Entity* GameState::getEntity(int id) {
   } else {
     return nullptr;
   }
+}
+
+bool GameState::playerCanAttack(PlayerNet* player, Entity* ent) {
+  if (!player->isAlive() || !ent->isAlive()) {
+    return false;
+  } else if (player->getAttackRange() < entitiesDistance(player, ent)) {
+    return false;
+  } else if (player->getId() == ent->getId()) {
+    if (player->getDamage() >= 0) { // Se puede curar, pero no dañarse a si mismo
+      return false;
+    }
+  }
+  return true;
 }

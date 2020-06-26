@@ -30,13 +30,25 @@ class GameState {
 
   bool isValidPosition(int x, int y);
 
-  PlayerNet* getNearestPlayer(Entity& ent, Condition* cond = nullptr);
+  PlayerNet* getNearestPlayer(Entity* ent, Condition* cond = nullptr);
 
-  float entitiesDistance(Entity& ent1, Entity& ent2);
+  float entitiesDistance(Entity* ent1, Entity* ent2);
 
-  void playerMoved(int id);
+  bool playerCanAttack(PlayerNet* player, Entity* ent);
 
-  void monsterMoved(int id);
+  /* ---------- Eventos ---------- */
+
+  void playerMoved(int id); // Ver si conviene mergearlos en uno solo
+
+  void playerDealtDamage(int id, int damage);
+
+  void playerTookDamage(int id, int damage);
+
+  void monsterMoved(int id); 
+
+  void playerDied(int id);
+
+  void entityDisappear(int id) // Jugadores que se desconectan o mobs que mueren
 };
 
 #endif  // GAMESTATE_H

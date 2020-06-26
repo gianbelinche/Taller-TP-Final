@@ -1,16 +1,16 @@
+#include "ServerEventHandler.h"
+
 #include <iostream>
 
 #include "PlayerNet.h"
-#include "ServerEventHandler.h"
 
-ServerEventHandler::ServerEventHandler(GameState &state) : world(state) {}
+ServerEventHandler::ServerEventHandler(GameState& state) : world(state) {}
 
 ServerEventHandler::~ServerEventHandler() {}
 
-
-void ServerEventHandler::handle(UserMoved &ev) {
+void ServerEventHandler::handle(UserMoved& ev) {
   PlayerNet* player = world.getPlayer(ev.getUser());
-  if (player == nullptr) { // Caso medio raro
+  if (player == nullptr) {  // Caso medio raro
     std::cerr << "Jugador no encontrado: " << ev.getUser() << std::endl;
     return;
   }
@@ -21,8 +21,7 @@ void ServerEventHandler::handle(UserMoved &ev) {
   world.playerMoved(ev.getUser());
 }
 
-
-void ServerEventHandler::handleUserAttack(ClickEvent &ev) {
+void ServerEventHandler::handleUserAttack(ClickEvent& ev) {
   PlayerNet* player = world.getPlayer(ev.getUser());
   if (player == nullptr) {
     std::cerr << "Jugador no encontrado: " << ev.getUser() << std::endl;
@@ -31,13 +30,18 @@ void ServerEventHandler::handleUserAttack(ClickEvent &ev) {
 
   Entity* entity = world.getEntity(ev.getDestinyEntityID());
   if (entity == nullptr) {
-    std::cerr << "Entidad de destino no encontrada" << ev.getDestinyEntityID() 
+    std::cerr << "Entidad de destino no encontrada" << ev.getDestinyEntityID()
               << std::endl;
     return;
   }
-  if (!entity->isAlive()) {return;}
+  if (!world.playerCanAttack(player, entity)) {
+    return;
+  }
 
   int damageDealt = player->attack(entity);
-  // Hay que mandar el daño causado fijandose si es mayor a cero, cero o 
+  world.playerDealtDamage(player->getId(), damageDealt);
+  // Hay que mandar el daño causado fijandose si es mayor a cero, cero o
   // negativo
+  // Tambien si murio hay que calcular la experiencia extra
+  if 
 }
