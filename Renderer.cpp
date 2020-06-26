@@ -2,11 +2,16 @@
 #include <unistd.h>
 
 Renderer::Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap, 
-                   EntityManager &anEntityManager, SDL_Renderer *aRenderer) : 
+                   EntityManager &anEntityManager, SDL_Renderer *aRenderer,
+                 Layout &layout, GraphicInventory &inventory, MiniChat &chat,
+                 ExpBar &expbar) : 
                                             closed(false), camera(aCamera),
                                             player(aPlayer), mainMap(aMainMap),
                                             entityManager(anEntityManager),
-                                            renderer(aRenderer) {}
+                                            renderer(aRenderer),
+                                            layout(layout), 
+                                            inventory(inventory),
+                                            chat(chat), expbar(expbar) {}
 
 Renderer::~Renderer() {}
 
@@ -24,10 +29,10 @@ void Renderer::run() {
         mainMap.renderTerrain(camera);
         entityManager.renderEntities(camera);
         mainMap.renderStructures(camera);
-        //layout.render
-        //graphicinventory.render
-        //expbar.render
-        //minichat.render
+        layout.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+        inventory.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+        expbar.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+        chat.render(SCREEN_WIDTH,SCREEN_HEIGHT);
 
         SDL_RenderPresent(renderer);
         

@@ -7,6 +7,10 @@
 #include "MainMap.h"
 #include "EntityManager.h"
 #include <mutex>
+#include "Layout.h"
+#include "GraphicInventory.h"
+#include "MiniChat.h"
+#include "ExpBar.h"
 
 class Renderer : public Thread {
     private:
@@ -17,10 +21,16 @@ class Renderer : public Thread {
         MainMap &mainMap;
         EntityManager &entityManager;
         SDL_Renderer *renderer;
+        Layout &layout;
+        GraphicInventory &inventory;
+        MiniChat &chat;
+        ExpBar &expbar;
 
     public:
         Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap, 
-                 EntityManager &anEntityManager, SDL_Renderer *aRenderer);
+                 EntityManager &anEntityManager, SDL_Renderer *aRenderer,
+                 Layout &layout, GraphicInventory &inventory, MiniChat &chat,
+                 ExpBar &expbar);
         ~Renderer();
 
         void run();
