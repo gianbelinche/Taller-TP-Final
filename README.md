@@ -196,23 +196,31 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
       `{06, 01, 987, 5}` --> El jugador `987` recibió 5 de daño
 
-    - __Evasión del contrincante (02):__
+    - __Curación(02)__:
 
-      `06 + 02 + id`
+      `06 + 02 + id + puntos_curacion`
 
-      verEjemplo:
+      Ejemplo:
 
-      `{06, 02, 47}` --> Se le avisa al jugador `47` que el contrincante esquivo el ataque
+      `{06, 02, 35, 100}` --> El jugador `35` recuperó `100` puntos de vida
 
-    - __Evasión por parte de nuestro jugador (03):__
+    - __Evasión del contrincante (03):__
 
       `06 + 03 + id`
 
       Ejemplo:
 
-      `{06, 03, 99}` --> El jugador 99 esquivo el ataque
+      `{06, 03, 47}` --> Se le avisa al jugador `47` que el contrincante esquivo el ataque
 
-    - __Mensajes enviados al jugador (04):__
+    - __Evasión por parte de nuestro jugador (04):__
+
+      `06 + 04 + id`
+
+      Ejemplo:
+
+      `{06, 04, 99}` --> El jugador 99 esquivo el ataque
+
+    - __Mensajes enviados al jugador (05):__
 
       TBD
 
