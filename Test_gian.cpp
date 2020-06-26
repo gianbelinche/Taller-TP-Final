@@ -23,6 +23,21 @@
 #define FRECUENCY 22050
 #define FONT_SIZE 50
 
+enum items{
+    SWORD,
+    AXE,
+    HAMMER,
+    FRESNO_ROD,
+    BACULO_NUDOSO,
+    BACULO_ENGARZADO,
+    SIMPLE_BOW,
+    COMPOSED_BOW,
+    LEATHER_ARMOR,
+    PLATE_ARMOR,
+    IRON_HELMET,
+    IRON_SHIELD
+};
+
 TestGian::TestGian() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         throw SDLError("Error: SDL no pudo inicializarse. SDL_Error: %s", 
@@ -99,19 +114,19 @@ void TestGian::run() {
     layout.changeLevel(level);
     layout.changeLife(life,life);
     layout.changeMana(mana,mana);
-    inventory.addImage("sword");
-    inventory.addImage("axe");
-    inventory.addImage("baculo nudoso");
-    inventory.addImage("composed bow");
-    inventory.addImage("fresno rod");
-    inventory.addImage("leather armor");
-    inventory.equip("leather armor");
-    inventory.equip("sword");
-    inventory.addImage("sword");
-    inventory.addImage("iron helmet");
-    inventory.equip("iron helmet");
-    inventory.addImage("iron shield");
-    inventory.equip("iron shield");
+    inventory.addImage(SWORD);
+    inventory.addImage(AXE);
+    inventory.addImage(BACULO_NUDOSO);
+    inventory.addImage(COMPOSED_BOW);
+    inventory.addImage(FRESNO_ROD);
+    inventory.addImage(LEATHER_ARMOR);
+    inventory.equip(LEATHER_ARMOR);
+    inventory.equip(SWORD);
+    inventory.addImage(SWORD);
+    inventory.addImage(IRON_HELMET);
+    inventory.equip(IRON_HELMET);
+    inventory.addImage(IRON_SHIELD);
+    inventory.equip(IRON_SHIELD);
     int exp = 0;
     int max_exp = 100;
     expBar.changeExp(exp,max_exp);
@@ -180,9 +195,8 @@ void TestGian::run() {
 			}else if(eventHandler.type == SDL_TEXTINPUT){
                 chat.putCharacter(eventHandler.text.text);
             }else if(eventHandler.type == SDL_MOUSEBUTTONDOWN){
-                std::string selected = inventory.select(eventHandler.button.x,eventHandler.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
-                if (selected != "")
-                    std::cout << selected << std::endl;
+                int selected = inventory.select(eventHandler.button.x,eventHandler.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
+                std::cout << selected << std::endl;
             }
         }
         
@@ -211,18 +225,19 @@ void TestGian::run() {
         expBar.changeExp(exp,max_exp);
         layout.changeLevel(level);
         if (items == 200 && cant_items < 20){
-            inventory.addImage("baculo engarzado");
+            inventory.addImage(BACULO_ENGARZADO);
             items = 0;
             cant_items++;
         }
         if (removes == 500){
-            inventory.removeImage("composed bow");
-            inventory.equip("axe");
+            inventory.removeImage(3);
+            inventory.equip(AXE);
             cant_items--;
         }
         if (removes == 1000){
-            inventory.removeImage("baculo nudoso");
+            inventory.removeImage(4);
             cant_items--;
+            removes = 0;
         }
 
         SDL_RenderPresent(mainRenderer);
