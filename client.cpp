@@ -22,30 +22,28 @@ int main(int argc, char* argv[]) {
         MainWindow mainWindow;
         MessageQueue senderQueue;
         MessageQueue receiverQueue;
+        SDL_Renderer *renderer = mainWindow.getRenderer();
 
-        Player player = clientConnector.getPlayer(mainWindow.getRenderer());
-        MainMap mainMap = clientConnector.getMainMap(mainWindow.getRenderer());
+        Player player = clientConnector.getPlayer(renderer);
+        MainMap mainMap = clientConnector.getMainMap(renderer);
         Sender sender = clientConnector.getSender(senderQueue);
         Receiver receiver = clientConnector.getReceiver(receiverQueue);
 
+        Layout layout(renderer);
+        GraphicInventory gInventory(renderer);
+        MiniChat miniChat(renderer);
+        ExpBar expBar(renderer);
+
         Camera camera(player.getPosX(), player.getPosY()); //quizas sea mejor cambiar esto
 
-        EntityManager entityManager(mainWindow.getRenderer(), player, player.getID());
+        EntityManager entityManager(renderer, player, player.getID());
 
         EventManager eventManager(entityManager, player.getID(), senderQueue);
         ModelController modelController(entityManager, receiverQueue);
         Renderer renderer(camera, player, mainMap, entityManager, 
-                          mainWindow.getRenderer(), layout, inventory, 
-                          chat, expbar);
-        /*Camera &aCamera, Player &aPlayer, MainMap &aMainMap, 
-        EntityManager &anEntityManager, SDL_Renderer *aRenderer,
-        Layout &layout, GraphicInventory &inventory, MiniChat &chat,
-        ExpBar &expbar*/
-        /*
-        ClientProtocol <- eliminar esta clase (tiene cómo se crea mainmap)
-        */
-        /*
-        try
+                          renderer, layout, gInventory, 
+                          miniChat, expBar);
+        /*try
             sender.run
             receiver.run
             modelcontroller.run
