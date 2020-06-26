@@ -15,6 +15,8 @@ class Entity {
 
   ~Entity();
 
+  int getId();
+
   int getX();
 
   int getY();

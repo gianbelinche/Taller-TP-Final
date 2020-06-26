@@ -18,6 +18,8 @@ class Monster : public Entity {
 
   ~Monster();
 
+  int takeDamage(int dmgToTake) override;
+
   void update() override;
 };
 

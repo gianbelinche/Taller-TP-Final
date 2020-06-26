@@ -9,6 +9,10 @@ Entity::~Entity() {}
 
 void Entity::update() {}
 
+int Entity::getId() {
+  return id;
+}
+
 int Entity::getX() { return x; }
 
 int Entity::getY() { return y; }

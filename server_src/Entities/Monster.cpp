@@ -1,5 +1,6 @@
 #include "Monster.h"
 
+#include <algorithm>
 #include <cmath>
 #include <random>
 
@@ -10,7 +11,7 @@
 
 #define MIN_DIST 150  // Esto debe ser configurable no se como
 #define ATK_DIST 20
-#define STEP 6
+#define STEP 10
 
 Monster::Monster(MonsterType &type, int id, int x, int y, GameState &world)
     : Entity(x, y, id, type.getHp()), kind(type), world(world) {}
@@ -19,8 +20,8 @@ Monster::~Monster() {}
 
 void Monster::update() {
   currentFrame++;
-  if (currentFrame ==
-      30) {  // TODO: Hacer configurable el valor de alguna forma
+  if (currentFrame == 30) {  // TODO: Hacer configurable el valor
+    currentFrame = 0;
     PlayerNet *player = world.getNearestPlayer(*this, &Condition::isAlive);
     int new_x = x;
     int new_y = y;
@@ -73,4 +74,13 @@ void Monster::update() {
       }
     }
   }
+}
+
+int Monster::takeDamage(int dmgToTake) {
+  int oldHp = hp;
+  hp = std::max(0, hp - dmgToTake);
+  if (hp == 0) {
+    world.entityDisappear(id);
+  }
+  return oldHp - hp;
 }
