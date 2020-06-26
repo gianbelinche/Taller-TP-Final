@@ -1,5 +1,5 @@
 # Taller-TP-Final
- 
+
 ## Protocolo
 
 A través de msgpack, se forma de la siguiente manera:
@@ -7,7 +7,7 @@ A través de msgpack, se forma de la siguiente manera:
 `uint32_t largo  ,  std::vector<uint32_t> mensaje`
 
 - **std::vector<uint32_t> mensaje**: 
-    
+  
     `{comando, enteros necesarios para comando}`
 
 Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros uint32_t
@@ -176,8 +176,72 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
 6. **Mensajes que cliente debe imprimir** (06):
 
-COMPLETAR
+    ​	Son del estilo:
 
-7. **Daño** (07):
+    ​	`06 + codigo_mensaje_a_imprimir + ...`
+
+    - __Daño provocado (00):__ 
+
+      `06 + 00 + id + daño`
+
+      Ejemplo:
+
+      `{06, 00, 488, 25}` --> El jugador `488` provoco un daño de `25`
+
+    - **Daño recibido (01):** 
+
+      `06 + 01 + id + daño`
+
+      Ejemplo:
+
+      `{06, 01, 987, 5}` --> El jugador `987` recibió 5 de daño
+
+    - __Evasión del contrincante (02):__
+
+      `06 + 02 + id`
+
+      verEjemplo:
+
+      `{06, 02, 47}` --> Se le avisa al jugador `47` que el contrincante esquivo el ataque
+
+    - __Evasión por parte de nuestro jugador (03):__
+
+      `06 + 03 + id`
+
+      Ejemplo:
+
+      `{06, 03, 99}` --> El jugador 99 esquivo el ataque
+
+    - __Mensajes enviados al jugador (04):__
+
+      TBD
+
+7. **Ganancia de experiencia(07):**
+
+    `07 + id + cant_exp`
+
+    Ejemplo:
+
+    `{07, 445, 168}` --> El jugador `445` gano `168` de experiencia
+
+    Aclaración: `cant_exp` nunca va a ser mayor que la cantidad de experiencia que le falta al jugador para subir de nivel
+
+8. **Subida de nivel(08):**
+
+    _Mas que nada para resetear la barrita de experiencia._
+
+    TODO: Ver si hace falta mandar el nuevo nivel del jugador o si con solo decir que se incrementó alcanza
+
+    `08 + id`
+
+    Ejemplo:
+
+    `{08, 11}` --> El jugador `11` subió de nivel
+
+    
+
+9. **Daño** (0X):
+
+    TBD: Se puede hacer con el mensaje (06), del subtipo **Daño recibido(01)**
 
 COMPLETAR
