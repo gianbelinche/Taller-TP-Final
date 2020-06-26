@@ -21,7 +21,9 @@ void ExpBar::changeExp(int exp, int max_exp){
     this->max_exp = max_exp;
 }
 
-void ExpBar::render(int screen_w,int screen_h){
+void ExpBar::render(Camera& camera){
+    int screen_w = camera.getWidth();
+    int screen_h = camera.getHeight();
     SDL_Rect clip = {0,0,screen_w,screen_h};
     SDL_Rect rQuad = {0,0,EMPTY_BAR_W,EMPTY_BAR_H};
     emptyBar.render(BAR_X,BAR_Y,&clip,&rQuad);

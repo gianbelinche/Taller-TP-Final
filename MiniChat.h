@@ -4,7 +4,7 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
 #include <vector>
-
+#include "Camera.h"
 
 class MiniChat{
 private:
@@ -17,7 +17,7 @@ private:
     std::vector<std::string> getPartialString(std::string string,int n);
 public:
     MiniChat(SDL_Renderer* mainRenderer);
-    void render(int screen_w, int screen_h);
+    void render(Camera& camera);
     void putCharacter(std::string c);
     void deleteCharacter();    
     void addMessage(std::string message);
