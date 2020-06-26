@@ -1,5 +1,6 @@
 #include "EventManager.h"
 #include "QuitException.h"
+#include "SDLError.h"
 #include <vector>
 #include <iostream>
 
@@ -15,10 +16,10 @@ EventManager::~EventManager() {}
 
 void EventManager::run() {
     try {
-        while (SDL_WaitEvent(&eventHandler) != 0) {
-            
+        while (SDL_WaitEvent(&event) != 0) {
+            this->handle(event);
         }
-        throw SDL_Error("Error en WaitEvent.");
+        throw SDLError("Error en WaitEvent.");
     } catch(const QuitException &e) {
         std::cerr << e.what() << '\n';
     }

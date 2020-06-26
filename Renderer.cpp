@@ -1,6 +1,12 @@
 #include "Renderer.h"
+#include <unistd.h>
 
-Renderer::Renderer() : closed(false) {}
+Renderer::Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap, 
+                   EntityManager &anEntityManager, SDL_Renderer *aRenderer) : 
+                                            closed(false), camera(aCamera),
+                                            player(aPlayer), mainMap(aMainMap),
+                                            entityManager(anEntityManager),
+                                            renderer(aRenderer) {}
 
 Renderer::~Renderer() {}
 
@@ -13,16 +19,20 @@ void Renderer::run() {
 
         camera.refresh(player.getPosX(), player.getPosY());
 
-        SDL_RenderClear(mainRenderer);
+        SDL_RenderClear(renderer);
 
         mainMap.renderTerrain(camera);
-        entMan.renderEntities(camera);
+        entityManager.renderEntities(camera);
         mainMap.renderStructures(camera);
+        //layout.render
+        //graphicinventory.render
+        //expbar.render
+        //minichat.render
 
-        SDL_RenderPresent(mainRenderer);
+        SDL_RenderPresent(renderer);
         
         time2 = SDL_GetTicks();
-        if (time2 - time1 < 25) usleep(25000 - (time2 - time1) * 1000); //33 ms para 30 fps
+        if (time2 - time1 < 30) usleep(30000 - (time2 - time1) * 1000);
     }
 }
 
