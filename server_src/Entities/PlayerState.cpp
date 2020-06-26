@@ -22,7 +22,7 @@ void PlayerState::move(PlayerNet &player, int x, int y) {
 
 void PlayerState::update(PlayerNet &player) {
   lifeRecover(player);
-  manaRecover(player);
+  manaRecover(player); // Para el estado de meditacion cambia la recuperacion
 }
 
 void PlayerState::manaRecover(PlayerNet &player) {

@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "../config/Equations.h"
+#include "GhostState.h"
 #include "PlayerState.h"
 
 PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int hp,
@@ -15,6 +16,18 @@ PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int hp,
       gold(currGold) {}
 
 PlayerNet::~PlayerNet() {}
+
+int PlayerNet::PlayerNet::getAttackRange() {
+  if (weapon == nullptr) {
+    return -1; // Es lo que hay por ahora
+  }
+  return weapon->getAttackRange(); 
+}
+
+int PlayerNet::PlayerNet::getDamage() {
+  return equation::causedDamage(getStrength(), weapon->getMinDmg(),
+                                weapon->getMaxDmg());
+}
 
 int PlayerNet::getCurrFrame() { return currentFrame; }
 
@@ -35,11 +48,7 @@ float PlayerNet::getMeditationFactor() {
 float PlayerNet::getRaceRecovery() { return playerRace->getRecoveryFactor(); }
 
 int PlayerNet::attack(Entity* ent) {
-  // Se tiene que fijar si puede atacar, si el jugador esta dentro del rango
-  // Quizas hacer el chequeo de jugador vivo aca
-  int playerDmg = equation::causedDamage(getStrength(), weapon->getMinDmg(),
-                                         weapon->getMaxDmg());
-  state->attack(*this, ent, playerDmg);
+  return state->attack(*this, ent, getDamage());
 }
 
 void PlayerNet::changeState(PlayerState* new_state) { state = new_state; }
@@ -58,10 +67,13 @@ int PlayerNet::takeDamage(int dmgToTake) {
       shield->getMaxDef(), helmet->getMinDef(), helmet->getMaxDef());
   int finalDmg = std::max(0, dmgToTake - defense);
   int oldHp = hp;
+
   hp = std::max(0, hp - finalDmg);
-  // Mandar mensaje a game status sobre el daño recibido;
+  world.playerTookDamage(id, oldHp - hp);
   if (hp == 0) {
-    // jugador muerto, cambiar el estado a fantasma y mandar mensaje
+    changeState(&PlayerState::dead);
+    world.playerDied(id);
+    // Dropear los items
   }
   return oldHp - hp;  // Daño efectivo
 }
@@ -69,6 +81,7 @@ int PlayerNet::takeDamage(int dmgToTake) {
 void PlayerNet::update() {
   currentFrame++;
   if (currentFrame == 30) {
+    currentFrame = 0;
     state->update(*this);
   }
 }

@@ -22,13 +22,13 @@ void Monster::update() {
   currentFrame++;
   if (currentFrame == 30) {  // TODO: Hacer configurable el valor
     currentFrame = 0;
-    PlayerNet *player = world.getNearestPlayer(*this, &Condition::isAlive);
+    PlayerNet *player = world.getNearestPlayer(this, &Condition::isAlive);
     int new_x = x;
     int new_y = y;
 
     if (player != nullptr &&
-        world.entitiesDistance(*this, *player) < MIN_DIST) {
-      if (world.entitiesDistance(*this, *player) <= ATK_DIST) {
+        world.entitiesDistance(this, player) < MIN_DIST) {
+      if (world.entitiesDistance(this, player) <= ATK_DIST) {
         // ATACA
       } else {
         float x_dist = abs(x - player->getX());

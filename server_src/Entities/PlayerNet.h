@@ -37,6 +37,10 @@ class PlayerNet : public Entity {
   ~PlayerNet();
 
   /* ------------- Getters ------------- */
+
+  int getAttackRange();
+
+  int getDamage();
   
   int getCurrFrame();
 
