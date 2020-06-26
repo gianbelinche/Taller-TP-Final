@@ -5,6 +5,7 @@
 #include "Layout.h"
 #include <string>
 #include <iostream>
+#include "LoginScreen.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -96,6 +97,8 @@ TestGian::~TestGian() {
 }
 
 void TestGian::run() {
+    LoginScreen login(mainRenderer);
+    bool in_login = true;
     bool quit = false;
     MusicPlayer music_player;
 	music_player.add(1,"music/cave.wav");
@@ -155,15 +158,19 @@ void TestGian::run() {
                 quit = true;
             }else if( eventHandler.type == SDL_KEYDOWN ){
                 if (eventHandler.key.keysym.sym == SDLK_RETURN){
-                    if (writing){
-                        chat.sendMessage();
-                        SDL_StopTextInput();
-                    } else {
-                        SDL_StartTextInput();
+                    if (!in_login){
+                        if (writing){
+                            chat.sendMessage();
+                            SDL_StopTextInput();
+                        } else {
+                            SDL_StartTextInput();
+                        }
+                        writing = !writing;
                     }
-                    writing = !writing;
                 } else if(eventHandler.key.keysym.sym == SDLK_BACKSPACE){
-                    chat.deleteCharacter();
+                    if (!in_login){
+                        chat.deleteCharacter();
+                    }
                 } else if(!writing){
                     switch( eventHandler.key.keysym.sym ){
  
@@ -198,7 +205,9 @@ void TestGian::run() {
                     }
                 }	
 			}else if(eventHandler.type == SDL_TEXTINPUT){
-                chat.putCharacter(eventHandler.text.text);
+                if (!in_login){
+                    chat.putCharacter(eventHandler.text.text);
+                }
             }else if(eventHandler.type == SDL_MOUSEBUTTONDOWN){
                 bool clicked = layout.isClicked(eventHandler.button.x,SCREEN_WIDTH);
                 std::cout <<  "is " << clicked << std::endl;
@@ -210,42 +219,45 @@ void TestGian::run() {
 
         SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(mainRenderer);
-
-        layout.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-        inventory.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-        expBar.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-        chat.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-        gold++;
-        if (life > 0) life--;
-        if (mana > 0) mana--;
-        layout.changeGold(gold);
-        layout.changeLife(life,1000);
-        layout.changeMana(mana,2000);
-        items++;
-        removes++;
-        exp++;
-        if (exp == max_exp){
-            exp = 0;
-            max_exp *= 2;
-            level++;
-        }
-        expBar.changeExp(exp,max_exp);
-        layout.changeLevel(level);
-        if (items == 200 && cant_items < 20){
-            inventory.addImage(BACULO_ENGARZADO);
-            items = 0;
-            cant_items++;
-        }
-        if (removes == 500){
-            inventory.removeImage(3);
-            inventory.equip(AXE);
-            cant_items--;
-        }
-        if (removes == 1000){
-            inventory.removeImage(4);
-            cant_items--;
-            removes = 0;
-        }
+        if (!in_login){
+            layout.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+            inventory.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+            expBar.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+            chat.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+            gold++;
+            if (life > 0) life--;
+            if (mana > 0) mana--;
+            layout.changeGold(gold);
+            layout.changeLife(life,1000);
+            layout.changeMana(mana,2000);
+            items++;
+            removes++;
+            exp++;
+            if (exp == max_exp){
+                exp = 0;
+                max_exp *= 2;
+                level++;
+            }
+            expBar.changeExp(exp,max_exp);
+            layout.changeLevel(level);
+            if (items == 200 && cant_items < 20){
+                inventory.addImage(BACULO_ENGARZADO);
+                items = 0;
+                cant_items++;
+            }
+            if (removes == 500){
+                inventory.removeImage(3);
+                inventory.equip(AXE);
+                cant_items--;
+            }
+            if (removes == 1000){
+                inventory.removeImage(4);
+                cant_items--;
+                removes = 0;
+            }
+        } else {
+            login.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+        }    
 
         SDL_RenderPresent(mainRenderer);
     }
