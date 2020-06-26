@@ -13,5 +13,4 @@ public:
     virtual ~SDLError() noexcept {}
 };
 
-
 #endif

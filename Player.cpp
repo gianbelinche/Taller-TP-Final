@@ -1,119 +1,172 @@
 #include "Player.h"
 
-Player::Player(SDL_Renderer *aRenderer) : speed(SPEED), posX(1000), posY(1000),
-                                          frameX(0), frameY(0),
-                                          plImage(aRenderer, 0, 0, 0) {
-    this->plImage.loadFromFile(PLAYER_PATH);
+#define B 0
 
-    for (int i = 0; i < WALKING_ANIMATION_FRAMES; i++) {
-        this->spriteClips[i].x = i * PLAYER_WIDTH;
-        this->spriteClips[i].y = 0;
-        this->spriteClips[i].w = PLAYER_WIDTH;
-        this->spriteClips[i].h = PLAYER_HEIGHT;
+Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID, 
+               uint16_t aPosX, uint16_t aPosY, bool isDead) : 
+                                                Entity(anID, aPosX, aPosY),
+                                                bodyImage(aRenderer, B, B, B),
+                                                headImage(aRenderer, B, B, B),
+                                                dead(isDead) {
+    this->speed = PLAYER_SPEED;
+    this->bodyFrameX = 0;
+    this->bodyFrameY = 0;
+    this->headFrameX = 0;
+    this->dead = false;     //esto también debería cambiar, puede que el usuario se loguee y este como fantasma
+    this->bodyWidth = 25;   //cambiar numeros magicos
+    this->bodyHeight = 45;  //cambiar numeros magicos
+    this->headWidth = 17;   //cambiar numeros magicos
+    this->headHeight = 17;  //cambiar numeros magicos
+
+    switch (aRace) {
+        case HUMAN:
+            /*this->bodyWidth = HUMAN_BODY_WIDTH;
+            this->bodyHeight = HUMAN_BODY_HEIGHT;
+            this->headWidth = HUMAN_HEAD_WIDTH;
+            this->headHeight = HUMAN_HEAD_HEIGHT;*/
+            this->bodyImage.loadFromFile(HUMAN_BODY_PATH);
+            this->headImage.loadFromFile(HUMAN_HEAD_PATH);
+            break;
+        
+        case ELF:
+            /*this->bodyWidth = ELF_BODY_WIDTH;
+            this->bodyHeight = ELF_BODY_HEIGHT;
+            this->headWidth = ELF_HEAD_WIDTH;
+            this->headHeight = ELF_HEAD_HEIGHT;*/
+            this->bodyImage.loadFromFile(ELF_BODY_PATH);
+            this->headImage.loadFromFile(ELF_HEAD_PATH);
+            break;
+
+        case DWARF:
+            /*this->bodyWidth = DWARF_BODY_WIDTH;
+            this->bodyHeight = DWARF_BODY_HEIGHT;
+            this->headWidth = DWARF_HEAD_WIDTH;
+            this->headHeight = DWARF_HEAD_HEIGHT;*/
+            this->bodyImage.loadFromFile(DWARF_BODY_PATH);
+            this->headImage.loadFromFile(DWARF_HEAD_PATH);
+            break;
+
+        case GNOME:
+            /*this->bodyWidth = GNOME_BODY_WIDTH;
+            this->bodyHeight = GNOME_BODY_HEIGHT;
+            this->headWidth = GNOME_HEAD_WIDTH;
+            this->headHeight = GNOME_HEAD_HEIGHT;*/
+            this->bodyImage.loadFromFile(GNOME_BODY_PATH);
+            this->headImage.loadFromFile(GNOME_HEAD_PATH);
+            break;
+
+        default:
+            break;
     }
+    
+    SpriteClipCreator(bodyHeight * BODY_ANIMATION_STATES, bodyWidth * 
+                      BODY_ANIMATION_FRAMES, bodyHeight, bodyWidth, bodyClips);
+
+    SpriteClipCreator(headHeight, headWidth * HEAD_ANIMATION_FRAMES, headHeight, headWidth, headClips);
 }
 
-Player::Player(Player&& other) : speed(other.speed), posX(other.posX),
-                                 posY(other.posY), frameX(other.frameX),
-                                 frameY(other.frameY),
-                                 plImage(std::move(other.plImage)) {
-    for (int i = 0; i < WALKING_ANIMATION_FRAMES; i++) {
-        this->spriteClips[i].x = other.spriteClips[i].x;
-        this->spriteClips[i].y = other.spriteClips[i].y;
-        this->spriteClips[i].w = other.spriteClips[i].w;
-        this->spriteClips[i].h = other.spriteClips[i].h;
-    }
-}
+Player::Player(Player&& other) : Entity(std::move(other)), speed(other.speed), 
+                                 bodyFrameX(other.bodyFrameX),
+                                 bodyFrameY(other.bodyFrameY), 
+                                 headFrameX(other.headFrameX),
+                                 bodyImage(std::move(other.bodyImage)),
+                                 headImage(std::move(other.headImage)),
+                                 bodyClips(std::move(bodyClips)), 
+                                 headClips(std::move(headClips)) {}
 
 Player& Player::operator=(Player&& other) {
     if (this == &other) {
         return *this;
     }
 
+    Entity::operator=(std::move(other));
     this->speed = other.speed;
-    this->posX = other.posX;
-    this->posY = other.posY;
-    this->frameX = other.frameX;
-    this->frameY = other.frameY;
-    this->plImage = std::move(other.plImage);
-
-    for (int i = 0; i < WALKING_ANIMATION_FRAMES; i++) {
-        this->spriteClips[i].x = other.spriteClips[i].x;
-        this->spriteClips[i].y = other.spriteClips[i].y;
-        this->spriteClips[i].w = other.spriteClips[i].w;
-        this->spriteClips[i].h = other.spriteClips[i].h;
-    }
+    this->bodyFrameX = other.bodyFrameX;
+    this->bodyFrameY = other.bodyFrameY;
+    this->headFrameX = other.headFrameX;
+    this->bodyImage = std::move(other.bodyImage);
+    this->headImage = std::move(other.headImage);
+    this->bodyClips = std::move(other.bodyClips);
+    this->headClips = std::move(other.headClips);
 }
 
 Player::~Player() {}
 
-void Player::move(SDL_Event& event) {
-    if (event.type == SDL_KEYDOWN) {
-        switch (event.key.keysym.sym) {
-            case SDLK_w:
-                this->posY -= this->speed;
-                this->frameX++;
-                if (this->frameX >= WALKING_ANIMATION_FRAMES) frameX = 0;
-                frameY = PLAYER_HEIGHT;
-                this->spriteClips[frameX].y = frameY;
-                // chequear que no se vaya del mapa
-                break;
+void Player::refreshPosition(MovementType move) {
+    switch (move) {
+        case UP:
+            this->posY -= this->speed;
+            this->bodyFrameX++;
+            if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
+            this->bodyFrameY = 1;
+            this->headFrameX = 3;
+            break;
 
-            case SDLK_a:
-                this->posX -= this->speed;
-                this->frameX++;
-                if (this->frameX >= WALKING_ANIMATION_FRAMES) frameX = 0;
-                frameY = PLAYER_HEIGHT * 2;
-                this->spriteClips[frameX].y = frameY;
-                // chequear que no se vaya del mapa
-                break;
+        case LEFT:
+            this->posX -= this->speed;
+            this->bodyFrameX++;
+            if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
+            this->bodyFrameY =  2;
+            this->bodyClips[bodyFrameX].y = this->bodyFrameY;
+            this->headFrameX = 2;
+            break;
 
-            case SDLK_s:
-                this->posY += this->speed;
-                this->frameX++;
-                if (this->frameX >= WALKING_ANIMATION_FRAMES) frameX = 0;
-                frameY = 0;
-                this->spriteClips[frameX].y = frameY;
-                // chequear que no se vaya del mapa
-                break;
+        case DOWN:
+            this->posY += this->speed;
+            this->bodyFrameX++;
+            if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
+            this->bodyFrameY = 0;
+            this->bodyClips[bodyFrameX].y = this->bodyFrameY;
+            this->headFrameX = 0;
+            break;
 
-            case SDLK_d:
-                this->posX += this->speed;
-                this->frameX++;
-                if (this->frameX >= WALKING_ANIMATION_FRAMES) frameX = 0;
-                frameY = PLAYER_HEIGHT * 3;
-                this->spriteClips[frameX].y = frameY;
-                // chequear que no se vaya del mapa
-                break;
-            
-            default:
-                break;
-        }
-    } else if (event.type == SDL_KEYUP) {
-        switch (event.key.keysym.sym) {
-            case SDLK_w:
-            case SDLK_a:
-            case SDLK_s:
-            case SDLK_d:
-                this->frameX = 0;
-                break;
-            
-            default:
-                break;
-        }
+        case RIGHT:
+            this->posX += this->speed;
+            this->bodyFrameX++;
+            if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
+            this->bodyFrameY = 3;
+            this->bodyClips[bodyFrameX].y = this->bodyFrameY;
+            this->headFrameX = 1;
+            break;
+
+        case STOP:
+            this->bodyFrameX = 0;
+            break;
+        
+        default:
+            break;
     }
 }
 
-void Player::render(int camX, int camY) {
-    SDL_Rect* currentClip = &(this->spriteClips[frameX]);
-    SDL_Rect renderQuad = {this->posX - camX, this->posY - camY, PLAYER_WIDTH, PLAYER_HEIGHT}; // chequear
-    this->plImage.render(this->posX - camX, this->posY - camY, currentClip, &renderQuad); //chequear
+void Player::render(Camera &camera) {
+    SDL_Rect *currentBodyClip = &(this->bodyClips[bodyFrameX + bodyFrameY * BODY_ANIMATION_FRAMES]);
+    SDL_Rect *currentHeadClip = &(this->headClips[headFrameX]);
+    SDL_Rect bodyQuad = {this->posX - camera.getX(), this->posY - camera.getY(), bodyWidth, bodyHeight}; // chequear
+    SDL_Rect headQuad = {this->posX - camera.getX() + headWidth / 4, this->posY - camera.getY() - headHeight / 2 + 1, headWidth, headHeight}; // chequear
+    this->bodyImage.render(bodyQuad.x, bodyQuad.y, currentBodyClip, &bodyQuad); //chequear
+    this->headImage.render(headQuad.x, headQuad.y, currentHeadClip, &headQuad); //chequear
 }
 
-int Player::getPosX() {
+bool Player::collision(uint16_t x, uint16_t y) {
+    //COMPLETAR CHEQUEAR CAMBIAR
+}
+
+void Player::kill() {
+    dead = true;
+}
+
+uint16_t Player::getPosX() {
     return this->posX;
 }
 
-int Player::getPosY() {
+uint16_t Player::getPosY() {
     return this->posY;
+}
+
+uint16_t Player::getHeight() {
+    return this->bodyHeight;
+}
+
+uint16_t Player::getWidth() {
+    return this->bodyWidth;
 }

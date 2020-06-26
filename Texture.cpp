@@ -36,7 +36,6 @@ Texture& Texture::operator=(Texture&& other){
     return *this;
 }
 
-
 void Texture::free() {
     if(this->texture != NULL) {
 		SDL_DestroyTexture(this->texture);
@@ -58,14 +57,10 @@ void Texture::render(int x, int y, SDL_Rect *clip, SDL_Rect *renderQuad) {
 	SDL_RenderCopy(this->renderer, this->texture, clip, renderQuad);
 }
 
-int Texture::getWidth() {
+uint16_t Texture::getWidth() {
     return this->tWidth;
 }
 
-int Texture::getHeight() {
+uint16_t Texture::getHeight() {
     return this->tHeight;
-}
-
-void Texture::setRenderer(SDL_Renderer *aRenderer) {
-    this->renderer = aRenderer;
 }

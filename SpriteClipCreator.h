@@ -6,8 +6,8 @@
 
 class SpriteClipCreator {
     public:
-        SpriteClipCreator(int imgHeight, int imgWidth, int tileHeight,
-                          int tileWidth, std::vector<SDL_Rect> &spriteClip);
+        SpriteClipCreator(uint16_t imgHeight, uint16_t imgWidth, uint16_t tileHeight,
+                          uint16_t tileWidth, std::vector<SDL_Rect> &spriteClip);
         ~SpriteClipCreator();
 };
 

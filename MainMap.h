@@ -8,20 +8,13 @@
 
 #include "MapImage.h"
 #include "Player.h"
-
-/* TAMAÑO DE LA PANTALLA */
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
-#define CHARACTER_POSITION_X 0
-#define CHARACTER_POSITION_Y 0
+#include "Camera.h"
 
 class MainMap {
     private:
-        SDL_Rect camera;
         std::map<uint32_t, MapImage> textures;
         std::vector<std::vector<uint32_t>> texMap;
         std::vector<std::vector<uint32_t>> strMap;
-        Player player;
         
     public:
         MainMap(std::map<uint32_t, std::vector<std::string>> &tiles, 
@@ -33,8 +26,8 @@ class MainMap {
         MainMap(MainMap&& other);
         MainMap& operator=(MainMap&& other);
 
-        void handleEvent(SDL_Event &event);
-        void render();
+        void renderTerrain(Camera &camera);
+        void renderStructures(Camera &camera);
 };
 
 #endif

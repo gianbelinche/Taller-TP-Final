@@ -3,82 +3,58 @@
 MainMap::MainMap(std::map<uint32_t, std::vector<std::string>> &tiles, 
                  SDL_Renderer *aRenderer, std::vector<std::vector<uint32_t>> aTexMap,
                  std::vector<std::vector<uint32_t>> aStrMap)
-                 : player(aRenderer), texMap(std::move(aTexMap)), strMap(std::move(aStrMap)) {
-    camera.x = (player.getPosX() + PLAYER_WIDTH / 2) - SCREEN_WIDTH / 2;
-    camera.y = (player.getPosY() + PLAYER_HEIGHT / 2) - SCREEN_HEIGHT / 2;
-    camera.h = SCREEN_HEIGHT;
-    camera.w = SCREEN_WIDTH;
-
-    if (camera.x < 0) {
-            camera.x = 0;
-    }
-    if (camera.y < 0) {
-        camera.y = 0;
-    }
-    
-    for (auto& v : tiles) {
-        int tileWidth = std::stoi(v.second.back());
-        v.second.pop_back();
-        int tileHeight = std::stoi(v.second.back());
-        v.second.pop_back();
-        std::string source = v.second.back();
+                 : texMap(std::move(aTexMap)), strMap(std::move(aStrMap)) {
+    for (auto& obj : tiles) {
+        int tileWidth = std::stoi(obj.second.back());
+        obj.second.pop_back();
+        int tileHeight = std::stoi(obj.second.back());
+        obj.second.pop_back();
+        std::string source = obj.second.back();
         MapImage mImg(aRenderer, source, tileHeight, tileWidth);
-        textures.emplace(v.first, std::move(mImg));
+        textures.emplace(obj.first, std::move(mImg));
     }
 }
 
 MainMap::~MainMap() {}
 
-MainMap::MainMap(MainMap&& other) : camera(std::move(other.camera)),
-                                    texMap(std::move(other.texMap)),
+MainMap::MainMap(MainMap&& other) : texMap(std::move(other.texMap)),
                                     strMap(std::move(other.strMap)),
-                                    textures(std::move(other.textures)),
-                                    player(std::move(other.player)) {}
+                                    textures(std::move(other.textures)) {}
 
 MainMap& MainMap::operator=(MainMap&& other) {
     if (this == &other) {
         return *this;
     }
 
-    this->camera = std::move(other.camera);
     this->texMap = std::move(other.texMap);
     this->strMap = std::move(other.strMap);
     this->textures = std::move(other.textures);
-    this->player = std::move(other.player);
 
     return *this;
 }
 
-void MainMap::handleEvent(SDL_Event &event) {
-    if ((event.type == SDL_KEYDOWN) || (event.type == SDL_KEYUP)) {
-        player.move(event);
-    }
-}
+void MainMap::renderTerrain(Camera &camera) {
+    /*uint32_t key = 0;
+    uint32_t index = 0;
 
-void MainMap::render() {
-
-    camera.x = (player.getPosX() + PLAYER_WIDTH / 2) - SCREEN_WIDTH / 2;
-    camera.y = (player.getPosY() + PLAYER_HEIGHT / 2) - SCREEN_HEIGHT / 2;
-
-    if (camera.x < 0) {
-            camera.x = 0;
-    }
-    if (camera.y < 0) {
-        camera.y = 0;
-    }/*
-    if (camera.x > LEVEL_WIDTH - camera.w) {
-        camera.x = LEVEL_WIDTH - camera.w;
-    }
-    if (camera.y > LEVEL_HEIGHT - camera.h) {
-        camera.y = LEVEL_HEIGHT - camera.h;
+    for (int y = -64, posY = camera.getY() - 64; y < camera.getHeight() + 64; y += 32, posY += 32) {
+        for (int x = -64, posX = camera.getX() - 64; x < camera.getWidth() + 64; x += 32, posX += 32) {
+            std::vector<uint32_t> *r = &texMap[posY/32];
+            index = (*r)[posX/32];
+            if (!index) continue;
+            key = index;
+            while (this->textures.find(key) == this->textures.end()) {
+                key--;
+            }
+            this->textures.at(key).renderFromTile(index-key, x, y);
+        }
     }*/
-
-    int x = 0 - camera.x;
-    int y = 0 - camera.y;
+    int x = 0 - camera.getX();
+    int y = 0 - camera.getY();
 
     for (auto &row : this->texMap) {
         for (auto &index : row) {
-            if (!(x < -96 || x > (SCREEN_WIDTH + 96) || y < -96 || y > (SCREEN_HEIGHT + 96) || index == 0)) {
+            if (!(x < -96 || x > (camera.getWidth() + 96) || y < -96 || y > (camera.getHeight() + 96) || index == 0)) {
                 int key = index;
                 while (this->textures.find(key) == this->textures.end()) {
                     key--;
@@ -89,17 +65,33 @@ void MainMap::render() {
             x += 32;
         }
         y += 32;
-        x = 0 - camera.x;
+        x = 0 - camera.getX();
     }
+}
 
-    player.render(camera.x, camera.y);
+void MainMap::renderStructures(Camera &camera) {
+    /*uint32_t key = 0;
+    uint32_t index = 0;
 
-    x = 0 - camera.x;
-    y = 0 - camera.y;
+    for (int y = -64, posY = camera.getY() - 64; y < camera.getHeight() + 64; y += 32, posY += 32) {
+        for (int x = -64, posX = camera.getX() - 64; x < camera.getWidth() + 64; x += 32, posX += 32) {
+            std::vector<uint32_t> *r = &strMap[posY/32];
+            index = (*r)[posX/32];
+            if (!index) continue;
+            key = index;
+            while (this->textures.find(key) == this->textures.end()) {
+                key--;
+            }
+            this->textures.at(key).renderFromTile(index-key, x, y);
+        }
+    }*/
+
+    int x = 0 - camera.getX();
+    int y = 0 - camera.getY();
 
     for (auto &row : this->strMap) {
         for (auto &index : row) {
-            if (!(x < -96 || x > (SCREEN_WIDTH + 96) || y < -96 || y > (SCREEN_HEIGHT + 96) || index == 0)) {
+            if (!(x < -96 || x > (camera.getWidth() + 96) || y < -96 || y > (camera.getHeight() + 96) || index == 0)) {
                 int key = index;
                 while (this->textures.find(key) == this->textures.end()) {
                     key--;
@@ -109,6 +101,6 @@ void MainMap::render() {
             x += 32;
         }
         y += 32;
-        x = 0 - camera.x;
+        x = 0 - camera.getX();
     }
 }
