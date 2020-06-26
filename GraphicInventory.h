@@ -6,6 +6,7 @@
 #include <vector>
 #include "FilteredImage.h"
 #include "Image.h"
+#include "Camera.h"
 
 class GraphicInventory {
 private:
@@ -21,9 +22,9 @@ public:
     GraphicInventory(SDL_Renderer* mainRenderer);
     void addImage(std::string key);
     void removeImage(std::string key);
-    void render(int screen_width,int screen_heigth);
+    void render(Camera& camera);
     void equip(std::string key);
-    std::string select(int x,int y,int screen_w,int screen_h);
+    std::string select(int x,int y,Camera& camera);
 
 };
 

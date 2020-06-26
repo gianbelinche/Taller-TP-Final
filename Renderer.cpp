@@ -29,10 +29,10 @@ void Renderer::run() {
         mainMap.renderTerrain(camera);
         entityManager.renderEntities(camera);
         mainMap.renderStructures(camera);
-        layout.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-        inventory.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-        expbar.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-        chat.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+        layout.render(camera);
+        inventory.render(camera);
+        expbar.render(camera);
+        chat.render(camera);
 
         SDL_RenderPresent(renderer);
         

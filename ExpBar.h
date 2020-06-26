@@ -1,6 +1,7 @@
 #ifndef CLASS_EXP_BAR
 #define CLASS_EXP_BAR
 #include "Image.h"
+#include "Camera.h"
 
 class ExpBar{
 private:
@@ -11,7 +12,7 @@ private:
     int max_exp;
 public:
     ExpBar(SDL_Renderer* mainRenderer);
-    void render(int screen_w,int screen_h);
+    void render(Camera& camera);
     void changeExp(int exp, int max_exp);
 };
 

@@ -67,7 +67,9 @@ void GraphicInventory::removeImage(std::string key){
     }
 }
 
-void GraphicInventory::render(int screen_w,int screen_h){
+void GraphicInventory::render(Camera& camera){
+    int screen_w = camera.getWidth();
+    int screen_h = camera.getHeight();
     this->renderEquiped(screen_w,screen_h);
     SDL_Rect clip = {0,0,screen_w,screen_h};
     SDL_Rect rQuad = {0,0,INTERIOR_BOX_W,INTERIOR_BOX_H};
@@ -107,7 +109,9 @@ void GraphicInventory::equip(std::string key){
     equiped[image_positions.at(key)] = key;
 }
 
-std::string GraphicInventory::select(int x,int y,int screen_w,int screen_h){
+std::string GraphicInventory::select(int x,int y,Camera& camera){
+    int screen_w = camera.getWidth();
+    int screen_h = camera.getHeight();
     int selected = -1;
     int actual_x = EXTERIOR_BOX_X;
     int actual_y = EXTERIOR_BOX_Y; 

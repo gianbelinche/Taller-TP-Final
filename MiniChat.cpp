@@ -38,7 +38,9 @@ void MiniChat::renderWord(std::string to_render_word,int x, int y, int screen_w,
     word.render(x,y,&clip,&rQuad);
 }
 
-void MiniChat::render(int screen_w, int screen_h){
+void MiniChat::render(Camera& camera){
+    int screen_w = camera.getWidth();
+    int screen_h = camera.getHeight();
     int lines = 0;
     int x = MESSAGES_X;
     int y = MESSAGES_Y;

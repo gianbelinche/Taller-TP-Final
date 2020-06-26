@@ -67,7 +67,9 @@ void Layout::changeLevel(int level){
 }
 
 
-void Layout::render(int screen_width,int screen_heigth){
+void Layout::render(Camera& camera){
+    int screen_width = camera.getWidth();
+    int screen_heigth = camera.getHeight();
     SDL_Rect clip = {0,0,screen_width,screen_heigth};
     SDL_Rect rq = {0,0,LAY_W,screen_heigth};
     int lay_w = LAY_W;
