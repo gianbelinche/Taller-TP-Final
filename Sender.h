@@ -1,17 +1,17 @@
 #ifndef __SENDER_H__
 #define __SENDER_H__
 
-#include "Socket.h"
+#include "ClientConnector.h"
 #include "MessageQueue.h"
 #include "Thread.h"
 
 class Sender : public Thread {
     private:
-        Socket *socket;
-        MessageQueue &queue;
+        ClientConnector *clConnector;
+        MessageQueue *queue;
 
     public:
-        Sender(Socket *aSocket, MessageQueue &aQueue);
+        Sender(ClientConnector *aClConnector, MessageQueue *aQueue);
         ~Sender();
 
         Sender(const Sender &copy) = delete;

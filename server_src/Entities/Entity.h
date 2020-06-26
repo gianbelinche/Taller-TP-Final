@@ -2,13 +2,15 @@
 #define ENTITY_H
 
 class Entity {
-protected:
+ protected:
   int x;
   int y;
-  int id; // Valor numerico que identifica a la entida en el cliente y el server
+  int id;  // Valor numerico que identifica a la entida en el cliente y el
+           // server
   int currentFrame;
   int hp;
-public:
+
+ public:
   Entity(int x, int y, int id, int hp);
 
   ~Entity();
@@ -28,4 +30,4 @@ public:
   int virtual takeDamage(int dmgToTake) = 0;
 };
 
-#endif // ENTITY_H
+#endif  // ENTITY_H

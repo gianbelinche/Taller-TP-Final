@@ -1,22 +1,19 @@
-#include <iostream>
-#include <unistd.h>
-
 #include "Game.h"
-#include "Spider.h"
+
+#include <unistd.h>
+#include <iostream>
 
 Game::Game() : keep_running(true) {}
 
 Game::~Game() {}
 
-void Game::run() {
-  loop();
-}
+void Game::run() { loop(); }
 
 void Game::loop() {
   while (keep_running) {
-    processInput(); // Decodifica y procesa todos los eventos encolados
+    processInput();  // Decodifica y procesa todos los eventos encolados
     update();
-    usleep(30000); // Algo mas de 30 fps
+    usleep(30000);  // Algo mas de 30 fps
   }
 }
 
@@ -38,10 +35,9 @@ void Game::update() {
 
 void Game::movePlayer(std::string &move) {
   // Hardcodeo violento para testing
-  int id_user = std::stoi(move.substr(0,1));
+  int id_user = std::stoi(move.substr(0, 1));
   std::string direction = move.substr(1, 1);
 
-  
   const int x = onlinePlayers.at(id_user).getX();
   const int y = onlinePlayers.at(id_user).getY();
 
@@ -67,15 +63,4 @@ void Game::movePlayer(std::string &move) {
   // Enviar al usuario el movimiento
 }
 
-
-void Game::addPlayer(int id) {
-  onlinePlayers.insert(std::make_pair(id, PlayerTestNet{id}));
-}
-
-void Game::addEntity() { // Hardcodeado de momento, no me importa nada
-  entities.push_back(new Spider());
-}
-
-void Game::addIncoming(std::string s) {
-  incomingEvents.push(s);
-}
+void Game::addIncoming(std::string s) { incomingEvents.push(s); }

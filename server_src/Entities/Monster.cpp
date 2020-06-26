@@ -1,36 +1,39 @@
+#include "Monster.h"
+
 #include <cmath>
 #include <random>
 
 #include "Condition.h"
 #include "IsAlive.h"
-#include "Monster.h"
 #include "MonsterType.h"
 #include "PlayerNet.h"
 
-#define MIN_DIST 150 // Esto debe ser configurable no se como
+#define MIN_DIST 150  // Esto debe ser configurable no se como
 #define ATK_DIST 20
 #define STEP 6
 
-Monster::Monster(MonsterType &type, int id, int x, int y, GameState &world) : 
-                 Entity(x, y, id), hp(type.getHp()), kind(type), world(world) {}
+Monster::Monster(MonsterType &type, int id, int x, int y, GameState &world)
+    : Entity(x, y, id, type.getHp()), kind(type), world(world) {}
 
 Monster::~Monster() {}
 
 void Monster::update() {
   currentFrame++;
-  if (currentFrame == 30) { // TODO: Hacer configurable el valor de alguna forma
-    PlayerNet* player = world.getNearestPlayer(*this, &Condition::isAlive);
+  if (currentFrame ==
+      30) {  // TODO: Hacer configurable el valor de alguna forma
+    PlayerNet *player = world.getNearestPlayer(*this, &Condition::isAlive);
     int new_x = x;
     int new_y = y;
 
-    if (player != nullptr && world.entitiesDistance(*this,*player) < MIN_DIST) {
-      if (world.entitiesDistance(*this,*player) <= ATK_DIST) {
+    if (player != nullptr &&
+        world.entitiesDistance(*this, *player) < MIN_DIST) {
+      if (world.entitiesDistance(*this, *player) <= ATK_DIST) {
         // ATACA
       } else {
         float x_dist = abs(x - player->getX());
         float y_dist = abs(y - player->getY());
 
-        if (x_dist < y_dist) { // Me muevo en el eje en que haya mas distancia
+        if (x_dist < y_dist) {  // Me muevo en el eje en que haya mas distancia
           if (y < player->getY()) {
             new_y = y + STEP;
           } else {
@@ -49,11 +52,11 @@ void Monster::update() {
           world.monsterMoved(id);
         }
       }
-    } else { // Si no hay jugador cerca
+    } else {  // Si no hay jugador cerca
       std::random_device rd;
       std::mt19937 gen(rd());
-      std::uniform_real_distribution<> distr(0,1);
-      float rand_val = distr(gen); // Valor random
+      std::uniform_real_distribution<> distr(0, 1);
+      float rand_val = distr(gen);  // Valor random
       if (rand_val < 0.25) {
         new_x -= 1;
       } else if (rand_val >= 0.25 && rand_val < 0.5) {
@@ -69,6 +72,5 @@ void Monster::update() {
         world.monsterMoved(id);
       }
     }
-
   }
 }

@@ -4,7 +4,6 @@
 #include <map>
 #include <msgpack.hpp>
 #include <string>
-#include <vector>
 #include <sstream>
 
 ClientConnector::ClientConnector(const char *host, const char *service) {
@@ -71,6 +70,8 @@ MainMap ClientConnector::getMainMap(SDL_Renderer *renderer) {
     len = (lenBuff[3] << 24) + (lenBuff[2] << 16) + (lenBuff[1] << 8) + 
           lenBuff[0];
 
+    len = ntohl(len);
+
     msgBuff = std::vector<char>(len);
     socket.recv(&msgBuff[0], len);
     ss = std::string(msgBuff.begin(), msgBuff.end());
@@ -82,6 +83,8 @@ MainMap ClientConnector::getMainMap(SDL_Renderer *renderer) {
     socket.recv(lenBuff, 4);
     len = (lenBuff[3] << 24) + (lenBuff[2] << 16) + (lenBuff[1] << 8) + 
           lenBuff[0];
+
+    len = ntohl(len);
 
     msgBuff = std::vector<char>(len);
     socket.recv(&msgBuff[0], len);
@@ -96,11 +99,21 @@ MainMap ClientConnector::getMainMap(SDL_Renderer *renderer) {
 }
 
 Sender ClientConnector::getSender(MessageQueue &queue) {
-    Sender sender(&socket, queue);
+    Sender sender(this, &queue);
     return std::move(sender);
 }
 
 Receiver ClientConnector::getReceiver(MessageQueue &queue) {
-    Receiver receiver(&socket, queue);
+    Receiver receiver(this, &queue);
     return std::move(receiver);
+}
+
+std::vector<char> ClientConnector::receive(uint32_t len) {
+    std::vector<char> msg(len);
+    socket.recv(&msg[0], len);
+    return std::move(msg);
+}
+
+void ClientConnector::send(std::vector<char> msg, uint32_t len) {
+    socket.send(&msg[0], len);
 }

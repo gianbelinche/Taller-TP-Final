@@ -4,12 +4,11 @@
 #include "Wearable.h"
 
 class Helmet : public Wearable {
-private:
-  
-public:
+ private:
+ public:
   Helmet(int id, int minDef, int maxDef);
 
   ~Helmet();
 };
 
-#endif // HELMET_H
+#endif  // HELMET_H

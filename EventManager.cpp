@@ -1,6 +1,7 @@
 #include "EventManager.h"
 #include "QuitException.h"
 #include <vector>
+#include <iostream>
 
 #define MOVE_CHAR 0
 
@@ -12,7 +13,22 @@ EventManager::EventManager(EntityManager &anEntityManager, uint32_t aPlayerID,
 
 EventManager::~EventManager() {}
 
+void EventManager::run() {
+    try {
+        while (SDL_WaitEvent(&eventHandler) != 0) {
+            
+        }
+        throw SDL_Error("Error en WaitEvent.");
+    } catch(const QuitException &e) {
+        std::cerr << e.what() << '\n';
+    }
+}
+
 void EventManager::handle(SDL_Event &event) {
+    //Hola guido te voy poniendo cosas que creo que vamos a necesitar
+    //Al principio de todo hay que poner un
+    //SDL_StopTextInput();
+    //Porque por default el text input esta activado
     // ver si tiene que ser bloqueante o no
     switch (event.type) {
         case SDL_QUIT:
@@ -29,8 +45,8 @@ void EventManager::handle(SDL_Event &event) {
             checkClick(event);
 
         case SDL_TEXTINPUT:
-            // GIAN
-        
+        //Aca habria que hacer esto
+        //chat.putCharacter(event.text.text);
         default:
             break;
     }
@@ -66,7 +82,9 @@ void EventManager::checkKeyDown(SDL_Event &event) {
 
             case SDLK_KP_ENTER:
             case SDLK_RETURN:
-                //Gian, haz lo tuyo
+                //aca iria un
+                //SDL_StartTextInput();
+                //writing = true;
                 break;
             
             default:
@@ -77,8 +95,12 @@ void EventManager::checkKeyDown(SDL_Event &event) {
         switch (event.key.keysym.sym) {
             case SDLK_KP_ENTER:
             case SDLK_RETURN:
+                //chat.sendMessage();
+                //SDL_StopTextInput();
+                break;
+
             case SDLK_BACKSPACE:
-                //Gian, haz lo tuyo
+                //chat.deleteCharacter();
                 break;
 
             default:
@@ -108,7 +130,14 @@ void EventManager::checkKeyUp(SDL_Event &event) {
 }
 
 void EventManager::checkClick(SDL_Event &event) {
-    if (/*Click en inventario*/) {
+    //Esto aun no lo tengo bien decidido pero, lo que tengo es esto
+    /*std::string selected = inventory.select(event.button.x,event.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
+    if (selected != "")
+    std::cout << selected << std::endl;*/
+    //es decir, le digo al inventario que seleccione el objeto de la pos x,y y devuelva el objeto de esa pos, si no hay ningun objeto
+    //o si clickeo afuera del inventario devuelve "", habria que diferenciar si clickeo afuera o en una casilla vacia, tal vez podria hacer que
+    //devuelva la casilla, eso lo resolveria, ya vere que hacer
+    if (0/*Click en inventario*/) {
 
     } else {
         //else entitymanager.checkClickEntities(camera, x, y);

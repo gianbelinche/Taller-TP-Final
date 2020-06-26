@@ -7,12 +7,13 @@
 class MonsterType;
 
 class Monster : public Entity {
-  friend class MonsterType; // Para que pueda acceder al constructor
-private:
+  friend class MonsterType;  // Para que pueda acceder al constructor
+ private:
   int hp;
   MonsterType &kind;
   GameState &world;
-public:
+
+ public:
   Monster(MonsterType &type, int id, int x, int y, GameState &world);
 
   ~Monster();
@@ -20,4 +21,4 @@ public:
   void update() override;
 };
 
-#endif // MONSTER_H
+#endif  // MONSTER_H

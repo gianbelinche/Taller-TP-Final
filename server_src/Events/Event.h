@@ -2,14 +2,15 @@
 #define EVENT_H
 
 class Event {
-protected:
+ protected:
   int originUserId;
-public:
+
+ public:
   Event(int id);
-  
+
   virtual ~Event();
 
   int getUser();
 };
 
-#endif // EVENT_H
+#endif  // EVENT_H

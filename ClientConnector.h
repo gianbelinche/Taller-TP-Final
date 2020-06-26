@@ -7,6 +7,7 @@
 #include "Sender.h"
 #include "Receiver.h"
 #include "MessageQueue.h"
+#include <vector>
 
 class ClientConnector {
     private:
@@ -24,6 +25,9 @@ class ClientConnector {
         MainMap getMainMap(SDL_Renderer *renderer);
         Sender getSender(MessageQueue &queue);
         Receiver getReceiver(MessageQueue &queue);
+
+        std::vector<char> receive(uint32_t len);
+        void send(std::vector<char> msg, uint32_t len);
 };
 
 #endif

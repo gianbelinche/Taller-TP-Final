@@ -7,11 +7,11 @@
 
 class Receiver : public Thread {
     private:
-        ClientConnector &clientConnector;
-        MessageQueue &queue;
+        ClientConnector *clConnector;
+        MessageQueue *queue;
 
     public:
-        Receiver(ClientConnector *clientConnector, MessageQueue &aQueue);
+        Receiver(ClientConnector *aClConnector, MessageQueue *aQueue);
         ~Receiver();
 
         Receiver(const Receiver &copy) = delete;

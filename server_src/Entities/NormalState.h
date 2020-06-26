@@ -4,14 +4,13 @@
 #include "PlayerState.h"
 
 class NormalState : public PlayerState {
-private:
-  
-public:
+ private:
+ public:
   NormalState();
 
   ~NormalState();
 
-  int attack(PlayerNet &player, Entity* ent, int damage) override;
+  int attack(PlayerNet& player, Entity* ent, int damage) override;
 };
 
-#endif // NORMALSTATE_H
+#endif  // NORMALSTATE_H

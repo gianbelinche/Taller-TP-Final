@@ -9,12 +9,12 @@ class GameState;
 #include "../Items/Weapon.h"
 #include "Class.h"
 #include "Entity.h"
-#include "Race.h"
 #include "PlayerState.h"
+#include "Race.h"
 
-class PlayerNet : public Entity{
-private:
-  PlayerState* state; // Ver si puede ser una referencia
+class PlayerNet : public Entity {
+ private:
+  PlayerState* state;  // Ver si puede ser una referencia
   Class* playerClass;
   Race* playerRace;
   int mana;
@@ -24,44 +24,48 @@ private:
   int level;
   int exp;
   int gold;
-  GameState &world;
+  GameState& world;
   Weapon* weapon;
   Armor* armor;
   Helmet* helmet;
   Shield* shield;
-public:
-  PlayerNet(int x, int y, int id, GameState &currState, int hp, int mana,
+
+ public:
+  PlayerNet(int x, int y, int id, GameState& currState, int hp, int mana,
             int velocity, int currExp, int currGold);
 
   ~PlayerNet();
 
-  void update() override;
+  /* ------------- Getters ------------- */
+  
+  int getCurrFrame();
+
+  int getFPS();  // Para la recuperacion se necesitan los segundos pasados
+
+  float getIntelligence();
+
+  float getMeditationFactor();
+
+  float getRaceRecovery();
+
+  float getStrength();
+
+  /* ---------- Acciones ---------- */
+
+  int attack(Entity* ent);
+
+  void changeState(PlayerState* new_state);
+
+  void heal(int points);
 
   // Pre: la posicion es valida(no colisiona)
   void move(int x, int y);
 
-  void changeState(PlayerState* new_state);
-
-  float getRaceRecovery();
-
-  float getMeditationFactor();
-
-  int getFPS(); // Para la recuperacion se necesitan los segundos pasados
-
-  void heal(int points);
-
   void recoverMana(int mPoints);
-
-  float getIntelligence();
-
-  float getStrength();
-
-  int getCurrFrame();
-
-  int attack(Entity* ent);
 
   int takeDamage(int dmgToTake) override;
 
+  void update() override;
 };
 
-#endif // PLAYERNET_H
+#endif  // PLAYERNET_H

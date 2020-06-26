@@ -4,10 +4,11 @@
 #include "Event.h"
 
 class UserMoved : public Event {
-private:
+ private:
   int x;
   int y;
-public:
+
+ public:
   UserMoved(int originUser, int pos_x, int pos_y);
 
   ~UserMoved();
@@ -17,4 +18,4 @@ public:
   int getY();
 };
 
-#endif // USERMOVED_H
+#endif  // USERMOVED_H

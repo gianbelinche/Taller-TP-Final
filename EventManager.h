@@ -20,6 +20,8 @@ class EventManager {
         EventManager(EntityManager &anEntityManager, uint32_t playerID, 
                      MessageQueue &msgQueue);
         ~EventManager();
+
+        void run();
         void handle(SDL_Event &event);
 };
 

@@ -1,9 +1,9 @@
-#include "../config/Equations.h"
 #include "Weapon.h"
 
+#include "../config/Equations.h"
 
-Weapon::Weapon(int itemID, int minDMG, int maxDMG) :
-               Item(itemID), minDmg(minDMG), maxDmg(maxDMG) {}
+Weapon::Weapon(int itemID, int minDMG, int maxDMG)
+    : Item(itemID), minDmg(minDMG), maxDmg(maxDMG) {}
 
 Weapon::~Weapon() {}
 
@@ -12,10 +12,6 @@ int Weapon::attack(Entity* entity, int strength) {
   return entity->takeDamage(hitDamage);
 }
 
-int Weapon::getMinDmg() {
-  return minDmg;    
-}
+int Weapon::getMinDmg() { return minDmg; }
 
-int Weapon::getMaxDmg() {
-  return maxDmg;    
-}
+int Weapon::getMaxDmg() { return maxDmg; }

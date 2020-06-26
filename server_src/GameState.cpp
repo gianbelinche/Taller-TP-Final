@@ -1,7 +1,7 @@
+#include "GameState.h"
+
 #include <cmath>
 #include <limits>
-
-#include "GameState.h"
 
 #define FRAMES_PER_SECOND 30
 
@@ -18,9 +18,9 @@ PlayerNet* GameState::getPlayer(int id) {
 }
 
 bool GameState::isValidPosition(int x, int y) {
-  if (y < 0|| y >= colisionMap.size() ||x < 0 || x >= colisionMap[0].size()) {
+  if (y < 0 || y >= colisionMap.size() || x < 0 || x >= colisionMap[0].size()) {
     return false;
-  } else if (colisionMap[y/TILE_SIZE][x/TILE_SIZE] != 0) {
+  } else if (colisionMap[y / TILE_SIZE][x / TILE_SIZE] != 0) {
     return false;
   } else {
     return true;
@@ -32,12 +32,12 @@ void GameState::playerMoved(int id) {
   // mensajes salientes
 }
 
-PlayerNet* GameState::getNearestPlayer(Entity &ent, Condition* cond) {
+PlayerNet* GameState::getNearestPlayer(Entity& ent, Condition* cond) {
   PlayerNet* nearest = nullptr;
   float smallestDistance = std::numeric_limits<float>::infinity();
   float curr;
-  for (auto &it: players) {
-    if ((curr = entitiesDistance(ent, *(it.second))) < smallestDistance && 
+  for (auto& it : players) {
+    if ((curr = entitiesDistance(ent, *(it.second))) < smallestDistance &&
         (cond->evaluate(it.second))) {
       nearest = it.second;
       smallestDistance = curr;
@@ -46,7 +46,7 @@ PlayerNet* GameState::getNearestPlayer(Entity &ent, Condition* cond) {
   return nearest;
 }
 
-float entitiesDistance(Entity &ent1, Entity &ent2) {
+float entitiesDistance(Entity& ent1, Entity& ent2) {
   int dist_x = abs(ent1.getX() - ent2.getX());
   int dist_y = abs(ent1.getY() - ent2.getY());
   return sqrt(pow(dist_x, 2) + pow(dist_y, 2));
@@ -54,12 +54,10 @@ float entitiesDistance(Entity &ent1, Entity &ent2) {
 
 void GameState::monsterMoved(int id) {
   // Busca el bichito en el map de bichos(o no) y manda el mensaje
-  // Ver si no conviene mergear con el playerMoved  
+  // Ver si no conviene mergear con el playerMoved
 }
 
-int GameState::getFPS() {
-  return framesPerSecond;    
-}
+int GameState::getFPS() { return framesPerSecond; }
 
 Entity* GameState::getEntity(int id) {
   if (entities.find(id) != entities.end()) {
