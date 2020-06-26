@@ -4,16 +4,15 @@
 
 class IsAlive;
 
-class Condition { // AKA callback version objetos
-private:
-
-public:
+class Condition {  // AKA callback version objetos
+ private:
+ public:
   Condition();
 
   ~Condition();
 
   bool virtual evaluate(PlayerNet* player);
 
-public:
+ public:
   static IsAlive isAlive;
 };

@@ -5,21 +5,22 @@
 #include <unordered_map>
 #include <vector>
 
+#include "Communication/ProtectedStrQueue.h"
 #include "Entities/Entity.h"
 #include "GameState.h"
-#include "Communication/ProtectedStrQueue.h"
 #include "ServerEventHandler.h"
 #include "Thread.h"
 
 class Game : public Thread {
-private:
+ private:
   GameState &world;
-  std::vector<Entity*> entities;
+  std::vector<Entity *> entities;
   std::unordered_map<int, PlayerNet> onlinePlayers;
   ProtectedStrQueue incomingEvents;
   ServerEventHandler handler;
   std::atomic<bool> keep_running;
-public:
+
+ public:
   Game();
 
   ~Game();
@@ -38,7 +39,8 @@ public:
   void addEntity();
 
   void addIncoming(std::string s);
-private:
+
+ private:
   // De momento un string con la dirección, probablemente cambie
   void movePlayer(std::string &move);
 };

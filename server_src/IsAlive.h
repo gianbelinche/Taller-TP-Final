@@ -3,9 +3,8 @@
 #include "Condition.h"
 
 class IsAlive : public Condition {
-private:
-  
-public:
+ private:
+ public:
   IsAlive();
 
   ~IsAlive();

@@ -4,11 +4,12 @@
 #include "../Entities/Entity.h"
 #include "Item.h"
 
-class Weapon : public Item{
-private:
+class Weapon : public Item {
+ private:
   int minDmg;
   int maxDmg;
-public:
+
+ public:
   Weapon(int itemID, int minDMG, int maxDMG);
 
   ~Weapon();
@@ -22,4 +23,4 @@ public:
   int getMaxDmg();
 };
 
-#endif // WEAPON_H
+#endif  // WEAPON_H

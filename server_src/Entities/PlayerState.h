@@ -1,8 +1,8 @@
 #ifndef PLAYERSTATE_H
 #define PLAYERSTATE_H
 
-#include "Entity.h"
 #include "../GameState.h"
+#include "Entity.h"
 
 class PlayerNet;
 class GhostState;
@@ -10,9 +10,8 @@ class NormalState;
 class MeditationState;
 
 class PlayerState {
-private:
-  
-public:
+ private:
+ public:
   PlayerState();
 
   virtual ~PlayerState();
@@ -21,15 +20,15 @@ public:
 
   void virtual move(PlayerNet &player, int x, int y);
 
-  int virtual attack(PlayerNet &player, Entity* ent, int damage);
+  int virtual attack(PlayerNet &player, Entity *ent, int damage);
 
   void virtual lifeRecover(PlayerNet &player);
 
   void virtual manaRecover(PlayerNet &player);
 
-public:
+ public:
   static NormalState normal;
   static MeditationState meditating;
   static GhostState dead;
 };
-#endif // PLAYERSTATE_H
+#endif  // PLAYERSTATE_H

@@ -5,10 +5,11 @@
 #include "Monster.h"
 
 class MonsterType {
-private:
+ private:
   int hp;
   int damage;
-public:
+
+ public:
   MonsterType(int hp, int damage);
 
   ~MonsterType();
@@ -17,7 +18,7 @@ public:
 
   int getDamage();
 
-  Monster* newMonster(int id, int x, int y, GameState &world);
+  Monster* newMonster(int id, int x, int y, GameState& world);
 };
 
-#endif // MONSTERTYPE_H
+#endif  // MONSTERTYPE_H

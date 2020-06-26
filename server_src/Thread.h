@@ -4,9 +4,10 @@
 #include <thread>
 
 class Thread {
-private:
+ private:
   std::thread thread;
-public:
+
+ public:
   Thread();
 
   virtual ~Thread();

@@ -1,15 +1,13 @@
 #ifndef MEDITATIONSTATE_H
 #define MEDITATIONSTATE_H
 
-
-#include "PlayerState.h"
-#include "PlayerNet.h"
 #include "NormalState.h"
+#include "PlayerNet.h"
+#include "PlayerState.h"
 
 class MeditationState : public PlayerState {
-private:
-  
-public:
+ private:
+ public:
   MeditationState();
 
   ~MeditationState();
@@ -18,7 +16,7 @@ public:
 
   void manaRecover(PlayerNet &player) override;
 
-  int attack(PlayerNet &player, Entity* ent, int damage);
+  int attack(PlayerNet &player, Entity *ent, int damage);
 };
 
-#endif // MEDITATIONSTATE_H
+#endif  // MEDITATIONSTATE_H

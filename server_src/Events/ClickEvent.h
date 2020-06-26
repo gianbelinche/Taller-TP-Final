@@ -4,9 +4,10 @@
 #include "Event.h"
 
 class ClickEvent : public Event {
-private:
+ private:
   int destinyId;
-public:
+
+ public:
   ClickEvent(int originUser, int destinyEntity);
 
   ~ClickEvent();
@@ -14,4 +15,4 @@ public:
   int getDestinyEntityID();
 };
 
-#endif // CLICKEVENT_H
+#endif  // CLICKEVENT_H

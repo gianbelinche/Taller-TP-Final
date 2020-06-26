@@ -3,11 +3,12 @@
 
 #include "Item.h"
 
-class Wearable : public Item{
-private:
+class Wearable : public Item {
+ private:
   int minDefense;
   int maxDefense;
-public:
+
+ public:
   Wearable(int id, int minDEF, int maxDEF);
 
   ~Wearable();
@@ -17,4 +18,4 @@ public:
   int getMaxDef();
 };
 
-#endif // WEARABLE_H
+#endif  // WEARABLE_H

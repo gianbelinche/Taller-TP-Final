@@ -4,9 +4,10 @@
 #include "../Entities/PlayerNet.h"
 
 class Item {
-private:
+ private:
   int id;
-public:
+
+ public:
   Item(int itemID);
 
   ~Item();
@@ -16,4 +17,4 @@ public:
   void virtual beEquiped(PlayerNet &player);
 };
 
-#endif // ITEM_H
+#endif  // ITEM_H
