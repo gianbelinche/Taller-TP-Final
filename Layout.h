@@ -24,6 +24,7 @@ public:
     void changeMana(int mana, int max_mana);
     void changeLevel(int level);
     void render(int screen_width,int screen_height);
+    bool isClicked(int x,int screen_width);
     ~Layout();
 
 };

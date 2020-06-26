@@ -195,6 +195,8 @@ void TestGian::run() {
 			}else if(eventHandler.type == SDL_TEXTINPUT){
                 chat.putCharacter(eventHandler.text.text);
             }else if(eventHandler.type == SDL_MOUSEBUTTONDOWN){
+                bool clicked = layout.isClicked(eventHandler.button.x,SCREEN_WIDTH);
+                std::cout <<  "is " << clicked << std::endl;
                 int selected = inventory.select(eventHandler.button.x,eventHandler.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
                 std::cout << selected << std::endl;
             }
