@@ -149,8 +149,8 @@ void TestGian::run() {
     chat.addMessage("msj de una linea");
     chat.addMessage("mensaje de largo de mas de una linea si senor");
     
-    bool writing = false;
-    SDL_StopTextInput();
+    bool writing = true;
+    int login_count = 0;
 
     while (!quit) {
 
@@ -162,14 +162,22 @@ void TestGian::run() {
                         if (writing){
                             if (in_login){
                                 login.send();
+                                login_count++;
+                                if (login_count == 2){
+                                    in_login = false;
+                                    SDL_StopTextInput();
+                                    writing = !writing;
+                                }
+                                    
                             } else {
                                 chat.sendMessage();
+                                SDL_StopTextInput();
+                                writing = !writing;
                             }
-                            SDL_StopTextInput();
                         } else {
                             SDL_StartTextInput();
+                            writing = !writing;
                         }
-                        writing = !writing;
                 } else if(eventHandler.key.keysym.sym == SDLK_BACKSPACE){
                     if (!in_login){
                         chat.deleteCharacter();

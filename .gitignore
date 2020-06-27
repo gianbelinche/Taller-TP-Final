@@ -2,10 +2,9 @@ prueba
 a.out
 *.a
 testgian
-Makefile
 .vscode/
 .gitignore
 CMakeFiles
 *.cmake
 CMakeCache.txt
-Makelife
+Makefile
