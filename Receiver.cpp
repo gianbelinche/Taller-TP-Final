@@ -9,9 +9,7 @@ Receiver::Receiver(ClientConnector *aClConnector, MessageQueue *aQueue) :
                                                     clConnector(aClConnector), 
                                                     queue(aQueue) {}
 
-Receiver::~Receiver() {
-    if (queue) queue->close();
-}
+Receiver::~Receiver() {}
 
 Receiver::Receiver(Receiver&& other) : Thread(std::move(other)),
                                        clConnector(other.clConnector), 
@@ -58,11 +56,15 @@ void Receiver::run() {
             queue->push(event);
         }
     } catch(const SocketException &e) {
+        // Se cerro correctamente, cierro cola
         queue->close();
-        queue = nullptr;
     } catch(const std::exception& e) {
+        // Se cerro inesperadamente
         std::cerr << e.what() << '\n';
+        queue->close();
     } catch(...) {
-        std::cerr << "Error: unknown" << '\n';
+        // Se cerro inesperadamente
+        std::cerr << "Error Receiver: unknown" << '\n';
+        queue->close();
     }
 }

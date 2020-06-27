@@ -9,6 +9,7 @@
 #include "EventManager.h"
 #include "ModelController.h"
 #include "Renderer.h"
+#include "ClientController.h"
 #include <exception>
 #include <iostream>
 
@@ -22,44 +23,37 @@ int main(int argc, char* argv[]) {
         MainWindow mainWindow;
         MessageQueue senderQueue;
         MessageQueue receiverQueue;
-        SDL_Renderer *renderer = mainWindow.getRenderer();
+        SDL_Renderer *mainRenderer = mainWindow.getRenderer();
+        ClientProtocol clientProtocol;
 
-        Player player = clientConnector.getPlayer(renderer);
-        MainMap mainMap = clientConnector.getMainMap(renderer);
+        Player player = clientConnector.getPlayer(mainRenderer);
+        MainMap mainMap = clientConnector.getMainMap(mainRenderer);
         Sender sender = clientConnector.getSender(senderQueue);
         Receiver receiver = clientConnector.getReceiver(receiverQueue);
 
-        Layout layout(renderer);
-        GraphicInventory gInventory(renderer);
-        MiniChat miniChat(renderer);
-        ExpBar expBar(renderer);
+        Layout layout(mainRenderer);
+        GraphicInventory gInventory(mainRenderer);
+        MiniChat miniChat(mainRenderer);
+        ExpBar expBar(mainRenderer);
 
-        Camera camera(player.getPosX(), player.getPosY()); //quizas sea mejor cambiar esto
+        Camera camera(player.getPosX(), player.getPosY());
 
-        EntityManager entityManager(renderer, player, player.getID());
+        EntityManager entityManager(mainRenderer, player, player.getID());
 
-        EventManager eventManager(entityManager, player.getID(), senderQueue);
+        EventManager eventManager(entityManager, player.getID(), senderQueue, 
+                                  camera, clientProtocol);
         ModelController modelController(entityManager, receiverQueue);
         Renderer renderer(camera, player, mainMap, entityManager, 
-                          renderer, layout, gInventory, 
-                          miniChat, expBar);
-        /*try
-            sender.run
-            receiver.run
-            modelcontroller.run
-            renderer.run
-            eventmanager.run
-        catch ()
-            sender.join
-            receiver.join
-            eventmanager.join
-            modelcontroller.join
-        */
+                          mainRenderer, layout, gInventory, miniChat, expBar);
+
+        ClientController clientController(receiver, sender, modelController,
+                                          eventManager, renderer);
+        clientController.run();
     } catch (const std::exception& e) {
         std::cerr << e.what() << '\n';
         return ERROR;
     } catch (...) {
-        std::cerr << "Error: unknown" << '\n';
+        std::cerr << "Error client: unknown" << '\n';
     }
 
     return SUCCESS;

@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include "EntityManager.h"
 #include "MessageQueue.h"
+#include "ClientProtocol.h"
 
 class EventManager {
     private:
@@ -12,6 +13,8 @@ class EventManager {
         MessageQueue &msgQueue;
         EntityManager &entityManager;
         SDL_Event event;
+        Camera &camera;
+        ClientProtocol &clProtocol;
 
         void checkKeyDown(SDL_Event &event);
         void checkKeyUp(SDL_Event &event);
@@ -19,7 +22,8 @@ class EventManager {
         
     public:
         EventManager(EntityManager &anEntityManager, uint32_t playerID, 
-                     MessageQueue &msgQueue);
+                     MessageQueue &msgQueue, Camera &aCamera, 
+                     ClientProtocol &aClProtocol);
         ~EventManager();
 
         EventManager(const EventManager& copy) = delete;

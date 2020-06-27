@@ -21,9 +21,14 @@ void ModelController::run() {
             */
         }
     } catch(const EmptyException& e) {
+        // Se cerró correctamente
     } catch(const std::exception& e) {
+        // Se cerró inesperadamente y cierro cola para avisar a Receiver
         std::cerr << e.what() << '\n';
+        msgQueue.close();
     } catch(...) {
+        // Se cerró inesperadamente y cierro cola para avisar a Receiver
         std::cerr << "Error ModelController: unkown" << '\n';
+        msgQueue.close();
     }
 }

@@ -1,10 +1,16 @@
 #include "MessageQueue.h"
 #include "EmptyException.h"
+#include "OSError.h"
 
 MessageQueue::MessageQueue() : isClosed(false) {}
 
 void MessageQueue::push(std::vector<uint32_t> &msg) {
     std::unique_lock<std::mutex> lk(mux);
+
+    if (this->isClosed) {
+        throw OSError("Error: se cerró inesperadamente la cola.");
+    }
+
     this->queue.emplace(std::move(msg));
     this->condVar.notify_all();
 }

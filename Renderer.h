@@ -6,7 +6,7 @@
 #include "Player.h"
 #include "MainMap.h"
 #include "EntityManager.h"
-#include <mutex>
+#include <atomic>
 #include "Layout.h"
 #include "GraphicInventory.h"
 #include "MiniChat.h"
@@ -14,8 +14,7 @@
 
 class Renderer : public Thread {
     private:
-        std::mutex mux;
-        bool closed;
+        std::atomic<bool> closed;
         Camera &camera;
         Player &player;
         MainMap &mainMap;
