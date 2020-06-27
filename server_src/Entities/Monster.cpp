@@ -59,13 +59,13 @@ void Monster::update() {
       std::uniform_real_distribution<> distr(0, 1);
       float rand_val = distr(gen);  // Valor random
       if (rand_val < 0.25) {
-        new_x -= 1;
+        new_x -= STEP;
       } else if (rand_val >= 0.25 && rand_val < 0.5) {
-        new_y -= 1;
+        new_y -= STEP;
       } else if (rand_val >= 0.5 && rand_val < 0.75) {
-        new_x += 1;
+        new_x += STEP;
       } else {
-        new_y += 1;
+        new_y += STEP;
       }
       if (world.isValidPosition(new_x, new_y)) {
         x = new_x;
@@ -83,4 +83,9 @@ int Monster::takeDamage(int dmgToTake) {
     world.entityDisappear(id);
   }
   return oldHp - hp;
+}
+
+int Monster::attack(PlayerNet* player) {
+  int damageDealt = player->takeDamage(kind.getDamage());
+  world.playerTookDamage(player->getId(), damageDealt);
 }

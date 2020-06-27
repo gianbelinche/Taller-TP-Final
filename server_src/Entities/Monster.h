@@ -18,6 +18,9 @@ class Monster : public Entity {
 
   ~Monster();
 
+  // Pre: el jugador existe y esta vivo
+  int attack(PlayerNet* player);
+
   int takeDamage(int dmgToTake) override;
 
   void update() override;
