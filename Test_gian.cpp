@@ -98,6 +98,7 @@ TestGian::~TestGian() {
 
 void TestGian::run() {
     LoginScreen login(mainRenderer);
+    int logins = 0;
     bool in_login = true;
     bool quit = false;
     MusicPlayer music_player;
@@ -158,18 +159,22 @@ void TestGian::run() {
                 quit = true;
             }else if( eventHandler.type == SDL_KEYDOWN ){
                 if (eventHandler.key.keysym.sym == SDLK_RETURN){
-                    if (!in_login){
                         if (writing){
-                            chat.sendMessage();
+                            if (in_login){
+                                login.send();
+                            } else {
+                                chat.sendMessage();
+                            }
                             SDL_StopTextInput();
                         } else {
                             SDL_StartTextInput();
                         }
                         writing = !writing;
-                    }
                 } else if(eventHandler.key.keysym.sym == SDLK_BACKSPACE){
                     if (!in_login){
                         chat.deleteCharacter();
+                    } else {
+                        login.deleteCharacter();
                     }
                 } else if(!writing){
                     switch( eventHandler.key.keysym.sym ){
@@ -207,12 +212,19 @@ void TestGian::run() {
 			}else if(eventHandler.type == SDL_TEXTINPUT){
                 if (!in_login){
                     chat.putCharacter(eventHandler.text.text);
+                } else {
+                    login.write(eventHandler.text.text);
                 }
             }else if(eventHandler.type == SDL_MOUSEBUTTONDOWN){
-                bool clicked = layout.isClicked(eventHandler.button.x,SCREEN_WIDTH);
-                std::cout <<  "is " << clicked << std::endl;
-                int selected = inventory.select(eventHandler.button.x,eventHandler.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
-                std::cout << selected << std::endl;
+                if (!in_login){
+                    bool clicked = layout.isClicked(eventHandler.button.x,SCREEN_WIDTH);
+                    std::cout <<  "is " << clicked << std::endl;
+                    int selected = inventory.select(eventHandler.button.x,eventHandler.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
+                    std::cout << selected << std::endl;
+                } else {
+                    login.select(eventHandler.button.x,eventHandler.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
+                }
+                
             }
         }
         
@@ -256,7 +268,11 @@ void TestGian::run() {
                 removes = 0;
             }
         } else {
+            logins++;
+            //if (logins == 200)
+                //login.changeToUserInput();
             login.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+            login.showError("Servidor inexistente");
         }    
 
         SDL_RenderPresent(mainRenderer);
