@@ -3,16 +3,21 @@
 #include "../config/Equations.h"
 #include "PlayerNet.h"
 
+#include <iostream>
+
 PlayerState::PlayerState() {}
 
 PlayerState::~PlayerState() {}
 
-int PlayerState::attack(PlayerNet &player, Entity *ent, int damage) {}
+int PlayerState::attack(PlayerNet &player, Entity *ent, int damage) {
+  return 0;
+}
 
 void PlayerState::lifeRecover(PlayerNet &player) {
   int healing = equation::pointsRecovery(
       player.getRaceRecovery(), player.getCurrFrame() / player.getFPS());
   player.heal(healing);
+  std::cout << "Recupera: " << healing << " ptos de vida\n";
 }
 
 void PlayerState::move(PlayerNet &player, int x, int y) {

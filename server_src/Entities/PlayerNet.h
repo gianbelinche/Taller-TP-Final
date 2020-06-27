@@ -18,7 +18,7 @@ class PlayerNet : public Entity {
   Class* playerClass;
   Race* playerRace;
   int mana;
-  int maxHp;
+  int maxHp = 100;
   int maxMana;
   int velocity;
   int level;
@@ -32,7 +32,8 @@ class PlayerNet : public Entity {
 
  public:
   PlayerNet(int x, int y, int id, GameState& currState, int hp, int mana,
-            int velocity, int currExp, int currGold);
+            int velocity, int currExp, int currGold, Weapon* wea, Armor* arm,
+            Helmet* helm, Shield* sh, PlayerState* sta, Class* cla, Race* ra);
 
   ~PlayerNet();
 

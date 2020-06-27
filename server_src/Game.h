@@ -14,14 +14,14 @@
 class Game : public Thread {
  private:
   GameState &world;
-  std::vector<Entity *> entities;
+  std::unordered_map<int, Entity *> entities;
   std::unordered_map<int, PlayerNet> onlinePlayers;
   ProtectedStrQueue incomingEvents;
   ServerEventHandler handler;
   std::atomic<bool> keep_running;
 
  public:
-  Game();
+  Game(GameState& world);
 
   ~Game();
 
@@ -36,7 +36,7 @@ class Game : public Thread {
   // Funciones de prueba de momento
   void addPlayer(int id);
 
-  void addEntity();
+  void addEntity(Entity* ent);
 
   void addIncoming(std::string s);
 

@@ -11,7 +11,7 @@ class ServerEventHandler {
   GameState &world;
 
  public:
-  ServerEventHandler(GameState &state);
+  explicit ServerEventHandler(GameState &state);
 
   ~ServerEventHandler();
 

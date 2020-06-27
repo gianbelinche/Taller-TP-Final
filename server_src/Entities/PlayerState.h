@@ -1,7 +1,6 @@
 #ifndef PLAYERSTATE_H
 #define PLAYERSTATE_H
 
-#include "../GameState.h"
 #include "Entity.h"
 
 class PlayerNet;

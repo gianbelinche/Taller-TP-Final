@@ -5,7 +5,8 @@
 
 #define FRAMES_PER_SECOND 30
 
-GameState::GameState(int fps) : framesPerSecond(fps) {}
+GameState::GameState(std::vector<std::vector<bool>> collisions, int fps)
+    : colisionMap(collisions), framesPerSecond(fps) {}
 
 GameState::~GameState() {}
 
@@ -18,7 +19,8 @@ PlayerNet* GameState::getPlayer(int id) {
 }
 
 bool GameState::isValidPosition(int x, int y) {
-  if (y < 0 || y >= colisionMap.size() || x < 0 || x >= colisionMap[0].size()) {
+  if (y < 0 || y >= (int)colisionMap.size() || 
+      x < 0 || x >= (int)colisionMap[0].size()) {
     return false;
   } else if (colisionMap[y / TILE_SIZE][x / TILE_SIZE] != 0) {
     return false;
@@ -30,6 +32,12 @@ bool GameState::isValidPosition(int x, int y) {
 void GameState::playerMoved(int id) {
   // Aca se llama a algo que encole el mensaje del jugador en la cola de
   // mensajes salientes
+}
+
+float GameState::entitiesDistance(Entity* ent1, Entity* ent2) {
+  int dist_x = abs(ent1->getX() - ent2->getX());
+  int dist_y = abs(ent1->getY() - ent2->getY());
+  return sqrt(pow(dist_x, 2) + pow(dist_y, 2));
 }
 
 PlayerNet* GameState::getNearestPlayer(Entity* ent, Condition* cond) {
@@ -44,12 +52,6 @@ PlayerNet* GameState::getNearestPlayer(Entity* ent, Condition* cond) {
     }
   }
   return nearest;
-}
-
-float entitiesDistance(Entity* ent1, Entity* ent2) {
-  int dist_x = abs(ent1->getX() - ent2->getX());
-  int dist_y = abs(ent1->getY() - ent2->getY());
-  return sqrt(pow(dist_x, 2) + pow(dist_y, 2));
 }
 
 void GameState::monsterMoved(int id) {
@@ -73,9 +75,37 @@ bool GameState::playerCanAttack(PlayerNet* player, Entity* ent) {
   } else if (player->getAttackRange() < entitiesDistance(player, ent)) {
     return false;
   } else if (player->getId() == ent->getId()) {
-    if (player->getDamage() >= 0) { // Se puede curar, pero no dañarse a si mismo
+    if (player->getDamage() >=
+        0) {  // Se puede curar, pero no dañarse a si mismo
       return false;
     }
   }
   return true;
+}
+
+void GameState::addEntity(Entity* ent) {
+  entities[ent->getId()] = ent;
+  // Aca deberia avisarle a los jugadores que aparecio un bichito    
+}
+
+void GameState::addPlayer(PlayerNet* player) {
+  players[player->getId()] = player;
+  entities[player->getId()] = player;
+  // Idem anterior, hay que brodcastear que aparecio    
+}
+
+void GameState::playerDied(int id) {
+    
+}
+
+void GameState::playerTookDamage(int id, int damage) {
+    
+}
+
+void GameState::entityDisappear(int id) {
+    
+}
+
+void GameState::playerDealtDamage(int id, int damage) {
+    
 }

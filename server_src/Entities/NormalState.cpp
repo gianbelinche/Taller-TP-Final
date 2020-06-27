@@ -1,5 +1,7 @@
 #include "NormalState.h"
 
+NormalState PlayerState::normal{};
+
 NormalState::NormalState() {}
 
 NormalState::~NormalState() {}

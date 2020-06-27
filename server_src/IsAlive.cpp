@@ -1,5 +1,7 @@
 #include "IsAlive.h"
 
+IsAlive Condition::isAlive{};
+
 IsAlive::IsAlive() {}
 
 IsAlive::~IsAlive() {}

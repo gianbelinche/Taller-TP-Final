@@ -8,15 +8,16 @@ class Weapon : public Item {
  private:
   int minDmg;
   int maxDmg;
+  int range;
 
  public:
-  Weapon(int itemID, int minDMG, int maxDMG);
+  Weapon(int itemID, int minDMG, int maxDMG, int rang);
 
   ~Weapon();
 
   int attack(Entity* entity, int strength);
 
-  int virtual getAttackRange() = 0;
+  int getAttackRange();
 
   int getMinDmg();
 

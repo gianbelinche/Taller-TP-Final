@@ -2,6 +2,16 @@
 
 #include "../config/Equations.h"
 
+MeditationState PlayerState::meditating{};
+
+MeditationState::MeditationState() {
+    
+}
+
+MeditationState::~MeditationState() {
+    
+}
+
 void MeditationState::move(PlayerNet &player, int x, int y) {
   player.changeState(&PlayerState::normal);
   PlayerState::normal.move(player, x, y);
@@ -16,5 +26,5 @@ void MeditationState::manaRecover(PlayerNet &player) {
 
 int MeditationState::attack(PlayerNet &player, Entity *ent, int damage) {
   player.changeState(&PlayerState::normal);
-  PlayerState::normal.attack(player, ent, damage);
+  return PlayerState::normal.attack(player, ent, damage);
 }

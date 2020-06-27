@@ -1,7 +1,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "../Entities/PlayerNet.h"
+class PlayerNet;
 
 class Item {
  private:

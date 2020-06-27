@@ -1,4 +1,5 @@
 #include "Item.h"
+#include "../Entities/PlayerNet.h"
 
 Item::Item(int itemID) {}
 

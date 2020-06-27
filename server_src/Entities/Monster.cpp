@@ -2,14 +2,15 @@
 
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 #include <random>
 
-#include "Condition.h"
-#include "IsAlive.h"
+#include "../Condition.h"
+#include "../IsAlive.h"
 #include "MonsterType.h"
 #include "PlayerNet.h"
 
-#define MIN_DIST 150  // Esto debe ser configurable no se como
+#define MIN_DIST 100  // Esto debe ser configurable no se como
 #define ATK_DIST 20
 #define STEP 10
 
@@ -29,7 +30,7 @@ void Monster::update() {
     if (player != nullptr &&
         world.entitiesDistance(this, player) < MIN_DIST) {
       if (world.entitiesDistance(this, player) <= ATK_DIST) {
-        // ATACA
+        attack(player);
       } else {
         float x_dist = abs(x - player->getX());
         float y_dist = abs(y - player->getY());
@@ -51,6 +52,7 @@ void Monster::update() {
           x = new_x;
           y = new_y;
           world.monsterMoved(id);
+          std::cout << "El mostro se movio a X: " << x << " Y: " << y << std::endl;
         }
       }
     } else {  // Si no hay jugador cerca
@@ -71,6 +73,7 @@ void Monster::update() {
         x = new_x;
         y = new_y;
         world.monsterMoved(id);
+        std::cout << "El mostro se movio a X: " << x << " Y: " << y << std::endl;
       }
     }
   }
@@ -88,4 +91,7 @@ int Monster::takeDamage(int dmgToTake) {
 int Monster::attack(PlayerNet* player) {
   int damageDealt = player->takeDamage(kind.getDamage());
   world.playerTookDamage(player->getId(), damageDealt);
+  std::cout << "Ataco al jugador: " << player->getId() 
+            << " y le hizo un daño de: " << damageDealt << std::endl;
+  return damageDealt;
 }

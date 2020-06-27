@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "PlayerNet.h"
+#include "Entities/PlayerNet.h"
 
 ServerEventHandler::ServerEventHandler(GameState& state) : world(state) {}
 
@@ -40,8 +40,7 @@ void ServerEventHandler::handleUserAttack(ClickEvent& ev) {
 
   int damageDealt = player->attack(entity);
   world.playerDealtDamage(player->getId(), damageDealt);
-  // Hay que mandar el daño causado fijandose si es mayor a cero, cero o
-  // negativo
+
   // Tambien si murio hay que calcular la experiencia extra
-  if 
+  
 }

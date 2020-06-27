@@ -1,19 +1,30 @@
 #include "PlayerNet.h"
 
 #include <algorithm>
+#include <iostream>
 
 #include "../config/Equations.h"
+#include "../GameState.h"
 #include "GhostState.h"
 #include "PlayerState.h"
 
 PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int hp,
-                     int mana, int velocity, int currExp, int currGold)
+                     int mana, int velocity, int currExp, int currGold,
+                     Weapon* wea, Armor* arm, Helmet* helm, Shield* sh,
+                     PlayerState* sta, Class* cla, Race* ra)
     : Entity(x, y, id, hp),
+      state(sta),
+      playerClass(cla),
+      playerRace(ra),
       mana(mana),
-      world(currState),
       velocity(velocity),
       exp(currExp),
-      gold(currGold) {}
+      gold(currGold),
+      world(currState),
+      weapon(wea),
+      armor(arm),
+      helmet(helm),
+      shield(sh) {}
 
 PlayerNet::~PlayerNet() {}
 
@@ -65,6 +76,7 @@ int PlayerNet::takeDamage(int dmgToTake) {
   int defense = equation::playerDefense(
       armor->getMinDef(), armor->getMaxDef(), shield->getMinDef(),
       shield->getMaxDef(), helmet->getMinDef(), helmet->getMaxDef());
+  std::cout << "La defensa resulto: " << defense << std::endl;
   int finalDmg = std::max(0, dmgToTake - defense);
   int oldHp = hp;
 
@@ -73,15 +85,20 @@ int PlayerNet::takeDamage(int dmgToTake) {
   if (hp == 0) {
     changeState(&PlayerState::dead);
     world.playerDied(id);
+    std::cout << "Se murió el jugador" << std::endl;
+
     // Dropear los items
   }
+  std::cout << "Ahora tiene vida: " << hp << std::endl;
   return oldHp - hp;  // Daño efectivo
 }
 
 void PlayerNet::update() {
   currentFrame++;
   if (currentFrame == 30) {
-    currentFrame = 0;
+    std::cout << "Tenia " << hp << "de vida\n"; 
     state->update(*this);
+    std::cout << "Ahora tiene:" << hp << std::endl;
+    currentFrame = 0;
   }
 }

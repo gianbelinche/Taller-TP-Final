@@ -1,9 +1,11 @@
 #include "Game.h"
 
 #include <unistd.h>
+
 #include <iostream>
 
-Game::Game() : keep_running(true) {}
+Game::Game(GameState &world)
+    : world(world), handler(ServerEventHandler(world)), keep_running(true) {}
 
 Game::~Game() {}
 
@@ -11,7 +13,7 @@ void Game::run() { loop(); }
 
 void Game::loop() {
   while (keep_running) {
-    processInput();  // Decodifica y procesa todos los eventos encolados
+    // processInput();  // Decodifica y procesa todos los eventos encolados
     update();
     usleep(30000);  // Algo mas de 30 fps
   }
@@ -29,7 +31,7 @@ void Game::processInput() {
 
 void Game::update() {
   for (auto &ent : entities) {
-    ent->update();
+    (ent.second)->update();
   }
 }
 
@@ -64,3 +66,5 @@ void Game::movePlayer(std::string &move) {
 }
 
 void Game::addIncoming(std::string s) { incomingEvents.push(s); }
+
+void Game::addEntity(Entity *ent) { entities[ent->getId()] = ent; }

@@ -1,6 +1,10 @@
 #include "Race.h"
 
-Race::Race(char race_t, float hpFac, float recFac, float manaFac) {}
+Race::Race(char race_t, float hpFac, float recFac, float manaFac)
+    : race_type(race_t), 
+      hpFactor(hpFac),
+      recoveryFactor(recFac),
+      manaFactor(manaFac) {}
 
 Race::~Race() {}
 

@@ -6,31 +6,35 @@
 
 #include "Condition.h"
 #include "Entities/Entity.h"
-#include "PlayerNet.h"
+#include "Entities/PlayerNet.h"
 
 #define TILE_SIZE 32
 
 class GameState {
  private:
-  std::vector<std::vector<int>> colisionMap;
+  std::vector<std::vector<bool>> colisionMap;
   std::unordered_map<int, PlayerNet*> players;
-  std::unordered_map<int, Entity*> entities;  // Jugadores y mosntruos
+  std::unordered_map<int, Entity*> entities;  // Jugadores y monstruos
   int framesPerSecond;
 
  public:
-  GameState(int fps);
+  GameState(std::vector<std::vector<bool>> collisions, int fps);
 
   ~GameState();
 
-  PlayerNet* getPlayer(int id);
+  void addEntity(Entity* ent);
+
+  void addPlayer(PlayerNet* player);
 
   Entity* getEntity(int id);
 
   int getFPS();
 
-  bool isValidPosition(int x, int y);
-
   PlayerNet* getNearestPlayer(Entity* ent, Condition* cond = nullptr);
+
+  PlayerNet* getPlayer(int id);
+
+  bool isValidPosition(int x, int y);
 
   float entitiesDistance(Entity* ent1, Entity* ent2);
 
@@ -38,17 +42,18 @@ class GameState {
 
   /* ---------- Eventos ---------- */
 
-  void playerMoved(int id); // Ver si conviene mergearlos en uno solo
+  void playerMoved(int id);  // Ver si conviene mergearlos en uno solo
 
   void playerDealtDamage(int id, int damage);
 
   void playerTookDamage(int id, int damage);
 
-  void monsterMoved(int id); 
+  void monsterMoved(int id);
 
   void playerDied(int id);
 
-  void entityDisappear(int id) // Jugadores que se desconectan o mobs que mueren
+  // Jugadores que se desconectan o mobs que mueren
+  void entityDisappear(int id);
 };
 
 #endif  // GAMESTATE_H

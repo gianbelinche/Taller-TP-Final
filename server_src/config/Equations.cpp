@@ -1,4 +1,5 @@
 #include <random>
+#include <iostream>
 
 #include "Equations.h"
 
@@ -21,10 +22,14 @@ int equation::causedDamage(float strength, int minDmg, int maxDmg) {
 int equation::playerDefense(int minArmorDef, int maxArmorDef, int minShieldDef,
                             int maxShieldDef, int minHelmetDef,
                             int maxHelmetDef) {
-  std::default_random_engine gen;
+  std::random_device rd;
+  std::mt19937 gen(rd());
+
   std::uniform_int_distribution<int> armorDef(minArmorDef, maxArmorDef);
   std::uniform_int_distribution<int> shieldDef(minShieldDef, maxShieldDef);
   std::uniform_int_distribution<int> helmetDef(minHelmetDef, maxHelmetDef);
+
+  // std::cout << "armordef: " << armorDef(gen);
 
   return armorDef(gen) + shieldDef(gen) + helmetDef(gen);
 }
