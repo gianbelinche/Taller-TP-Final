@@ -36,7 +36,7 @@ void ServerEventHandler::handle(UserMoved& ev) {
   default:
     break;
   }
-  
+
   if (!world.isValidPosition(x, y)) {
     return;
   }
@@ -70,5 +70,5 @@ void ServerEventHandler::handleUserAttack(ClickEvent& ev) {
     expGain += entity->getDeathExp(player->getLevel());
   }
   std::cout << "La experiencia ganada es de: " << expGain << "\n";
-  player->receiveExp(expGain);  
+  player->receiveExp(expGain);
 }

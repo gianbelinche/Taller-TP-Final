@@ -20,6 +20,8 @@ class Monster : public Entity {
   // Pre: el jugador existe y esta vivo
   int attack(PlayerNet* player);
 
+  bool canBeAttackedBy(Entity* ent) override;
+
   int getDeathExp(int attackerLevel) override;
 
   int getHitExp(int AttackerLevel, int damage) override;

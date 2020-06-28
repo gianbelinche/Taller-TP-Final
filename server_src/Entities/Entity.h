@@ -24,6 +24,8 @@ class Entity {
 
   int getId();
 
+  int getLevel();
+
   int getX();
 
   int getY();
@@ -35,6 +37,8 @@ class Entity {
   virtual void update();
 
   bool isAlive();
+
+  bool virtual canBeAttackedBy(Entity* ent) = 0;
 
   int virtual takeDamage(int dmgToTake) = 0;
 };

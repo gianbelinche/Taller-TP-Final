@@ -109,3 +109,7 @@ int Monster::getDeathExp(int attackerLevel) {
 int Monster::getHitExp(int AttackerLevel, int damage) {
   return equation::monsterHitExp(level, damage);
 }
+
+bool Monster::canBeAttackedBy(Entity* ent) {
+  return true;
+}

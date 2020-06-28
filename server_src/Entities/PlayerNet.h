@@ -70,6 +70,8 @@ class PlayerNet : public Entity {
 
   int attack(Entity* ent);
 
+  bool canBeAttackedBy(Entity* ent) override;
+
   void changeState(PlayerState* new_state);
 
   void heal(int points);

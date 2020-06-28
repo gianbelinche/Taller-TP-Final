@@ -38,3 +38,7 @@ int Entity::getHitExp(int AttackerLevel, int damage) {
 int Entity::getDeathExp(int attackerLevel) {
   return 0;
 }
+
+int Entity::getLevel() {
+  return level;    
+}

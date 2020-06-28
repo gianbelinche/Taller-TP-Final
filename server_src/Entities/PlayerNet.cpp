@@ -1,6 +1,7 @@
 #include "PlayerNet.h"
 
 #include <algorithm>
+#include <cmath>
 #include <iostream>
 
 #include "../GameState.h"
@@ -37,14 +38,14 @@ PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int hp,
 
 PlayerNet::~PlayerNet() {}
 
-int PlayerNet::PlayerNet::getAttackRange() {
+int PlayerNet::getAttackRange() {
   if (weapon == nullptr) {
     return -1;  // Es lo que hay por ahora
   }
   return weapon->getAttackRange();
 }
 
-int PlayerNet::PlayerNet::getDamage() {
+int PlayerNet::getDamage() {
   return equation::causedDamage(getStrength(), weapon->getMinDmg(),
                                 weapon->getMaxDmg());
 }
@@ -165,4 +166,8 @@ void PlayerNet::levelUp() {
   hp = maxHp;
   mana = maxMana;
   world.playerLeveledUp(id);
+}
+
+bool PlayerNet::canBeAttackedBy(Entity* ent) {
+  return (abs(ent->getLevel() - level) <= 10) && (level > 12);
 }

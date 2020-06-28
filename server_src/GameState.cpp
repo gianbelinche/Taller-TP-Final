@@ -70,7 +70,7 @@ Entity* GameState::getEntity(int id) {
 }
 
 bool GameState::playerCanAttack(PlayerNet* player, Entity* ent) {
-  if (!player->isAlive() || !ent->isAlive()) {
+  if (!player->isAlive() || !ent->isAlive() || !ent->canBeAttackedBy(player)) {
     return false;
   } else if (player->getAttackRange() < entitiesDistance(player, ent)) {
     return false;
