@@ -5,17 +5,14 @@
 
 class UserMoved : public Event {
  private:
-  int x;
-  int y;
+  char direction;
 
  public:
-  UserMoved(int originUser, int pos_x, int pos_y);
+  UserMoved(int originUser, char direction);
 
   ~UserMoved();
 
-  int getX();
-
-  int getY();
+  char getDirection();
 };
 
 #endif  // USERMOVED_H

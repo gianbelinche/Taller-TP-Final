@@ -15,7 +15,7 @@ class ServerEventHandler {
 
   ~ServerEventHandler();
 
-  void handle(UserMoved &ev);
+  bool handle(UserMoved &ev);
 
   void handleUserAttack(ClickEvent &ev);
 };
