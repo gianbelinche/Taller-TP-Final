@@ -1,11 +1,12 @@
 prueba
 a.out
 *.a
+persistencia
+.persistencia.*
 testgian
-Makefile
 .vscode/
 .gitignore
 CMakeFiles
 *.cmake
 CMakeCache.txt
-Makelife
+Makefile

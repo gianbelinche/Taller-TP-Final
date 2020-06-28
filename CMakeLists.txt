@@ -49,6 +49,7 @@ add_executable (testgian
   SDLError.cpp
   ExpBar.cpp
   MiniChat.cpp
+  LoginScreen.cpp
 )
 
 

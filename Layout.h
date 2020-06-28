@@ -24,9 +24,9 @@ public:
     void changeLife(int life, int max_life);
     void changeMana(int mana, int max_mana);
     void changeLevel(int level);
+    bool isClicked(int x,int screen_width);
     void render(Camera& camera);
     ~Layout();
-
 };
 
 #endif

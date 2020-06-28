@@ -5,6 +5,7 @@
 #include "Layout.h"
 #include <string>
 #include <iostream>
+#include "LoginScreen.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -22,6 +23,26 @@
 /* FRECUENCIA DE SONIDO */
 #define FRECUENCY 22050
 #define FONT_SIZE 50
+
+enum items{
+    SWORD,
+    AXE,
+    HAMMER,
+    FRESNO_ROD,
+    ELFIC_FLUTE,
+    BACULO_NUDOSO,
+    BACULO_ENGARZADO,
+    SIMPLE_BOW,
+    COMPOSED_BOW,
+    LEATHER_ARMOR,
+    PLATE_ARMOR,
+    BLUE_TUNIC,
+    HOOD,
+    IRON_HELMET,
+    TURTLE_SHIELD,
+    IRON_SHIELD,
+    MAGIC_HAT
+};
 
 TestGian::TestGian() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
@@ -76,6 +97,9 @@ TestGian::~TestGian() {
 }
 
 void TestGian::run() {
+    LoginScreen login(mainRenderer);
+    int logins = 0;
+    bool in_login = true;
     bool quit = false;
     MusicPlayer music_player;
 	music_player.add(1,"music/cave.wav");
@@ -99,19 +123,19 @@ void TestGian::run() {
     layout.changeLevel(level);
     layout.changeLife(life,life);
     layout.changeMana(mana,mana);
-    inventory.addImage("sword");
-    inventory.addImage("axe");
-    inventory.addImage("baculo nudoso");
-    inventory.addImage("composed bow");
-    inventory.addImage("fresno rod");
-    inventory.addImage("leather armor");
-    inventory.equip("leather armor");
-    inventory.equip("sword");
-    inventory.addImage("sword");
-    inventory.addImage("iron helmet");
-    inventory.equip("iron helmet");
-    inventory.addImage("iron shield");
-    inventory.equip("iron shield");
+    inventory.addImage(SWORD);
+    inventory.addImage(AXE);
+    inventory.addImage(BACULO_NUDOSO);
+    inventory.addImage(COMPOSED_BOW);
+    inventory.addImage(FRESNO_ROD);
+    inventory.addImage(LEATHER_ARMOR);
+    inventory.equip(LEATHER_ARMOR);
+    inventory.equip(SWORD);
+    inventory.addImage(SWORD);
+    inventory.addImage(IRON_HELMET);
+    inventory.equip(IRON_HELMET);
+    inventory.addImage(IRON_SHIELD);
+    inventory.equip(IRON_SHIELD);
     int exp = 0;
     int max_exp = 100;
     expBar.changeExp(exp,max_exp);
@@ -125,8 +149,8 @@ void TestGian::run() {
     chat.addMessage("msj de una linea");
     chat.addMessage("mensaje de largo de mas de una linea si senor");
     
-    bool writing = false;
-    SDL_StopTextInput();
+    bool writing = true;
+    int login_count = 0;
 
     while (!quit) {
 
@@ -135,15 +159,31 @@ void TestGian::run() {
                 quit = true;
             }else if( eventHandler.type == SDL_KEYDOWN ){
                 if (eventHandler.key.keysym.sym == SDLK_RETURN){
-                    if (writing){
-                        chat.sendMessage();
-                        SDL_StopTextInput();
-                    } else {
-                        SDL_StartTextInput();
-                    }
-                    writing = !writing;
+                        if (writing){
+                            if (in_login){
+                                login.send();
+                                login_count++;
+                                if (login_count == 2){
+                                    in_login = false;
+                                    SDL_StopTextInput();
+                                    writing = !writing;
+                                }
+                                    
+                            } else {
+                                chat.sendMessage();
+                                SDL_StopTextInput();
+                                writing = !writing;
+                            }
+                        } else {
+                            SDL_StartTextInput();
+                            writing = !writing;
+                        }
                 } else if(eventHandler.key.keysym.sym == SDLK_BACKSPACE){
-                    chat.deleteCharacter();
+                    if (!in_login){
+                        chat.deleteCharacter();
+                    } else {
+                        login.deleteCharacter();
+                    }
                 } else if(!writing){
                     switch( eventHandler.key.keysym.sym ){
  
@@ -178,52 +218,70 @@ void TestGian::run() {
                     }
                 }	
 			}else if(eventHandler.type == SDL_TEXTINPUT){
-                chat.putCharacter(eventHandler.text.text);
+                if (!in_login){
+                    chat.putCharacter(eventHandler.text.text);
+                } else {
+                    login.write(eventHandler.text.text);
+                }
             }else if(eventHandler.type == SDL_MOUSEBUTTONDOWN){
-                std::string selected = inventory.select(eventHandler.button.x,eventHandler.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
-                if (selected != "")
+                if (!in_login){
+                    bool clicked = layout.isClicked(eventHandler.button.x,SCREEN_WIDTH);
+                    std::cout <<  "is " << clicked << std::endl;
+                    int selected = inventory.select(eventHandler.button.x,eventHandler.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
                     std::cout << selected << std::endl;
+                } else {
+                    login.select(eventHandler.button.x,eventHandler.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
+                }
+                
             }
         }
         
 
         SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(mainRenderer);
-
-        layout.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-        inventory.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-        expBar.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-        chat.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-        gold++;
-        if (life > 0) life--;
-        if (mana > 0) mana--;
-        layout.changeGold(gold);
-        layout.changeLife(life,1000);
-        layout.changeMana(mana,2000);
-        items++;
-        removes++;
-        exp++;
-        if (exp == max_exp){
-            exp = 0;
-            max_exp *= 2;
-            level++;
-        }
-        expBar.changeExp(exp,max_exp);
-        layout.changeLevel(level);
-        if (items == 200 && cant_items < 20){
-            inventory.addImage("baculo engarzado");
-            items = 0;
-            cant_items++;
-        }
-        if (removes == 500){
-            inventory.removeImage("composed bow");
-            inventory.equip("axe");
-            cant_items--;
-        }
-        if (removes == 1000){
-            inventory.removeImage("baculo nudoso");
-            cant_items--;
-        }
+        if (!in_login){
+            layout.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+            inventory.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+            expBar.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+            chat.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+            gold++;
+            if (life > 0) life--;
+            if (mana > 0) mana--;
+            layout.changeGold(gold);
+            layout.changeLife(life,1000);
+            layout.changeMana(mana,2000);
+            items++;
+            removes++;
+            exp++;
+            if (exp == max_exp){
+                exp = 0;
+                max_exp *= 2;
+                level++;
+            }
+            expBar.changeExp(exp,max_exp);
+            layout.changeLevel(level);
+            if (items == 200 && cant_items < 20){
+                inventory.addImage(BACULO_ENGARZADO);
+                items = 0;
+                cant_items++;
+            }
+            if (removes == 500){
+                inventory.removeImage(3);
+                inventory.equip(AXE);
+                cant_items--;
+            }
+            if (removes == 1000){
+                inventory.removeImage(4);
+                cant_items--;
+                removes = 0;
+            }
+        } else {
+            logins++;
+            //if (logins == 200)
+                //login.changeToUserInput();
+            login.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+            login.showError("Servidor inexistente");
+        }    
 
         SDL_RenderPresent(mainRenderer);
     }
