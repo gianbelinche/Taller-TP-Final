@@ -6,12 +6,12 @@
 #include <string>
 #include <vector>
 
-class ProtectedStrQueue
-{
-private:
+class ProtectedStrQueue {
+ private:
   std::mutex m;
   std::queue<std::string> q;
-public:
+
+ public:
   ProtectedStrQueue();
 
   ~ProtectedStrQueue();
