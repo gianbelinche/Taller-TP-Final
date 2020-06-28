@@ -10,9 +10,9 @@ class Race {
   float hpFactor;
   float recoveryFactor;
   float manaFactor;
-  int constitution;
-  int strength;
-  int intelligence;
+  int constitution = 5;
+  int strength = 1;
+  int intelligence = 4;
   int agility;
 
  public:

@@ -10,9 +10,9 @@ class Class {
   float hpFactor;
   float manaFactor;        // 0 para el guerrero
   float meditationFactor;  // idem
-  float stregthFactor;
-  float constitutionFactor;
-  float intelligenceFactor;
+  float strengthFactor = 1;
+  float constitutionFactor = 1;
+  float intelligenceFactor = 15;
   float agilityFactor;
 
  public:

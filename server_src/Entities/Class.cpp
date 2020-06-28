@@ -14,7 +14,7 @@ float Class::getManaFactor() { return manaFactor; }
 
 float Class::getmeditationFactor() { return meditationFactor; }
 
-float Class::getStrengthFactor() { return stregthFactor; }
+float Class::getStrengthFactor() { return strengthFactor; }
 
 float Class::getConstitutionFactor() { return constitutionFactor; }
 

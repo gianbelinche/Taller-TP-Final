@@ -9,14 +9,14 @@
 #include "PlayerState.h"
 
 PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int hp,
-                     int mana, int velocity, int currExp, int currGold,
-                     Weapon* wea, Armor* arm, Helmet* helm, Shield* sh,
-                     PlayerState* sta, Class* cla, Race* ra)
+                     int mana, int velocity, int currExp, int currLevel,
+                     int currGold, Weapon* wea, Armor* arm, Helmet* helm,
+                     Shield* sh, PlayerState* sta, Class* cla, Race* ra)
     : Entity(x, y, id,
              equation::playerMaxHp(
                  cla->getConstitutionFactor() * ra->getConstitution(),
-                 cla->getHpFactor(), ra->getHpFactor(), level),
-             hp, level),
+                 cla->getHpFactor(), ra->getHpFactor(), currLevel),
+             hp, currLevel),
       state(sta),
       playerClass(cla),
       playerRace(ra),
@@ -126,14 +126,15 @@ void PlayerNet::receiveExp(int amount) {
   exp += amount;
   if (exp >= maxExp) {
     levelUp();
+    std::cout << "subio de nivel\n";
   } else {
     world.playerExpGain(id, amount);
   }
+  std::cout << "El jugador gano: " << amount << " de exp y ahora tiene: "
+            << exp << " de experiencia\n";
 }
 
-int PlayerNet::getLevel() {
-  return level;
-}
+int PlayerNet::getLevel() { return level; }
 
 void PlayerNet::updateMaxHp() {
   maxHp = equation::playerMaxHp(getConstitution(), playerClass->getHpFactor(),
@@ -141,23 +142,18 @@ void PlayerNet::updateMaxHp() {
 }
 
 void PlayerNet::updateMaxMana() {
-  maxMana = equation::playerMaxMana(getIntelligence(), 
-                                    playerClass->getManaFactor(),
-                                    playerRace->getManaFactor(),
-                                    level); 
+  maxMana =
+      equation::playerMaxMana(getIntelligence(), playerClass->getManaFactor(),
+                              playerRace->getManaFactor(), level);
 }
 
 int PlayerNet::getConstitution() {
   return playerClass->getConstitutionFactor() * playerRace->getConstitution();
 }
 
-void PlayerNet::updateMaxGold() {
-  maxGold = equation::maxGold(level);
-}
+void PlayerNet::updateMaxGold() { maxGold = equation::maxGold(level); }
 
-void PlayerNet::updateMaxExp() {
-  maxExp = equation::playerMaxExp(level);
-}
+void PlayerNet::updateMaxExp() { maxExp = equation::playerMaxExp(level); }
 
 void PlayerNet::levelUp() {
   exp = 0;

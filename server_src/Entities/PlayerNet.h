@@ -20,7 +20,6 @@ class PlayerNet : public Entity {
   int mana;
   int maxMana;
   int velocity;
-  int level;
   int maxExp;
   int exp;
   int gold;
@@ -33,8 +32,9 @@ class PlayerNet : public Entity {
 
  public:
   PlayerNet(int x, int y, int id, GameState& currState, int hp, int mana,
-            int velocity, int currExp, int currGold, Weapon* wea, Armor* arm,
-            Helmet* helm, Shield* sh, PlayerState* sta, Class* cla, Race* ra);
+            int velocity, int currExp, int currLevel, int currGold, Weapon* wea,
+            Armor* arm, Helmet* helm, Shield* sh, PlayerState* sta, Class* cla,
+            Race* ra);
 
   ~PlayerNet();
 
@@ -45,7 +45,7 @@ class PlayerNet : public Entity {
   int getDamage();
 
   int getConstitution();
-  
+
   int getCurrFrame();
 
   int getFPS();  // Para la recuperacion se necesitan los segundos pasados

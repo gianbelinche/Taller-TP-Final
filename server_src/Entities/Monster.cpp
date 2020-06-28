@@ -56,7 +56,7 @@ void Monster::update() {
           x = new_x;
           y = new_y;
           world.monsterMoved(id);
-          std::cout << "El mostro se movio a X: " << x << " Y: " << y << std::endl;
+          std::cout << "El mostro se movio a X: " << x << " Y: " << y << "\n\n";
         }
       }
     } else {  // Si no hay jugador cerca
@@ -77,7 +77,7 @@ void Monster::update() {
         x = new_x;
         y = new_y;
         world.monsterMoved(id);
-        std::cout << "El mostro se movio a X: " << x << " Y: " << y << std::endl;
+        std::cout << "El mostro se movio a X: " << x << " Y: " << y << "\n\n";
       }
     }
   }
@@ -86,7 +86,9 @@ void Monster::update() {
 int Monster::takeDamage(int dmgToTake) {
   int oldHp = hp;
   hp = std::max(0, hp - dmgToTake);
+  std::cout << "Le hizo: " << dmgToTake << " daño al motro\n";
   if (hp == 0) {
+    std::cout << "Se murio el mostro\n";
     world.entityDisappear(id);
   }
   return oldHp - hp;
@@ -96,7 +98,7 @@ int Monster::attack(PlayerNet* player) {
   int damageDealt = player->takeDamage(kind.getDamage());
   world.playerTookDamage(player->getId(), damageDealt);
   std::cout << "Ataco al jugador: " << player->getId() 
-            << " y le hizo un daño de: " << damageDealt << std::endl;
+            << " y le hizo un daño de: " << damageDealt << "\n\n";
   return damageDealt;
 }
 

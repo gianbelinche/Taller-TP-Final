@@ -8,7 +8,7 @@ ServerEventHandler::ServerEventHandler(GameState& state) : world(state) {}
 
 ServerEventHandler::~ServerEventHandler() {}
 
-bool ServerEventHandler::handle(UserMoved& ev) {
+void ServerEventHandler::handle(UserMoved& ev) {
   PlayerNet* player = world.getPlayer(ev.getUser());
   if (player == nullptr) {  // Caso medio raro
     std::cerr << "Jugador no encontrado: " << ev.getUser() << std::endl;
@@ -58,6 +58,7 @@ void ServerEventHandler::handleUserAttack(ClickEvent& ev) {
     return;
   }
   if (!world.playerCanAttack(player, entity)) {
+    std::cout << "No lo dejo atacar\n";
     return;
   }
 
@@ -68,5 +69,6 @@ void ServerEventHandler::handleUserAttack(ClickEvent& ev) {
   if (!entity->isAlive()) {
     expGain += entity->getDeathExp(player->getLevel());
   }
+  std::cout << "La experiencia ganada es de: " << expGain << "\n";
   player->receiveExp(expGain);  
 }

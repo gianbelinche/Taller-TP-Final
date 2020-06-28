@@ -68,3 +68,7 @@ void Game::movePlayer(std::string &move) {
 void Game::addIncoming(std::string s) { incomingEvents.push(s); }
 
 void Game::addEntity(Entity *ent) { entities[ent->getId()] = ent; }
+
+ServerEventHandler& Game::getServ() {
+  return handler;    
+}

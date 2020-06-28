@@ -1,4 +1,4 @@
-
+#include <iostream>
 
 #include "Entity.h"
 
@@ -6,10 +6,12 @@ Entity::Entity(int x, int y, int id, int maxHp, int hp, int level)
     : x(x),
       y(y), 
       id(id),
-      maxHp(maxHp), 
       hp(hp),
+      maxHp(maxHp), 
       level(level),
-      currentFrame(0) {}
+      currentFrame(0) {
+  std::cout << "Se creo con: " << maxHp << " de vida\n";
+      }
 
 Entity::~Entity() {}
 
