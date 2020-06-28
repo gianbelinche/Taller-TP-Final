@@ -68,3 +68,12 @@ int equation::playerMaxHp(int constitution, int classHpFac,
                           int raceHpFac, int level) {
   return constitution * classHpFac * raceHpFac * level;
 }
+
+int equation::playerMaxExp(int level) {
+  return 1000 * pow(level, 1.8);    
+}
+
+int equation::playerMaxMana(int intelligence, int manaClassFac,
+                            int manaRaceFac, int level) {
+  return intelligence * manaClassFac * manaRaceFac * level;
+}

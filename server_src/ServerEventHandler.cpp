@@ -63,8 +63,10 @@ void ServerEventHandler::handleUserAttack(ClickEvent& ev) {
 
   int damageDealt = player->attack(entity);
   world.playerDealtDamage(player->getId(), damageDealt);
-  
 
-  // Tambien si murio hay que calcular la experiencia extra
-  
+  int expGain = entity->getHitExp(player->getLevel(), damageDealt);
+  if (!entity->isAlive()) {
+    expGain += entity->getDeathExp(player->getLevel());
+  }
+  player->receiveExp(expGain);  
 }

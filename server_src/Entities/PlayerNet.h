@@ -24,6 +24,7 @@ class PlayerNet : public Entity {
   int maxExp;
   int exp;
   int gold;
+  int maxGold;
   GameState& world;
   Weapon* weapon;
   Armor* armor;
@@ -42,6 +43,8 @@ class PlayerNet : public Entity {
   int getAttackRange();
 
   int getDamage();
+
+  int getConstitution();
   
   int getCurrFrame();
 
@@ -52,6 +55,8 @@ class PlayerNet : public Entity {
   int getHitExp(int AttackerLevel, int damage) override;
 
   float getIntelligence();
+
+  int getLevel();
 
   float getMeditationFactor();
 
@@ -79,6 +84,17 @@ class PlayerNet : public Entity {
   int takeDamage(int dmgToTake) override;
 
   void update() override;
+
+ private:
+  void levelUp();
+
+  void updateMaxHp();
+
+  void updateMaxMana();
+
+  void updateMaxGold();
+
+  void updateMaxExp();
 };
 
 #endif  // PLAYERNET_H

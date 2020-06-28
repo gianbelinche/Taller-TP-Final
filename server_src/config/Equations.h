@@ -23,6 +23,11 @@ namespace equation {
   int monsterDeathExp(int monsterLevel, int maxHp);
 
   int playerMaxHp(int constitution, int classHpFac, int raceHpFac, int level);
+
+  int playerMaxMana(int intelligence, int manaClassFac,
+                    int manaRaceFac, int level);
+
+  int playerMaxExp(int level);
 } // namespace equation
 
 #endif // EQUATIONS_H

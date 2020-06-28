@@ -19,8 +19,8 @@ PlayerNet* GameState::getPlayer(int id) {
 }
 
 bool GameState::isValidPosition(int x, int y) {
-  if (y < 0 || y >= (int)colisionMap.size() || 
-      x < 0 || x >= (int)colisionMap[0].size()) {
+  if (y < 0 || y >= (int)colisionMap.size() || x < 0 ||
+      x >= (int)colisionMap[0].size()) {
     return false;
   } else if (colisionMap[y / TILE_SIZE][x / TILE_SIZE] != 0) {
     return false;
@@ -85,27 +85,23 @@ bool GameState::playerCanAttack(PlayerNet* player, Entity* ent) {
 
 void GameState::addEntity(Entity* ent) {
   entities[ent->getId()] = ent;
-  // Aca deberia avisarle a los jugadores que aparecio un bichito    
+  // Aca deberia avisarle a los jugadores que aparecio un bichito
 }
 
 void GameState::addPlayer(PlayerNet* player) {
   players[player->getId()] = player;
   entities[player->getId()] = player;
-  // Idem anterior, hay que brodcastear que aparecio    
+  // Idem anterior, hay que brodcastear que aparecio
 }
 
-void GameState::playerDied(int id) {
-    
-}
+void GameState::playerDied(int id) {}
 
-void GameState::playerTookDamage(int id, int damage) {
-    
-}
+void GameState::playerTookDamage(int id, int damage) {}
 
-void GameState::entityDisappear(int id) {
-    
-}
+void GameState::entityDisappear(int id) {}
 
-void GameState::playerDealtDamage(int id, int damage) {
-    
-}
+void GameState::playerDealtDamage(int id, int damage) {}
+
+void GameState::playerLeveledUp(int id) {}
+
+void GameState::playerExpGain(int id, int gain) {}

@@ -28,7 +28,12 @@ PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int hp,
       weapon(wea),
       armor(arm),
       helmet(helm),
-      shield(sh) {}
+      shield(sh) {
+  maxMana = equation::playerMaxMana(getIntelligence(), cla->getManaFactor(),
+                                    ra->getManaFactor(), level);
+  maxExp = equation::playerMaxExp(level);
+  maxGold = equation::maxGold(level);
+}
 
 PlayerNet::~PlayerNet() {}
 
@@ -117,4 +122,51 @@ int PlayerNet::getDeathExp(int attackerLevel) {
   return equation::playerDeathExp(maxHp, level, attackerLevel);
 }
 
-void PlayerNet::receiveExp(int amount) {}
+void PlayerNet::receiveExp(int amount) {
+  exp += amount;
+  if (exp >= maxExp) {
+    levelUp();
+  } else {
+    world.playerExpGain(id, amount);
+  }
+}
+
+int PlayerNet::getLevel() {
+  return level;
+}
+
+void PlayerNet::updateMaxHp() {
+  maxHp = equation::playerMaxHp(getConstitution(), playerClass->getHpFactor(),
+                                playerRace->getHpFactor(), level);
+}
+
+void PlayerNet::updateMaxMana() {
+  maxMana = equation::playerMaxMana(getIntelligence(), 
+                                    playerClass->getManaFactor(),
+                                    playerRace->getManaFactor(),
+                                    level); 
+}
+
+int PlayerNet::getConstitution() {
+  return playerClass->getConstitutionFactor() * playerRace->getConstitution();
+}
+
+void PlayerNet::updateMaxGold() {
+  maxGold = equation::maxGold(level);
+}
+
+void PlayerNet::updateMaxExp() {
+  maxExp = equation::playerMaxExp(level);
+}
+
+void PlayerNet::levelUp() {
+  exp = 0;
+  level++;
+  updateMaxHp();
+  updateMaxMana();
+  updateMaxGold();
+  updateMaxExp();
+  hp = maxHp;
+  mana = maxMana;
+  world.playerLeveledUp(id);
+}

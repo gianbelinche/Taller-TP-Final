@@ -42,6 +42,10 @@ class GameState {
 
   /* ---------- Eventos ---------- */
 
+  void playerExpGain(int id, int gain);
+
+  void playerLeveledUp(int id);
+
   void playerMoved(int id, char direction);  // Ver si conviene mergearlos en uno solo
 
   void playerDealtDamage(int id, int damage);
