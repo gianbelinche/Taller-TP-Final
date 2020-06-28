@@ -3,8 +3,6 @@
 #include <iostream>
 #include <ios>
 
-Persistor::Persistor() : total(0){}
-
 void Persistor::persistPlayer(std::string file_name,std::vector<uint32_t> data,int player){
     if (players.find(player) == players.end()){
         file.open(file_name,std::fstream::app);

@@ -278,6 +278,33 @@ Layout.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/testgian.dir/build.make CMakeFiles/testgian.dir/Layout.cpp.s
 .PHONY : Layout.cpp.s
 
+LoginScreen.o: LoginScreen.cpp.o
+
+.PHONY : LoginScreen.o
+
+# target to build an object file
+LoginScreen.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testgian.dir/build.make CMakeFiles/testgian.dir/LoginScreen.cpp.o
+.PHONY : LoginScreen.cpp.o
+
+LoginScreen.i: LoginScreen.cpp.i
+
+.PHONY : LoginScreen.i
+
+# target to preprocess a source file
+LoginScreen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testgian.dir/build.make CMakeFiles/testgian.dir/LoginScreen.cpp.i
+.PHONY : LoginScreen.cpp.i
+
+LoginScreen.s: LoginScreen.cpp.s
+
+.PHONY : LoginScreen.s
+
+# target to generate assembly for a file
+LoginScreen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testgian.dir/build.make CMakeFiles/testgian.dir/LoginScreen.cpp.s
+.PHONY : LoginScreen.cpp.s
+
 MiniChat.o: MiniChat.cpp.o
 
 .PHONY : MiniChat.o
@@ -572,6 +599,9 @@ help:
 	@echo "... Layout.o"
 	@echo "... Layout.i"
 	@echo "... Layout.s"
+	@echo "... LoginScreen.o"
+	@echo "... LoginScreen.i"
+	@echo "... LoginScreen.s"
 	@echo "... MiniChat.o"
 	@echo "... MiniChat.i"
 	@echo "... MiniChat.s"

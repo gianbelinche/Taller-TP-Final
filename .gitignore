@@ -1,6 +1,8 @@
 prueba
 a.out
 *.a
+persistencia
+.persistencia.*
 testgian
 .vscode/
 .gitignore
