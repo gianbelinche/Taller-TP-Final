@@ -3,17 +3,24 @@
 
 class Entity {
  protected:
+
   int x;
   int y;
   int id;  // Valor numerico que identifica a la entida en el cliente y el
            // server
-  int currentFrame;
   int hp;
+  int maxHp;
+  int level;
+  int currentFrame;
 
  public:
-  Entity(int x, int y, int id, int hp);
+  Entity(int x, int y, int id, int maxHp, int hp, int level);
 
   ~Entity();
+
+  int virtual getHitExp(int AttackerLevel, int damage);
+
+  int virtual getDeathExp(int attackerLevel);
 
   int getId();
 

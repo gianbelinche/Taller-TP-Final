@@ -11,6 +11,18 @@ namespace equation {
 
   int playerDefense(int minArmorDef, int maxArmorDef, int minShieldDef, 
                     int maxShieldDef, int minHelmetDef, int maxHelmetDef);
+
+  int maxGold(int level);
+
+  int playerHitExp(int attackerLevel, int attackedLevel, int damage);
+
+  int playerDeathExp(int maxHp, int attackedLevel, int attackerLevel);
+
+  int monsterHitExp(int monsterLevel, int damage);
+
+  int monsterDeathExp(int monsterLevel, int maxHp);
+
+  int playerMaxHp(int constitution, int classHpFac, int raceHpFac, int level);
 } // namespace equation
 
 #endif // EQUATIONS_H

@@ -42,7 +42,7 @@ class GameState {
 
   /* ---------- Eventos ---------- */
 
-  void playerMoved(int id);  // Ver si conviene mergearlos en uno solo
+  void playerMoved(int id, char direction);  // Ver si conviene mergearlos en uno solo
 
   void playerDealtDamage(int id, int damage);
 

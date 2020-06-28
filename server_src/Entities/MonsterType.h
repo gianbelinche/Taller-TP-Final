@@ -18,7 +18,7 @@ class MonsterType {
 
   int getDamage();
 
-  Monster* newMonster(int id, int x, int y, GameState& world);
+  Monster* newMonster(int id, int x, int y, int level, GameState& world);
 };
 
 #endif  // MONSTERTYPE_H

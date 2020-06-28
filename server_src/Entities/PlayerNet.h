@@ -18,10 +18,10 @@ class PlayerNet : public Entity {
   Class* playerClass;
   Race* playerRace;
   int mana;
-  int maxHp = 100;
   int maxMana;
   int velocity;
   int level;
+  int maxExp;
   int exp;
   int gold;
   GameState& world;
@@ -47,6 +47,10 @@ class PlayerNet : public Entity {
 
   int getFPS();  // Para la recuperacion se necesitan los segundos pasados
 
+  int getDeathExp(int attackerLevel) override;
+
+  int getHitExp(int AttackerLevel, int damage) override;
+
   float getIntelligence();
 
   float getMeditationFactor();
@@ -54,6 +58,8 @@ class PlayerNet : public Entity {
   float getRaceRecovery();
 
   float getStrength();
+
+  int getVelocity();
 
   /* ---------- Acciones ---------- */
 
@@ -65,6 +71,8 @@ class PlayerNet : public Entity {
 
   // Pre: la posicion es valida(no colisiona)
   void move(int x, int y);
+
+  void receiveExp(int amount);
 
   void recoverMana(int mPoints);
 

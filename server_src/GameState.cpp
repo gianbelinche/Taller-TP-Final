@@ -29,7 +29,7 @@ bool GameState::isValidPosition(int x, int y) {
   }
 }
 
-void GameState::playerMoved(int id) {
+void GameState::playerMoved(int id, char direction) {
   // Aca se llama a algo que encole el mensaje del jugador en la cola de
   // mensajes salientes
 }

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <random>
 
+#include "../config/Equations.h"
 #include "../Condition.h"
 #include "../IsAlive.h"
 #include "MonsterType.h"
@@ -14,8 +15,11 @@
 #define ATK_DIST 20
 #define STEP 10
 
-Monster::Monster(MonsterType &type, int id, int x, int y, GameState &world)
-    : Entity(x, y, id, type.getHp()), kind(type), world(world) {}
+Monster::Monster(MonsterType &type, int id, int x, int y, int level,
+                 GameState &world)
+    : Entity(x, y, id, type.getHp(), type.getHp(), level),
+      kind(type), 
+      world(world) {}
 
 Monster::~Monster() {}
 
@@ -94,4 +98,12 @@ int Monster::attack(PlayerNet* player) {
   std::cout << "Ataco al jugador: " << player->getId() 
             << " y le hizo un daño de: " << damageDealt << std::endl;
   return damageDealt;
+}
+
+int Monster::getDeathExp(int attackerLevel) {
+  return equation::monsterDeathExp(level, maxHp);
+}
+
+int Monster::getHitExp(int AttackerLevel, int damage) {
+  return equation::monsterHitExp(level, damage);
 }

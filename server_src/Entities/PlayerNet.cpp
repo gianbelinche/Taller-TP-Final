@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <iostream>
 
-#include "../config/Equations.h"
 #include "../GameState.h"
+#include "../config/Equations.h"
 #include "GhostState.h"
 #include "PlayerState.h"
 
@@ -12,7 +12,11 @@ PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int hp,
                      int mana, int velocity, int currExp, int currGold,
                      Weapon* wea, Armor* arm, Helmet* helm, Shield* sh,
                      PlayerState* sta, Class* cla, Race* ra)
-    : Entity(x, y, id, hp),
+    : Entity(x, y, id,
+             equation::playerMaxHp(
+                 cla->getConstitutionFactor() * ra->getConstitution(),
+                 cla->getHpFactor(), ra->getHpFactor(), level),
+             hp, level),
       state(sta),
       playerClass(cla),
       playerRace(ra),
@@ -30,9 +34,9 @@ PlayerNet::~PlayerNet() {}
 
 int PlayerNet::PlayerNet::getAttackRange() {
   if (weapon == nullptr) {
-    return -1; // Es lo que hay por ahora
+    return -1;  // Es lo que hay por ahora
   }
-  return weapon->getAttackRange(); 
+  return weapon->getAttackRange();
 }
 
 int PlayerNet::PlayerNet::getDamage() {
@@ -96,9 +100,21 @@ int PlayerNet::takeDamage(int dmgToTake) {
 void PlayerNet::update() {
   currentFrame++;
   if (currentFrame == 30) {
-    std::cout << "Tenia " << hp << "de vida\n"; 
+    std::cout << "Tenia " << hp << "de vida\n";
     state->update(*this);
     std::cout << "Ahora tiene:" << hp << std::endl;
     currentFrame = 0;
   }
 }
+
+int PlayerNet::getVelocity() { return velocity; }
+
+int PlayerNet::getHitExp(int AttackerLevel, int damage) {
+  return equation::playerHitExp(AttackerLevel, level, damage);
+}
+
+int PlayerNet::getDeathExp(int attackerLevel) {
+  return equation::playerDeathExp(maxHp, level, attackerLevel);
+}
+
+void PlayerNet::receiveExp(int amount) {}
