@@ -67,7 +67,7 @@ void Sender::run() {
     } catch(const std::exception& e) {
         std::cerr << e.what() << '\n';
     } catch(...) {
-        std::cerr << "Error: unknown" << '\n';
+        std::cerr << "Error Sender: unknown" << '\n';
     }
 
 }

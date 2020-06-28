@@ -1,24 +1,28 @@
 #include "EventManager.h"
 #include "QuitException.h"
+#include "SDLError.h"
 #include <vector>
 #include <iostream>
 
 #define MOVE_CHAR 0
 
 EventManager::EventManager(EntityManager &anEntityManager, uint32_t aPlayerID, 
-                           MessageQueue &aMsgQueue) : 
+                           MessageQueue &aMsgQueue, Camera &aCamera, 
+                           ClientProtocol &aClProtocol) : 
                                                 entityManager(anEntityManager),
                                                 playerID(aPlayerID), 
-                                                msgQueue(aMsgQueue) {}
+                                                msgQueue(aMsgQueue),
+                                                camera(aCamera),
+                                                clProtocol(aClProtocol) {}
 
 EventManager::~EventManager() {}
 
 void EventManager::run() {
     try {
-        while (SDL_WaitEvent(&eventHandler) != 0) {
-            
+        while (SDL_WaitEvent(&event) != 0) {
+            this->handle(event);
         }
-        throw SDL_Error("Error en WaitEvent.");
+        throw SDLError("Error en WaitEvent.");
     } catch(const QuitException &e) {
         std::cerr << e.what() << '\n';
     }
@@ -57,27 +61,23 @@ void EventManager::checkKeyDown(SDL_Event &event) {
     if (!writing) {
         switch (event.key.keysym.sym) {
             case SDLK_w:
-                msg.emplace_back(MOVE_CHAR);
-                msg.emplace_back(playerID);
-                msg.emplace_back(MOVE_UP);
+                clProtocol.makeMsgMove(playerID, MOVE_UP, msg);
+                msgQueue.push(msg);
                 break;
 
             case SDLK_a:
-                msg.emplace_back(MOVE_CHAR);
-                msg.emplace_back(playerID);
-                msg.emplace_back(MOVE_LEFT);
+                clProtocol.makeMsgMove(playerID, MOVE_LEFT, msg);
+                msgQueue.push(msg);
                 break;
 
             case SDLK_s:
-                msg.emplace_back(MOVE_CHAR);
-                msg.emplace_back(playerID);
-                msg.emplace_back(MOVE_DOWN);
+                clProtocol.makeMsgMove(playerID, MOVE_DOWN, msg);
+                msgQueue.push(msg);
                 break;
 
             case SDLK_d:
-                msg.emplace_back(MOVE_CHAR);
-                msg.emplace_back(playerID);
-                msg.emplace_back(MOVE_RIGHT);
+                clProtocol.makeMsgMove(playerID, MOVE_RIGHT, msg);
+                msgQueue.push(msg);
                 break;
 
             case SDLK_KP_ENTER:
@@ -90,7 +90,6 @@ void EventManager::checkKeyDown(SDL_Event &event) {
             default:
                 break;
         }
-        msgQueue.push(msg);
     } else {
         switch (event.key.keysym.sym) {
             case SDLK_KP_ENTER:
@@ -117,9 +116,7 @@ void EventManager::checkKeyUp(SDL_Event &event) {
             case SDLK_a:
             case SDLK_s:
             case SDLK_d:
-                msg.emplace_back(MOVE_CHAR);
-                msg.emplace_back(playerID);
-                msg.emplace_back(STOP);
+                clProtocol.makeMsgMove(playerID, STOP, msg);
                 msgQueue.push(msg);
                 break;
             
@@ -138,8 +135,15 @@ void EventManager::checkClick(SDL_Event &event) {
     //o si clickeo afuera del inventario devuelve "", habria que diferenciar si clickeo afuera o en una casilla vacia, tal vez podria hacer que
     //devuelva la casilla, eso lo resolveria, ya vere que hacer
     if (0/*Click en inventario*/) {
-
+        std::vector<uint32_t> msg;
+        clProtocol.makeMsgClickInventory(playerID, /*SLOT*/, msg);
     } else {
-        //else entitymanager.checkClickEntities(camera, x, y);
+        uint32_t IDClicked = entityManager.checkClickEntities(camera, 
+                                                              event.button.x, 
+                                                              event.button.y);
+        if (IDClicked) {
+            std::vector<uint32_t> msg;
+            clProtocol.makeMsgClickEntity(IDClicked, msg);
+        }
     }
 }

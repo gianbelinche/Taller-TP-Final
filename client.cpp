@@ -5,6 +5,11 @@
 #include "Sender.h"
 #include "Receiver.h"
 #include "Camera.h"
+#include "EntityManager.h"
+#include "EventManager.h"
+#include "ModelController.h"
+#include "Renderer.h"
+#include "ClientController.h"
 #include <exception>
 #include <iostream>
 
@@ -18,40 +23,37 @@ int main(int argc, char* argv[]) {
         MainWindow mainWindow;
         MessageQueue senderQueue;
         MessageQueue receiverQueue;
+        SDL_Renderer *mainRenderer = mainWindow.getRenderer();
+        ClientProtocol clientProtocol;
 
-        Player player = clientConnector.getPlayer(mainWindow.getRenderer());
-        MainMap mainMap = clientConnector.getMainMap(mainWindow.getRenderer());
+        Player player = clientConnector.getPlayer(mainRenderer);
+        MainMap mainMap = clientConnector.getMainMap(mainRenderer);
         Sender sender = clientConnector.getSender(senderQueue);
         Receiver receiver = clientConnector.getReceiver(receiverQueue);
 
-        Camera camera(player.getPosX(), player.getPosY()); //quizas sea mejor cambiar esto
+        Layout layout(mainRenderer);
+        GraphicInventory gInventory(mainRenderer);
+        MiniChat miniChat(mainRenderer);
+        ExpBar expBar(mainRenderer);
 
-        //EntityManager
+        Camera camera(player.getPosX(), player.getPosY());
 
-        //EventManager
-        //ModelController
-        //Renderer
-        /*
-        ClientProtocol <- eliminar esta clase (tiene cómo se crea mainmap)
-        */
-        /*
-        try
-            sender.run
-            receiver.run
-            modelcontroller.run
-            renderer.run
-            eventmanager.run
-        catch ()
-            sender.join
-            receiver.join
-            eventmanager.join
-            modelcontroller.join
-        */
+        EntityManager entityManager(mainRenderer, player, player.getID());
+
+        EventManager eventManager(entityManager, player.getID(), senderQueue, 
+                                  camera, clientProtocol);
+        ModelController modelController(entityManager, receiverQueue);
+        Renderer renderer(camera, player, mainMap, entityManager, 
+                          mainRenderer, layout, gInventory, miniChat, expBar);
+
+        ClientController clientController(receiver, sender, modelController,
+                                          eventManager, renderer);
+        clientController.run();
     } catch (const std::exception& e) {
         std::cerr << e.what() << '\n';
         return ERROR;
     } catch (...) {
-        std::cerr << "Error: unknown" << '\n';
+        std::cerr << "Error client: unknown" << '\n';
     }
 
     return SUCCESS;

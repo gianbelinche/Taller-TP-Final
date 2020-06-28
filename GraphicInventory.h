@@ -6,6 +6,7 @@
 #include <vector>
 #include "FilteredImage.h"
 #include "Image.h"
+#include "Camera.h"
 
 class GraphicInventory {
 private:
@@ -19,12 +20,12 @@ private:
     void renderEquiped(int screen_w,int screen_h);
 public:
     GraphicInventory(SDL_Renderer* mainRenderer);
+
     void addImage(int key);
     void removeImage(int pos);
-    void render(int screen_width,int screen_heigth);
     void equip(int key);
-    int select(int x,int y,int screen_w,int screen_h);
-
+    int select(int x,int y,Camera& camera);
+    void render(Camera& camera);
 };
 
 #endif

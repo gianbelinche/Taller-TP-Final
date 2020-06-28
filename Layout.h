@@ -7,6 +7,7 @@
 #include "GraphicInventory.h"
 #include "ExpBar.h"
 #include "MiniChat.h"
+#include "Camera.h"
 
 class Layout {
 private:
@@ -23,10 +24,9 @@ public:
     void changeLife(int life, int max_life);
     void changeMana(int mana, int max_mana);
     void changeLevel(int level);
-    void render(int screen_width,int screen_height);
     bool isClicked(int x,int screen_width);
+    void render(Camera& camera);
     ~Layout();
-
 };
 
 #endif
