@@ -2,6 +2,38 @@
 #define DATA_SIZE 35
 #include <iostream>
 #include <ios>
+#include <msgpack.hpp>
+
+Persistor::Persistor(){
+    file.open("map.json");
+    std::cout << "const " << file.is_open() << std::endl;
+    std::map<int,int> map;
+    file.seekg(0,std::ios::end);
+    int size = file.tellg();
+    if (size > 0){
+        char* str =(char*) malloc(size);
+        file.seekg(0);
+        file.read(str,size);
+        std::string string(str,size);
+        msgpack::object_handle oh = msgpack::unpack(string.data(),size);
+        msgpack::object deserialized = oh.get();
+        deserialized.convert(map);
+        this->players = std::move(map);
+        free(str);
+    }
+    file.close();
+    
+}
+
+Persistor::~Persistor(){
+    file.open("map.json",std::fstream::out | std::fstream::trunc );
+    std::cout << "Dest " << file.is_open() << std::endl;
+    std::stringstream buff;
+    msgpack::pack(buff,players);
+    buff.seekg(0);
+    file.write(&buff.str()[0],buff.str().size());
+    file.close();
+}
 
 void Persistor::persistPlayer(std::string file_name,std::vector<uint32_t> data,int player){
     if (players.find(player) == players.end()){
