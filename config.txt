@@ -1,0 +1,9 @@
+8080 port
+150 int1
+200 int2
+152 int3
+5 otroint
+0.256 float
+6.589 otrofloat
+0.00457 masfloat
+12356.156 masflo at

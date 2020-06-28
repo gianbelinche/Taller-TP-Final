@@ -1,14 +1,14 @@
 #ifndef CLASS_CONFIGURATION
 #define CLASS_CONFIGURATION
-#include <istream>
+#include <fstream>
 #include <vector>
 #include <string>
 
 class Configuration{
 private:    
-    std::ifstream file;
+    std::fstream file;
 public:
-    std::vector<uint32_t> parse(std::string file_name);    
+    std::pair<std::vector<int>,std::vector<float>> parse(std::string file_name,int int_number,int float_number);    
 };
 
 #endif
