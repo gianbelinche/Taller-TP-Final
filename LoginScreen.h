@@ -6,6 +6,7 @@
 #include <vector>
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
+#include "Camera.h"
 
 class LoginScreen{
 private:
@@ -26,10 +27,10 @@ private:
     void renderWord(std::string to_render_word,int x, int y,int w,int h,int screen_w,int screen_h);
 public:
     LoginScreen(SDL_Renderer* mainRenderer);
-    void render(int screen_w,int screen_h);
+    void render(Camera& camera);
     void changeToUserInput();
     void showError(std::string error);
-    void select(int x,int y,int screen_w,int screen_h);
+    void select(int x,int y,Camera& camera);
     void write(std::string c);  
     void deleteCharacter();
     std::vector<std::string> send();  

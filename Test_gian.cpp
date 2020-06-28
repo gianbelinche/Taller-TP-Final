@@ -6,13 +6,9 @@
 #include <string>
 #include <iostream>
 #include "LoginScreen.h"
+#include "Camera.h"
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
 
-/* TAMAÑO DEL NIVEL */
-#define LEVEL_WIDTH 1280
-#define LEVEL_HEIGHT 960
 
 /* NOMBRE DE LA PANTALLA */
 #define WINDOW_NAME "Main"
@@ -97,6 +93,7 @@ TestGian::~TestGian() {
 }
 
 void TestGian::run() {
+    Camera camera(0,0);
     LoginScreen login(mainRenderer);
     int logins = 0;
     bool in_login = true;
@@ -227,10 +224,10 @@ void TestGian::run() {
                 if (!in_login){
                     bool clicked = layout.isClicked(eventHandler.button.x,SCREEN_WIDTH);
                     std::cout <<  "is " << clicked << std::endl;
-                    int selected = inventory.select(eventHandler.button.x,eventHandler.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
+                    int selected = inventory.select(eventHandler.button.x,eventHandler.button.y,camera);
                     std::cout << selected << std::endl;
                 } else {
-                    login.select(eventHandler.button.x,eventHandler.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
+                    login.select(eventHandler.button.x,eventHandler.button.y,camera);
                 }
                 
             }
@@ -240,10 +237,10 @@ void TestGian::run() {
         SDL_SetRenderDrawColor(mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(mainRenderer);
         if (!in_login){
-            layout.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-            inventory.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-            expBar.render(SCREEN_WIDTH,SCREEN_HEIGHT);
-            chat.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+            layout.render(camera);
+            inventory.render(camera);
+            expBar.render(camera);
+            chat.render(camera);
             gold++;
             if (life > 0) life--;
             if (mana > 0) mana--;
@@ -279,7 +276,7 @@ void TestGian::run() {
             logins++;
             //if (logins == 200)
                 //login.changeToUserInput();
-            login.render(SCREEN_WIDTH,SCREEN_HEIGHT);
+            login.render(camera);
             login.showError("Servidor inexistente");
         }    
 

@@ -50,6 +50,7 @@ add_executable (testgian
   ExpBar.cpp
   MiniChat.cpp
   LoginScreen.cpp
+  Camera.cpp
 )
 
 

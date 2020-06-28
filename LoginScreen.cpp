@@ -90,7 +90,9 @@ void LoginScreen::renderWord(std::string to_render_word,int x, int y,int w,int h
     word.render(x,y,&clip,&rQuad);
 }
 
-void LoginScreen::render(int screen_w,int screen_h){
+void LoginScreen::render(Camera& camera){
+    int screen_w = camera.getWidth();
+    int screen_h = camera.getHeight();
     SDL_Rect clip = {0,0,screen_w,screen_h};
     SDL_Rect rq = {0,0,screen_w,screen_h};
     background.render(0,0,&clip,&rq);
@@ -150,7 +152,9 @@ void LoginScreen::deleteCharacter(){
     }
 }
 
-void LoginScreen::select(int x,int y,int screen_w,int screen_h){
+void LoginScreen::select(int x,int y,Camera& camera){
+    int screen_w = camera.getWidth();
+    int screen_h = camera.getHeight();
     if (x >= TEXT_INPUT_X && x <= TEXT_INPUT_X + TEXT_INPUT_W){
         if (y >= TEXT_INPUT_Y && y <= TEXT_INPUT_Y + TEXT_INPUT_H)
             actual = 0;
