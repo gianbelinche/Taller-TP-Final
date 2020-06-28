@@ -129,7 +129,7 @@ void GraphicInventory::equip(int key){
 }
 
 
-std::string GraphicInventory::select(int x,int y,Camera& camera){
+int GraphicInventory::select(int x,int y,Camera& camera){
     int screen_w = camera.getWidth();
     int screen_h = camera.getHeight();
     int selected = -1;
