@@ -12,6 +12,7 @@
 #define GOLD_LIFE_X (screen_width - LAY_W * 0.95)
 #define MANA_LEVEL_X (screen_width - LAY_W * 0.95/2)
 #define LIFE_MANA_Y (screen_heigth / 24)
+#define ITEM_BOXES_W (screen_width / 15)
 
 Layout::Layout(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer), 
 layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL) {
@@ -79,4 +80,8 @@ void Layout::render(Camera& camera){
     life.render(GOLD_LIFE_X,LIFE_MANA_Y,&clip,&rq);
     mana.render(MANA_LEVEL_X,LIFE_MANA_Y,&clip,&rq);
     level.render(MANA_LEVEL_X,0,&clip,&rq);
+}
+
+bool Layout::isClicked(int x,int screen_width){
+    return (x > screen_width - LAY_W - ITEM_BOXES_W);
 }

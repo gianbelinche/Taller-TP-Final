@@ -7,8 +7,10 @@
 #define INTERIOR_BOX_H (screen_h / 19)
 #define EXTERIOR_BOX_X (screen_w * 1743 / 2550)
 #define EXTERIOR_BOX_Y (screen_h / 10)
-#define EXTERIOR_BOX_W (screen_w / 16)
+#define EXTERIOR_BOX_W ((screen_w / 16) * 105/100)
 #define EXTERIOR_BOX_H (screen_h / 14)
+#define EXTERIOR_BOX_W_SELECTED (screen_w / 16)
+#define EXTERIOR_BOX_SELECTED_H (EXTERIOR_BOX_H * 97/100)
 #define ITEM_BOXES_W (screen_w / 15)
 #define ITEM_BOXES_H (screen_h *3 / 8)
 #define ITEM_BOXES_X (screen_w * 3 / 5)
@@ -22,49 +24,66 @@
 #define SELECTED_TYPE_2 2
 #define SELECTED_TYPE_3 3
 
+enum items{
+    SWORD,
+    AXE,
+    HAMMER,
+    FRESNO_ROD,
+    ELFIC_FLUTE,
+    BACULO_NUDOSO,
+    BACULO_ENGARZADO,
+    SIMPLE_BOW,
+    COMPOSED_BOW,
+    LEATHER_ARMOR,
+    PLATE_ARMOR,
+    BLUE_TUNIC,
+    HOOD,
+    IRON_HELMET,
+    TURTLE_SHIELD,
+    IRON_SHIELD,
+    MAGIC_HAT
+};
+
 
 GraphicInventory::GraphicInventory(SDL_Renderer* mainRenderer) : 
 mainRenderer(mainRenderer), itemBoxes(NULL) {
     Image itemBoxes(mainRenderer);
     itemBoxes.loadFromFile("Layout_graphics/Inventory/ItemBoxes.png");
     this->itemBoxes = std::move(itemBoxes);
-    equiped.push_back("");
-    equiped.push_back("");
-    equiped.push_back("");
-    equiped.push_back("");
-    this->insert("sword","Layout_graphics/Inventory/espada.png",SELECTED_TYPE_0);
-    this->insert("axe","Layout_graphics/Inventory/hacha.png",SELECTED_TYPE_0);
-    this->insert("hammer","Layout_graphics/Inventory/martillo.png",SELECTED_TYPE_0);
-    this->insert("fresno rod","Layout_graphics/Inventory/vara de fresno.png",SELECTED_TYPE_0);
-    this->insert("baculo nudoso","Layout_graphics/Inventory/baculo nudoso.png",SELECTED_TYPE_0);
-    this->insert("baculo engarzado","Layout_graphics/Inventory/baculo engarzado.png",SELECTED_TYPE_0);
-    this->insert("simple bow","Layout_graphics/Inventory/arco simple.png",SELECTED_TYPE_0);
-    this->insert("composed bow","Layout_graphics/Inventory/arco compuesto.png",SELECTED_TYPE_0);
-    this->insert("leather armor","Layout_graphics/Inventory/armadura de cuero.png",SELECTED_TYPE_1);
-    this->insert("plate armor","Layout_graphics/Inventory/armadura de placas.png",SELECTED_TYPE_1);
-    this->insert("iron helmet","Layout_graphics/Inventory/casco de hierro.png",SELECTED_TYPE_2);
-    this->insert("iron shield","Layout_graphics/Inventory/escudo de hierro.png",SELECTED_TYPE_3);
+    equiped.push_back(-1);
+    equiped.push_back(-1);
+    equiped.push_back(-1);
+    equiped.push_back(-1);
+    this->insert(SWORD,"Layout_graphics/Inventory/espada.png",SELECTED_TYPE_0);
+    this->insert(AXE,"Layout_graphics/Inventory/hacha.png",SELECTED_TYPE_0);
+    this->insert(HAMMER,"Layout_graphics/Inventory/martillo.png",SELECTED_TYPE_0);
+    this->insert(FRESNO_ROD,"Layout_graphics/Inventory/vara de fresno.png",SELECTED_TYPE_0);
+    this->insert(BACULO_NUDOSO,"Layout_graphics/Inventory/baculo nudoso.png",SELECTED_TYPE_0);
+    this->insert(BACULO_ENGARZADO,"Layout_graphics/Inventory/baculo engarzado.png",SELECTED_TYPE_0);
+    this->insert(SIMPLE_BOW,"Layout_graphics/Inventory/arco simple.png",SELECTED_TYPE_0);
+    this->insert(COMPOSED_BOW,"Layout_graphics/Inventory/arco compuesto.png",SELECTED_TYPE_0);
+    this->insert(LEATHER_ARMOR,"Layout_graphics/Inventory/armadura de cuero.png",SELECTED_TYPE_1);
+    this->insert(PLATE_ARMOR,"Layout_graphics/Inventory/armadura de placas.png",SELECTED_TYPE_1);
+    this->insert(IRON_HELMET,"Layout_graphics/Inventory/casco de hierro.png",SELECTED_TYPE_2);
+    this->insert(IRON_SHIELD,"Layout_graphics/Inventory/escudo de hierro.png",SELECTED_TYPE_3);
 }
 
-void GraphicInventory::insert(std::string key,std::string path,int position){
+void GraphicInventory::insert(int key,std::string path,int position){
     FilteredImage image(mainRenderer);
     image.loadFromFile(path);
-    images.insert(std::pair<std::string,FilteredImage>(key,std::move(image)));
-    image_positions.insert(std::pair<std::string,int>(key,position));
+    images.insert(std::pair<int,FilteredImage>(key,std::move(image)));
+    image_positions.insert(std::pair<int,int>(key,position));
 }
 
-void GraphicInventory::addImage(std::string key){
+void GraphicInventory::addImage(int key){
     present_images.push_back(key);
 }
 
-void GraphicInventory::removeImage(std::string key){
-    std::vector<std::string>::iterator it;
-    for (it = present_images.begin(); it != present_images.end(); it++){
-        if (*it == key){
-            present_images.erase(it);
-            break;
-        }
+void GraphicInventory::removeImage(int pos){
+    if (pos >= present_images.size()){
+        throw SDLError("No hay ningun objeto en la posicion a eliminar\n");
     }
+    present_images.erase(present_images.begin() + pos);
 }
 
 void GraphicInventory::render(Camera& camera){
@@ -98,18 +117,19 @@ void GraphicInventory::renderEquiped(int screen_w,int screen_h){
     int x = SELECTED_EXT_BOX_X;
     int y = SELECTED_EXT_BOX_Y;
     for (int i = 0; i < MAX_NUMBER_OF_SELECTED_ITEMS; i++){
-        if (equiped[i] != ""){
+        if (equiped[i] != -1){
             images.at(equiped[i]).render(x,y,&clip,&rQuad);
         }
         y += SELECTED_EXT_BOX_H;
     }
 }
 
-void GraphicInventory::equip(std::string key){
+void GraphicInventory::equip(int key){
     equiped[image_positions.at(key)] = key;
 }
 
-std::string GraphicInventory::select(int x,int y,Camera& camera){
+
+int GraphicInventory::select(int x,int y,Camera& camera){
     int screen_w = camera.getWidth();
     int screen_h = camera.getHeight();
     int selected = -1;
@@ -117,18 +137,15 @@ std::string GraphicInventory::select(int x,int y,Camera& camera){
     int actual_y = EXTERIOR_BOX_Y; 
 
     for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++){
-        if ((x > actual_x) && (x < (actual_x + EXTERIOR_BOX_W)) && (y > actual_y) && (y < (actual_y + EXTERIOR_BOX_H))){
+        if ((x >= actual_x) && (x <= (actual_x + EXTERIOR_BOX_W_SELECTED)) && (y >= actual_y) && (y <= (actual_y + EXTERIOR_BOX_SELECTED_H))){
             selected = i;
             break;
         }
-        actual_x += EXTERIOR_BOX_W; 
+        actual_x += EXTERIOR_BOX_W_SELECTED; 
         if ((i+1) % NUMBER_OF_COLUMNS == 0){
             actual_x = EXTERIOR_BOX_X;
-            actual_y += EXTERIOR_BOX_H; 
+            actual_y += EXTERIOR_BOX_SELECTED_H; 
         }
     }
-    if (selected == -1 || selected >= present_images.size()){
-        return "";
-    }
-    return present_images[selected];
+    return selected;
 }
