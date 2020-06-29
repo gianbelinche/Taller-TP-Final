@@ -136,7 +136,7 @@ void EventManager::checkClick(SDL_Event &event) {
     //devuelva la casilla, eso lo resolveria, ya vere que hacer
     if (0/*Click en inventario*/) {
         std::vector<uint32_t> msg;
-        clProtocol.makeMsgClickInventory(playerID, /*SLOT*/, msg);
+        clProtocol.makeMsgClickInventory(playerID, 1/*SLOT*/, msg);
     } else {
         uint32_t IDClicked = entityManager.checkClickEntities(camera, 
                                                               event.button.x, 

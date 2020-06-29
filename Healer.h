@@ -14,7 +14,7 @@
 class Healer : public NPC {
     public:
         Healer(SDL_Renderer *renderer, uint32_t anID, uint16_t posX, 
-               uint16_t posY, View aView);
+               uint16_t posY);
         ~Healer();
 };
 

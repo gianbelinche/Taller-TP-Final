@@ -24,22 +24,35 @@ ClientConnector& ClientConnector::operator=(ClientConnector&& other) {
     return *this;
 }
 
-Player ClientConnector::getPlayer(SDL_Renderer *renderer) {
+uint32_t ClientConnector::receiveLen() {
     char lenBuff[4];
     socket.recv(lenBuff, 4);
 
-    uint32_t len = (lenBuff[3] << 24) + (lenBuff[2] << 16) + 
-                   (lenBuff[1] << 8) + lenBuff[0];
+    uint32_t len;
 
-    len = ntohl(len);
+    char *lenPointer = (char*)&len;
+    lenPointer[0] = lenBuff[0];
+    lenPointer[1] = lenBuff[1];
+    lenPointer[2] = lenBuff[2];
+    lenPointer[3] = lenBuff[3];
 
+    return ntohl(len);
+}
+
+std::string ClientConnector::receiveMsg(uint32_t len) {
     std::vector<char> msgBuff(len);
     socket.recv(&msgBuff[0], len);
+    std::string msgStr(msgBuff.begin(), msgBuff.end());
 
-    std::string ss(msgBuff.begin(), msgBuff.end());
+    return std::move(msgStr);
+}
+
+Player ClientConnector::getPlayer(SDL_Renderer *renderer) {
+    uint32_t len = receiveLen();
+    std::string msgStr = receiveMsg(len);
 
     std::vector<uint32_t> msg;
-    msgpack::object_handle oh = msgpack::unpack(ss.data(), ss.size());
+    msgpack::object_handle oh = msgpack::unpack(msgStr.data(), msgStr.size());
     oh.get().convert(msg);
 
     Player player(renderer, (PlayerRace)msg[2], msg[1], (uint16_t)msg[3], 
@@ -49,51 +62,29 @@ Player ClientConnector::getPlayer(SDL_Renderer *renderer) {
 }
 
 MainMap ClientConnector::getMainMap(SDL_Renderer *renderer) {
-    //chequear funcion
-    char lenBuff[4];
-    socket.recv(lenBuff, 4);
-
-    uint32_t len = (lenBuff[3] << 24) + (lenBuff[2] << 16) + 
-                   (lenBuff[1] << 8) + lenBuff[0];
-
-    len = ntohl(len);
-
-    std::vector<char> msgBuff(len);
-    socket.recv(&msgBuff[0], len);
-    std::string ss(msgBuff.begin(), msgBuff.end());
+    //Recibo tiles
+    uint32_t tileLen = receiveLen();
+    std::string tMsgStr = receiveMsg(tileLen);
 
     std::map<uint32_t, std::vector<std::string>> tiles;
-    msgpack::object_handle oh = msgpack::unpack(ss.data(), ss.size());
-    oh.get().convert(tiles);
+    msgpack::unpack(tMsgStr.data(), tMsgStr.size()).get().convert(tiles);
 
-    socket.recv(lenBuff, 4);
-    len = (lenBuff[3] << 24) + (lenBuff[2] << 16) + (lenBuff[1] << 8) + 
-          lenBuff[0];
-
-    len = ntohl(len);
-
-    msgBuff = std::vector<char>(len);
-    socket.recv(&msgBuff[0], len);
-    ss = std::string(msgBuff.begin(), msgBuff.end());
+    //Recibo matriz de terreno
+    uint32_t matLen0 = receiveLen();
+    std::string mMsgStr0 = receiveMsg(matLen0);
 
     std::vector<std::vector<uint32_t>> matrixLayer0;
-    oh = msgpack::unpack(ss.data(), ss.size());
-    oh.get().convert(matrixLayer0);
+    msgpack::unpack(mMsgStr0.data(), mMsgStr0.size()).get().convert(matrixLayer0);
 
-    socket.recv(lenBuff, 4);
-    len = (lenBuff[3] << 24) + (lenBuff[2] << 16) + (lenBuff[1] << 8) + 
-          lenBuff[0];
-
-    len = ntohl(len);
-
-    msgBuff = std::vector<char>(len);
-    socket.recv(&msgBuff[0], len);
-    ss = std::string(msgBuff.begin(), msgBuff.end());
+    //Recibo matriz de estructuras
+    uint32_t matLen1 = receiveLen();
+    std::string mMsgStr1 = receiveMsg(matLen1);
     
     std::vector<std::vector<uint32_t>> matrixLayer1;
-    oh = msgpack::unpack(ss.data(), ss.size());
-    oh.get().convert(matrixLayer1);
+    msgpack::object_handle ohM1 = msgpack::unpack(mMsgStr1.data(), mMsgStr1.size());
+    ohM1.get().convert(matrixLayer1);
 
+    //Genero MainMap
     MainMap mainMap(tiles, renderer, matrixLayer0, matrixLayer1);
     return std::move(mainMap);
 }

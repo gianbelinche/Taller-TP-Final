@@ -1,6 +1,8 @@
 #ifndef __SENDER_H__
 #define __SENDER_H__
 
+class Sender;
+
 #include "ClientConnector.h"
 #include "MessageQueue.h"
 #include "Thread.h"

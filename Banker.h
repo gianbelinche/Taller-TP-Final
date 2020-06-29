@@ -13,7 +13,8 @@
 
 class Banker : public NPC {
     public:
-        Banker(SDL_Renderer *renderer, uint32_t anID, uint16_t posX, uint16_t posY, View aView);
+        Banker(SDL_Renderer *renderer, uint32_t anID, uint16_t posX, 
+               uint16_t posY);
         ~Banker();
 };
 

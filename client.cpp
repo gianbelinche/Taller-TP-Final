@@ -16,14 +16,17 @@
 #define ERROR 1
 #define SUCCESS 0
 
+#include <arpa/inet.h>
+#include <msgpack.hpp>
+
 int main(int argc, char* argv[]) {
     try {
         if (argc != 3) return 1; //SACAR ESTO
         ClientConnector clientConnector(argv[1], argv[2]); //CAMBIAR, PASAR DE OTRA FORMA EL IP Y SERVICE
         MainWindow mainWindow;
+        SDL_Renderer *mainRenderer = mainWindow.getRenderer();
         MessageQueue senderQueue;
         MessageQueue receiverQueue;
-        SDL_Renderer *mainRenderer = mainWindow.getRenderer();
         ClientProtocol clientProtocol;
 
         Player player = clientConnector.getPlayer(mainRenderer);
@@ -36,7 +39,8 @@ int main(int argc, char* argv[]) {
         MiniChat miniChat(mainRenderer);
         ExpBar expBar(mainRenderer);
 
-        Camera camera(player.getPosX(), player.getPosY());
+        Camera camera(player.getPosX(), player.getPosY(), player.getHeight(), 
+                      player.getWidth());
 
         EntityManager entityManager(mainRenderer, player, player.getID());
 

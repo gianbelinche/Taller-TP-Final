@@ -9,48 +9,31 @@ Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID,
                                                 headImage(aRenderer, B, B, B),
                                                 dead(isDead) {
     this->speed = PLAYER_SPEED;
+    this->bodyWidth = PLAYER_BODY_WIDTH;
+    this->bodyHeight = PLAYER_BODY_HEIGHT;
+    this->headWidth = PLAYER_HEAD_WIDTH;
+    this->headHeight = PLAYER_HEAD_HEIGHT;
     this->bodyFrameX = 0;
     this->bodyFrameY = 0;
     this->headFrameX = 0;
-    this->dead = false;     //esto también debería cambiar, puede que el usuario se loguee y este como fantasma
-    this->bodyWidth = 25;   //cambiar numeros magicos
-    this->bodyHeight = 45;  //cambiar numeros magicos
-    this->headWidth = 17;   //cambiar numeros magicos
-    this->headHeight = 17;  //cambiar numeros magicos
 
     switch (aRace) {
         case HUMAN:
-            /*this->bodyWidth = HUMAN_BODY_WIDTH;
-            this->bodyHeight = HUMAN_BODY_HEIGHT;
-            this->headWidth = HUMAN_HEAD_WIDTH;
-            this->headHeight = HUMAN_HEAD_HEIGHT;*/
             this->bodyImage.loadFromFile(HUMAN_BODY_PATH);
             this->headImage.loadFromFile(HUMAN_HEAD_PATH);
             break;
         
         case ELF:
-            /*this->bodyWidth = ELF_BODY_WIDTH;
-            this->bodyHeight = ELF_BODY_HEIGHT;
-            this->headWidth = ELF_HEAD_WIDTH;
-            this->headHeight = ELF_HEAD_HEIGHT;*/
             this->bodyImage.loadFromFile(ELF_BODY_PATH);
             this->headImage.loadFromFile(ELF_HEAD_PATH);
             break;
 
         case DWARF:
-            /*this->bodyWidth = DWARF_BODY_WIDTH;
-            this->bodyHeight = DWARF_BODY_HEIGHT;
-            this->headWidth = DWARF_HEAD_WIDTH;
-            this->headHeight = DWARF_HEAD_HEIGHT;*/
             this->bodyImage.loadFromFile(DWARF_BODY_PATH);
             this->headImage.loadFromFile(DWARF_HEAD_PATH);
             break;
 
         case GNOME:
-            /*this->bodyWidth = GNOME_BODY_WIDTH;
-            this->bodyHeight = GNOME_BODY_HEIGHT;
-            this->headWidth = GNOME_HEAD_WIDTH;
-            this->headHeight = GNOME_HEAD_HEIGHT;*/
             this->bodyImage.loadFromFile(GNOME_BODY_PATH);
             this->headImage.loadFromFile(GNOME_HEAD_PATH);
             break;
@@ -62,17 +45,23 @@ Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID,
     SpriteClipCreator(bodyHeight * BODY_ANIMATION_STATES, bodyWidth * 
                       BODY_ANIMATION_FRAMES, bodyHeight, bodyWidth, bodyClips);
 
-    SpriteClipCreator(headHeight, headWidth * HEAD_ANIMATION_FRAMES, headHeight, headWidth, headClips);
+    SpriteClipCreator(headHeight, headWidth * HEAD_ANIMATION_FRAMES, headHeight,
+                      headWidth, headClips);
 }
 
-Player::Player(Player&& other) : Entity(std::move(other)), speed(other.speed), 
+Player::Player(Player&& other) : Entity(std::move(other)), 
+                                 speed(other.speed),
+                                 bodyWidth(other.bodyWidth),
+                                 bodyHeight(other.bodyHeight),
+                                 headWidth(other.headWidth),
+                                 headHeight(other.headHeight),
                                  bodyFrameX(other.bodyFrameX),
                                  bodyFrameY(other.bodyFrameY), 
                                  headFrameX(other.headFrameX),
                                  bodyImage(std::move(other.bodyImage)),
                                  headImage(std::move(other.headImage)),
-                                 bodyClips(std::move(bodyClips)), 
-                                 headClips(std::move(headClips)) {}
+                                 bodyClips(std::move(other.bodyClips)), 
+                                 headClips(std::move(other.headClips)) {}
 
 Player& Player::operator=(Player&& other) {
     if (this == &other) {
@@ -81,6 +70,10 @@ Player& Player::operator=(Player&& other) {
 
     Entity::operator=(std::move(other));
     this->speed = other.speed;
+    bodyWidth = other.bodyWidth;
+    bodyHeight = other.bodyHeight;
+    headWidth = other.headWidth;
+    headHeight = other.headHeight;
     this->bodyFrameX = other.bodyFrameX;
     this->bodyFrameY = other.bodyFrameY;
     this->headFrameX = other.headFrameX;
@@ -106,8 +99,7 @@ void Player::refreshPosition(MovementType move) {
             this->posX -= this->speed;
             this->bodyFrameX++;
             if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
-            this->bodyFrameY =  2;
-            this->bodyClips[bodyFrameX].y = this->bodyFrameY;
+            this->bodyFrameY = 2;
             this->headFrameX = 2;
             break;
 
@@ -116,7 +108,6 @@ void Player::refreshPosition(MovementType move) {
             this->bodyFrameX++;
             if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
             this->bodyFrameY = 0;
-            this->bodyClips[bodyFrameX].y = this->bodyFrameY;
             this->headFrameX = 0;
             break;
 
@@ -125,7 +116,6 @@ void Player::refreshPosition(MovementType move) {
             this->bodyFrameX++;
             if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
             this->bodyFrameY = 3;
-            this->bodyClips[bodyFrameX].y = this->bodyFrameY;
             this->headFrameX = 1;
             break;
 

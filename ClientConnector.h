@@ -1,6 +1,8 @@
 #ifndef __CLIENT_CONNECTOR_H__
 #define __CLIENT_CONNECTOR_H__
 
+class ClientConnector;
+
 #include "Socket.h"
 #include "Player.h"
 #include "MainMap.h"
@@ -12,6 +14,8 @@
 class ClientConnector {
     private:
         Socket socket;
+        uint32_t receiveLen();
+        std::string receiveMsg(uint32_t len);
 
     public:
         ClientConnector(const char *host, const char *service);

@@ -20,7 +20,8 @@ class Camera {
         uint16_t playerWidth;
 
     public:
-        Camera(uint16_t posX, uint16_t posY);
+        Camera(uint16_t posX, uint16_t posY, uint16_t playerHeight,
+        uint16_t playerWidth);
         ~Camera();
 
         void refresh(uint16_t posX, uint16_t posY);

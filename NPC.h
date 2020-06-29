@@ -24,7 +24,7 @@ class NPC : public Entity {
 
     public:
         NPC(SDL_Renderer *renderer, uint32_t anID, uint16_t aPosX,
-            uint16_t aPosY, View aView);
+            uint16_t aPosY);
         ~NPC();
 
         NPC(const NPC &copy) = delete;

@@ -24,9 +24,9 @@ VER COMO CERRAR CADA UNO EN CASO DE FALLA.
 */
 
 void ClientController::run() {
-    receiver.run();
-    sender.run();
-    modelController.run();
-    renderer.run();
+    receiver.start();
+    sender.start();
+    modelController.start();
+    renderer.start();
     eventManager.run();
 }

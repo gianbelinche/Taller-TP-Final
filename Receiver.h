@@ -1,6 +1,8 @@
 #ifndef __RECEIVER_H__
 #define __RECEIVER_H__
 
+class Receiver;
+
 #include "MessageQueue.h"
 #include "ClientConnector.h"
 #include "Thread.h"

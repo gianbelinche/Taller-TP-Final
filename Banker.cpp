@@ -1,8 +1,8 @@
 #include "Banker.h"
 #include "SpriteClipCreator.h"
 
-Banker::Banker(SDL_Renderer *renderer, uint32_t anID, uint16_t posX, uint16_t posY, 
-               View aView) : NPC(renderer, anID, posX, posY, aView) {
+Banker::Banker(SDL_Renderer *renderer, uint32_t anID, uint16_t posX, 
+               uint16_t posY) : NPC(renderer, anID, posX, posY) {
     image.loadFromFile(BANKER_PATH);
     height = BANKER_HEIGHT;
     width = BANKER_WIDTH;

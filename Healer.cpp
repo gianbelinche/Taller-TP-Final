@@ -2,8 +2,7 @@
 #include "SpriteClipCreator.h"
 
 Healer::Healer(SDL_Renderer *renderer, uint32_t anID, uint16_t posX, 
-               uint16_t posY, View aView) : NPC(renderer, anID, posX, posY, 
-                                            aView) {
+               uint16_t posY) : NPC(renderer, anID, posX, posY) {
     image.loadFromFile(HEALER_PATH);
     height = HEALER_HEIGHT;
     width = HEALER_WIDTH;

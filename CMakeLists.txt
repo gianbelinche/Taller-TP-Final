@@ -103,7 +103,6 @@ add_library(pruebasss
   GraphicInventory.cpp
   Layout.cpp
   MiniChat.cpp
-<<<<<<< HEAD
   EmptyException.cpp
   JsonError.cpp
   OSError.cpp
@@ -116,10 +115,6 @@ add_library(pruebasss
   Renderer.cpp
   Sender.cpp
   Thread.cpp
-=======
-  LoginScreen.cpp
-  Camera.cpp
->>>>>>> d7ac03a4c5e3842114c92dec75b8056384766d0f
 )
 
 # Agrego la carpeta con los headers autogenerados a los includes

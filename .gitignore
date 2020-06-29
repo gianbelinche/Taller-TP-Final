@@ -10,3 +10,4 @@ CMakeFiles
 *.cmake
 CMakeCache.txt
 Makefile
+build/

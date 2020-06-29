@@ -30,7 +30,7 @@ class EntityManager {
         EntityManager(SDL_Renderer *aRenderer, Player &aPlayer, uint32_t aPlayerID);
         ~EntityManager();
 
-        void addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY, View aView);
+        void addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY);
         void addDrop(ItemType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY);
         void addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX, uint16_t aPosY, bool dead);
         

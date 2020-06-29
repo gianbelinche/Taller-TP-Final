@@ -4,6 +4,7 @@
 #include "SDLError.h"
 #include "MainMap.h"
 #include "EntityManager.h"
+#include <iostream>
 
 /* NOMBRE DE LA PANTALLA */
 #define WINDOW_NAME "Main"
@@ -24,7 +25,7 @@ MainWindow::MainWindow() {
 
     //Set texture filtering to linear
     if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
-        // printf( "Warning: Linear texture filtering not enabled!" );
+        std::cerr << "Warning: Linear texture filtering not enabled!";
     }
 
     this->mainWindow = SDL_CreateWindow(WINDOW_NAME, SDL_WINDOWPOS_UNDEFINED, 

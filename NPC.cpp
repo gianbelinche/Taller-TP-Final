@@ -1,9 +1,9 @@
 #include "NPC.h"
 #include "SpriteClipCreator.h"
 
-NPC::NPC(SDL_Renderer *renderer, uint32_t anID, uint16_t aPosX, uint16_t aPosY,
-         View aView) : Entity(anID, aPosX, aPosY), image(renderer, 0, 0, 0),
-                       view(aView), frame(0) {}
+NPC::NPC(SDL_Renderer *renderer, uint32_t anID, uint16_t aPosX, uint16_t aPosY)
+                    : Entity(anID, aPosX, aPosY), image(renderer, 0, 0, 0),
+                      view(DOWN), frame(0) {}
 
 NPC::~NPC() {}
 

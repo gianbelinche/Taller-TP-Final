@@ -49,6 +49,7 @@ void MainMap::renderTerrain(Camera &camera) {
             this->textures.at(key).renderFromTile(index-key, x, y);
         }
     }*/
+
     int x = 0 - camera.getX();
     int y = 0 - camera.getY();
 

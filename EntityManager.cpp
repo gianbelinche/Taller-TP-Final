@@ -11,37 +11,36 @@ EntityManager::~EntityManager() {
     }
 }
 
-void EntityManager::addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY, 
-                              View aView) {
+void EntityManager::addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY) {
     std::unique_lock<std::mutex> lk(mux);
     /*DEBERIA ARMAR TAMBIEN EL OTRO HASH PARA RENDERIZAR EN ORDEN*/
     switch (type) {
         case SPYDER:
-            entities[anID] = new Spyder(renderer, anID, aPosX, aPosY, aView);
+            entities[anID] = new Spyder(renderer, anID, aPosX, aPosY);
             break;
         
         case SKELETON:
-            entities[anID] = new Skeleton(renderer, anID, aPosX, aPosY, aView);
+            entities[anID] = new Skeleton(renderer, anID, aPosX, aPosY);
             break;
 
         case GOBLIN:
-            entities[anID] = new Goblin(renderer, anID, aPosX, aPosY, aView);
+            entities[anID] = new Goblin(renderer, anID, aPosX, aPosY);
             break;
 
         case ZOMBIE:
-            entities[anID] = new Zombie(renderer, anID, aPosX, aPosY, aView);
+            entities[anID] = new Zombie(renderer, anID, aPosX, aPosY);
             break;
 
         case BANKER:
-            entities[anID] = new Banker(renderer, anID, aPosX, aPosY, aView);
+            entities[anID] = new Banker(renderer, anID, aPosX, aPosY);
             break;
 
         case MERCHANT:
-            entities[anID] = new Merchant(renderer, anID, aPosX, aPosY, aView);
+            entities[anID] = new Merchant(renderer, anID, aPosX, aPosY);
             break;
 
         case HEALER:
-            entities[anID] = new Healer(renderer, anID, aPosX, aPosY, aView);
+            entities[anID] = new Healer(renderer, anID, aPosX, aPosY);
             break;
 
         default:

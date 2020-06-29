@@ -21,6 +21,8 @@ void Renderer::run() {
         Uint32 time1 = 0;
         Uint32 time2 = 0;
 
+        int cont = 0;
+
         while (!closed) {
             time1 = SDL_GetTicks();
 

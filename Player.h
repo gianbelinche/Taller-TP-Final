@@ -24,22 +24,10 @@ class Player;
 #define GNOME_HEAD_PATH "img/gnomehead.png"
 
 /* MEDIDAS DEL JUGADOR */
-/*#define HUMAN_BODY_WIDTH 25
-#define HUMAN_BODY_HEIGHT 45
-#define HUMAN_HEAD_WIDTH 17
-#define HUMAN_HEAD_HEIGHT 17
-#define ELF_BODY_WIDTH 25
-#define ELF_BODY_HEIGHT 45
-#define ELF_HEAD_WIDTH 17
-#define ELF_HEAD_HEIGHT 17
-#define DWARF_BODY_WIDTH 25
-#define DWARF_BODY_HEIGHT 45
-#define DWARF_HEAD_WIDTH 17
-#define DWARF_HEAD_HEIGHT 17
-#define GNOME_BODY_WIDTH 25
-#define GNOME_BODY_HEIGHT 45
-#define GNOME_HEAD_WIDTH 17
-#define GNOME_HEAD_HEIGHT 17*/
+#define PLAYER_BODY_WIDTH 25
+#define PLAYER_BODY_HEIGHT 45
+#define PLAYER_HEAD_WIDTH 17
+#define PLAYER_HEAD_HEIGHT 17
 
 /* CANTIDAD DE CUADROS POR ANIMACIÓN */
 #define BODY_ANIMATION_FRAMES 5
@@ -65,7 +53,6 @@ class Player : public Entity {
         uint16_t bodyFrameY;
         uint16_t headFrameX;
         bool dead;
-        bool killed;
         FilteredImage bodyImage;
         FilteredImage headImage;
         std::vector <SDL_Rect> bodyClips;

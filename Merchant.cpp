@@ -2,8 +2,7 @@
 #include "SpriteClipCreator.h"
 
 Merchant::Merchant(SDL_Renderer *renderer, uint32_t anID, uint16_t posX,
-                   uint16_t posY, View aView) : NPC(renderer, anID, posX, posY,
-                                                    aView) {
+                   uint16_t posY) : NPC(renderer, anID, posX, posY) {
     image.loadFromFile(MERCHANT_PATH);
     height = MERCHANT_HEIGHT;
     width = MERCHANT_WIDTH;

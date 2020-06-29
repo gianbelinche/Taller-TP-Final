@@ -9,6 +9,7 @@ class ModelController : public Thread {
     private:
         EntityManager &entityManager;
         MessageQueue &msgQueue;
+        void handle(std::vector<uint32_t> &event);
         
     public:
         ModelController(EntityManager &anEntityManager, MessageQueue &aMsgQueue);
