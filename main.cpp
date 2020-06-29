@@ -15,7 +15,7 @@ int main(){
     }
     //persistor.persistPlayer("persistencia",data,2);
     //persistor.persistPlayer("persistencia",data,335);
-    std::vector<uint32_t> recv_data = persistor.obtainPlayerData("persistencia",335);
+    std::vector<uint32_t> recv_data = persistor.obtainPlayerData("persistencia",1);
     
     for (int i = 0; i < 35 ;i++){
         std::cout << recv_data[i] << std::endl;
@@ -24,6 +24,9 @@ int main(){
     for (int i = 0; i < 35 ;i++){
         std::cout << recv_data[i] << std::endl;
     }
+    std::unordered_map<int,std::string> passwords = persistor.obtainPasswordMap("passwords.json");
+    persistor.persistPasswordMap("passwords.json",passwords);
+
     /*
     Configuration config;
     std::pair<std::vector<int>,std::vector<float>> data = config.parse("config.txt",5,4);
