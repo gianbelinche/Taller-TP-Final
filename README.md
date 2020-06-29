@@ -41,7 +41,7 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
        `{01, 12345, 6789}` -> `Click` de entidad `12345` a entidad `6789`
 
-    - **Tipos de entidad**: Player, NPC / Mob, Drop (o Item)
+    - **Tipos de entidad**: Player, NPC o Mob
 
 2. **Click en inventario** (02):
 
@@ -113,7 +113,7 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
     - **Servidor a Cliente**:
 
-       `02 + ID + raza + posX + posY + estado`
+       `02 + ID + raza + posX + posY + estado + armadura + arma + escudo` (lo equipado)
 
        Ejemplo:
 
@@ -128,6 +128,8 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
     - **Estado**: 
       - 00 -> Vivo
       - 01 -> Muerto <- Muerto sería en modo fantasma
+
+    - **Armadura/Arma/Escudo**: COMPLETAR
 
 3. **Spawn de un drop** (03):
 
