@@ -2,22 +2,24 @@
 #define __MODEL_CONTROLLER_H__
 
 #include "Thread.h"
-#include "MessageQueue.h"
+#include "ProtMsgQueue.h"
 #include "EntityManager.h"
+#include <atomic>
 
-class ModelController : public Thread {
+class ModelController {
     private:
         EntityManager &entityManager;
-        MessageQueue &msgQueue;
+        ProtMsgQueue &msgQueue;
         void handle(std::vector<uint32_t> &event);
         
     public:
-        ModelController(EntityManager &anEntityManager, MessageQueue &aMsgQueue);
+        ModelController(EntityManager &anEntityManager, ProtMsgQueue &aMsgQueue);
         ~ModelController();
 
         ModelController(const ModelController& copy) = delete;
         
-        void run();
+        void closeQueue();
+        void run(std::atomic<bool> &closed);
 };
 
 #endif

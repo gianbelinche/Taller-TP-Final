@@ -6,6 +6,7 @@
 #include "ModelController.h"
 #include "EventManager.h"
 #include "Renderer.h"
+#include "ClientConnector.h"
 
 class ClientController {
     private:
@@ -14,11 +15,13 @@ class ClientController {
         ModelController &modelController;
         EventManager &eventManager;
         Renderer &renderer;
+        ClientConnector &clientConnector;
 
     public:
         ClientController(Receiver &aReceiver, Sender &aSender, 
                         ModelController &aModelController, 
-                        EventManager &anEventManager, Renderer &aRenderer);
+                        EventManager &anEventManager, Renderer &aRenderer,
+                        ClientConnector &aClientConnector);
         ~ClientController();
 
         void run();

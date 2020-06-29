@@ -7,7 +7,7 @@
 #define MOVE_CHAR 0
 
 EventManager::EventManager(EntityManager &anEntityManager, uint32_t aPlayerID, 
-                           MessageQueue &aMsgQueue, Camera &aCamera, 
+                           BlockingMsgQueue &aMsgQueue, Camera &aCamera, 
                            ClientProtocol &aClProtocol) : 
                                                 entityManager(anEntityManager),
                                                 playerID(aPlayerID), 
@@ -24,7 +24,15 @@ void EventManager::run() {
         }
         throw SDLError("Error en WaitEvent.");
     } catch(const QuitException &e) {
+        msgQueue.close();
+    } catch (std::exception &e) {
+        std::cerr << "EventManager: ";
         std::cerr << e.what() << '\n';
+        msgQueue.close();
+    } catch (...) {
+        std::cerr << "EventManager: ";
+        std::cerr << "Error EventManager: unknown." << '\n';
+        msgQueue.close();
     }
 }
 
@@ -36,7 +44,7 @@ void EventManager::handle(SDL_Event &event) {
     // ver si tiene que ser bloqueante o no
     switch (event.type) {
         case SDL_QUIT:
-            throw QuitException("Salida del programa.\n");
+            throw QuitException("Salida del programa\n");
             break;
 
         case SDL_KEYDOWN:

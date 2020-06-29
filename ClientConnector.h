@@ -8,7 +8,8 @@ class ClientConnector;
 #include "MainMap.h"
 #include "Sender.h"
 #include "Receiver.h"
-#include "MessageQueue.h"
+#include "BlockingMsgQueue.h"
+#include "ProtMsgQueue.h"
 #include <vector>
 
 class ClientConnector {
@@ -25,10 +26,12 @@ class ClientConnector {
         ClientConnector(ClientConnector&& other);
         ClientConnector& operator=(ClientConnector&& other);
 
+        void closeSocket();
+
         Player getPlayer(SDL_Renderer *renderer);
         MainMap getMainMap(SDL_Renderer *renderer);
-        Sender getSender(MessageQueue &queue);
-        Receiver getReceiver(MessageQueue &queue);
+        Sender getSender(BlockingMsgQueue &queue);
+        Receiver getReceiver(ProtMsgQueue &queue);
 
         std::vector<char> receive(uint32_t len);
         void send(std::vector<char> msg, uint32_t len);

@@ -1,5 +1,4 @@
 #include "ModelController.h"
-#include "EmptyException.h"
 #include <exception>
 #include <iostream>
 
@@ -10,30 +9,25 @@
 #define DESTROY_ENTITY 4
 
 ModelController::ModelController(EntityManager &anEntityManager, 
-                                 MessageQueue &aMsgQueue) : 
+                                 ProtMsgQueue &aMsgQueue) : 
                                         entityManager(anEntityManager),
                                         msgQueue(aMsgQueue) {}
 
 ModelController::~ModelController() {}
 
-void ModelController::run() {
-    try
-    {
-        while (true) {
-            std::vector<uint32_t> event = msgQueue.pop();
-            this->handle(event);
-        }
-    } catch(const EmptyException& e) {
-        // Se cerró correctamente
-    } catch(const std::exception& e) {
-        // Se cerró inesperadamente y cierro cola para avisar a Receiver
-        std::cerr << e.what() << '\n';
-        msgQueue.close();
-    } catch(...) {
-        // Se cerró inesperadamente y cierro cola para avisar a Receiver
-        std::cerr << "Error ModelController: unkown" << '\n';
-        msgQueue.close();
+void ModelController::run(std::atomic<bool> &closed) {
+    while (!msgQueue.isEmpty()) {
+        std::vector<uint32_t> event = msgQueue.pop();
+        this->handle(event);
     }
+
+    if (msgQueue.isClosed()) {
+        closed = true;
+    }
+}
+
+void ModelController::closeQueue() {
+    msgQueue.close();
 }
 
 void ModelController::handle(std::vector<uint32_t> &event) {

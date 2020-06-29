@@ -1,11 +1,12 @@
 #include "Sender.h"
-#include "EmptyException.h"
+#include "QueueClosedException.h"
 #include <exception>
 #include <iostream>
 #include <sstream>
 #include <msgpack.hpp>
+#include <SDL2/SDL.h>
 
-Sender::Sender(ClientConnector *aClConnector, MessageQueue *aQueue) : 
+Sender::Sender(ClientConnector *aClConnector, BlockingMsgQueue *aQueue) : 
                                                     clConnector(aClConnector), 
                                                     queue(aQueue) {
 }
@@ -63,11 +64,22 @@ void Sender::run() {
             //enviar paquete
             clConnector->send(msg, msg.size());
         }
-    } catch(const EmptyException &e) {
+    } catch(const QueueClosedException &e) {
+        SDL_Event sdlevent;
+        sdlevent.type = SDL_QUIT;
+        SDL_PushEvent(&sdlevent);
     } catch(const std::exception& e) {
+        std::cerr << "Sender: ";
         std::cerr << e.what() << '\n';
+        SDL_Event sdlevent;
+        sdlevent.type = SDL_QUIT;
+        SDL_PushEvent(&sdlevent);
     } catch(...) {
+        std::cerr << "Sender: ";
         std::cerr << "Error Sender: unknown" << '\n';
+        SDL_Event sdlevent;
+        sdlevent.type = SDL_QUIT;
+        SDL_PushEvent(&sdlevent);
     }
 
 }

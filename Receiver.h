@@ -3,17 +3,17 @@
 
 class Receiver;
 
-#include "MessageQueue.h"
+#include "ProtMsgQueue.h"
 #include "ClientConnector.h"
 #include "Thread.h"
 
 class Receiver : public Thread {
     private:
         ClientConnector *clConnector;
-        MessageQueue *queue;
+        ProtMsgQueue *queue;
 
     public:
-        Receiver(ClientConnector *aClConnector, MessageQueue *aQueue);
+        Receiver(ClientConnector *aClConnector, ProtMsgQueue *aQueue);
         ~Receiver();
 
         Receiver(const Receiver &copy) = delete;

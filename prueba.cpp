@@ -331,6 +331,8 @@ void enviarprueba(Socket &l) {
         msgLenEnt[i] = lenBuffEnt[i];
     }
 
+    getc(stdin);
+
     //enviar largo
     l.send(&msgLenEnt[0], 4);
     //enviar paquete

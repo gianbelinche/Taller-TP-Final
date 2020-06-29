@@ -4,16 +4,16 @@
 class Sender;
 
 #include "ClientConnector.h"
-#include "MessageQueue.h"
+#include "BlockingMsgQueue.h"
 #include "Thread.h"
 
 class Sender : public Thread {
     private:
         ClientConnector *clConnector;
-        MessageQueue *queue;
+        BlockingMsgQueue *queue;
 
     public:
-        Sender(ClientConnector *aClConnector, MessageQueue *aQueue);
+        Sender(ClientConnector *aClConnector, BlockingMsgQueue *aQueue);
         ~Sender();
 
         Sender(const Sender &copy) = delete;

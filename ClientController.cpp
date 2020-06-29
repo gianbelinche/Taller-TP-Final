@@ -3,30 +3,25 @@
 ClientController::ClientController(Receiver &aReceiver, Sender &aSender, 
                                    ModelController &aModelController, 
                                    EventManager &anEventManager, 
-                                   Renderer &aRenderer) : 
+                                   Renderer &aRenderer, 
+                                   ClientConnector &aClientConnector) : 
                                         receiver(aReceiver), sender(aSender),
                                         modelController(aModelController),
                                         eventManager(anEventManager),
-                                        renderer(aRenderer) {}
+                                        renderer(aRenderer),
+                                        clientConnector(aClientConnector) {}
 
 ClientController::~ClientController() {
     receiver.join();
     sender.join();
-    modelController.join();
     renderer.join();
 }
-
-/*
-CHEQUEAR EL TEMA DE VER QUE ESTE TODO CERRADO ANTES DE LLEGAR AL
-JOIN PARA QUE NO SE QUEDE TRABADO.
-VER COMO HACER PARA CERRAR EVENTMANAGER EN CASO DE FALLA.
-VER COMO CERRAR CADA UNO EN CASO DE FALLA.
-*/
 
 void ClientController::run() {
     receiver.start();
     sender.start();
-    modelController.start();
     renderer.start();
     eventManager.run();
+    modelController.closeQueue();
+    clientConnector.closeSocket();
 }

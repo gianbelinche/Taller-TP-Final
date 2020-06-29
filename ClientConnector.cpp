@@ -1,4 +1,5 @@
 #include "ClientConnector.h"
+#include "SocketException.h"
 #include <arpa/inet.h>
 
 #include <map>
@@ -22,6 +23,10 @@ ClientConnector& ClientConnector::operator=(ClientConnector&& other) {
 
     socket = std::move(other.socket);
     return *this;
+}
+
+void ClientConnector::closeSocket() {
+    socket.shutdown_close();
 }
 
 uint32_t ClientConnector::receiveLen() {
@@ -89,19 +94,21 @@ MainMap ClientConnector::getMainMap(SDL_Renderer *renderer) {
     return std::move(mainMap);
 }
 
-Sender ClientConnector::getSender(MessageQueue &queue) {
+Sender ClientConnector::getSender(BlockingMsgQueue &queue) {
     Sender sender(this, &queue);
     return std::move(sender);
 }
 
-Receiver ClientConnector::getReceiver(MessageQueue &queue) {
+Receiver ClientConnector::getReceiver(ProtMsgQueue &queue) {
     Receiver receiver(this, &queue);
     return std::move(receiver);
 }
 
 std::vector<char> ClientConnector::receive(uint32_t len) {
     std::vector<char> msg(len);
-    socket.recv(&msg[0], len);
+    if (socket.recv(&msg[0], len) < len) {
+        throw SocketException("Error al recibir: Se cerró socket.");
+    }
     return std::move(msg);
 }
 

@@ -75,7 +75,8 @@ add_library(pruebasss
   ClientController.cpp
   ClientProtocol.cpp
   jsoncpp.cpp
-  MessageQueue.cpp
+  BlockingMsgQueue.cpp
+  ProtMsgQueue.cpp
   ClientConnector.cpp
   Socket.cpp
   Banker.cpp
@@ -103,7 +104,7 @@ add_library(pruebasss
   GraphicInventory.cpp
   Layout.cpp
   MiniChat.cpp
-  EmptyException.cpp
+  QueueClosedException.cpp
   JsonError.cpp
   OSError.cpp
   QuitException.cpp

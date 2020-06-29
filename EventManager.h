@@ -3,14 +3,14 @@
 
 #include <SDL2/SDL.h>
 #include "EntityManager.h"
-#include "MessageQueue.h"
+#include "BlockingMsgQueue.h"
 #include "ClientProtocol.h"
 
 class EventManager {
     private:
         bool writing;
         uint32_t playerID;
-        MessageQueue &msgQueue;
+        BlockingMsgQueue &msgQueue;
         EntityManager &entityManager;
         SDL_Event event;
         Camera &camera;
@@ -22,7 +22,7 @@ class EventManager {
         
     public:
         EventManager(EntityManager &anEntityManager, uint32_t playerID, 
-                     MessageQueue &msgQueue, Camera &aCamera, 
+                     BlockingMsgQueue &msgQueue, Camera &aCamera, 
                      ClientProtocol &aClProtocol);
         ~EventManager();
 

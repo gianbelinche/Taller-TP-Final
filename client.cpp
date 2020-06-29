@@ -1,6 +1,7 @@
 #include "ClientConnector.h"
 #include "MainWindow.h"
-#include "MessageQueue.h"
+#include "BlockingMsgQueue.h"
+#include "ProtMsgQueue.h"
 #include "MainMap.h"
 #include "Sender.h"
 #include "Receiver.h"
@@ -25,8 +26,8 @@ int main(int argc, char* argv[]) {
         ClientConnector clientConnector(argv[1], argv[2]); //CAMBIAR, PASAR DE OTRA FORMA EL IP Y SERVICE
         MainWindow mainWindow;
         SDL_Renderer *mainRenderer = mainWindow.getRenderer();
-        MessageQueue senderQueue;
-        MessageQueue receiverQueue;
+        BlockingMsgQueue senderQueue;
+        ProtMsgQueue receiverQueue;
         ClientProtocol clientProtocol;
 
         Player player = clientConnector.getPlayer(mainRenderer);
@@ -48,10 +49,11 @@ int main(int argc, char* argv[]) {
                                   camera, clientProtocol);
         ModelController modelController(entityManager, receiverQueue);
         Renderer renderer(camera, player, mainMap, entityManager, 
-                          mainRenderer, layout, gInventory, miniChat, expBar);
+                          mainRenderer, layout, gInventory, miniChat, expBar,
+                          modelController);
 
         ClientController clientController(receiver, sender, modelController,
-                                          eventManager, renderer);
+                                          eventManager, renderer, clientConnector);
         clientController.run();
     } catch (const std::exception& e) {
         std::cerr << e.what() << '\n';

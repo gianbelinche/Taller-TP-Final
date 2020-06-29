@@ -1,5 +1,5 @@
-#ifndef __MESSAGE_QUEUE_H__
-#define __MESSAGE_QUEUE_H__
+#ifndef __BLOCKING_MESSAGE_QUEUE_H__
+#define __BLOCKING_MESSAGE_QUEUE_H__
 
 #include <vector>
 #include <queue>
@@ -10,7 +10,7 @@
 /*
  * Cola bloqueante de elementos tipo std::vector<uint32_t>
 */
-class MessageQueue {
+class BlockingMsgQueue {
     private:
         std::queue<std::vector<uint32_t>> queue;
         std::mutex mux;
@@ -18,12 +18,12 @@ class MessageQueue {
         bool isClosed;
         
     public:
-        MessageQueue();
-        ~MessageQueue();
+        BlockingMsgQueue();
+        ~BlockingMsgQueue();
 
-        MessageQueue(const MessageQueue &copy) = delete;
-        MessageQueue(MessageQueue&& other);
-        MessageQueue& operator=(MessageQueue&& other);
+        BlockingMsgQueue(const BlockingMsgQueue &copy) = delete;
+        BlockingMsgQueue(BlockingMsgQueue&& other);
+        BlockingMsgQueue& operator=(BlockingMsgQueue&& other);
 
         void push(std::vector<uint32_t> &msg);
         std::vector<uint32_t> pop();

@@ -163,6 +163,33 @@ Banker.cpp.s:
 	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/Banker.cpp.s
 .PHONY : Banker.cpp.s
 
+BlockingMsgQueue.o: BlockingMsgQueue.cpp.o
+
+.PHONY : BlockingMsgQueue.o
+
+# target to build an object file
+BlockingMsgQueue.cpp.o:
+	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/BlockingMsgQueue.cpp.o
+.PHONY : BlockingMsgQueue.cpp.o
+
+BlockingMsgQueue.i: BlockingMsgQueue.cpp.i
+
+.PHONY : BlockingMsgQueue.i
+
+# target to preprocess a source file
+BlockingMsgQueue.cpp.i:
+	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/BlockingMsgQueue.cpp.i
+.PHONY : BlockingMsgQueue.cpp.i
+
+BlockingMsgQueue.s: BlockingMsgQueue.cpp.s
+
+.PHONY : BlockingMsgQueue.s
+
+# target to generate assembly for a file
+BlockingMsgQueue.cpp.s:
+	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/BlockingMsgQueue.cpp.s
+.PHONY : BlockingMsgQueue.cpp.s
+
 Camera.o: Camera.cpp.o
 
 .PHONY : Camera.o
@@ -270,33 +297,6 @@ ClientProtocol.s: ClientProtocol.cpp.s
 ClientProtocol.cpp.s:
 	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/ClientProtocol.cpp.s
 .PHONY : ClientProtocol.cpp.s
-
-EmptyException.o: EmptyException.cpp.o
-
-.PHONY : EmptyException.o
-
-# target to build an object file
-EmptyException.cpp.o:
-	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/EmptyException.cpp.o
-.PHONY : EmptyException.cpp.o
-
-EmptyException.i: EmptyException.cpp.i
-
-.PHONY : EmptyException.i
-
-# target to preprocess a source file
-EmptyException.cpp.i:
-	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/EmptyException.cpp.i
-.PHONY : EmptyException.cpp.i
-
-EmptyException.s: EmptyException.cpp.s
-
-.PHONY : EmptyException.s
-
-# target to generate assembly for a file
-EmptyException.cpp.s:
-	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/EmptyException.cpp.s
-.PHONY : EmptyException.cpp.s
 
 Entity.o: Entity.cpp.o
 
@@ -730,33 +730,6 @@ Merchant.cpp.s:
 	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/Merchant.cpp.s
 .PHONY : Merchant.cpp.s
 
-MessageQueue.o: MessageQueue.cpp.o
-
-.PHONY : MessageQueue.o
-
-# target to build an object file
-MessageQueue.cpp.o:
-	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/MessageQueue.cpp.o
-.PHONY : MessageQueue.cpp.o
-
-MessageQueue.i: MessageQueue.cpp.i
-
-.PHONY : MessageQueue.i
-
-# target to preprocess a source file
-MessageQueue.cpp.i:
-	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/MessageQueue.cpp.i
-.PHONY : MessageQueue.cpp.i
-
-MessageQueue.s: MessageQueue.cpp.s
-
-.PHONY : MessageQueue.s
-
-# target to generate assembly for a file
-MessageQueue.cpp.s:
-	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/MessageQueue.cpp.s
-.PHONY : MessageQueue.cpp.s
-
 MiniChat.o: MiniChat.cpp.o
 
 .PHONY : MiniChat.o
@@ -891,6 +864,60 @@ Player.s: Player.cpp.s
 Player.cpp.s:
 	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/Player.cpp.s
 .PHONY : Player.cpp.s
+
+ProtMsgQueue.o: ProtMsgQueue.cpp.o
+
+.PHONY : ProtMsgQueue.o
+
+# target to build an object file
+ProtMsgQueue.cpp.o:
+	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/ProtMsgQueue.cpp.o
+.PHONY : ProtMsgQueue.cpp.o
+
+ProtMsgQueue.i: ProtMsgQueue.cpp.i
+
+.PHONY : ProtMsgQueue.i
+
+# target to preprocess a source file
+ProtMsgQueue.cpp.i:
+	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/ProtMsgQueue.cpp.i
+.PHONY : ProtMsgQueue.cpp.i
+
+ProtMsgQueue.s: ProtMsgQueue.cpp.s
+
+.PHONY : ProtMsgQueue.s
+
+# target to generate assembly for a file
+ProtMsgQueue.cpp.s:
+	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/ProtMsgQueue.cpp.s
+.PHONY : ProtMsgQueue.cpp.s
+
+QueueClosedException.o: QueueClosedException.cpp.o
+
+.PHONY : QueueClosedException.o
+
+# target to build an object file
+QueueClosedException.cpp.o:
+	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/QueueClosedException.cpp.o
+.PHONY : QueueClosedException.cpp.o
+
+QueueClosedException.i: QueueClosedException.cpp.i
+
+.PHONY : QueueClosedException.i
+
+# target to preprocess a source file
+QueueClosedException.cpp.i:
+	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/QueueClosedException.cpp.i
+.PHONY : QueueClosedException.cpp.i
+
+QueueClosedException.s: QueueClosedException.cpp.s
+
+.PHONY : QueueClosedException.s
+
+# target to generate assembly for a file
+QueueClosedException.cpp.s:
+	$(MAKE) -f CMakeFiles/pruebasss.dir/build.make CMakeFiles/pruebasss.dir/QueueClosedException.cpp.s
+.PHONY : QueueClosedException.cpp.s
 
 QuitException.o: QuitException.cpp.o
 
@@ -1337,6 +1364,9 @@ help:
 	@echo "... Banker.o"
 	@echo "... Banker.i"
 	@echo "... Banker.s"
+	@echo "... BlockingMsgQueue.o"
+	@echo "... BlockingMsgQueue.i"
+	@echo "... BlockingMsgQueue.s"
 	@echo "... Camera.o"
 	@echo "... Camera.i"
 	@echo "... Camera.s"
@@ -1349,9 +1379,6 @@ help:
 	@echo "... ClientProtocol.o"
 	@echo "... ClientProtocol.i"
 	@echo "... ClientProtocol.s"
-	@echo "... EmptyException.o"
-	@echo "... EmptyException.i"
-	@echo "... EmptyException.s"
 	@echo "... Entity.o"
 	@echo "... Entity.i"
 	@echo "... Entity.s"
@@ -1400,9 +1427,6 @@ help:
 	@echo "... Merchant.o"
 	@echo "... Merchant.i"
 	@echo "... Merchant.s"
-	@echo "... MessageQueue.o"
-	@echo "... MessageQueue.i"
-	@echo "... MessageQueue.s"
 	@echo "... MiniChat.o"
 	@echo "... MiniChat.i"
 	@echo "... MiniChat.s"
@@ -1418,6 +1442,12 @@ help:
 	@echo "... Player.o"
 	@echo "... Player.i"
 	@echo "... Player.s"
+	@echo "... ProtMsgQueue.o"
+	@echo "... ProtMsgQueue.i"
+	@echo "... ProtMsgQueue.s"
+	@echo "... QueueClosedException.o"
+	@echo "... QueueClosedException.i"
+	@echo "... QueueClosedException.s"
 	@echo "... QuitException.o"
 	@echo "... QuitException.i"
 	@echo "... QuitException.s"

@@ -5,7 +5,7 @@
 #include <arpa/inet.h>
 #include <msgpack.hpp>
 
-Receiver::Receiver(ClientConnector *aClConnector, MessageQueue *aQueue) : 
+Receiver::Receiver(ClientConnector *aClConnector, ProtMsgQueue *aQueue) : 
                                                     clConnector(aClConnector), 
                                                     queue(aQueue) {}
 
@@ -56,15 +56,26 @@ void Receiver::run() {
             queue->push(event);
         }
     } catch(const SocketException &e) {
-        // Se cerro correctamente, cierro cola
+        // Se cerro correctamente
         queue->close();
+        SDL_Event sdlevent;
+        sdlevent.type = SDL_QUIT;
+        SDL_PushEvent(&sdlevent);
     } catch(const std::exception& e) {
         // Se cerro inesperadamente
+        std::cerr << "Receiver: " << '\n';
         std::cerr << e.what() << '\n';
         queue->close();
+        SDL_Event sdlevent;
+        sdlevent.type = SDL_QUIT;
+        SDL_PushEvent(&sdlevent);
     } catch(...) {
         // Se cerro inesperadamente
+        std::cerr << "Receiver: " << '\n';
         std::cerr << "Error Receiver: unknown" << '\n';
         queue->close();
+        SDL_Event sdlevent;
+        sdlevent.type = SDL_QUIT;
+        SDL_PushEvent(&sdlevent);
     }
 }

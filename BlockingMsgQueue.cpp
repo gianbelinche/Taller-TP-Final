@@ -1,26 +1,26 @@
-#include "MessageQueue.h"
-#include "EmptyException.h"
+#include "BlockingMsgQueue.h"
+#include "QueueClosedException.h"
 #include "OSError.h"
 
-MessageQueue::MessageQueue() : isClosed(false) {}
+BlockingMsgQueue::BlockingMsgQueue() : isClosed(false) {}
 
-void MessageQueue::push(std::vector<uint32_t> &msg) {
+void BlockingMsgQueue::push(std::vector<uint32_t> &msg) {
     std::unique_lock<std::mutex> lk(mux);
 
     if (this->isClosed) {
-        throw OSError("Error: se cerró inesperadamente la cola.");
+        throw OSError("Error: se cerró inesperadamente la cola."); //chequear
     }
 
     this->queue.emplace(std::move(msg));
     this->condVar.notify_all();
 }
 
-std::vector<uint32_t> MessageQueue::pop() {
+std::vector<uint32_t> BlockingMsgQueue::pop() {
     std::unique_lock<std::mutex> lk(mux);
 
     while (this->queue.empty()) {
         if (this->isClosed) {
-            throw EmptyException();
+            throw QueueClosedException();
         }
         condVar.wait(lk);
     }
@@ -30,15 +30,15 @@ std::vector<uint32_t> MessageQueue::pop() {
     return std::move(element);
 }
 
-void MessageQueue::close() {
+void BlockingMsgQueue::close() {
     std::unique_lock<std::mutex> lk(mux);
     this->isClosed = true;
     this->condVar.notify_all();
 }
 
-bool MessageQueue::isEmpty() {
+bool BlockingMsgQueue::isEmpty() {
     std::unique_lock<std::mutex> lk(mux);
     return this->queue.empty();
 }
 
-MessageQueue::~MessageQueue() {}
+BlockingMsgQueue::~BlockingMsgQueue() {}

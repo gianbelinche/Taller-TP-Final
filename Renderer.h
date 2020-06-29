@@ -2,6 +2,7 @@
 #define __RENDERER_H__
 
 #include "Thread.h"
+#include "ModelController.h"
 #include "Camera.h"
 #include "Player.h"
 #include "MainMap.h"
@@ -24,16 +25,17 @@ class Renderer : public Thread {
         GraphicInventory &inventory;
         MiniChat &chat;
         ExpBar &expbar;
+        ModelController &modelController;
 
     public:
         Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap, 
                  EntityManager &anEntityManager, SDL_Renderer *aRenderer,
                  Layout &aLayout, GraphicInventory &anInventory, 
-                 MiniChat &aChat, ExpBar &anExpbar);
+                 MiniChat &aChat, ExpBar &anExpbar,
+                 ModelController &aModelController);
         ~Renderer();
 
         void run();
-        void close();
 };
 
 #endif
