@@ -1,0 +1,24 @@
+{
+  "config": {
+    "fps": 30,
+    "framesEntreSpawns": 150
+  },
+  "elfo": {
+    "hpFactor": 1,
+    "recoveryFactor": 2,
+    "manaFactor": 3,
+    "constitution": 15,
+    "strength": 10,
+    "intelligence": 30,
+    "agility": 25
+  },
+  "enano": {
+    "hpFactor": 3,
+    "recoveryFactor": 2,
+    "manaFactor": 1,
+    "constitution": 30,
+    "strength": 25,
+    "intelligence": 15,
+    "agility": 10
+  }
+}
