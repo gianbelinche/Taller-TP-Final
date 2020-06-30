@@ -1,6 +1,8 @@
 #include "Camera.h"
 
-Camera::Camera(uint16_t posX, uint16_t posY) {
+Camera::Camera(uint16_t posX, uint16_t posY, uint16_t aPlayerHeight,
+        uint16_t aPlayerWidth) : playerHeight(aPlayerHeight), 
+                                playerWidth(aPlayerWidth) {
     this->height = SCREEN_HEIGHT;
     this->width = SCREEN_WIDTH;
     this->x = (posX + playerWidth / 2) - width / 2;
@@ -23,15 +25,21 @@ Camera::Camera(uint16_t posX, uint16_t posY) {
 Camera::~Camera() {}
 
 void Camera::refresh(uint16_t posX, uint16_t posY) {
-    if ((posX + playerWidth / 2) < width / 2) this->x = 0;
-    else this->x = (posX + playerWidth / 2) - width / 2;
+    if ((posX + playerWidth / 2) < width / 2) {
+        this->x = 0;
+    } else {
+        this->x = (posX + playerWidth / 2) - width / 3;
+    }
 
     if (this->x > LEVEL_WIDTH - this->width) {
         this->x = LEVEL_WIDTH - this->width;
     }
 
-    if ((posY + playerHeight / 2) < height / 2) this->y = 0;
-    else this->y = (posY + playerHeight / 2) - height / 2;
+    if ((posY + playerHeight / 2) < height / 2) {
+        this->y = 0;
+    } else {
+        this->y = (posY + playerHeight / 2) - height / 2;
+    }
     
     if (this->y > LEVEL_HEIGHT - this->height) {
         this->y = LEVEL_HEIGHT - this->height;

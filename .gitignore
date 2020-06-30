@@ -1,7 +1,13 @@
 prueba
 a.out
-.vscode/
-CMakeFiles
+*.a
+persistencia
+.persistencia.*
 testgian
-*cmake
+.vscode/
+.gitignore
+CMakeFiles
+*.cmake
 CMakeCache.txt
+Makefile
+build/

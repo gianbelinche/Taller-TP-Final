@@ -24,7 +24,7 @@ class NPC : public Entity {
 
     public:
         NPC(SDL_Renderer *renderer, uint32_t anID, uint16_t aPosX,
-            uint16_t aPosY, View aView);
+            uint16_t aPosY);
         ~NPC();
 
         NPC(const NPC &copy) = delete;
@@ -34,6 +34,7 @@ class NPC : public Entity {
         virtual void refreshPosition(MovementType move) override;
         virtual void render(Camera &camera) override;
         virtual bool collision(uint16_t x, uint16_t y) override;
+        virtual void kill() override;
 };
 
 #endif

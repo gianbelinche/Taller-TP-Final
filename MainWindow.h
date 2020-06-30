@@ -10,12 +10,11 @@ class MainWindow {
     private:
         SDL_Window* mainWindow;
         SDL_Renderer* mainRenderer;
-        SDL_Event eventHandler;
 
     public:
         MainWindow();
         ~MainWindow();
-        void run();
+        SDL_Renderer* getRenderer();
 };
 
 #endif

@@ -2,8 +2,7 @@
 #include "SpriteClipCreator.h"
 
 Skeleton::Skeleton(SDL_Renderer *renderer, uint32_t anID, uint16_t posX, 
-                   uint16_t posY, View aView) : NPC(renderer, anID, posX, posY,
-                                                    aView) {
+                   uint16_t posY) : NPC(renderer, anID, posX, posY) {
     image.loadFromFile(SKELETON_PATH);
     height = SKELETON_HEIGHT;
     width = SKELETON_WIDTH;

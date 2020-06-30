@@ -23,19 +23,19 @@ class EntityManager {
         uint32_t playerID;
         SDL_Renderer *renderer;
         std::map<uint32_t, Entity*> entities;
-        std::map<uint32_t, Entity*> entitiesRender;
+        std::map<uint32_t, Entity*> entitiesRender; //chequear, todavía no lo hice
         std::mutex mux;
         
     public:
         EntityManager(SDL_Renderer *aRenderer, Player &aPlayer, uint32_t aPlayerID);
         ~EntityManager();
 
-        void addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY, View aView);
+        void addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY);
         void addDrop(ItemType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY);
-        void addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX, uint16_t aPosY);
+        void addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX, uint16_t aPosY, bool dead);
         
         void destroyEntity(uint32_t ID);
-        void refreshEntities();
+        void killPlayer(uint32_t ID);
 
         void moveEntity(uint32_t ID, MovementType moveType);
         void renderEntities(Camera &camera);

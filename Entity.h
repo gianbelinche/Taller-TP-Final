@@ -17,7 +17,6 @@ class Entity {
         uint32_t ID;
         uint16_t posX;
         uint16_t posY;
-        bool destroyed;
 
     public:
         Entity(uint32_t anID, uint16_t aPosX, uint16_t aPosY);
@@ -30,9 +29,8 @@ class Entity {
         virtual void refreshPosition(MovementType move) = 0;
         virtual void render(Camera &camera) = 0;
         virtual bool collision(uint16_t x, uint16_t y) = 0;
+        virtual void kill() = 0;
 
-        bool isDestroyed();
-        void destroy();
         uint32_t getID();
 };
 

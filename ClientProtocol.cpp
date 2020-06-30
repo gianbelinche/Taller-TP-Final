@@ -1,137 +1,28 @@
 #include "ClientProtocol.h"
 
+#define MOVE 0
+#define CLICK_ENTITY 1
+#define CLICK_INVENTORY 2
+
 ClientProtocol::ClientProtocol() {}
 
 ClientProtocol::~ClientProtocol() {}
 
-MainMap ClientProtocol::createMainMap(SDL_Renderer *renderer) {
-    /* LECTURA DEL MAPA.JSON */
+void ClientProtocol::makeMsgMove(uint32_t ID, uint32_t moveType, 
+                                 std::vector<uint32_t> &msg) {
+    msg.emplace_back(MOVE);
+    msg.emplace_back(ID);
+    msg.emplace_back(moveType);
+}
 
-    std::ifstream mapFile(MAP_JSON_PATH);
-    Json::Reader mapReader;
-    Json::Value mapValues;
-    mapReader.parse(mapFile, mapValues);
+void ClientProtocol::makeMsgClickEntity(uint32_t ID, std::vector<uint32_t> &msg) {
+    msg.emplace_back(CLICK_ENTITY);
+    msg.emplace_back(ID);
+}
 
-    /*
-     * Busco el array de capas. El mapa se separa en "capas" que permiten
-     * la superposición de elementos. Nuestro mapa se divide en dos capas
-     * para poder poner edificaciones, arboles, etc.
-    */
-    const Json::Value& layers = mapValues["layers"]; // Array de capas
-
-    /*
-     * Si algo que se buscó en el .json no se encontró se setea el
-     * const Json::Value&
-     * en null.
-    */
-    if (!layers) {
-        /* Buscar cómo obtener el error que genera jsoncpp */
-        //throw JsonError("Error: no se encontró layers. JsonError: %s", jsonerror);
-    }
-
-    /*
-     * Ancho, alto y la data de cada capa.
-    */
-    const Json::Value& layer0 = layers[0]["data"];     // Array de enteros de capa 0
-    const Json::Value& width0 = layers[0]["width"];    // Ancho de la capa 0
-    const Json::Value& height0 = layers[0]["height"];  // Alto de la capa 0
-
-    if (!(layer0 && height0 && width0)) {
-        /* Buscar cómo obtener el error que genera jsoncpp */
-        //throw JsonError("Error: no se encontró data de capa 0. JsonError: %s", jsonerror);
-    }
-
-    const Json::Value& layer1 = layers[1]["data"];     // Array de enteros de capa 1
-    const Json::Value& width1 = layers[1]["width"];    // Ancho de la capa 1
-    const Json::Value& height1 = layers[1]["height"];  // Alto de la capa 1
-
-    if (!(layer1 && height1 && width1)) {
-        /* Buscar cómo obtener el error que genera jsoncpp */
-        //throw JsonError("Error: no se encontró data de capa 1. JsonError: %s", jsonerror);
-    }
-
-    const Json::Value& layer2 = layers[2]["data"];     // Array de enteros de capa 2
-    const Json::Value& width2 = layers[2]["width"];    // Ancho de la capa 2
-    const Json::Value& height2 = layers[2]["height"];  // Alto de la capa 2
-
-    if (!(layer2 && height2 && width2)) {
-        /* Buscar cómo obtener el error que genera jsoncpp */
-        //throw JsonError("Error: no se encontró data de capa 1. JsonError: %s", jsonerror);
-    }
-
-    /*
-     * Creo las matrices que tienen la data de las capas.
-     * Estas matrices se deben guardar para enviar a los clientes
-     * Además, se deben guardar los valores:
-     * height0, width0, height1 y width1 (no es necesario creo)
-    */
-
-    std::vector<std::vector<uint32_t>> matrixLayer0;
-    std::vector<std::vector<uint32_t>> matrixLayer1;
-    std::vector<std::vector<uint32_t>> matrixLayer2;
-    uint32_t cont = 0;
-
-    /* Matriz de capa 0 */
-
-    for (Json::Value::UInt i = 0; i < height0.asUInt(); i++) {
-        std::vector<uint32_t> row;
-        for (Json::Value::UInt j = 0; j < width0.asUInt(); j++) {
-            row.emplace_back(layer0[cont].asUInt());
-            cont++;
-        }
-        matrixLayer0.emplace_back(row);
-    }
-
-    /* Matriz de capa 1 */
-
-    cont = 0;
-    for (Json::Value::UInt i = 0; i < height1.asUInt(); i++) {
-        std::vector<uint32_t> row;
-        for (Json::Value::UInt j = 0; j < width1.asUInt(); j++) {
-            row.emplace_back(layer1[cont].asUInt());
-            cont++;
-        }
-        matrixLayer1.emplace_back(row);
-    }
-
-    /* Matriz de capa de bloqueo */
-
-    cont = 0;
-    for (Json::Value::UInt i = 0; i < height2.asUInt(); i++) {
-        std::vector<uint32_t> row;
-        for (Json::Value::UInt j = 0; j < width2.asUInt(); j++) {
-            row.emplace_back(layer2[cont].asUInt());
-            cont++;
-        }
-        matrixLayer2.emplace_back(row);
-    }
-
-    /* 
-     * Creo el hash que contiene como: 
-     *  -clave: al numero asignado al tileset.
-     *  -valor: un vector de valores importantes en forma de strings.
-    */
-
-    const Json::Value& tilesets = mapValues["tilesets"];  // Array de tilesets
-
-    /* Este hash se debe guardar para enviar a los clientes */
-    std::map<uint32_t, std::vector<std::string>> tiles;
-    
-    for (Json::Value::ArrayIndex i = 0; i < tilesets.size(); i++) {
-        std::ifstream ifsl(tilesets[i]["source"].asString());
-        Json::Value vall;
-        mapReader.parse(ifsl, vall);
-
-        uint32_t key = tilesets[i]["firstgid"].asUInt();
-        std::vector<std::string> v;
-
-        v.emplace_back(vall["image"].asString());
-        v.emplace_back(vall["tileheight"].asString());
-        v.emplace_back(vall["tilewidth"].asString());
-        
-        tiles[key] = v;
-    }
-
-    MainMap mainMap(tiles, renderer, matrixLayer0, matrixLayer1);
-    return std::move(mainMap);
+void ClientProtocol::makeMsgClickInventory(uint32_t ID, uint32_t slot, 
+                                           std::vector<uint32_t> &msg) {
+    msg.emplace_back(CLICK_INVENTORY);
+    msg.emplace_back(ID);
+    msg.emplace_back(slot);
 }

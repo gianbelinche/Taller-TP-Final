@@ -1,23 +1,19 @@
 #ifndef __CLIENT_PROTOCOL_H__
 #define __CLIENT_PROTOCOL_H__
 
-#include "MainMap.h"
-#include "json/json.h"
-#include <fstream>
-#include <map>
-
-/* RUTA AL ARCHIVO MAP.JSON */
-#define MAP_JSON_PATH "map.json"
+#include <vector>
+#include <stdint.h>
 
 class ClientProtocol {
-    private:
-        
     public:
         ClientProtocol();
         ~ClientProtocol();
-
-        //vector<uint32_t> makeMsg(); //cambiar
-        MainMap createMainMap(SDL_Renderer *renderer);
+        void makeMsgMove(uint32_t ID, uint32_t moveType, 
+        
+                         std::vector<uint32_t> &msg);
+        void makeMsgClickEntity(uint32_t ID, std::vector<uint32_t> &msg);
+        void makeMsgClickInventory(uint32_t ID, uint32_t slot, 
+                                   std::vector<uint32_t> &msg);
 };
 
 #endif

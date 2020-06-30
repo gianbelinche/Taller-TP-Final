@@ -1,11 +1,10 @@
+#include <unistd.h>
+
 #include "MainWindow.h"
 #include "SDLError.h"
-
 #include "MainMap.h"
 #include "EntityManager.h"
-#include "Camera.h"
-
-#include "ClientProtocol.h"
+#include <iostream>
 
 /* NOMBRE DE LA PANTALLA */
 #define WINDOW_NAME "Main"
@@ -26,7 +25,7 @@ MainWindow::MainWindow() {
 
     //Set texture filtering to linear
     if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
-        // printf( "Warning: Linear texture filtering not enabled!" );
+        std::cerr << "Warning: Linear texture filtering not enabled!";
     }
 
     this->mainWindow = SDL_CreateWindow(WINDOW_NAME, SDL_WINDOWPOS_UNDEFINED, 
@@ -65,37 +64,6 @@ MainWindow::~MainWindow() {
     SDL_Quit();
 }
 
-#include <iostream>
-
-void MainWindow::run() {
-    ClientProtocol cp;
-    MainMap mainMap = cp.createMainMap(mainRenderer);
-    Player player(mainRenderer, ELF, 1010, 5000, 2500);
-    EntityManager entMan(mainRenderer, player, 1010);
-    Camera camera(player.getPosX(), player.getPosY());
-
-    bool quit = false;
-
-    //Uint32 time = SDL_GetTicks();
-
-    while (!quit) {
-        //time = SDL_GetTicks();
-        while (SDL_PollEvent(&eventHandler) != 0) { //el que se encargue de esto puede usar waitevent en vez de pollevent
-            if (eventHandler.type == SDL_QUIT) {
-                quit = true;
-            }
-            entMan.moveEntity(1010, MOVE_DOWN);
-        }
-
-        camera.refresh(player.getPosX(), player.getPosY());
-        
-        SDL_RenderClear(mainRenderer);
-
-        mainMap.renderTerrain(camera);
-        entMan.renderEntities(camera);
-        mainMap.renderStructures(camera);
-
-        SDL_RenderPresent(mainRenderer);
-        //std::cout << 1000 / (SDL_GetTicks() - time) << '\n';
-    }
+SDL_Renderer* MainWindow::getRenderer() {
+    return mainRenderer;
 }

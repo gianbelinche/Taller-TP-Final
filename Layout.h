@@ -5,6 +5,9 @@
 #include "Image.h"
 #include "Text.h"
 #include "GraphicInventory.h"
+#include "ExpBar.h"
+#include "MiniChat.h"
+#include "Camera.h"
 
 class Layout {
 private:
@@ -14,19 +17,16 @@ private:
     Text life;
     Text mana;
     Text level;
-    TTF_Font* gFont;    
-    GraphicInventory inventory;
+    TTF_Font* gFont;
 public:
     Layout(SDL_Renderer* mainRenderer);
     void changeGold(int gold);
     void changeLife(int life, int max_life);
     void changeMana(int mana, int max_mana);
     void changeLevel(int level);
-    void addItem(std::string item);
-    void removeItem(std::string item);
-    void render(int screen_width,int screen_height);
+    bool isClicked(int x,int screen_width);
+    void render(Camera& camera);
     ~Layout();
-
 };
 
 #endif
