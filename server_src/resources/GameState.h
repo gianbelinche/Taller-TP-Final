@@ -18,7 +18,7 @@ class GameState {
   int framesPerSecond;
 
  public:
-  GameState(std::vector<std::vector<bool>> collisions, int fps);
+  GameState(std::vector<std::vector<bool>>& collisions, int fps);
 
   ~GameState();
 

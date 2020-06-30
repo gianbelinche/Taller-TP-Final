@@ -5,7 +5,7 @@
 
 #define FRAMES_PER_SECOND 30
 
-GameState::GameState(std::vector<std::vector<bool>> collisions, int fps)
+GameState::GameState(std::vector<std::vector<bool>>& collisions, int fps)
     : colisionMap(collisions), framesPerSecond(fps) {}
 
 GameState::~GameState() {}
