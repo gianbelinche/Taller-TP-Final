@@ -4,7 +4,7 @@
     "framesEntreSpawns": 150
   },
   "elfo": {
-    "hpFactor": 1,
+    "hpFactor": 1.2,
     "recoveryFactor": 2,
     "manaFactor": 3,
     "constitution": 15,
@@ -14,7 +14,7 @@
   },
   "enano": {
     "hpFactor": 3,
-    "recoveryFactor": 2,
+    "recoveryFactor": 2.1,
     "manaFactor": 1,
     "constitution": 30,
     "strength": 25,
