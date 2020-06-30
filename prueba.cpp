@@ -11,16 +11,12 @@
 void receive(Socket &l) {
     while (true) {
         //recibe largo
-
-
         std::vector<char> lenBuff;
         l.recv(&lenBuff[0], 4);
         uint32_t len = (lenBuff[3] << 24) + (lenBuff[2] << 16) +
                         (lenBuff[1] << 8) + lenBuff[0];
 
         len = ntohl(len);
-
-
 
         //recibe paquete
         std::vector<char> msgBuff;
@@ -31,11 +27,11 @@ void receive(Socket &l) {
         std::vector<uint32_t> event;
         msgpack::object_handle oh = msgpack::unpack(ss.data(), ss.size());
         oh.get().convert(event);
-
+        std::cout << "{";
         for (auto &m : event) {
-    
+            std::cout << m << ", ";
         }
-
+        std::cout << "}" << '\n';
     }
 }
 
@@ -331,8 +327,6 @@ void enviarprueba(Socket &l) {
         msgLenEnt[i] = lenBuffEnt[i];
     }
 
-    getc(stdin);
-
     //enviar largo
     l.send(&msgLenEnt[0], 4);
     //enviar paquete
@@ -348,6 +342,7 @@ int main(int argc, char const *argv[])
 
     //std::thread recibir(receive, l);
     enviarprueba(l);
+    receive(l);
     getc(stdin);
 
     //recibir.join();

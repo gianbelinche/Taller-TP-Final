@@ -34,7 +34,7 @@ class ClientConnector {
         Receiver getReceiver(ProtMsgQueue &queue);
 
         std::vector<char> receive(uint32_t len);
-        void send(std::vector<char> msg, uint32_t len);
+        void send(std::vector<char> &msg, uint32_t len);
 };
 
 #endif

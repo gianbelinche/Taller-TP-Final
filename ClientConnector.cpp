@@ -112,6 +112,6 @@ std::vector<char> ClientConnector::receive(uint32_t len) {
     return std::move(msg);
 }
 
-void ClientConnector::send(std::vector<char> msg, uint32_t len) {
+void ClientConnector::send(std::vector<char> &msg, uint32_t len) {
     socket.send(&msg[0], len);
 }

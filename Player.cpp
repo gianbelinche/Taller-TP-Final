@@ -69,6 +69,7 @@ Player::Player(Player&& other) : Entity(std::move(other)),
                                  bodyFrameX(other.bodyFrameX),
                                  bodyFrameY(other.bodyFrameY), 
                                  headFrameX(other.headFrameX),
+                                 dead(other.dead),
                                  bodyImage(std::move(other.bodyImage)),
                                  headImage(std::move(other.headImage)),
                                  ghostImage(std::move(other.ghostImage)),
@@ -92,6 +93,7 @@ Player& Player::operator=(Player&& other) {
     this->bodyFrameX = other.bodyFrameX;
     this->bodyFrameY = other.bodyFrameY;
     this->headFrameX = other.headFrameX;
+    dead = other.dead;
     this->bodyImage = std::move(other.bodyImage);
     this->headImage = std::move(other.headImage);
     this->ghostImage = std::move(other.ghostImage);
