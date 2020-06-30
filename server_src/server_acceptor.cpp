@@ -2,18 +2,17 @@
 #include <vector>
 
 #include "server_acceptor.h"
-#include "common_SocketExcept.h"
 
-Acceptor::Acceptor(const char* serv, std::vector<int> &nums) 
-                  : numbers(nums), keep_talking(true) {
-  sock.s_bind(serv);
-  sock.s_listen();
+
+Acceptor::Acceptor(const char* serv) 
+                  : keep_talking(true) {
+  sock.bind(serv);
+  sock.listen();
 }
 
 Acceptor::~Acceptor() {
   sock.shutdown_close();
   release_all_clients();
-  std::cout << score;
   this->join();
 }
 
