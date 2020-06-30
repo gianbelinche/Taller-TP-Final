@@ -86,7 +86,6 @@ void Item::refreshPosition(MovementType move) {
 }
 
 void Item::render(Camera &camera) {
-    //CHEQUEAR COMPLETAR CAMBIAR
     image.render(posX - camera.getX(), posY - camera.getY(), NULL, NULL);
 }
 
