@@ -3,6 +3,7 @@
 #include <iostream>
 
 int main(){
+    /*
     Persistor persistor;
     std::vector<uint32_t> data;
     for (uint32_t i = 0; i < 35; i++){
@@ -26,16 +27,18 @@ int main(){
     }
     std::unordered_map<int,std::string> passwords = persistor.obtainPasswordMap("passwords.json");
     persistor.persistPasswordMap("passwords.json",passwords);
-
-    /*
-    Configuration config;
-    std::pair<std::vector<int>,std::vector<float>> data = config.parse("config.txt",5,4);
-    for (int i = 0; i < 5 ;i++){
-        std::cout << (data.first)[i] << std::endl;
-    }
-    for (int i = 0; i < 4; i++){
-        std::cout << (data.second)[i] << std::endl;
     }*/
+    
+    Configuration config;
+    std::unordered_map<std::string,std::unordered_map<std::string,float>> data = config.parse("config.json");
+    std::cout << data["config"]["fps"] << std::endl;
+    std::cout << data["config"]["framesEntreSpawns"] << std::endl;
+    std::cout << data["elfo"]["hpFactor"] << std::endl;
+    std::cout << data["elfo"]["constitution"] << std::endl;
+    std::cout << data["elfo"]["intelligence"] << std::endl;
+    std::cout << data["enano"]["manaFactor"] << std::endl;
+    std::cout << data["enano"]["strength"] << std::endl;
+
 
     return 0;
 }
