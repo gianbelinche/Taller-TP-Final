@@ -1,12 +1,17 @@
 #include "ModelController.h"
 #include <exception>
-#include <iostream>
 
 #define MOVE_ENTITY 0
+
 #define CREATE_NPC 1
+
 #define CREATE_PLAYER 2
+
 #define CREATE_DROP 3
+
 #define DESTROY_ENTITY 4
+
+#define CHANGE_ENTITY_STATE 5
 
 ModelController::ModelController(EntityManager &anEntityManager, 
                                  ProtMsgQueue &aMsgQueue) : 
@@ -50,6 +55,10 @@ void ModelController::handle(std::vector<uint32_t> &event) {
 
         case DESTROY_ENTITY:
             entityManager.destroyEntity(event[1]);
+            break;
+
+        case CHANGE_ENTITY_STATE:
+            entityManager.changeEntityState(event[1], event[2]);
             break;
         
         default:

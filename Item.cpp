@@ -94,6 +94,6 @@ bool Item::collision(uint16_t x, uint16_t y) {
     return false;
 }
 
-void Item::kill() {
+void Item::changeState(uint8_t aState) {
     //DO NOTHING
 }

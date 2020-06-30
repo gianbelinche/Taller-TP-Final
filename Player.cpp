@@ -3,12 +3,12 @@
 #define B 0
 
 Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID, 
-               uint16_t aPosX, uint16_t aPosY, bool isDead) : 
+               uint16_t aPosX, uint16_t aPosY, uint8_t aState) : 
                                                 Entity(anID, aPosX, aPosY),
                                                 bodyImage(aRenderer, B, B, B),
                                                 headImage(aRenderer, B, B, B),
                                                 ghostImage(aRenderer, B, B, B),
-                                                dead(isDead) {
+                                                state(aState) {
     this->speed = PLAYER_SPEED;
     this->bodyWidth = PLAYER_BODY_WIDTH;
     this->bodyHeight = PLAYER_BODY_HEIGHT;
@@ -69,7 +69,7 @@ Player::Player(Player&& other) : Entity(std::move(other)),
                                  bodyFrameX(other.bodyFrameX),
                                  bodyFrameY(other.bodyFrameY), 
                                  headFrameX(other.headFrameX),
-                                 dead(other.dead),
+                                 state(other.state),
                                  bodyImage(std::move(other.bodyImage)),
                                  headImage(std::move(other.headImage)),
                                  ghostImage(std::move(other.ghostImage)),
@@ -93,7 +93,7 @@ Player& Player::operator=(Player&& other) {
     this->bodyFrameX = other.bodyFrameX;
     this->bodyFrameY = other.bodyFrameY;
     this->headFrameX = other.headFrameX;
-    dead = other.dead;
+    state = other.state;
     this->bodyImage = std::move(other.bodyImage);
     this->headImage = std::move(other.headImage);
     this->ghostImage = std::move(other.ghostImage);
@@ -168,10 +168,10 @@ void Player::renderPlayer(Camera &camera) {
 }
 
 void Player::render(Camera &camera) {
-    if (dead) {
-        this->renderGhost(camera);
-    } else {
+    if (state == 0) {
         this->renderPlayer(camera);
+    } else if (state == 1) {
+        this->renderGhost(camera);
     }
 }
 
@@ -180,8 +180,8 @@ bool Player::collision(uint16_t x, uint16_t y) {
            (y < posY + bodyHeight);
 }
 
-void Player::kill() {
-    dead = true;
+void Player::changeState(uint8_t aState) {
+    state = aState;
 }
 
 uint16_t Player::getPosX() {

@@ -49,12 +49,15 @@ void EventManager::handle(SDL_Event &event) {
 
         case SDL_KEYDOWN:
             checkKeyDown(event);
+            break;
 
         case SDL_KEYUP:
             checkKeyUp(event);
+            break;
 
         case SDL_MOUSEBUTTONDOWN:
             checkClick(event);
+            break;
 
         case SDL_TEXTINPUT:
         //Aca habria que hacer esto
@@ -118,7 +121,7 @@ void EventManager::checkKeyDown(SDL_Event &event) {
 
 void EventManager::checkKeyUp(SDL_Event &event) {
     std::vector<uint32_t> msg;
-    if (!writing && event.key.repeat == 0) {
+    if (!writing) {
         switch (event.key.keysym.sym) {
             case SDLK_w:
             case SDLK_a:
@@ -145,6 +148,7 @@ void EventManager::checkClick(SDL_Event &event) {
     if (0/*Click en inventario*/) {
         std::vector<uint32_t> msg;
         clProtocol.makeMsgClickInventory(playerID, 1/*SLOT*/, msg);
+        msgQueue.push(msg);
     } else {
         uint32_t IDClicked = entityManager.checkClickEntities(camera, 
                                                               event.button.x, 
@@ -152,6 +156,7 @@ void EventManager::checkClick(SDL_Event &event) {
         if (IDClicked) {
             std::vector<uint32_t> msg;
             clProtocol.makeMsgClickEntity(IDClicked, msg);
+            msgQueue.push(msg);
         }
     }
 }

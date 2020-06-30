@@ -1,11 +1,9 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__ 
 
-enum View {UP, DOWN, LEFT, RIGHT}; //chequear
+enum View {UP, DOWN, LEFT, RIGHT};
 
 enum MovementType {MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, STOP};
-/* CHEQUEAR SI CAMBIAR EL VALOR O NO (por protocolo), LA IDEA DEL STOP ES PARA DECIR QUE 
-DEJO DE MOVERSE Y ASI VOLVER AL FRAME 0 */
 
 #include <vector>
 
@@ -29,7 +27,7 @@ class Entity {
         virtual void refreshPosition(MovementType move) = 0;
         virtual void render(Camera &camera) = 0;
         virtual bool collision(uint16_t x, uint16_t y) = 0;
-        virtual void kill() = 0;
+        virtual void changeState(uint8_t aState) = 0;
 
         uint32_t getID();
 };

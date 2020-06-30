@@ -66,10 +66,10 @@ void EntityManager::destroyEntity(uint32_t ID) {
     entities.erase(ID);
 }
 
-void EntityManager::killPlayer(uint32_t ID) {
+void EntityManager::changeEntityState(uint32_t ID, uint8_t state) {
     std::unique_lock<std::mutex> lk(mux);
-    if (ID == playerID) player.kill();
-    entities[ID]->kill();
+    if (ID == playerID) player.changeState(state);
+    entities[ID]->changeState(state);
 }
 
 void EntityManager::moveEntity(uint32_t ID, MovementType moveType) {
@@ -94,7 +94,7 @@ uint32_t EntityManager::checkClickEntities(Camera &camera, uint16_t x, uint16_t 
 
     for (auto &entity : entities) {
         if (entity.second->collision(x + xCam, y + yCam)) {
-            return entity.second->getID();
+            return entity.first;
         }
     }
 }

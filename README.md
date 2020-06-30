@@ -176,11 +176,17 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
     - **Servidor a Cliente**:
     
-        `05 + ID`
+        `05 + ID + estado`
 
         Ejemplo:
 
-        `{05, 123456}` -> `Murió` el jugador de ID `12345`
+        `{05, 123456, 00}` -> `Revivió` el jugador de ID `12345`
+
+        `{05, 123456, 01}` -> `Murió` el jugador de ID `12345`
+
+    - **Estados**:
+      - 00 -> Vivo
+      - 01 -> Muerto
 
         Aclaración: Este llamado es para indicar que un jugador pasó a ser fantasma. Si el jugador se desconectó el llamado es el (04).
 

@@ -56,7 +56,7 @@ class Player : public Entity {
         uint16_t bodyFrameX;
         uint16_t bodyFrameY;
         uint16_t headFrameX;
-        bool dead;
+        uint8_t state;
         FilteredImage bodyImage;
         FilteredImage headImage;
         FilteredImage ghostImage;
@@ -68,7 +68,7 @@ class Player : public Entity {
 
     public:
         Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID, 
-               uint16_t aPosX, uint16_t aPosY, bool isDead);
+               uint16_t aPosX, uint16_t aPosY, uint8_t aState);
         ~Player();
 
         Player(const Player &copy) = delete;
@@ -78,7 +78,7 @@ class Player : public Entity {
         virtual void refreshPosition(MovementType move) override;
         virtual void render(Camera &camera) override;
         virtual bool collision(uint16_t x, uint16_t y) override;
-        virtual void kill() override;
+        virtual void changeState(uint8_t aState) override;
 
         uint16_t getPosX();
         uint16_t getPosY();

@@ -34,7 +34,7 @@ class NPC : public Entity {
         virtual void refreshPosition(MovementType move) override;
         virtual void render(Camera &camera) override;
         virtual bool collision(uint16_t x, uint16_t y) override;
-        virtual void kill() override;
+        virtual void changeState(uint8_t aState) override;
 };
 
 #endif

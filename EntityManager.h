@@ -35,7 +35,7 @@ class EntityManager {
         void addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX, uint16_t aPosY, bool dead);
         
         void destroyEntity(uint32_t ID);
-        void killPlayer(uint32_t ID);
+        void changeEntityState(uint32_t ID, uint8_t state);
 
         void moveEntity(uint32_t ID, MovementType moveType);
         void renderEntities(Camera &camera);
