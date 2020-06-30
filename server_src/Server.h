@@ -2,9 +2,9 @@
 #define SERVER_H
 
 #include <atomic>
+#include <list>
 #include <string>
 #include <unordered_map>
-#include <vector>
 
 #include "config/Configuration.h"
 #include "resources/Acceptor.h"
@@ -17,8 +17,9 @@ class Server : public Thread {
  private:
   Acceptor clientAcceptor;
   Configuration config;
-  std::vector<ClientHandler*> clients;
+  std::list<ClientHandler*> clients;  // efficient erase
   std::atomic<bool> keepAccepting;
+
  public:
   Server(const char* port, Configuration configuration);
 
@@ -27,6 +28,10 @@ class Server : public Thread {
   void run() override;
 
   void loadMap(const char* mapPath);
+
+  void releaseDeadClients();
+
+  void releaseAllClients();
 };
 
-#endif // SERVER_H
+#endif  // SERVER_H

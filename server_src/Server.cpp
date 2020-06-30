@@ -22,10 +22,37 @@ void Server::run() {
   GameState world(map.getCollisionMap(), 30);
   Game game(world);
   Persistor persistor;
-  game.run(); // Lanza el hilo principal del juego
+  // game.init()  // quizas hay que hacer algo asi
+  game.start();  // Lanza el hilo principal del juego
 
-  while (keepAccepting) { 
+  while (keepAccepting) {
     Socket peer = std::move(clientAcceptor.accept());
     ClientHandler* cli = new ClientHandler(std::move(peer), persistor);
+
+    clients.push_back(cli);
+    cli->start();
+    releaseDeadClients();
+  }
+}
+
+void Server::releaseDeadClients() {
+  for (std::list<ClientHandler*>::iterator it = clients.begin();
+       it != clients.end();) {
+    if ((*it)->finished()) {
+      (*it)->join();
+      delete *it;
+      it = clients.erase(it);
+    } else {
+      ++it;
+    }
+  }
+}
+
+void Server::releaseAllClients() {
+  for (std::list<ClientHandler*>::iterator it = clients.begin();
+       it != clients.end();) {
+    (*it)->join();
+    delete *it;
+    it = clients.erase(it);
   }
 }
