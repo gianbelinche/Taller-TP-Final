@@ -59,7 +59,7 @@ void Sender::run() {
             }
 
             //enviar largo
-            clConnector->send(msgLen, len);
+            clConnector->send(msgLen, 4);
 
             //enviar paquete
             clConnector->send(msg, msg.size());

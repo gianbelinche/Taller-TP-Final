@@ -118,7 +118,7 @@ void EventManager::checkKeyDown(SDL_Event &event) {
 
 void EventManager::checkKeyUp(SDL_Event &event) {
     std::vector<uint32_t> msg;
-    if (!writing) {
+    if (!writing && event.key.repeat == 0) {
         switch (event.key.keysym.sym) {
             case SDLK_w:
             case SDLK_a:
