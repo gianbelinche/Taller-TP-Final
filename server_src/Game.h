@@ -7,14 +7,14 @@
 
 #include "Communication/ProtectedStrQueue.h"
 #include "Entities/Entity.h"
-#include "GameState.h"
-#include "ServerEventHandler.h"
-#include "Thread.h"
+#include "resources/GameState.h"
+#include "resources/ServerEventHandler.h"
+#include "resources/Thread.h"
 
 class Game : public Thread {
  private:
-  GameState &world;
-  std::unordered_map<int, Entity *> entities;
+  GameState& world;
+  std::unordered_map<int, Entity*> entities;
   std::unordered_map<int, PlayerNet> onlinePlayers;
   ProtectedStrQueue incomingEvents;
   ServerEventHandler handler;
@@ -45,7 +45,7 @@ class Game : public Thread {
 
  private:
   // De momento un string con la dirección, probablemente cambie
-  void movePlayer(std::string &move);
+  void movePlayer(std::string& move);
 };
 
 #endif

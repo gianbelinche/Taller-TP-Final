@@ -1,5 +1,9 @@
 #include <atomic>
+#include <cstdint>
+#include <string>
+#include <vector>
 
+#include "Map.h"
 #include "Persistor.h"
 #include "Socket.h"
 #include "Thread.h"
@@ -9,13 +13,21 @@ class ClientHandler : public Thread {
   Socket peer;
   Persistor& persistor;
   std::atomic<bool> online;
+  Map& map;
 
  public:
-  ClientHandler(Socket p, Persistor& persist);
+  ClientHandler(Socket p, Persistor& persist, Map& worldMap);
 
   ~ClientHandler();
 
   void run() override;
 
   bool finished();
+
+  // Devuelve un vector con los datos necesarios para crear al Player
+  std::vector<uint32_t> getCredentials();
+
+  void sendMap();
+
+  void sendMsg(std::string msg);
 };
