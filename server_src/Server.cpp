@@ -18,16 +18,19 @@ Server::Server(const char* port, Configuration configuration)
 Server::~Server() {}
 
 void Server::run() {
+  std::atomic<uint32_t> idAssigner{0};
   Map map(MAP_PATH);
   GameState world(map.getCollisionMap(), 30);
-  Game game(world);
+  Game game(world, idAssigner);
   Persistor persistor;
+
   // game.init()  // quizas hay que hacer algo asi
   game.start();  // Lanza el hilo principal del juego
 
   while (keepAccepting) {
     Socket peer = std::move(clientAcceptor.accept());
-    ClientHandler* cli = new ClientHandler(std::move(peer), persistor);
+    ClientHandler* cli =
+        new ClientHandler(std::move(peer), persistor, map, idAssigner);
 
     clients.push_back(cli);
     cli->start();

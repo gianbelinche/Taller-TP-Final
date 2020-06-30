@@ -19,9 +19,10 @@ class Game : public Thread {
   ProtectedStrQueue incomingEvents;
   ServerEventHandler handler;
   std::atomic<bool> keep_running;
+  std::atomic<uint32_t>& idAssigner;
 
  public:
-  Game(GameState& world);
+  Game(GameState& world, std::atomic<uint32_t>& idGenerator);
 
   ~Game();
 

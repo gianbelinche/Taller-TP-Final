@@ -6,8 +6,12 @@
 #include <msgpack.hpp>
 #include <sstream>
 
-ClientHandler::ClientHandler(Socket p, Persistor& persist, Map& worldMap)
-    : peer(std::move(p)), persistor(persist), map(worldMap) {}
+ClientHandler::ClientHandler(Socket p, Persistor& persist, Map& worldMap,
+                             std::atomic<uint32_t>& idAssigner)
+    : peer(std::move(p)),
+      persistor(persist),
+      map(worldMap),
+      idGenerator(idAssigner) {}
 
 ClientHandler::~ClientHandler() {}
 
@@ -18,7 +22,10 @@ void ClientHandler::run() {
 
 bool ClientHandler::finished() { return online; }
 
-std::vector<uint32_t> ClientHandler::getCredentials() { return {1, 2, 3}; }
+std::vector<uint32_t> ClientHandler::getCredentials() {
+  // Si el jugador no existe hacer idPlayer = idAssigner++; es todo atomico
+  return {1, 2, 3};
+}
 
 void ClientHandler::sendMap() {
   std::stringstream mapBuffer;

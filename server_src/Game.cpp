@@ -4,8 +4,11 @@
 
 #include <iostream>
 
-Game::Game(GameState &world)
-    : world(world), handler(ServerEventHandler(world)), keep_running(true) {}
+Game::Game(GameState &world, std::atomic<uint32_t> &idGenerator)
+    : world(world),
+      handler(ServerEventHandler(world)),
+      keep_running(true),
+      idAssigner(idGenerator) {}
 
 Game::~Game() {}
 
@@ -69,6 +72,4 @@ void Game::addIncoming(std::string s) { incomingEvents.push(s); }
 
 void Game::addEntity(Entity *ent) { entities[ent->getId()] = ent; }
 
-ServerEventHandler& Game::getServ() {
-  return handler;    
-}
+ServerEventHandler &Game::getServ() { return handler; }

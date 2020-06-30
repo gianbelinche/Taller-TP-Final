@@ -14,9 +14,11 @@ class ClientHandler : public Thread {
   Persistor& persistor;
   std::atomic<bool> online;
   Map& map;
+  std::atomic<uint32_t>& idGenerator;
 
  public:
-  ClientHandler(Socket p, Persistor& persist, Map& worldMap);
+  ClientHandler(Socket p, Persistor& persist, Map& worldMap,
+                std::atomic<uint32_t>& idAssigner);
 
   ~ClientHandler();
 
@@ -30,4 +32,6 @@ class ClientHandler : public Thread {
   void sendMap();
 
   void sendMsg(std::string msg);
+
+  void sendState();
 };
