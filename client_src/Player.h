@@ -9,6 +9,7 @@ class Player;
 #include "SpriteClipCreator.h"
 #include "Camera.h"
 #include "Entity.h"
+#include "Equippable.h"
 
 /* VELOCIDAD DEL JUGADOR */
 #define PLAYER_SPEED 6
@@ -57,9 +58,14 @@ class Player : public Entity {
         uint8_t bodyFrameY;
         uint8_t headFrameX;
         uint8_t state;
+        Equippable weapon;
+        Equippable armor;
+        Equippable shield;
+        Equippable helmet;
         FilteredImage bodyImage;
         FilteredImage headImage;
         FilteredImage ghostImage;
+
         std::vector <SDL_Rect> bodyClips;
         std::vector <SDL_Rect> headClips;
         std::vector <SDL_Rect> ghostClips;
@@ -68,7 +74,9 @@ class Player : public Entity {
 
     public:
         Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID, 
-               uint16_t aPosX, uint16_t aPosY, uint8_t aState);
+               uint16_t aPosX, uint16_t aPosY, uint8_t aState, 
+               EquipType aWeapon, EquipType anArmor, EquipType aShield, 
+               EquipType aHelmet);
         ~Player();
 
         Player(const Player &copy) = delete;
@@ -79,6 +87,7 @@ class Player : public Entity {
         virtual void render(Camera &camera) override;
         virtual bool collision(uint16_t x, uint16_t y) override;
         virtual void changeState(uint8_t aState) override;
+        virtual void changeEquipmet(EquipType equipType, uint8_t what) override;
 
         uint16_t getPosX();
         uint16_t getPosY();

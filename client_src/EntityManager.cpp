@@ -13,7 +13,7 @@ EntityManager::~EntityManager() {
 
 void EntityManager::addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY) {
     std::unique_lock<std::mutex> lk(mux);
-    /*DEBERIA ARMAR TAMBIEN EL OTRO HASH PARA RENDERIZAR EN ORDEN*/
+    /*DEBERIA ARMAR TAMBIEN EL OTRO HASH PARA RENDERIZAR EN ORDEN chequear cambiar completar*/
     switch (type) {
         case SPYDER:
             entities[anID] = new Spyder(renderer, anID, aPosX, aPosY);
@@ -44,7 +44,6 @@ void EntityManager::addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t
             break;
 
         default:
-            //ERROR, NO EXISTE ESA ENTIDAD, DEBERIA TIRAR ALGUN ERROR
             break;
     }
 }
@@ -97,4 +96,6 @@ uint32_t EntityManager::checkClickEntities(Camera &camera, uint16_t x, uint16_t 
             return entity.first;
         }
     }
+
+    return 0;
 }

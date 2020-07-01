@@ -2,6 +2,7 @@
 #define __ENTITY_MANAGER_H__
 
 #include <map>
+#include <unordered_map>
 #include <mutex>
 #include <SDL2/SDL.h>
 #include "Entity.h"
@@ -22,7 +23,7 @@ class EntityManager {
         Player &player;
         uint32_t playerID;
         SDL_Renderer *renderer;
-        std::map<uint32_t, Entity*> entities;
+        std::unordered_map<uint32_t, Entity*> entities;
         std::map<uint32_t, Entity*> entitiesRender; //chequear, todavía no lo hice
         std::mutex mux;
         

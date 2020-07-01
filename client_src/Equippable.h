@@ -25,6 +25,9 @@
 #define EQUIPPABLE_HEIGHT 45
 #define EQUIPPABLE_WIDTH 25
 
+#define EQUIPPABLE_ANIMATION_FRAMES 5
+#define EQUIPPABLE_ANIMATION_STATES 4
+
 enum EquipType {NONE, ESPADA, HACHA, MARTILLO, VARA_FRESNO, FLAUTA_ELFICA, 
                BACULO_NUDOSO, BACULO_ENGARZADO, ARCO_SIMPLE, ARCO_COMPUESTO, 
                ARMADURA_CUERO, ARMADURA_PLACAS, TUNICA_AZUL, CAPUCHA, 
@@ -33,14 +36,17 @@ enum EquipType {NONE, ESPADA, HACHA, MARTILLO, VARA_FRESNO, FLAUTA_ELFICA,
 class Equippable {
     private:
         FilteredImage image;
+        EquipType type;
         uint8_t horFrame;
         uint8_t verFrame;
         std::vector<SDL_Rect> clips;
+        SDL_Rect quad;
         
     public:
-        Equippable(SDL_Renderer *renderer, EquipType equipType, uint8_t aHorFrame, uint8_t aVerFrame);
+        Equippable(SDL_Renderer *renderer, EquipType equipType);
         ~Equippable();
 
+        void updateEquipment(EquipType equipType);
         void updateFrame(uint8_t aHorFrame, uint8_t aVerFrame);
         void render(uint16_t posX, uint16_t posY);
 };

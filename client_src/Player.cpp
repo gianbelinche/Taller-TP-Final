@@ -3,12 +3,18 @@
 #define B 0
 
 Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID, 
-               uint16_t aPosX, uint16_t aPosY, uint8_t aState) : 
+               uint16_t aPosX, uint16_t aPosY, uint8_t aState, 
+               EquipType aWeapon, EquipType anArmor, EquipType aShield, 
+               EquipType aHelmet) : 
                                                 Entity(anID, aPosX, aPosY),
                                                 bodyImage(aRenderer, B, B, B),
                                                 headImage(aRenderer, B, B, B),
                                                 ghostImage(aRenderer, B, B, B),
-                                                state(aState) {
+                                                state(aState),
+                                                weapon(aRenderer, aWeapon),
+                                                armor(aRenderer, anArmor),
+                                                shield(aRenderer, aShield),
+                                                helmet(aRenderer, aHelmet) {
     this->speed = PLAYER_SPEED;
     this->bodyWidth = PLAYER_BODY_WIDTH;
     this->bodyHeight = PLAYER_BODY_HEIGHT;
@@ -165,6 +171,9 @@ void Player::renderPlayer(Camera &camera) {
     SDL_Rect headQuad = {this->posX - camera.getX() + headWidth / 4, this->posY - camera.getY() - headHeight / 2 + 1, headWidth, headHeight}; // chequear
     this->bodyImage.render(bodyQuad.x, bodyQuad.y, currentBodyClip, &bodyQuad); //chequear
     this->headImage.render(headQuad.x, headQuad.y, currentHeadClip, &headQuad); //chequear
+    //AGREGAR RENDERIZADO DE EQUIPMENT
+    //AGREGAR FUNCION EN ENTITY
+    //CHEQUEAR QUE FUNCIONE BIEN
 }
 
 void Player::render(Camera &camera) {
