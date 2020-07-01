@@ -3,7 +3,7 @@
 #include <iostream>
 #include <ios>
 #include <msgpack.hpp>
-#define PLAYERS_MAP "players_map.json"
+#define PLAYERS_MAP "players_map"
 
 Persistor::Persistor(){
     file.open(PLAYERS_MAP);
