@@ -14,7 +14,7 @@ private:
     ExpBar expbar;
 
 public:
-    LayoutManager(Layout& layout,GraphicInventory& inventory,MiniChat& chat,ExpBar expbar);
+    LayoutManager(Layout& layout,GraphicInventory& inventory,MiniChat& chat,ExpBar& expbar);
 
     void decodeInventoryMessage(std::vector<uint32_t> message);
     void decodeStateMessage(std::vector<uint32_t> message);
