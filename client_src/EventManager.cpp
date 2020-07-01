@@ -9,7 +9,7 @@
 EventManager::EventManager(EntityManager &anEntityManager, uint32_t aPlayerID, 
                            BlockingMsgQueue &aMsgQueue, Camera &aCamera, 
                            ClientProtocol &aClProtocol, MiniChat &chat,
-                           GraphicInventort &inventory) : 
+                           GraphicInventory &inventory) : 
                                                 entityManager(anEntityManager),
                                                 playerID(aPlayerID), 
                                                 msgQueue(aMsgQueue),
@@ -72,6 +72,7 @@ void EventManager::handle(SDL_Event &event) {
 
 void EventManager::checkKeyDown(SDL_Event &event) {
     std::vector<uint32_t> msg;
+    std::string command = "";
     if (!writing) {
         switch (event.key.keysym.sym) {
             case SDLK_w:
@@ -107,7 +108,7 @@ void EventManager::checkKeyDown(SDL_Event &event) {
         switch (event.key.keysym.sym) {
             case SDLK_KP_ENTER:
             case SDLK_RETURN:
-                std::string command = chat.sendMessage();
+                command = chat.sendMessage();
                 SDL_StopTextInput();
                 writing = false;
                 msg = clProtocol.makeMsgSendCommand(playerID,command);
@@ -153,8 +154,8 @@ void EventManager::checkClick(SDL_Event &event) {
                                                               event.button.x, 
                                                               event.button.y);
         if (IDClicked) {
-            std::vector<uint32_t> msg;
-            clProtocol.makeMsgClickEntity(IDClicked, msg);
+            std::vector<uint32_t> msg =
+            clProtocol.makeMsgClickEntity(IDClicked);
             msgQueue.push(msg);
         }
     }

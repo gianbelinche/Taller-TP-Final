@@ -11,7 +11,7 @@ private:
     Layout& layout;
     GraphicInventory& inventory;
     MiniChat& chat;
-    ExpBar expbar;
+    ExpBar& expbar;
 
 public:
     LayoutManager(Layout& layout,GraphicInventory& inventory,MiniChat& chat,ExpBar& expbar);

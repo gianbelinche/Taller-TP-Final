@@ -18,7 +18,7 @@ class EventManager {
         Camera &camera;
         ClientProtocol &clProtocol;
         MiniChat &chat;
-        GraphicInventort &inventory;
+        GraphicInventory &inventory;
 
         void checkKeyDown(SDL_Event &event);
         void checkKeyUp(SDL_Event &event);
@@ -28,7 +28,7 @@ class EventManager {
         EventManager(EntityManager &anEntityManager, uint32_t playerID, 
                      BlockingMsgQueue &msgQueue, Camera &aCamera, 
                      ClientProtocol &aClProtocol,MiniChat &chat,
-                     GraphicInventort &inventory);
+                     GraphicInventory &inventory);
         ~EventManager();
 
         EventManager(const EventManager& copy) = delete;
