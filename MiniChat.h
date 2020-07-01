@@ -18,9 +18,13 @@ private:
 public:
     MiniChat(SDL_Renderer* mainRenderer);
     void render(Camera& camera);
+    //Agrega el caracter c al mensaje actual
     void putCharacter(std::string c);
-    void deleteCharacter();    
+    //Borra el ultimo caracter del mensaje actual
+    void deleteCharacter();
+    //Añade un mensaje al historial de mensajes    
     void addMessage(std::string message);
+    //Añade el mensaje actual al historial de mensajes y lo vacia
     void sendMessage();
     ~MiniChat();
 

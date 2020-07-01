@@ -9,7 +9,9 @@ private:
     std::map<int,SoundEffect> sounds;
 public:
     SoundEffectPlayer() : sounds() {}
+    //Añade un efecto de sonido
     void add(const int id,std::string sound);
+    //Reproduce el efecto de sonido con clave id
     void play(const int id);
 };
 

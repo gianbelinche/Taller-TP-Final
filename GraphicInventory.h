@@ -8,6 +8,10 @@
 #include "Image.h"
 #include "Camera.h"
 
+/*
+    Implementa un inventario de manera gráfica
+    Donde en cada slot se grafica una imagen    
+*/
 class GraphicInventory {
 private:
     SDL_Renderer* mainRenderer;
@@ -21,9 +25,13 @@ private:
 public:
     GraphicInventory(SDL_Renderer* mainRenderer);
 
+    //Añade un objeto al inventario
     void addImage(int key);
+    //Quita un objeto del inventario en el slot pos
     void removeImage(int pos);
+    //Equipa un objeto
     void equip(int key);
+    //Devuelve que slot fue clickeado, o -1 si no se clickeo ningun slot
     int select(int x,int y,Camera& camera);
     void render(Camera& camera);
 };
