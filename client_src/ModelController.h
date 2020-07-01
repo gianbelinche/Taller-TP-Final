@@ -4,16 +4,19 @@
 #include "Thread.h"
 #include "ProtMsgQueue.h"
 #include "EntityManager.h"
+#include "LayoutManager.h"
 #include <atomic>
 
 class ModelController {
     private:
         EntityManager &entityManager;
         ProtMsgQueue &msgQueue;
+        LayoutManager &layoutManager;
         void handle(std::vector<uint32_t> &event);
         
     public:
-        ModelController(EntityManager &anEntityManager, ProtMsgQueue &aMsgQueue);
+        ModelController(EntityManager &anEntityManager, 
+                        ProtMsgQueue &aMsgQueue,LayoutManager &layoutManager);
         ~ModelController();
 
         ModelController(const ModelController& copy) = delete;

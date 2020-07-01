@@ -11,6 +11,7 @@
 #include "ModelController.h"
 #include "Renderer.h"
 #include "ClientController.h"
+#include "LayoutManager.h"
 #include <exception>
 #include <iostream>
 
@@ -40,6 +41,8 @@ int main(int argc, char* argv[]) {
         MiniChat miniChat(mainRenderer);
         ExpBar expBar(mainRenderer);
 
+        LayoutManager layoutManager(layout,gInventory,miniChat,expBar);
+
         Camera camera(player.getPosX(), player.getPosY(), player.getHeight(), 
                       player.getWidth());
 
@@ -47,7 +50,7 @@ int main(int argc, char* argv[]) {
 
         EventManager eventManager(entityManager, player.getID(), senderQueue, 
                                   camera, clientProtocol);
-        ModelController modelController(entityManager, receiverQueue);
+        ModelController modelController(entityManager, receiverQueue, layoutManager);
         Renderer renderer(camera, player, mainMap, entityManager, 
                           mainRenderer, layout, gInventory, miniChat, expBar,
                           modelController);

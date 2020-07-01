@@ -1,18 +1,25 @@
 #include "ModelController.h"
 #include <exception>
 
-#define MOVE_ENTITY 0
-#define CREATE_NPC 1
-#define CREATE_PLAYER 2
-#define CREATE_DROP 3
-#define DESTROY_ENTITY 4
-#define CHANGE_ENTITY_STATE 5
-#define CHANGE_ENTITY_EQUIP 6
+enum state {
+    MOVE_ENTITY,
+    CREATE_NPC,
+    CREATE_PLAYER,
+    CREATE_DROP,
+    DESTROY_ENTITY,
+    CHANGE_ENTITY_STATE,
+    CHANGE_ENTITY_EQUIP,
+    INVENTORY,
+    LAYOUT_STATE,
+    CHAT
+};
 
 ModelController::ModelController(EntityManager &anEntityManager, 
-                                 ProtMsgQueue &aMsgQueue) : 
+                                 ProtMsgQueue &aMsgQueue,
+                                 LayoutManager &layoutManager) : 
                                         entityManager(anEntityManager),
-                                        msgQueue(aMsgQueue) {}
+                                        msgQueue(aMsgQueue),
+                                        layoutManager(layoutManager) {}
 
 ModelController::~ModelController() {}
 
@@ -65,6 +72,18 @@ void ModelController::handle(std::vector<uint32_t> &event) {
         case CHANGE_ENTITY_EQUIP:
             entityManager.changeEntityEquipment(event[1], (EquipType)event[3], 
                                                 event[2]);
+            break;
+        
+        case INVENTORY:
+            layoutManager.decodeInventoryMessage(event);
+            break;
+
+        case LAYOUT_STATE:
+            layoutManager.decodeStateMessage(event);
+            break;
+
+        case CHAT:
+            layoutManager.decodeChatMessage(event);
             break;
         
         default:
