@@ -88,3 +88,5 @@ bool NPC::collision(uint16_t x, uint16_t y) {
 }
 
 void NPC::changeState(uint8_t aState) {}
+
+void NPC::changeEquipment(EquipType equipType, uint8_t what) {}

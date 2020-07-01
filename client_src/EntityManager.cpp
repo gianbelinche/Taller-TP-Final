@@ -54,9 +54,12 @@ void EntityManager::addDrop(ItemType type, uint32_t anID, uint16_t aPosX, uint16
 }
 
 void EntityManager::addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX, 
-                              uint16_t aPosY, bool dead) {
+                              uint16_t aPosY, uint8_t aState, EquipType aWeapon,
+                              EquipType anArmor, EquipType aShield, 
+                              EquipType aHelmet) {
     std::unique_lock<std::mutex> lk(mux);
-    entities[anID] = new Player(renderer, aRace, anID, aPosX, aPosY, dead);
+    entities[anID] = new Player(renderer, aRace, anID, aPosX, aPosY, aState, 
+                                aWeapon, anArmor, aShield, aHelmet);
 }
 
 void EntityManager::destroyEntity(uint32_t ID) {
@@ -69,6 +72,12 @@ void EntityManager::changeEntityState(uint32_t ID, uint8_t state) {
     std::unique_lock<std::mutex> lk(mux);
     if (ID == playerID) player.changeState(state);
     entities[ID]->changeState(state);
+}
+
+void EntityManager::changeEntityEquipment(uint32_t ID, EquipType equipType, uint8_t what) {
+    std::unique_lock<std::mutex> lk(mux);
+    if (ID == playerID) player.changeEquipment(equipType, what);
+    entities[ID]->changeEquipment(equipType, what);
 }
 
 void EntityManager::moveEntity(uint32_t ID, MovementType moveType) {

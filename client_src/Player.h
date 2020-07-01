@@ -9,7 +9,6 @@ class Player;
 #include "SpriteClipCreator.h"
 #include "Camera.h"
 #include "Entity.h"
-#include "Equippable.h"
 
 /* VELOCIDAD DEL JUGADOR */
 #define PLAYER_SPEED 6
@@ -87,7 +86,7 @@ class Player : public Entity {
         virtual void render(Camera &camera) override;
         virtual bool collision(uint16_t x, uint16_t y) override;
         virtual void changeState(uint8_t aState) override;
-        virtual void changeEquipmet(EquipType equipType, uint8_t what) override;
+        virtual void changeEquipment(EquipType equipType, uint8_t what) override;
 
         uint16_t getPosX();
         uint16_t getPosY();

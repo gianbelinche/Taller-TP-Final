@@ -9,6 +9,7 @@ enum MovementType {MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, STOP};
 
 #include "FilteredImage.h"
 #include "Camera.h"
+#include "Equippable.h"
 
 class Entity {
     protected:
@@ -28,6 +29,7 @@ class Entity {
         virtual void render(Camera &camera) = 0;
         virtual bool collision(uint16_t x, uint16_t y) = 0;
         virtual void changeState(uint8_t aState) = 0;
+        virtual void changeEquipment(EquipType equipType, uint8_t what) = 0;
 
         uint32_t getID();
 };

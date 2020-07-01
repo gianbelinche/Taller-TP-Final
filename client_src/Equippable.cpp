@@ -10,71 +10,71 @@ Equippable::Equippable(SDL_Renderer *renderer, EquipType equipType) :
         case NONE:
             break;
 
-        case ESPADA:
+        case EQUIP_ESPADA:
             image.loadFromFile(GIF_ESPADA_PATH);
             break;
         
-        case HACHA:
+        case EQUIP_HACHA:
             image.loadFromFile(GIF_HACHA_PATH);
             break;
 
-        case MARTILLO:
+        case EQUIP_MARTILLO:
             image.loadFromFile(GIF_MARTILLO_PATH);
             break;
 
-        case VARA_FRESNO:
+        case EQUIP_VARA_FRESNO:
             image.loadFromFile(GIF_VARA_FRESNO_PATH);
             break;
 
-        case FLAUTA_ELFICA:
+        case EQUIP_FLAUTA_ELFICA:
             image.loadFromFile(GIF_FLAUTA_ELFICA_PATH);
             break;
 
-        case BACULO_NUDOSO:
+        case EQUIP_BACULO_NUDOSO:
             image.loadFromFile(GIF_BACULO_NUDOSO_PATH);
             break;
 
-        case BACULO_ENGARZADO:
+        case EQUIP_BACULO_ENGARZADO:
             image.loadFromFile(GIF_BACULO_ENGARZADO_PATH);
             break;
 
-        case ARCO_SIMPLE:
+        case EQUIP_ARCO_SIMPLE:
             image.loadFromFile(GIF_ARCO_SIMPLE_PATH);
             break;
 
-        case ARCO_COMPUESTO:
+        case EQUIP_ARCO_COMPUESTO:
             image.loadFromFile(GIF_ARCO_COMPUESTO_PATH);
             break;
 
-        case ARMADURA_CUERO:
+        case EQUIP_ARMADURA_CUERO:
             image.loadFromFile(GIF_ARMADURA_CUERO_PATH);
             break;
 
-        case ARMADURA_PLACAS:
+        case EQUIP_ARMADURA_PLACAS:
             image.loadFromFile(GIF_ARMADURA_PLACAS_PATH);
             break;
 
-        case TUNICA_AZUL:
+        case EQUIP_TUNICA_AZUL:
             image.loadFromFile(GIF_TUNICA_AZUL_PATH);
             break;
 
-        case CAPUCHA:
+        case EQUIP_CAPUCHA:
             image.loadFromFile(GIF_CAPUCHA_PATH);
             break;
 
-        case CASCO_HIERRO:
+        case EQUIP_CASCO_HIERRO:
             image.loadFromFile(GIF_CASCO_HIERRO_PATH);
             break;
 
-        case ESCUDO_TORTUGA:
+        case EQUIP_ESCUDO_TORTUGA:
             image.loadFromFile(GIF_ESCUDO_TORTUGA_PATH);
             break;
 
-        case ESCUDO_HIERRO:
+        case EQUIP_ESCUDO_HIERRO:
             image.loadFromFile(GIF_ESCUDO_HIERRO_PATH);
             break;
         
-        case SOMBRERO_MAGICO:
+        case EQUIP_SOMBRERO_MAGICO:
             image.loadFromFile(GIF_SOMBRERO_MAGICO_PATH);
             break;
         
@@ -89,6 +89,28 @@ Equippable::Equippable(SDL_Renderer *renderer, EquipType equipType) :
     this->quad = {0, 0, EQUIPPABLE_WIDTH, EQUIPPABLE_HEIGHT};
 }
 
+Equippable::Equippable(Equippable&& other) : image(std::move(other.image)),
+                                             type(std::move(other.type)),
+                                             horFrame(std::move(other.horFrame)),
+                                             verFrame(std::move(other.verFrame)),
+                                             clips(std::move(other.clips)),
+                                             quad(std::move(other.quad)) {}
+
+Equippable& Equippable::operator=(Equippable&& other) {
+    if (this == &other) {
+        return *this;
+    }
+
+    this->image = std::move(other.image);
+    this->type = std::move(other.type);
+    this->horFrame = std::move(other.horFrame);
+    this->verFrame = std::move(other.verFrame);
+    this->clips = std::move(other.clips);
+    this->quad = std::move(other.quad);
+
+    return *this;
+}
+
 Equippable::~Equippable() {}
 
 void Equippable::updateEquipment(EquipType equipType) {
@@ -98,71 +120,71 @@ void Equippable::updateEquipment(EquipType equipType) {
         case NONE:
             break;
 
-        case ESPADA:
+        case EQUIP_ESPADA:
             image.loadFromFile(GIF_ESPADA_PATH);
             break;
         
-        case HACHA:
+        case EQUIP_HACHA:
             image.loadFromFile(GIF_HACHA_PATH);
             break;
 
-        case MARTILLO:
+        case EQUIP_MARTILLO:
             image.loadFromFile(GIF_MARTILLO_PATH);
             break;
 
-        case VARA_FRESNO:
+        case EQUIP_VARA_FRESNO:
             image.loadFromFile(GIF_VARA_FRESNO_PATH);
             break;
 
-        case FLAUTA_ELFICA:
+        case EQUIP_FLAUTA_ELFICA:
             image.loadFromFile(GIF_FLAUTA_ELFICA_PATH);
             break;
 
-        case BACULO_NUDOSO:
+        case EQUIP_BACULO_NUDOSO:
             image.loadFromFile(GIF_BACULO_NUDOSO_PATH);
             break;
 
-        case BACULO_ENGARZADO:
+        case EQUIP_BACULO_ENGARZADO:
             image.loadFromFile(GIF_BACULO_ENGARZADO_PATH);
             break;
 
-        case ARCO_SIMPLE:
+        case EQUIP_ARCO_SIMPLE:
             image.loadFromFile(GIF_ARCO_SIMPLE_PATH);
             break;
 
-        case ARCO_COMPUESTO:
+        case EQUIP_ARCO_COMPUESTO:
             image.loadFromFile(GIF_ARCO_COMPUESTO_PATH);
             break;
 
-        case ARMADURA_CUERO:
+        case EQUIP_ARMADURA_CUERO:
             image.loadFromFile(GIF_ARMADURA_CUERO_PATH);
             break;
 
-        case ARMADURA_PLACAS:
+        case EQUIP_ARMADURA_PLACAS:
             image.loadFromFile(GIF_ARMADURA_PLACAS_PATH);
             break;
 
-        case TUNICA_AZUL:
+        case EQUIP_TUNICA_AZUL:
             image.loadFromFile(GIF_TUNICA_AZUL_PATH);
             break;
 
-        case CAPUCHA:
+        case EQUIP_CAPUCHA:
             image.loadFromFile(GIF_CAPUCHA_PATH);
             break;
 
-        case CASCO_HIERRO:
+        case EQUIP_CASCO_HIERRO:
             image.loadFromFile(GIF_CASCO_HIERRO_PATH);
             break;
 
-        case ESCUDO_TORTUGA:
+        case EQUIP_ESCUDO_TORTUGA:
             image.loadFromFile(GIF_ESCUDO_TORTUGA_PATH);
             break;
 
-        case ESCUDO_HIERRO:
+        case EQUIP_ESCUDO_HIERRO:
             image.loadFromFile(GIF_ESCUDO_HIERRO_PATH);
             break;
         
-        case SOMBRERO_MAGICO:
+        case EQUIP_SOMBRERO_MAGICO:
             image.loadFromFile(GIF_SOMBRERO_MAGICO_PATH);
             break;
         

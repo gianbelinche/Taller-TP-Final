@@ -2,16 +2,12 @@
 #include <exception>
 
 #define MOVE_ENTITY 0
-
 #define CREATE_NPC 1
-
 #define CREATE_PLAYER 2
-
 #define CREATE_DROP 3
-
 #define DESTROY_ENTITY 4
-
 #define CHANGE_ENTITY_STATE 5
+#define CHANGE_ENTITY_EQUIP 6
 
 ModelController::ModelController(EntityManager &anEntityManager, 
                                  ProtMsgQueue &aMsgQueue) : 
@@ -42,15 +38,20 @@ void ModelController::handle(std::vector<uint32_t> &event) {
             break;
 
         case CREATE_NPC:
-            entityManager.addNPC((NPCType)event[2], event[1], event[3], event[4]);
+            entityManager.addNPC((NPCType)event[2], event[1], event[3], 
+                                 event[4]);
             break;
 
         case CREATE_PLAYER:
-            entityManager.addPlayer((PlayerRace)event[2], event[1], event[3], event[4], event[5]);
+            entityManager.addPlayer((PlayerRace)event[2], event[1], event[3], 
+                                    event[4], event[5], (EquipType)event[6], 
+                                    (EquipType)event[7], (EquipType)event[8], 
+                                    (EquipType)event[9]);
             break;
 
         case CREATE_DROP:
-            entityManager.addDrop((ItemType)event[2], event[1], event[3], event[4]);
+            entityManager.addDrop((ItemType)event[2], event[1], event[3], 
+                                  event[4]);
             break;
 
         case DESTROY_ENTITY:
@@ -59,6 +60,11 @@ void ModelController::handle(std::vector<uint32_t> &event) {
 
         case CHANGE_ENTITY_STATE:
             entityManager.changeEntityState(event[1], event[2]);
+            break;
+
+        case CHANGE_ENTITY_EQUIP:
+            entityManager.changeEntityEquipment(event[1], (EquipType)event[3], 
+                                                event[2]);
             break;
         
         default:

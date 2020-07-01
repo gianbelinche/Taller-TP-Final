@@ -5,16 +5,15 @@
 Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID, 
                uint16_t aPosX, uint16_t aPosY, uint8_t aState, 
                EquipType aWeapon, EquipType anArmor, EquipType aShield, 
-               EquipType aHelmet) : 
-                                                Entity(anID, aPosX, aPosY),
-                                                bodyImage(aRenderer, B, B, B),
-                                                headImage(aRenderer, B, B, B),
-                                                ghostImage(aRenderer, B, B, B),
-                                                state(aState),
-                                                weapon(aRenderer, aWeapon),
-                                                armor(aRenderer, anArmor),
-                                                shield(aRenderer, aShield),
-                                                helmet(aRenderer, aHelmet) {
+               EquipType aHelmet) : Entity(anID, aPosX, aPosY),
+                                    bodyImage(aRenderer, B, B, B),
+                                    headImage(aRenderer, B, B, B),
+                                    ghostImage(aRenderer, B, B, B),
+                                    state(aState),
+                                    weapon(aRenderer, aWeapon),
+                                    armor(aRenderer, anArmor),
+                                    shield(aRenderer, aShield),
+                                    helmet(aRenderer, aHelmet) {
     this->speed = PLAYER_SPEED;
     this->bodyWidth = PLAYER_BODY_WIDTH;
     this->bodyHeight = PLAYER_BODY_HEIGHT;
@@ -76,6 +75,10 @@ Player::Player(Player&& other) : Entity(std::move(other)),
                                  bodyFrameY(other.bodyFrameY), 
                                  headFrameX(other.headFrameX),
                                  state(other.state),
+                                 weapon(std::move(other.weapon)),
+                                 armor(std::move(other.armor)),
+                                 shield(std::move(other.shield)),
+                                 helmet(std::move(other.helmet)),
                                  bodyImage(std::move(other.bodyImage)),
                                  headImage(std::move(other.headImage)),
                                  ghostImage(std::move(other.ghostImage)),
@@ -99,7 +102,11 @@ Player& Player::operator=(Player&& other) {
     this->bodyFrameX = other.bodyFrameX;
     this->bodyFrameY = other.bodyFrameY;
     this->headFrameX = other.headFrameX;
-    state = other.state;
+    this->state = other.state;
+    this->weapon = std::move(other.weapon);
+    this->armor = std::move(other.armor);
+    this->shield = std::move(other.shield);
+    this->helmet = std::move(other.helmet);
     this->bodyImage = std::move(other.bodyImage);
     this->headImage = std::move(other.headImage);
     this->ghostImage = std::move(other.ghostImage);
@@ -153,6 +160,10 @@ void Player::refreshPosition(MovementType move) {
         default:
             break;
     }
+    weapon.updateFrame(bodyFrameX, bodyFrameY);
+    armor.updateFrame(bodyFrameX, bodyFrameY);
+    shield.updateFrame(bodyFrameX, bodyFrameY);
+    helmet.updateFrame(bodyFrameX, bodyFrameY);
 }
 
 void Player::renderGhost(Camera &camera) {
@@ -167,13 +178,14 @@ void Player::renderGhost(Camera &camera) {
 void Player::renderPlayer(Camera &camera) {
     SDL_Rect *currentBodyClip = &(this->bodyClips[bodyFrameX + bodyFrameY * BODY_ANIMATION_FRAMES]);
     SDL_Rect *currentHeadClip = &(this->headClips[headFrameX]);
-    SDL_Rect bodyQuad = {this->posX - camera.getX(), this->posY - camera.getY(), bodyWidth, bodyHeight}; // chequear
-    SDL_Rect headQuad = {this->posX - camera.getX() + headWidth / 4, this->posY - camera.getY() - headHeight / 2 + 1, headWidth, headHeight}; // chequear
-    this->bodyImage.render(bodyQuad.x, bodyQuad.y, currentBodyClip, &bodyQuad); //chequear
-    this->headImage.render(headQuad.x, headQuad.y, currentHeadClip, &headQuad); //chequear
-    //AGREGAR RENDERIZADO DE EQUIPMENT
-    //AGREGAR FUNCION EN ENTITY
-    //CHEQUEAR QUE FUNCIONE BIEN
+    SDL_Rect bodyQuad = {this->posX - camera.getX(), this->posY - camera.getY(), bodyWidth, bodyHeight};
+    SDL_Rect headQuad = {this->posX - camera.getX() + headWidth / 4, this->posY - camera.getY() - headHeight / 2 + 1, headWidth, headHeight};
+    this->bodyImage.render(bodyQuad.x, bodyQuad.y, currentBodyClip, &bodyQuad);
+    this->headImage.render(headQuad.x, headQuad.y, currentHeadClip, &headQuad);
+    this->weapon.render(bodyQuad.x, bodyQuad.y);
+    this->armor.render(bodyQuad.x, bodyQuad.y);
+    this->shield.render(bodyQuad.x, bodyQuad.y);
+    this->helmet.render(headQuad.x, headQuad.y);
 }
 
 void Player::render(Camera &camera) {
@@ -191,6 +203,29 @@ bool Player::collision(uint16_t x, uint16_t y) {
 
 void Player::changeState(uint8_t aState) {
     state = aState;
+}
+
+void Player::changeEquipment(EquipType equipType, uint8_t what) {
+    switch (what) {
+        case 0: //cambiar numeros magicos
+            weapon.updateEquipment(equipType);
+            break;
+        
+        case 1:
+            armor.updateEquipment(equipType);
+            break;
+
+        case 2:
+            shield.updateEquipment(equipType);
+            break;
+
+        case 3:
+            helmet.updateEquipment(equipType);
+            break;
+
+        default:
+            break;
+    }
 }
 
 uint16_t Player::getPosX() {

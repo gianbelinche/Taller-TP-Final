@@ -60,8 +60,9 @@ Player ClientConnector::getPlayer(SDL_Renderer *renderer) {
     msgpack::object_handle oh = msgpack::unpack(msgStr.data(), msgStr.size());
     oh.get().convert(msg);
 
-    Player player(renderer, (PlayerRace)msg[2], msg[1], (uint16_t)msg[3], 
-                    (uint16_t)msg[4], (bool)msg[5]); //chequear
+    Player player(renderer, (PlayerRace)msg[2], msg[1], msg[3], msg[4], msg[5],
+                  (EquipType)msg[6], (EquipType)msg[7], (EquipType)msg[8], 
+                  (EquipType)msg[9]); //chequear
 
     return std::move(player);
 }

@@ -17,6 +17,7 @@
 #include "Healer.h"
 #include "Camera.h"
 #include "Item.h"
+#include "Equippable.h"
 
 class EntityManager {
     private:
@@ -33,10 +34,14 @@ class EntityManager {
 
         void addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY);
         void addDrop(ItemType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY);
-        void addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX, uint16_t aPosY, bool dead);
+        void addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX, 
+                       uint16_t aPosY, uint8_t aState, EquipType aWeapon,
+                       EquipType anArmor, EquipType aShield, 
+                       EquipType aHelmet);
         
         void destroyEntity(uint32_t ID);
         void changeEntityState(uint32_t ID, uint8_t state);
+        void changeEntityEquipment(uint32_t ID, EquipType equipType, uint8_t what);
 
         void moveEntity(uint32_t ID, MovementType moveType);
         void renderEntities(Camera &camera);
