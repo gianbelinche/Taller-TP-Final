@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
         EntityManager entityManager(mainRenderer, player, player.getID());
 
         EventManager eventManager(entityManager, player.getID(), senderQueue, 
-                                  camera, clientProtocol);
+                                  camera, clientProtocol,miniChat, gInventory);
         ModelController modelController(entityManager, receiverQueue, layoutManager);
         Renderer renderer(camera, player, mainMap, entityManager, 
                           mainRenderer, layout, gInventory, miniChat, expBar,

@@ -5,6 +5,8 @@
 #include "EntityManager.h"
 #include "BlockingMsgQueue.h"
 #include "ClientProtocol.h"
+#include "MiniChat.h"
+#include "GraphicInventory.h"
 
 class EventManager {
     private:
@@ -15,6 +17,8 @@ class EventManager {
         SDL_Event event;
         Camera &camera;
         ClientProtocol &clProtocol;
+        MiniChat &chat;
+        GraphicInventort &inventory;
 
         void checkKeyDown(SDL_Event &event);
         void checkKeyUp(SDL_Event &event);
@@ -23,7 +27,8 @@ class EventManager {
     public:
         EventManager(EntityManager &anEntityManager, uint32_t playerID, 
                      BlockingMsgQueue &msgQueue, Camera &aCamera, 
-                     ClientProtocol &aClProtocol);
+                     ClientProtocol &aClProtocol,MiniChat &chat,
+                     GraphicInventort &inventory);
         ~EventManager();
 
         EventManager(const EventManager& copy) = delete;

@@ -25,7 +25,7 @@ public:
     //Añade un mensaje al historial de mensajes    
     void addMessage(std::string message);
     //Añade el mensaje actual al historial de mensajes y lo vacia
-    void sendMessage();
+    std::string sendMessage();
     ~MiniChat();
 
 };

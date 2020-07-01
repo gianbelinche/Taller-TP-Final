@@ -84,7 +84,9 @@ void MiniChat::addMessage(std::string message){
     }
 }
 
-void MiniChat::sendMessage(){
+std::string MiniChat::sendMessage(){
     this->addMessage(writing_word);
+    std::string to_return = writing_word;
     writing_word.clear();
+    return to_return;
 }

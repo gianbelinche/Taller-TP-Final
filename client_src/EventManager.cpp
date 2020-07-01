@@ -8,12 +8,15 @@
 
 EventManager::EventManager(EntityManager &anEntityManager, uint32_t aPlayerID, 
                            BlockingMsgQueue &aMsgQueue, Camera &aCamera, 
-                           ClientProtocol &aClProtocol) : 
+                           ClientProtocol &aClProtocol, MiniChat &chat,
+                           GraphicInventort &inventory) : 
                                                 entityManager(anEntityManager),
                                                 playerID(aPlayerID), 
                                                 msgQueue(aMsgQueue),
                                                 camera(aCamera),
-                                                clProtocol(aClProtocol) {}
+                                                clProtocol(aClProtocol),
+                                                chat(chat),
+                                                inventory(inventory) {}
 
 EventManager::~EventManager() {}
 
@@ -39,7 +42,7 @@ void EventManager::run() {
 void EventManager::handle(SDL_Event &event) {
     //Hola guido te voy poniendo cosas que creo que vamos a necesitar
     //Al principio de todo hay que poner un
-    //SDL_StopTextInput();
+    //SDL_StopTextInput(); //Habria que hacer esto al salir del login
     //Porque por default el text input esta activado
     // ver si tiene que ser bloqueante o no
     switch (event.type) {
@@ -60,8 +63,8 @@ void EventManager::handle(SDL_Event &event) {
             break;
 
         case SDL_TEXTINPUT:
-        //Aca habria que hacer esto
-        //chat.putCharacter(event.text.text);
+            chat.putCharacter(event.text.text);
+            break;
         default:
             break;
     }
@@ -72,30 +75,29 @@ void EventManager::checkKeyDown(SDL_Event &event) {
     if (!writing) {
         switch (event.key.keysym.sym) {
             case SDLK_w:
-                clProtocol.makeMsgMove(playerID, MOVE_UP, msg);
+                msg = clProtocol.makeMsgMove(playerID,MOVE_UP);
                 msgQueue.push(msg);
                 break;
 
             case SDLK_a:
-                clProtocol.makeMsgMove(playerID, MOVE_LEFT, msg);
+                msg = clProtocol.makeMsgMove(playerID, MOVE_LEFT);
                 msgQueue.push(msg);
                 break;
 
             case SDLK_s:
-                clProtocol.makeMsgMove(playerID, MOVE_DOWN, msg);
+                msg = clProtocol.makeMsgMove(playerID, MOVE_DOWN);
                 msgQueue.push(msg);
                 break;
 
             case SDLK_d:
-                clProtocol.makeMsgMove(playerID, MOVE_RIGHT, msg);
+                msg = clProtocol.makeMsgMove(playerID, MOVE_RIGHT);
                 msgQueue.push(msg);
                 break;
 
             case SDLK_KP_ENTER:
             case SDLK_RETURN:
-                //aca iria un
-                //SDL_StartTextInput();
-                //writing = true;
+                SDL_StartTextInput();
+                writing = true;
                 break;
             
             default:
@@ -105,12 +107,15 @@ void EventManager::checkKeyDown(SDL_Event &event) {
         switch (event.key.keysym.sym) {
             case SDLK_KP_ENTER:
             case SDLK_RETURN:
-                //chat.sendMessage();
-                //SDL_StopTextInput();
+                std::string command = chat.sendMessage();
+                SDL_StopTextInput();
+                writing = false;
+                msg = clProtocol.makeMsgSendCommand(playerID,command);
+                msgQueue.push(msg);
                 break;
 
             case SDLK_BACKSPACE:
-                //chat.deleteCharacter();
+                chat.deleteCharacter();
                 break;
 
             default:
@@ -127,7 +132,7 @@ void EventManager::checkKeyUp(SDL_Event &event) {
             case SDLK_a:
             case SDLK_s:
             case SDLK_d:
-                clProtocol.makeMsgMove(playerID, STOP, msg);
+                msg = clProtocol.makeMsgMove(playerID, STOP);
                 msgQueue.push(msg);
                 break;
             
@@ -138,16 +143,10 @@ void EventManager::checkKeyUp(SDL_Event &event) {
 }
 
 void EventManager::checkClick(SDL_Event &event) {
-    //Esto aun no lo tengo bien decidido pero, lo que tengo es esto
-    /*std::string selected = inventory.select(event.button.x,event.button.y,SCREEN_WIDTH,SCREEN_HEIGHT);
-    if (selected != "")
-    std::cout << selected << std::endl;*/
-    //es decir, le digo al inventario que seleccione el objeto de la pos x,y y devuelva el objeto de esa pos, si no hay ningun objeto
-    //o si clickeo afuera del inventario devuelve "", habria que diferenciar si clickeo afuera o en una casilla vacia, tal vez podria hacer que
-    //devuelva la casilla, eso lo resolveria, ya vere que hacer
-    if (0/*Click en inventario*/) {
-        std::vector<uint32_t> msg;
-        clProtocol.makeMsgClickInventory(playerID, 1/*SLOT*/, msg);
+    uint32_t slot = inventory.select(event.button.x,event.button.y,camera);
+    if (slot  != -1) {
+        std::vector<uint32_t> msg = 
+        clProtocol.makeMsgClickInventory(playerID, slot);
         msgQueue.push(msg);
     } else {
         uint32_t IDClicked = entityManager.checkClickEntities(camera, 
