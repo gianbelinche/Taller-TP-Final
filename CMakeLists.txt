@@ -47,6 +47,7 @@ add_library(clientLib
   client_src/Renderer.cpp
   client_src/Sender.cpp
   client_src/Thread.cpp
+  client_src/Equippable.cpp
 )
 
 # Agrego la carpeta con los headers autogenerados a los includes

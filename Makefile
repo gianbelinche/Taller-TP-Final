@@ -352,6 +352,33 @@ client_src/EntityManager.cpp.s:
 	$(MAKE) -f CMakeFiles/clientLib.dir/build.make CMakeFiles/clientLib.dir/client_src/EntityManager.cpp.s
 .PHONY : client_src/EntityManager.cpp.s
 
+client_src/Equippable.o: client_src/Equippable.cpp.o
+
+.PHONY : client_src/Equippable.o
+
+# target to build an object file
+client_src/Equippable.cpp.o:
+	$(MAKE) -f CMakeFiles/clientLib.dir/build.make CMakeFiles/clientLib.dir/client_src/Equippable.cpp.o
+.PHONY : client_src/Equippable.cpp.o
+
+client_src/Equippable.i: client_src/Equippable.cpp.i
+
+.PHONY : client_src/Equippable.i
+
+# target to preprocess a source file
+client_src/Equippable.cpp.i:
+	$(MAKE) -f CMakeFiles/clientLib.dir/build.make CMakeFiles/clientLib.dir/client_src/Equippable.cpp.i
+.PHONY : client_src/Equippable.cpp.i
+
+client_src/Equippable.s: client_src/Equippable.cpp.s
+
+.PHONY : client_src/Equippable.s
+
+# target to generate assembly for a file
+client_src/Equippable.cpp.s:
+	$(MAKE) -f CMakeFiles/clientLib.dir/build.make CMakeFiles/clientLib.dir/client_src/Equippable.cpp.s
+.PHONY : client_src/Equippable.cpp.s
+
 client_src/EventManager.o: client_src/EventManager.cpp.o
 
 .PHONY : client_src/EventManager.o
@@ -1331,6 +1358,9 @@ help:
 	@echo "... client_src/EntityManager.o"
 	@echo "... client_src/EntityManager.i"
 	@echo "... client_src/EntityManager.s"
+	@echo "... client_src/Equippable.o"
+	@echo "... client_src/Equippable.i"
+	@echo "... client_src/Equippable.s"
 	@echo "... client_src/EventManager.o"
 	@echo "... client_src/EventManager.i"
 	@echo "... client_src/EventManager.s"

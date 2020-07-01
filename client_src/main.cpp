@@ -1,8 +1,11 @@
-#include "Persistor.h"
-#include "Configuration.h"
+//#include "Persistor.h"
+//#include "Configuration.h"
+#include "Serializer.h"
 #include <iostream>
+#include <sstream>
 
 int main(){
+    /*
     Persistor persistor;
     std::vector<uint32_t> data;
     for (uint32_t i = 0; i < 35; i++){
@@ -24,7 +27,7 @@ int main(){
     for (int i = 0; i < 35 ;i++){
         std::cout << recv_data[i] << std::endl;
     }
-    /*
+    
     Configuration config;
     std::pair<std::vector<int>,std::vector<float>> data = config.parse("config.txt",5,4);
     for (int i = 0; i < 5 ;i++){
@@ -33,6 +36,15 @@ int main(){
     for (int i = 0; i < 4; i++){
         std::cout << (data.second)[i] << std::endl;
     }*/
+
+    Serializer ser;
+    std::vector<uint32_t> message = ser.serializeCommand(20,"Esto es un comanod");
+    std::stringstream recvd_message;
+
+    for (unsigned int i = 2; i < message.size(); i++){
+        recvd_message << (char) message[i];
+    }
+    std::cout << recvd_message.str() << std::endl;
 
     return 0;
 }

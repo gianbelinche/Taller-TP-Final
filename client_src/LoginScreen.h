@@ -8,6 +8,12 @@
 #include "SDL2/SDL_image.h"
 #include "Camera.h"
 
+/*
+    Representa la pantalla de login, en la que primero
+    se debe ingresar un host y un puerto para conectarse al servidor,
+    y luego se ingresa el usuario y la contraseña para loguearse.
+*/
+
 class LoginScreen{
 private:
     SDL_Renderer* mainRenderer;
@@ -28,11 +34,17 @@ private:
 public:
     LoginScreen(SDL_Renderer* mainRenderer);
     void render(Camera& camera);
+    //Cambia de modo ingresar servidor a modo ingresar usuario y contraseña
     void changeToUserInput();
+    //Muestra un error en pantalla
     void showError(std::string error);
-    void select(int x,int y,Camera& camera);
-    void write(std::string c);  
+    //Selecciona uno de los dos posibles cuadros de texto para escribir
+    void select(int x,int y,int screen_w,int screen_h);
+    //Escribe el caracter c en el cuadro de texto seleccionado
+    void write(std::string c); 
+    //Elimina el ultimo caracter del cuadro de texto seleccionado
     void deleteCharacter();
+    //Devuelve el contenido de ambos cuadros de textos y los vacia
     std::vector<std::string> send();  
 };
 

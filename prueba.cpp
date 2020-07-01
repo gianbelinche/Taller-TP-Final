@@ -103,6 +103,10 @@ void enviarprueba(Socket &l) {
     jugadorProtocolo.emplace_back(2500);
     jugadorProtocolo.emplace_back(2500);
     jugadorProtocolo.emplace_back(0);
+    jugadorProtocolo.emplace_back(2);
+    jugadorProtocolo.emplace_back(11);
+    jugadorProtocolo.emplace_back(15);
+    jugadorProtocolo.emplace_back(13);
 
     //empaquetar
     std::stringstream buffer3;

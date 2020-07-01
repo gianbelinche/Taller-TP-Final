@@ -51,10 +51,15 @@ void Deserializer::decodeChatMessage(std::vector<uint32_t> message){
         recvd_message << "El jugador " << message[2] << " esquivo el ataque";
     }
     if (message[1] == 5){
-
+        for (unsigned int i = 2; i < message.size(); i++){
+            recvd_message << (char) message[i];
+        }
     }
     if (message[1] == 6){
         recvd_message << "El jugador " << message[2] << " gano " << message[3] << " de experiencia";
+    }
+    if (message[1] == 7){
+        recvd_message <<  "El jugador " << message[2] << " subió de nivel";
     }
     chat.addMessage(recvd_message.str());
 }
