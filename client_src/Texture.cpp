@@ -1,9 +1,5 @@
 #include "Texture.h"
 
-/* CAMBIAR COMENTARIOS A ESPAÑOL O SACAR */
-
-/* CAMBIAR CONSTANTES DE LUGAR */
-
 Texture::Texture(SDL_Renderer *aRenderer) : renderer(aRenderer), texture(NULL),
                                             tWidth(0), tHeight(0) {}
 

@@ -108,7 +108,7 @@ Player::~Player() {}
 
 void Player::refreshPosition(MovementType move) {
     switch (move) {
-        case UP:
+        case MOVE_UP:
             this->posY -= this->speed;
             this->bodyFrameX++;
             if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
@@ -116,7 +116,7 @@ void Player::refreshPosition(MovementType move) {
             this->headFrameX = 3;
             break;
 
-        case LEFT:
+        case MOVE_LEFT:
             this->posX -= this->speed;
             this->bodyFrameX++;
             if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
@@ -124,7 +124,7 @@ void Player::refreshPosition(MovementType move) {
             this->headFrameX = 2;
             break;
 
-        case DOWN:
+        case MOVE_DOWN:
             this->posY += this->speed;
             this->bodyFrameX++;
             if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;
@@ -132,7 +132,7 @@ void Player::refreshPosition(MovementType move) {
             this->headFrameX = 0;
             break;
 
-        case RIGHT:
+        case MOVE_RIGHT:
             this->posX += this->speed;
             this->bodyFrameX++;
             if (this->bodyFrameX >= BODY_ANIMATION_FRAMES) bodyFrameX = 0;

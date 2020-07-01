@@ -7,10 +7,6 @@
 #include "SDL2/SDL_mixer.h"
 #include "Image.h"
 
-/* CAMBIAR COMENTARIOS A ESPAÑOL O SACAR */
-
-/* CAMBIAR CONSTANTES DE LUGAR */
-
 class TestGian {
     private:
         SDL_Window* mainWindow;

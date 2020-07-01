@@ -1,10 +1,6 @@
 #ifndef __TEXTURE_H__
 #define __TEXTURE_H__
 
-/* CAMBIAR COMENTARIOS A ESPAÑOL O SACAR */
-
-/* CAMBIAR CONSTANTES DE LUGAR */
-
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include <SDL2/SDL_ttf.h>

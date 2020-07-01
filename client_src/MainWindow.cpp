@@ -44,8 +44,7 @@ MainWindow::MainWindow() {
                         SDL_GetError());
     }
 
-    SDL_SetRenderDrawColor(this->mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF); //CAMBIAR!!
-
+    SDL_SetRenderDrawColor(this->mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
     int imgFlags = IMG_INIT_PNG;
     if (!(IMG_Init(imgFlags) & imgFlags)) {
         throw SDLError("Error: SDL_image no pudo inicializarse. SDL_Error: %s",

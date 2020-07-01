@@ -53,9 +53,9 @@ class Player : public Entity {
         uint16_t headHeight;
         uint16_t ghostWidth;
         uint16_t ghostHeight;
-        uint16_t bodyFrameX;
-        uint16_t bodyFrameY;
-        uint16_t headFrameX;
+        uint8_t bodyFrameX;
+        uint8_t bodyFrameY;
+        uint8_t headFrameX;
         uint8_t state;
         FilteredImage bodyImage;
         FilteredImage headImage;

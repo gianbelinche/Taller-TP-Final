@@ -3,119 +3,50 @@ cmake_minimum_required(VERSION 2.8)
 project(argentum)
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-#[[
-add_library(controllers
-  ClientController.cpp
-  ClientProtocol.cpp
-  jsoncpp.cpp
-  MessageQueue.cpp
-)
 
-add_library(connection
-  ClientConnector.cpp
-  Socket.cpp
-)
-
-add_library(entities
-  Banker.cpp
-  Entity.cpp
-  EntityManager.cpp
-  Goblin.cpp
-  Healer.cpp
-  Item.cpp
-  Merchant.cpp
-  NPC.cpp
-  Player.cpp
-  Skeleton.cpp
-  Spyder.cpp
-  Zombie.cpp
-)
-
-add_library(textures
-  FilteredImage.cpp
-  Image.cpp
-  MapImage.cpp
-  Text.cpp
-  Texture.cpp
-)
-
-add_library(images
-  Camera.cpp
-  MainMap.cpp
-  MainWindow.cpp
-  SpriteClipCreator.cpp
-)
-
-add_library(layout
-  ExpBar.cpp
-  GraphicInventory.cpp
-  Layout.cpp
-  MiniChat.cpp
-)
-
-add_library(errors
-  EmptyException.cpp
-  JsonError.cpp
-  OSError.cpp
-  QuitException.cpp
-  SDLError.cpp
-  SocketException.cpp
-)
-
-add_library(threads
-  EventManager.cpp
-  ModelController.cpp
-  Receiver.cpp
-  Renderer.cpp
-  Sender.cpp
-  Thread.cpp
-)
-]]
-add_library(pruebasss
-  ClientController.cpp
-  ClientProtocol.cpp
-  jsoncpp.cpp
-  BlockingMsgQueue.cpp
-  ProtMsgQueue.cpp
-  ClientConnector.cpp
-  Socket.cpp
-  Banker.cpp
-  Entity.cpp
-  EntityManager.cpp
-  Goblin.cpp
-  Healer.cpp
-  Item.cpp
-  Merchant.cpp
-  NPC.cpp
-  Player.cpp
-  Skeleton.cpp
-  Spyder.cpp
-  Zombie.cpp
-  FilteredImage.cpp
-  Image.cpp
-  MapImage.cpp
-  Text.cpp
-  Texture.cpp
-  Camera.cpp
-  MainMap.cpp
-  MainWindow.cpp
-  SpriteClipCreator.cpp
-  ExpBar.cpp
-  GraphicInventory.cpp
-  Layout.cpp
-  MiniChat.cpp
-  QueueClosedException.cpp
-  JsonError.cpp
-  OSError.cpp
-  QuitException.cpp
-  SDLError.cpp
-  SocketException.cpp
-  EventManager.cpp
-  ModelController.cpp
-  Receiver.cpp
-  Renderer.cpp
-  Sender.cpp
-  Thread.cpp
+add_library(clientLib
+  client_src/ClientController.cpp
+  client_src/ClientProtocol.cpp
+  client_src/BlockingMsgQueue.cpp
+  client_src/ProtMsgQueue.cpp
+  client_src/ClientConnector.cpp
+  client_src/Socket.cpp
+  client_src/Banker.cpp
+  client_src/Entity.cpp
+  client_src/EntityManager.cpp
+  client_src/Goblin.cpp
+  client_src/Healer.cpp
+  client_src/Item.cpp
+  client_src/Merchant.cpp
+  client_src/NPC.cpp
+  client_src/Player.cpp
+  client_src/Skeleton.cpp
+  client_src/Spyder.cpp
+  client_src/Zombie.cpp
+  client_src/FilteredImage.cpp
+  client_src/Image.cpp
+  client_src/MapImage.cpp
+  client_src/Text.cpp
+  client_src/Texture.cpp
+  client_src/Camera.cpp
+  client_src/MainMap.cpp
+  client_src/MainWindow.cpp
+  client_src/SpriteClipCreator.cpp
+  client_src/ExpBar.cpp
+  client_src/GraphicInventory.cpp
+  client_src/Layout.cpp
+  client_src/MiniChat.cpp
+  client_src/QueueClosedException.cpp
+  client_src/OSError.cpp
+  client_src/QuitException.cpp
+  client_src/SDLError.cpp
+  client_src/SocketException.cpp
+  client_src/EventManager.cpp
+  client_src/ModelController.cpp
+  client_src/Receiver.cpp
+  client_src/Renderer.cpp
+  client_src/Sender.cpp
+  client_src/Thread.cpp
 )
 
 # Agrego la carpeta con los headers autogenerados a los includes
@@ -123,10 +54,10 @@ message("Agregando '${PROJECT_BINARY_DIR}' como directorio de includes")
 include_directories(${PROJECT_BINARY_DIR})
 
 
-add_executable (prueba
-  client.cpp
+add_executable (client
+  client_src/client.cpp
 )
 
 #target_link_libraries(testgian errors sounds textures layout SDL2 SDL2_image SDL2_mixer SDL2_ttf)
 #target_link_libraries(prueba controllers connection entities textures images layout errors threads SDL2 SDL2_image SDL2_mixer SDL2_ttf pthread)
-target_link_libraries(prueba pruebasss SDL2 SDL2_image SDL2_mixer SDL2_ttf pthread)
+target_link_libraries(client clientLib SDL2 SDL2_image SDL2_mixer SDL2_ttf pthread)
