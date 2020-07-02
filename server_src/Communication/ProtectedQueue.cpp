@@ -50,10 +50,10 @@ void ProtectedQueue<T>::emptyQueue(std::vector<T> &events) {
 
 template <class T>
 bool ProtectedQueue<T>::isClosed() {
-  return closed;    
+  return closed;
 }
 
 template <class T>
 bool ProtectedQueue<T>::empty() {
-  return q.empty();    
+  return q.empty();
 }

@@ -35,4 +35,4 @@ class ProtectedQueue {
   void emptyQueue(std::vector<T> &events);
 };
 
-#endif // PROTECTEDQUEUE_H
+#endif  // PROTECTEDQUEUE_H

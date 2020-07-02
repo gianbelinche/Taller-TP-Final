@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "Communication/ProtectedQueue.h"
 #include "Map.h"
 #include "Persistor.h"
 #include "Socket.h"
@@ -17,10 +18,12 @@ class ClientHandler : public Thread {
   std::atomic<bool> online;
   Map& map;
   std::atomic<uint32_t>& idGenerator;
+  ProtectedQueue<std::string>& incomingMessages;
 
  public:
   ClientHandler(Socket p, Persistor& persist, Map& worldMap,
-                std::atomic<uint32_t>& idAssigner);
+                std::atomic<uint32_t>& idAssigner,
+                ProtectedQueue<std::string>& incoming);
 
   ~ClientHandler();
 
@@ -36,6 +39,12 @@ class ClientHandler : public Thread {
   void sendMsg(std::string msg);
 
   void sendState();
+
+  void sendTiles();
+
+  void sendTerrain();
+
+  void sendStructures();
 };
 
-#endif // CLIENTHANDLER_H
+#endif  // CLIENTHANDLER_H

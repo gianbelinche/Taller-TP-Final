@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <utility>
 
+#include "Communication/ProtectedQueue.h"
 #include "Game.h"
 #include "resources/GameState.h"
 #include "resources/Map.h"
@@ -23,14 +24,15 @@ void Server::run() {
   GameState world(map.getCollisionMap(), 30);
   Game game(world, idAssigner);
   Persistor persistor;
+  ProtectedQueue<std::string> incomingMessages;
 
   // game.init()  // quizas hay que hacer algo asi
   game.start();  // Lanza el hilo principal del juego
 
   while (keepAccepting) {
     Socket peer = std::move(clientAcceptor.accept());
-    ClientHandler* cli =
-        new ClientHandler(std::move(peer), persistor, map, idAssigner);
+    ClientHandler* cli = new ClientHandler(std::move(peer), persistor, map,
+                                           idAssigner, incomingMessages);
 
     clients.push_back(cli);
     cli->start();
