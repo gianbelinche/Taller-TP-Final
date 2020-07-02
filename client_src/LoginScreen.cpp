@@ -74,6 +74,9 @@ void LoginScreen::changeToUserInput(){
 
     input1 = "";
     input2 = "";
+
+    Text error(NULL);
+    this->error = std::move(error);
 }
 
 void LoginScreen::showError(std::string error){
