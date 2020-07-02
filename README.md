@@ -57,13 +57,23 @@ A través de msgpack, se forma de la siguiente manera:
 
     - **Cliente a Servidor**:
 
-        `03 + comando`
+        `03 + ID + comando` (comando esta codificado como vector de ints)
 
         Ejemplo:
 
-        `{03, "/meditar"}` <- El usuario escribió "/meditar" en el chat
+        `{03, 120, "/meditar"}` <- El usuario 120 escribió "/meditar" en el chat
 
-        `{03, "@Personaje2 hola como estas?"}` <- El usuario escribió "@Personaje2 hola como estas?" en el chat
+        `{03, 120, "@Personaje2 hola como estas?"}` <- El usuario 120 escribió "@Personaje2 hola como estas?" en el chat
+
+4. **Login** (04):
+
+    - **Cliente a Servidor**:
+
+      `04 + ID + user_size + user + password` (user y password estan codificados como vectores de ints)
+
+      Ejemplo:
+
+      `{04, 10, 6, matias, contraseña}` <- El usuario es matias y la contraseña contraseña.
 
 
       
@@ -403,5 +413,15 @@ A través de msgpack, se forma de la siguiente manera:
       Ejemplo:
 
       `{10, 04, 1020, 2500}` <- La cantidad de experiencia actual es 1020 de 2500     
+
+11. **Login**:
+
+    `11 + logueado`
+
+    Ejemplo:
+
+    `{11,0}` <- El jugador no se logueo correctamente
+
+    `{11,1}` <- El jugador se logueo correctamente
 
 COMPLETAR
