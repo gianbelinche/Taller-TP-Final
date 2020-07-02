@@ -1,21 +1,37 @@
+#include "ProtectedStrQueue.h"
+
 #include <utility>
 
-#include "ProtectedStrQueue.h"
+#include "ClosedQueueException.h"
 
 ProtectedStrQueue::ProtectedStrQueue() {}
 
 ProtectedStrQueue::~ProtectedStrQueue() {}
 
+void ProtectedStrQueue::close() {
+  std::unique_lock<std::mutex> l(m);
+  closed = true;
+  cv.notify_all();
+}
+
 void ProtectedStrQueue::push(std::string s) {
   std::unique_lock<std::mutex> l(m);
   q.push(std::move(s));
+  cv.notify_all();  // O one, no cambia nada en nuestro caso, solo va a haber 1
+                    // en espera
 }
 
-// Si se va a usar para algo ver de mandarle el mutex
 std::string ProtectedStrQueue::pop() {
-  std::string frontElement = q.front();
+  std::unique_lock<std::mutex> l(m);
+  while (q.empty()) {
+    if (closed) {
+      throw ClosedQueueException("La cola esta cerrada");
+    }
+    cv.wait(l);
+  }
+  std::string poppedMsg = q.front();
   q.pop();
-  return frontElement;
+  return std::move(poppedMsg);
 }
 
 void ProtectedStrQueue::emptyQueue(std::vector<std::string> &events) {
