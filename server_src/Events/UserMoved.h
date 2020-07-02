@@ -12,6 +12,14 @@ class UserMoved : public Event {
 
   ~UserMoved();
 
+  UserMoved(const UserMoved& other) = delete;
+
+  UserMoved& operator=(const UserMoved& other) = delete;
+
+  UserMoved(UserMoved&& other);
+
+  UserMoved& operator=(UserMoved&& other);
+
   char getDirection();
 };
 
