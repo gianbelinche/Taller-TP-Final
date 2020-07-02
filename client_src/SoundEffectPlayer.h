@@ -9,6 +9,8 @@ private:
     std::map<int,SoundEffect> sounds;
 public:
     SoundEffectPlayer() : sounds() {}
+    SoundEffectPlayer(const SoundEffectPlayer& copy) = delete;
+    SoundEffectPlayer& operator=(const SoundEffectPlayer& copy) = delete;
     //Añade un efecto de sonido
     void add(const int id,std::string sound);
     //Reproduce el efecto de sonido con clave id

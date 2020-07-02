@@ -16,6 +16,8 @@ private:
     Camera camera;
 public:
     LoginManager(LoginScreen& login,SDL_Renderer *mainRenderer);
+    LoginManager(const LoginManager& copy) = delete;
+    LoginManager& operator=(const LoginManager& copy) = delete;
     std::vector<std::string> run();
 };
 

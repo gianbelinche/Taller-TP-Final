@@ -17,6 +17,8 @@ private:
     std::vector<std::string> getPartialString(std::string string,int n);
 public:
     MiniChat(SDL_Renderer* mainRenderer);
+    MiniChat(const MiniChat& copy) = delete;
+    MiniChat& operator=(const MiniChat& copy) = delete;
     void render(Camera& camera);
     //Agrega el caracter c al mensaje actual
     void putCharacter(std::string c);

@@ -26,6 +26,8 @@ private:
     TTF_Font* gFont;
 public:
     Layout(SDL_Renderer* mainRenderer);
+    Layout(const Layout& copy) = delete;
+    Layout& operator=(const Layout& copy) = delete;
     //Cambian el texto de oro/vida/mana/nivel a graficarse
     void changeGold(int gold);
     void changeLife(int life, int max_life);

@@ -26,6 +26,9 @@ private:
 public:
     GraphicInventory(SDL_Renderer* mainRenderer);
 
+    GraphicInventory(const GraphicInventory& copy) = delete;
+    GraphicInventory& operator=(const GraphicInventory& copy) = delete;
+
     //Añade un objeto al inventario
     void addImage(int key);
     //Quita un objeto del inventario en el slot pos
