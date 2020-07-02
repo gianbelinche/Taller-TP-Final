@@ -3,19 +3,20 @@
 
 #include <atomic>
 #include <cstdint>
+#include <string>
 
 #include "../resources/Thread.h"
-#include "ProtectedStrQueue.h"
+#include "ProtectedQueue.h"
 #include "Socket.h"
 
 class ServerReceiver : public Thread {
  private:
   Socket& peer;
-  ProtectedStrQueue& incomingEvents;
+  ProtectedQueue<std::string>& incomingEvents;
   std::atomic<bool> keepRunning;
 
  public:
-  ServerReceiver(Socket& peer, ProtectedStrQueue incoming);
+  ServerReceiver(Socket& peer, ProtectedQueue<std::string> incoming);
 
   ~ServerReceiver();
 
