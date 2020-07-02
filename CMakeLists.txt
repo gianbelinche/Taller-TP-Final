@@ -49,6 +49,8 @@ add_library(clientLib
   client_src/Thread.cpp
   client_src/Equippable.cpp
   client_src/LayoutManager.cpp
+  client_src/LoginScreen.cpp
+  client_src/LoginManager.cpp
 )
 
 # Agrego la carpeta con los headers autogenerados a los includes

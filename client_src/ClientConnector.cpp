@@ -7,8 +7,7 @@
 #include <string>
 #include <sstream>
 
-ClientConnector::ClientConnector(const char *host, const char *service) {
-    socket.connect(host, service);
+ClientConnector::ClientConnector() {
 }
 
 ClientConnector::~ClientConnector() {}
@@ -23,6 +22,10 @@ ClientConnector& ClientConnector::operator=(ClientConnector&& other) {
 
     socket = std::move(other.socket);
     return *this;
+}
+
+void ClientConnector::connect(const char *host, const char *service){
+    socket.connect(host, service);
 }
 
 void ClientConnector::closeSocket() {

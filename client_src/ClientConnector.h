@@ -19,13 +19,14 @@ class ClientConnector {
         std::string receiveMsg(uint32_t len);
 
     public:
-        ClientConnector(const char *host, const char *service);
+        ClientConnector();
         ~ClientConnector();
 
         ClientConnector(const ClientConnector &copy) = delete;
         ClientConnector(ClientConnector&& other);
         ClientConnector& operator=(ClientConnector&& other);
 
+        void connect(const char *host, const char *service);
         void closeSocket();
 
         Player getPlayer(SDL_Renderer *renderer);

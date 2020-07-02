@@ -21,6 +21,7 @@ EventManager::EventManager(EntityManager &anEntityManager, uint32_t aPlayerID,
 EventManager::~EventManager() {}
 
 void EventManager::run() {
+    SDL_StopTextInput();
     try {
         while (SDL_WaitEvent(&event) != 0) {
             this->handle(event);
@@ -47,7 +48,7 @@ void EventManager::handle(SDL_Event &event) {
     // ver si tiene que ser bloqueante o no
     switch (event.type) {
         case SDL_QUIT:
-            throw QuitException("Salida del programa\n");
+            throw QuitException("Salida del programa\n"); 
             break;
 
         case SDL_KEYDOWN:

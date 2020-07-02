@@ -39,7 +39,7 @@ public:
     //Muestra un error en pantalla
     void showError(std::string error);
     //Selecciona uno de los dos posibles cuadros de texto para escribir
-    void select(int x,int y,int screen_w,int screen_h);
+    void select(int x,int y,Camera& camera);
     //Escribe el caracter c en el cuadro de texto seleccionado
     void write(std::string c); 
     //Elimina el ultimo caracter del cuadro de texto seleccionado

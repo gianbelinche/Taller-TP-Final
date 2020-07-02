@@ -137,7 +137,8 @@ std::vector<std::string> LoginScreen::send(){
     std::vector<std::string> vector;
     vector.push_back(input1);
     vector.push_back(input2);
-    this->changeToUserInput();
+    input1 = "";
+    input2 = "";
     return std::move(vector);
 }
 
