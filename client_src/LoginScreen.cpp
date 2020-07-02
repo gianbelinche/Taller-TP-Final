@@ -171,6 +171,6 @@ void LoginScreen::deactivate(){
     active = false;
 }
 
-bool LoginScreen::is_active(){
+bool LoginScreen::is_active() const{
     return active;
 } 

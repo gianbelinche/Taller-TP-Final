@@ -34,8 +34,8 @@ public:
     void changeMana(int mana, int max_mana);
     void changeLevel(int level);
     //Marca si el layout fue clickeado
-    bool isClicked(int x,int screen_width);
-    void render(Camera& camera);
+    bool isClicked(int x,int screen_width) const;
+    void render(const Camera& camera);
     ~Layout();
 };
 

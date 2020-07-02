@@ -67,18 +67,18 @@ void Camera::refresh(uint16_t posX, uint16_t posY) {
     }
 }
 
-uint16_t Camera::getX() {
+uint16_t Camera::getX() const{
     return this->x;
 }
 
-uint16_t Camera::getY() {
+uint16_t Camera::getY() const{
     return this->y;
 }
 
-uint16_t Camera::getHeight() {
+uint16_t Camera::getHeight() const{
     return this->height;
 }
 
-uint16_t Camera::getWidth() {
+uint16_t Camera::getWidth() const{
     return this->width;
 }

@@ -30,10 +30,10 @@ class Camera {
 
         void refresh(uint16_t posX, uint16_t posY);
 
-        uint16_t getX();
-        uint16_t getY();
-        uint16_t getHeight();
-        uint16_t getWidth();
+        uint16_t getX() const;
+        uint16_t getY() const;
+        uint16_t getHeight() const;
+        uint16_t getWidth() const;
 };
 
 #endif

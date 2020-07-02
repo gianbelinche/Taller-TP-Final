@@ -19,7 +19,7 @@ public:
     MiniChat(SDL_Renderer* mainRenderer);
     MiniChat(const MiniChat& copy) = delete;
     MiniChat& operator=(const MiniChat& copy) = delete;
-    void render(Camera& camera);
+    void render(const Camera& camera);
     //Agrega el caracter c al mensaje actual
     void putCharacter(std::string c);
     //Borra el ultimo caracter del mensaje actual

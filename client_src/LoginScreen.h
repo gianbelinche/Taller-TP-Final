@@ -52,7 +52,7 @@ public:
     //Desactiva la pantalla de login
     void deactivate();
     //Informa si el login esta activado
-    bool is_active();
+    bool is_active() const;
 };
 
 #endif

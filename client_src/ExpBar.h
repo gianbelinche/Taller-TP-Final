@@ -20,7 +20,7 @@ public:
     ExpBar(SDL_Renderer* mainRenderer);
     ExpBar(const ExpBar& copy) = delete;
     ExpBar& operator=(const ExpBar& copy) = delete;
-    void render(Camera& camera);
+    void render(const Camera& camera);
     void changeExp(int exp, int max_exp);
 };
 
