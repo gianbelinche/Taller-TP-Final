@@ -8,7 +8,7 @@ class MusicPlayer {
 private:
     std::map<int,Music> songs;
 public:
-    MusicPlayer() : songs() {}
+    MusicPlayer();
     //Añade una cancion al reproductor
     void add(const int id,std::string song);
     //Comienza a reproducir la canción con clave id

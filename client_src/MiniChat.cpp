@@ -14,7 +14,7 @@
 
 
 MiniChat::MiniChat(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer){
-    this->gFont = TTF_OpenFont("Fonts/OpenSans.ttf", FONT_SIZE);
+    this->gFont = TTF_OpenFont("Fonts/Palace.ttf", FONT_SIZE);
 }
 
 MiniChat::~MiniChat(){
