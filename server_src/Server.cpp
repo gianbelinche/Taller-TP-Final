@@ -18,7 +18,7 @@ Server::Server(const char* port, Configuration configuration)
 Server::~Server() {}
 
 void Server::run() {
-  std::atomic<uint32_t> idAssigner{0};
+  std::atomic<uint32_t> idAssigner{1};
   Map map(MAP_PATH);
   GameState world(map.getCollisionMap(), 30);
   Game game(world, idAssigner);

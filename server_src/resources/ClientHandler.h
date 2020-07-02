@@ -1,3 +1,5 @@
+#ifndef CLIENTHANDLER_H
+#define CLIENTHANDLER_H
 #include <atomic>
 #include <cstdint>
 #include <string>
@@ -35,3 +37,5 @@ class ClientHandler : public Thread {
 
   void sendState();
 };
+
+#endif // CLIENTHANDLER_H

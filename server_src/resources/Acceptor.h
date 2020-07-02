@@ -1,3 +1,6 @@
+#ifndef ACCEPTOR_H
+#define ACCEPTOR_H
+
 #include <atomic>
 #include <vector>
 
@@ -15,3 +18,5 @@ class Acceptor {
 
   Socket accept();
 };
+
+#endif // ACCEPTOR_H
