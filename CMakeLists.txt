@@ -51,6 +51,8 @@ add_library(clientLib
   client_src/LayoutManager.cpp
   client_src/LoginScreen.cpp
   client_src/LoginManager.cpp
+  client_src/Music.cpp
+  client_src/MusicPlayer.cpp
 )
 
 # Agrego la carpeta con los headers autogenerados a los includes
