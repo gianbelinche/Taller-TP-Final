@@ -14,6 +14,9 @@ class MainWindow {
     public:
         MainWindow();
         ~MainWindow();
+
+        MainWindow(const MainWindow& copy) = delete;
+
         SDL_Renderer* getRenderer();
 };
 

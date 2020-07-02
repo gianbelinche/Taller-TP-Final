@@ -22,6 +22,27 @@ Camera::Camera(uint16_t posX, uint16_t posY, uint16_t aPlayerHeight,
     }
 }
 
+Camera::Camera(Camera&& other) : x(other.x), y(other.y), 
+                                 height(other.height),
+                                 width(other.width), 
+                                 playerHeight(other.playerHeight),
+                                 playerWidth(other.playerWidth) {}
+
+Camera& Camera::operator=(Camera&& other) {
+    if (this == &other) {
+        return *this;
+    }
+
+    this->x = other.x;
+    this->y = other.y;
+    this->height = other.height;
+    this->width = other.width; 
+    this->playerHeight = other.playerHeight;
+    this->playerWidth = other.playerWidth;
+    
+    return *this;
+}
+
 Camera::~Camera() {}
 
 void Camera::refresh(uint16_t posX, uint16_t posY) {

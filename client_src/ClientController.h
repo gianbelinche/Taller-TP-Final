@@ -24,6 +24,8 @@ class ClientController {
                         ClientConnector &aClientConnector);
         ~ClientController();
 
+        ClientController(const ClientController &copy) = delete;
+
         void run();
 };
  

@@ -16,6 +16,10 @@ class Healer : public NPC {
         Healer(SDL_Renderer *renderer, uint32_t anID, uint16_t posX, 
                uint16_t posY);
         ~Healer();
+
+        Healer(const Healer& copy) = delete;
+        Healer(Healer &&other);
+        Healer& operator=(Healer&& other);
 };
 
 #endif

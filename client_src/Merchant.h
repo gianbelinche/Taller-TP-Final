@@ -16,6 +16,10 @@ class Merchant : public NPC {
         Merchant(SDL_Renderer *renderer, uint32_t anID, uint16_t posX, 
                  uint16_t posY);
         ~Merchant();
+
+        Merchant(const Merchant& copy) = delete;
+        Merchant(Merchant &&other);
+        Merchant& operator=(Merchant&& other);
 };
 
 #endif

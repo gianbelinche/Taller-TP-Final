@@ -34,22 +34,6 @@ MainMap& MainMap::operator=(MainMap&& other) {
 }
 
 void MainMap::renderTerrain(Camera &camera) {
-    /*uint32_t key = 0;
-    uint32_t index = 0;
-
-    for (int y = -64, posY = camera.getY() - 64; y < camera.getHeight() + 64; y += 32, posY += 32) {
-        for (int x = -64, posX = camera.getX() - 64; x < camera.getWidth() + 64; x += 32, posX += 32) {
-            std::vector<uint32_t> *r = &texMap[posY/32];
-            index = (*r)[posX/32];
-            if (!index) continue;
-            key = index;
-            while (this->textures.find(key) == this->textures.end()) {
-                key--;
-            }
-            this->textures.at(key).renderFromTile(index-key, x, y);
-        }
-    }*/
-
     int x = 0 - camera.getX();
     int y = 0 - camera.getY();
 
@@ -71,22 +55,6 @@ void MainMap::renderTerrain(Camera &camera) {
 }
 
 void MainMap::renderStructures(Camera &camera) {
-    /*uint32_t key = 0;
-    uint32_t index = 0;
-
-    for (int y = -64, posY = camera.getY() - 64; y < camera.getHeight() + 64; y += 32, posY += 32) {
-        for (int x = -64, posX = camera.getX() - 64; x < camera.getWidth() + 64; x += 32, posX += 32) {
-            std::vector<uint32_t> *r = &strMap[posY/32];
-            index = (*r)[posX/32];
-            if (!index) continue;
-            key = index;
-            while (this->textures.find(key) == this->textures.end()) {
-                key--;
-            }
-            this->textures.at(key).renderFromTile(index-key, x, y);
-        }
-    }*/
-
     int x = 0 - camera.getX();
     int y = 0 - camera.getY();
 

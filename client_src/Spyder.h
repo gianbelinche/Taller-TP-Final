@@ -16,6 +16,10 @@ class Spyder : public NPC {
         Spyder(SDL_Renderer *renderer, uint32_t anID, uint16_t posX, 
                uint16_t posY);
         ~Spyder();
+
+        Spyder(const Spyder& copy) = delete;
+        Spyder(Spyder &&other);
+        Spyder& operator=(Spyder&& other);
 };
 
 #endif

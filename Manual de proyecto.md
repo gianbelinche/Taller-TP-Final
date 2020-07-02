@@ -14,7 +14,7 @@ Integrantes:
 
 Para realizar este proyecto se dividieron las tares en tres grupos, cada uno correspondiente a un integrante.
 
-Los grupos fueron los propuestos en el enunciado, donde el trabajo correspondiente al alumno uno lo realizó Julian Crespo, el alumno 2 Guido Botta y el alumno 3 Gianluca Belinche.
+Los grupos fueron los propuestos en el enunciado, donde el trabajo correspondiente al alumno 1 lo realizó Julian Crespo, el alumno 2 Guido Botta y el alumno 3 Gianluca Belinche.
 
 ## Evolución del proyecto
 

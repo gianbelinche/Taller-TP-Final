@@ -16,6 +16,10 @@ class Banker : public NPC {
         Banker(SDL_Renderer *renderer, uint32_t anID, uint16_t posX, 
                uint16_t posY);
         ~Banker();
+
+        Banker(const Banker& copy) = delete;
+        Banker(Banker &&other);
+        Banker& operator=(Banker&& other);
 };
 
 #endif

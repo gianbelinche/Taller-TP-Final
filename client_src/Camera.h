@@ -24,6 +24,10 @@ class Camera {
         uint16_t playerWidth);
         ~Camera();
 
+        Camera(const Camera &copy) = delete;
+        Camera(Camera&& other);
+        Camera& operator=(Camera&& other);
+
         void refresh(uint16_t posX, uint16_t posY);
 
         uint16_t getX();

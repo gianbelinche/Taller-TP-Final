@@ -38,6 +38,8 @@ class Renderer : public Thread {
                  LoginScreen &loginScreen);
         ~Renderer();
 
+        Renderer(const Renderer& copy) = delete;
+
         void run();
 };
 

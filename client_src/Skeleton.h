@@ -16,6 +16,10 @@ class Skeleton : public NPC {
         Skeleton(SDL_Renderer *renderer, uint32_t anID, uint16_t posX, 
                  uint16_t posY);
         ~Skeleton();
+
+        Skeleton(const Skeleton& copy) = delete;
+        Skeleton(Skeleton &&other);
+        Skeleton& operator=(Skeleton&& other);
 };
 
 #endif
