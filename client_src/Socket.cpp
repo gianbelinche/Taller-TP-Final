@@ -14,6 +14,10 @@ Socket::Socket(Socket &&other) : fd(other.fd) { // Para el accept
 }
 
 Socket& Socket::operator=(Socket &&other) {
+  if (this == &other) {
+    return *this;
+  }
+
   if (this->fd != -1) {close(this->fd);}
   this->fd = other.fd;
   other.fd = -1;

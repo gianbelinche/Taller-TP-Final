@@ -25,7 +25,12 @@ SoundEffect::SoundEffect(SoundEffect&& other){
 }
 
 SoundEffect& SoundEffect::operator=(SoundEffect&& other){
+    if (this == &other) {
+        return *this;
+    }
+
     this->gSoundEffect = other.gSoundEffect;
     other.gSoundEffect = NULL;
+    
     return *this;
 }

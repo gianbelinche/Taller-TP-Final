@@ -13,7 +13,6 @@ EntityManager::~EntityManager() {
 
 void EntityManager::addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY) {
     std::unique_lock<std::mutex> lk(mux);
-    /*DEBERIA ARMAR TAMBIEN EL OTRO HASH PARA RENDERIZAR EN ORDEN chequear cambiar completar*/
     switch (type) {
         case SPYDER:
             entities[anID] = new Spyder(renderer, anID, aPosX, aPosY);
@@ -88,8 +87,15 @@ void EntityManager::moveEntity(uint32_t ID, MovementType moveType) {
 
 void EntityManager::renderEntities(Camera &camera) {
     std::unique_lock<std::mutex> lk(mux);
+
+    std::map<uint32_t, Entity*> entitiesRender;
+
     for (auto& entity : entities) {
-        entity.second->render(camera);
+        entitiesRender[entity.second->getPosY()] = entity.second;
+    }
+
+    for (auto& entityRender : entitiesRender) {
+        entityRender.second->render(camera);
     }
 
     player.render(camera);

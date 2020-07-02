@@ -88,9 +88,6 @@ class Player : public Entity {
         virtual void changeState(uint8_t aState) override;
         virtual void changeEquipment(EquipType equipType, uint8_t what) override;
 
-        uint16_t getPosX();
-        uint16_t getPosY();
-
         uint16_t getHeight();
         uint16_t getWidth();
 };

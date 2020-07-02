@@ -25,7 +25,12 @@ Music::Music(Music&& other){
 }
 
 Music& Music::operator=(Music&& other){
+    if (this == &other) {
+        return *this;
+    }
+
     this->gMusic = other.gMusic;
     other.gMusic = NULL;
+    
     return *this;
 }

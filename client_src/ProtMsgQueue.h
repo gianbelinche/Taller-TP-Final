@@ -21,8 +21,6 @@ class ProtMsgQueue {
         ~ProtMsgQueue();
 
         ProtMsgQueue(const ProtMsgQueue &copy) = delete;
-        ProtMsgQueue(ProtMsgQueue&& other);
-        ProtMsgQueue& operator=(ProtMsgQueue&& other);
 
         void push(std::vector<uint32_t> &msg);
         std::vector<uint32_t> pop();

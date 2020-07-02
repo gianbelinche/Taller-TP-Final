@@ -18,8 +18,18 @@ Entity& Entity::operator=(Entity&& other) {
     ID = other.ID;
     posX = other.posX;
     posY = other.posY;
+
+    return *this;
 }
 
 uint32_t Entity::getID() {
     return ID;
+}
+
+uint16_t Entity::getPosX() {
+    return posX;
+}
+
+uint16_t Entity::getPosY() {
+    return posY;
 }

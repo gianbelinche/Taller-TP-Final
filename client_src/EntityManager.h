@@ -25,7 +25,6 @@ class EntityManager {
         uint32_t playerID;
         SDL_Renderer *renderer;
         std::unordered_map<uint32_t, Entity*> entities;
-        std::map<uint32_t, Entity*> entitiesRender; //chequear, todavía no lo hice
         std::mutex mux;
         
     public:

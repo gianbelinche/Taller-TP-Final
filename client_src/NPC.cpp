@@ -31,6 +31,8 @@ NPC& NPC::operator=(NPC&& other) {
     clips = std::move(other.clips);
     quad = other.quad;
     image = std::move(other.image);
+
+    return *this;
 }
 
 void NPC::refreshPosition(MovementType move) {

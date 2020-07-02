@@ -228,14 +228,6 @@ void Player::changeEquipment(EquipType equipType, uint8_t what) {
     }
 }
 
-uint16_t Player::getPosX() {
-    return this->posX;
-}
-
-uint16_t Player::getPosY() {
-    return this->posY;
-}
-
 uint16_t Player::getHeight() {
     return this->bodyHeight;
 }

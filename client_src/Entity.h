@@ -32,6 +32,8 @@ class Entity {
         virtual void changeEquipment(EquipType equipType, uint8_t what) = 0;
 
         uint32_t getID();
+        uint16_t getPosX();
+        uint16_t getPosY();
 };
 
 #endif

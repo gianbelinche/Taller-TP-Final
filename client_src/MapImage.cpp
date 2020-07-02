@@ -20,6 +20,7 @@ MapImage& MapImage::operator=(MapImage&& other) {
 
     this->spriteClips = std::move(other.spriteClips);
     Image::operator=(std::move(other));
+    
     return *this;
 }
 

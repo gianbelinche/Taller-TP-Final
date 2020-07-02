@@ -22,8 +22,6 @@ class BlockingMsgQueue {
         ~BlockingMsgQueue();
 
         BlockingMsgQueue(const BlockingMsgQueue &copy) = delete;
-        BlockingMsgQueue(BlockingMsgQueue&& other);
-        BlockingMsgQueue& operator=(BlockingMsgQueue&& other);
 
         void push(std::vector<uint32_t> &msg);
         std::vector<uint32_t> pop();
