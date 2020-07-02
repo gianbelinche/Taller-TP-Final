@@ -25,12 +25,15 @@ Otros casos fueron ***COMPLETAR CON CASOS DE GUIDO Y JULIAN***
 
 ## Inconvenientes encontrados
 
+Un inconveniente que se encontró fue, una vez creado el modelo del cliente, se intentó agregar la etapa de login a este, pero por la forma en que se habia diseñado, no encajaba correctamente, generando dependencias circulares dificiles de solucionar, ya que para poder tomar eventos de sdl para el login, por la forma en que se codeo, primero habia que conectarse al servidor, pero no nos podiamos conectar al servidor hasta que el usuario no lo ingresara a travéz de la pantalla de login, por lo que no podiamos hacer que funcionase.
+El problema se soluciono haciendo que la pantalla de login se implementara con QT en vez de SDL, de esa manera, se logró independizar la pantalla de login con la conexión al servidor.
+
 ## Analisis de puntos pendientes
 
 ## Herramientas
 
 Las herramientas externas para realizar el proyecto fueron, las librerias SDL, msgpack, jsoncpp, ***SHA256???***
 El sistema de control de versiones usado fue git a través de github.
-Se utilizaron diversos programas para la creación de los gráficos y la música del juego, entre ellos, audacity, y software de corrección de color para darle variedad a los sprites.
+Se utilizaron diversos programas para la creación de los gráficos y la música del juego, entre ellos, audacity, ZapSplat (biblioteca online de sonidos) y software de corrección de color para darle variedad a los sprites.
 
 ## Conclusiones
