@@ -9,19 +9,20 @@
 EventManager::EventManager(EntityManager &anEntityManager, uint32_t aPlayerID, 
                            BlockingMsgQueue &aMsgQueue, Camera &aCamera, 
                            ClientProtocol &aClProtocol, MiniChat &chat,
-                           GraphicInventory &inventory) : 
+                           GraphicInventory &inventory,
+                           LoginScreen &loginScreen) :
                                                 entityManager(anEntityManager),
                                                 playerID(aPlayerID), 
                                                 msgQueue(aMsgQueue),
                                                 camera(aCamera),
                                                 clProtocol(aClProtocol),
                                                 chat(chat),
-                                                inventory(inventory) {}
+                                                inventory(inventory),
+                                                loginScreen(loginScreen) {}
 
 EventManager::~EventManager() {}
 
 void EventManager::run() {
-    SDL_StopTextInput();
     try {
         while (SDL_WaitEvent(&event) != 0) {
             this->handle(event);
@@ -41,11 +42,6 @@ void EventManager::run() {
 }
 
 void EventManager::handle(SDL_Event &event) {
-    //Hola guido te voy poniendo cosas que creo que vamos a necesitar
-    //Al principio de todo hay que poner un
-    //SDL_StopTextInput(); //Habria que hacer esto al salir del login
-    //Porque por default el text input esta activado
-    // ver si tiene que ser bloqueante o no
     switch (event.type) {
         case SDL_QUIT:
             throw QuitException("Salida del programa\n"); 
@@ -64,7 +60,11 @@ void EventManager::handle(SDL_Event &event) {
             break;
 
         case SDL_TEXTINPUT:
-            chat.putCharacter(event.text.text);
+            if (loginScreen.is_active()){
+                loginScreen.write(event.text.text);
+            } else {
+                chat.putCharacter(event.text.text);
+            }
             break;
         default:
             break;
@@ -74,54 +74,71 @@ void EventManager::handle(SDL_Event &event) {
 void EventManager::checkKeyDown(SDL_Event &event) {
     std::vector<uint32_t> msg;
     std::string command = "";
-    if (!writing) {
-        switch (event.key.keysym.sym) {
-            case SDLK_w:
-                msg = clProtocol.makeMsgMove(playerID,MOVE_UP);
-                msgQueue.push(msg);
-                break;
-
-            case SDLK_a:
-                msg = clProtocol.makeMsgMove(playerID, MOVE_LEFT);
-                msgQueue.push(msg);
-                break;
-
-            case SDLK_s:
-                msg = clProtocol.makeMsgMove(playerID, MOVE_DOWN);
-                msgQueue.push(msg);
-                break;
-
-            case SDLK_d:
-                msg = clProtocol.makeMsgMove(playerID, MOVE_RIGHT);
-                msgQueue.push(msg);
-                break;
-
+    if (loginScreen.is_active()){
+        std::vector<std::string> user;
+        switch (event.key.keysym.sym){
             case SDLK_KP_ENTER:
             case SDLK_RETURN:
-                SDL_StartTextInput();
-                writing = true;
+                user = loginScreen.send();
+                msg = clProtocol.makeMsgLogin(playerID,user[0],user[1]);
+                msgQueue.push(msg);
+                loginScreen.deactivate(); //Esto hay que sacarlo
+                SDL_StopTextInput(); //Hay que ver bien donde poner esto
                 break;
-            
-            default:
-                break;
+            case SDLK_BACKSPACE:
+                loginScreen.deleteCharacter();
+                break;    
         }
     } else {
-        switch (event.key.keysym.sym) {
-            case SDLK_KP_ENTER:
-            case SDLK_RETURN:
-                command = chat.sendMessage();
-                SDL_StopTextInput();
-                writing = false;
-                msg = clProtocol.makeMsgSendCommand(playerID,command);
-                msgQueue.push(msg);
-                break;
+        if (!writing) {
+            switch (event.key.keysym.sym) {
+                case SDLK_w:
+                    msg = clProtocol.makeMsgMove(playerID,MOVE_UP);
+                    msgQueue.push(msg);
+                    break;
 
-            case SDLK_BACKSPACE:
-                chat.deleteCharacter();
-                break;
+                case SDLK_a:
+                    msg = clProtocol.makeMsgMove(playerID, MOVE_LEFT);
+                    msgQueue.push(msg);
+                    break;
 
-            default:
-                break;
+                case SDLK_s:
+                    msg = clProtocol.makeMsgMove(playerID, MOVE_DOWN);
+                    msgQueue.push(msg);
+                    break;
+
+                case SDLK_d:
+                    msg = clProtocol.makeMsgMove(playerID, MOVE_RIGHT);
+                    msgQueue.push(msg);
+                    break;
+
+                case SDLK_KP_ENTER:
+                case SDLK_RETURN:
+                    SDL_StartTextInput();
+                    writing = true;
+                    break;
+                
+                default:
+                    break;
+            }
+        } else {
+            switch (event.key.keysym.sym) {
+                case SDLK_KP_ENTER:
+                case SDLK_RETURN:
+                    command = chat.sendMessage();
+                    SDL_StopTextInput();
+                    writing = false;
+                    msg = clProtocol.makeMsgSendCommand(playerID,command);
+                    msgQueue.push(msg);
+                    break;
+
+                case SDLK_BACKSPACE:
+                    chat.deleteCharacter();
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }
@@ -145,19 +162,24 @@ void EventManager::checkKeyUp(SDL_Event &event) {
 }
 
 void EventManager::checkClick(SDL_Event &event) {
-    uint32_t slot = inventory.select(event.button.x,event.button.y,camera);
-    if (slot  != -1) {
-        std::vector<uint32_t> msg = 
-        clProtocol.makeMsgClickInventory(playerID, slot);
-        msgQueue.push(msg);
+    if (loginScreen.is_active()){
+        loginScreen.select(event.button.x,event.button.y,camera);
     } else {
-        uint32_t IDClicked = entityManager.checkClickEntities(camera, 
-                                                              event.button.x, 
-                                                              event.button.y);
-        if (IDClicked) {
-            std::vector<uint32_t> msg =
-            clProtocol.makeMsgClickEntity(IDClicked);
+        uint32_t slot = inventory.select(event.button.x,event.button.y,camera);
+        if (slot  != -1) {
+            std::vector<uint32_t> msg = 
+            clProtocol.makeMsgClickInventory(playerID, slot);
             msgQueue.push(msg);
+        } else {
+            uint32_t IDClicked = entityManager.checkClickEntities(camera, 
+                                                                event.button.x, 
+                                                                event.button.y);
+            if (IDClicked) {
+                std::vector<uint32_t> msg =
+                clProtocol.makeMsgClickEntity(IDClicked);
+                msgQueue.push(msg);
+            }
         }
     }
+    
 }

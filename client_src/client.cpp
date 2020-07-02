@@ -69,11 +69,13 @@ int main(int argc, char* argv[]) {
         EntityManager entityManager(mainRenderer, player, player.getID());
 
         EventManager eventManager(entityManager, player.getID(), senderQueue, 
-                                  camera, clientProtocol,miniChat, gInventory);
-        ModelController modelController(entityManager, receiverQueue, layoutManager);
+                                  camera, clientProtocol,miniChat, gInventory,
+                                 loginScreen);
+        ModelController modelController(entityManager, receiverQueue,
+                                         layoutManager, loginScreen);
         Renderer renderer(camera, player, mainMap, entityManager, 
                           mainRenderer, layout, gInventory, miniChat, expBar,
-                          modelController);
+                          modelController,loginScreen);
 
         ClientController clientController(receiver, sender, modelController,
                                           eventManager, renderer, clientConnector);

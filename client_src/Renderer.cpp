@@ -7,7 +7,8 @@ Renderer::Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap,
                    EntityManager &anEntityManager, SDL_Renderer *aRenderer,
                    Layout &aLayout, GraphicInventory &anInventory, 
                    MiniChat &aChat, ExpBar &anExpbar, 
-                   ModelController &aModelController) : 
+                   ModelController &aModelController,
+                   LoginScreen &loginScreen) : 
                                             closed(false), camera(aCamera),
                                             player(aPlayer), mainMap(aMainMap),
                                             entityManager(anEntityManager),
@@ -15,7 +16,8 @@ Renderer::Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap,
                                             layout(aLayout), 
                                             inventory(anInventory), chat(aChat),
                                             expbar(anExpbar), 
-                                            modelController(aModelController) {}
+                                            modelController(aModelController),
+                                            loginScreen(loginScreen) {}
 
 Renderer::~Renderer() {}
 
@@ -35,13 +37,17 @@ void Renderer::run() {
 
             SDL_RenderClear(renderer);
 
-            mainMap.renderTerrain(camera);
-            entityManager.renderEntities(camera);
-            mainMap.renderStructures(camera);
-            layout.render(camera);
-            inventory.render(camera);
-            expbar.render(camera);
-            chat.render(camera);
+            if (loginScreen.is_active()){
+                loginScreen.render(camera);
+            } else {
+                mainMap.renderTerrain(camera);
+                entityManager.renderEntities(camera);
+                mainMap.renderStructures(camera);
+                layout.render(camera);
+                inventory.render(camera);
+                expbar.render(camera);
+                chat.render(camera);
+            }
 
             SDL_RenderPresent(renderer);
             

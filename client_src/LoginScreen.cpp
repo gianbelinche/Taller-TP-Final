@@ -19,7 +19,7 @@
 
 LoginScreen::LoginScreen(SDL_Renderer* mainRenderer) : 
 mainRenderer(mainRenderer),background(NULL),text_input(NULL),
-text1(NULL),text2(NULL), error(NULL),title(NULL){
+text1(NULL),text2(NULL), error(NULL),title(NULL),active(true){
     Image background(mainRenderer);
     background.loadFromFile("Layout_graphics/Login/back_log_fix.png");
     this->background = std::move(background);
@@ -163,3 +163,11 @@ void LoginScreen::select(int x,int y,Camera& camera){
             actual = 1;    
     }
 }
+
+void LoginScreen::deactivate(){
+    active = false;
+}
+
+bool LoginScreen::is_active(){
+    return active;
+} 

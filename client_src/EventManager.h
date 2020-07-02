@@ -7,6 +7,7 @@
 #include "ClientProtocol.h"
 #include "MiniChat.h"
 #include "GraphicInventory.h"
+#include "LoginScreen.h"
 
 class EventManager {
     private:
@@ -19,6 +20,7 @@ class EventManager {
         ClientProtocol &clProtocol;
         MiniChat &chat;
         GraphicInventory &inventory;
+        LoginScreen &loginScreen;
 
         void checkKeyDown(SDL_Event &event);
         void checkKeyUp(SDL_Event &event);
@@ -28,7 +30,7 @@ class EventManager {
         EventManager(EntityManager &anEntityManager, uint32_t playerID, 
                      BlockingMsgQueue &msgQueue, Camera &aCamera, 
                      ClientProtocol &aClProtocol,MiniChat &chat,
-                     GraphicInventory &inventory);
+                     GraphicInventory &inventory, LoginScreen &loginScreen);
         ~EventManager();
 
         EventManager(const EventManager& copy) = delete;

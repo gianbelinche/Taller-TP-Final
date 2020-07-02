@@ -1,6 +1,5 @@
 #include "LoginManager.h"
-#include <vector>
-#include <string>
+
 #include "QuitException.h"
 
 LoginManager::LoginManager(LoginScreen& login,SDL_Renderer *mainRenderer) : 
@@ -42,6 +41,5 @@ std::vector<std::string> LoginManager::run(){
         login.render(camera);
         SDL_RenderPresent(mainRenderer);
     }
-    SDL_StopTextInput();
     return std::move(server);
 }

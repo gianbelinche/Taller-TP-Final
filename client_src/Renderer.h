@@ -12,6 +12,7 @@
 #include "GraphicInventory.h"
 #include "MiniChat.h"
 #include "ExpBar.h"
+#include "LoginScreen.h"
 
 class Renderer : public Thread {
     private:
@@ -26,13 +27,15 @@ class Renderer : public Thread {
         MiniChat &chat;
         ExpBar &expbar;
         ModelController &modelController;
+        LoginScreen &loginScreen;
 
     public:
         Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap, 
                  EntityManager &anEntityManager, SDL_Renderer *aRenderer,
                  Layout &aLayout, GraphicInventory &anInventory, 
                  MiniChat &aChat, ExpBar &anExpbar,
-                 ModelController &aModelController);
+                 ModelController &aModelController,
+                 LoginScreen &loginScreen);
         ~Renderer();
 
         void run();

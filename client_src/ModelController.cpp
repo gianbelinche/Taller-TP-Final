@@ -11,15 +11,18 @@ enum state {
     CHANGE_ENTITY_EQUIP,
     INVENTORY,
     LAYOUT_STATE,
-    CHAT
+    CHAT,
+    LOGIN
 };
 
 ModelController::ModelController(EntityManager &anEntityManager, 
                                  ProtMsgQueue &aMsgQueue,
-                                 LayoutManager &layoutManager) : 
+                                 LayoutManager &layoutManager,
+                                 LoginScreen &loginScreen) : 
                                         entityManager(anEntityManager),
                                         msgQueue(aMsgQueue),
-                                        layoutManager(layoutManager) {}
+                                        layoutManager(layoutManager),
+                                        loginScreen(loginScreen) {}
 
 ModelController::~ModelController() {}
 
@@ -85,6 +88,14 @@ void ModelController::handle(std::vector<uint32_t> &event) {
         case CHAT:
             layoutManager.decodeChatMessage(event);
             break;
+
+        case LOGIN:
+            if (event[1] == 0){
+                loginScreen.showError("Contraseña incorrecta");
+            } else {
+                loginScreen.deactivate();
+            }
+            break;    
         
         default:
             break;

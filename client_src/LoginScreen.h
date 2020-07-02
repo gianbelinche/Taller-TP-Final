@@ -30,6 +30,7 @@ private:
     std::string input1;
     std::string input2;
     int actual;
+    bool active;
     void renderWord(std::string to_render_word,int x, int y,int w,int h,int screen_w,int screen_h);
 public:
     LoginScreen(SDL_Renderer* mainRenderer);
@@ -46,6 +47,10 @@ public:
     void deleteCharacter();
     //Devuelve el contenido de ambos cuadros de textos y los vacia
     std::vector<std::string> send();  
+    //Desactiva la pantalla de login
+    void deactivate();
+    //Informa si el login esta activado
+    bool is_active();
 };
 
 #endif
