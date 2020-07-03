@@ -68,7 +68,7 @@ void Layout::changeLevel(int level){
 }
 
 
-void Layout::render(Camera& camera){
+void Layout::render(const Camera& camera){
     int screen_width = camera.getWidth();
     int screen_heigth = camera.getHeight();
     SDL_Rect clip = {0,0,screen_width,screen_heigth};
@@ -82,6 +82,6 @@ void Layout::render(Camera& camera){
     level.render(MANA_LEVEL_X,0,&clip,&rq);
 }
 
-bool Layout::isClicked(int x,int screen_width){
+bool Layout::isClicked(int x,int screen_width) const{
     return (x > screen_width - LAY_W - ITEM_BOXES_W);
 }

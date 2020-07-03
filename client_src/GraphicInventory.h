@@ -26,6 +26,9 @@ private:
 public:
     GraphicInventory(SDL_Renderer* mainRenderer);
 
+    GraphicInventory(const GraphicInventory& copy) = delete;
+    GraphicInventory& operator=(const GraphicInventory& copy) = delete;
+
     //Añade un objeto al inventario
     void addImage(int key);
     //Quita un objeto del inventario en el slot pos
@@ -33,8 +36,8 @@ public:
     //Equipa un objeto
     void equip(int key);
     //Devuelve que slot fue clickeado, o -1 si no se clickeo ningun slot
-    int select(int x,int y,Camera& camera);
-    void render(Camera& camera);
+    int select(int x,int y,const Camera& camera);
+    void render(const Camera& camera);
 };
 
 #endif

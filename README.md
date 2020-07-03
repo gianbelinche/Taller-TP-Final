@@ -51,7 +51,7 @@ A través de msgpack, se forma de la siguiente manera:
 
         Ejemplo:
 
-        `{02,00}` <- Seleccionar slot 0
+        `{02,120,00}` <- El jugador 120 selecciona slot 0
 
 3. **Comandos** (03):
 
@@ -308,7 +308,11 @@ A través de msgpack, se forma de la siguiente manera:
 
     - __Mensajes enviados al jugador (05):__
 
-      TBD
+      `07 + 05 + mensaje` (mensaje codificado como vector de ints)
+
+      Ejemplo:
+
+      `{07,05,"El Jugador @Mariano dice: hola que tal"}` 
 
     - __Ganancia de experiencia(06):__
 
@@ -320,11 +324,7 @@ A través de msgpack, se forma de la siguiente manera:
 
       Aclaración: `cant_exp` nunca va a ser mayor que la cantidad de experiencia que le falta al jugador para subir de nivel
 
-  - __Subida de nivel(07):__
-
-      _Mas que nada para resetear la barrita de experiencia._
-
-      TODO: Ver si hace falta mandar el nuevo nivel del jugador o si con solo decir que se incrementó alcanza
+    - __Subida de nivel(07):__
 
       `07 + 07 + id`
 
@@ -332,19 +332,15 @@ A través de msgpack, se forma de la siguiente manera:
 
       `{07, 04, 11}` --> El jugador `11` subió de nivel
 
-8. **Daño** (0X):
+8. **Comandos de inventario** (08):
 
-    TBD: Se puede hacer con el mensaje (06), del subtipo **Daño recibido(01)**
-
-9. **Comandos de inventario** (09):
-
-    `09 + ID comando + SLOT/OBJ`
+    `08 + ID comando + SLOT/OBJ`
 
     Ejemplo:
 
-    `{09, 00, 00}` <- poner espada en inventario
+    `{08, 00, 00}` <- poner espada en inventario
 
-    `{09, 01, 02}` <- sacar objeto en slot 2 del inventario
+    `{08, 01, 02}` <- sacar objeto en slot 2 del inventario
 
     IDs:
       - 00 <- poner objeto
@@ -370,58 +366,68 @@ A través de msgpack, se forma de la siguiente manera:
       - 16 -> Escudo de Hierro
       - 17 -> Sombrero Magico
 
-10. **Actualizar estado**:
+9. **Actualizar estado**:
 
-    `10 + ID + cantidad + cant_max(opcional)`
+    `09 + ID + cantidad + cant_max(opcional)`
 
     - __Oro(00)__:
 
-      `10 + 00 + oro`
+      `09 + 00 + oro`
 
       Ejemplo:
 
-      `{10, 00, 150}` <- La cantidad de oro actual es 150
+      `{09, 00, 150}` <- La cantidad de oro actual es 150
 
     - __Vida(01)__:
 
-      `10 + 01 + vida + vida_max`
+      `09 + 01 + vida + vida_max`
 
       Ejemplo:
 
-      `{10, 01, 150, 300}` <- La cantidad de vida actual es 150 de 300
+      `{09, 01, 150, 300}` <- La cantidad de vida actual es 150 de 300
 
     - __Mana(02)__:
 
-      `10 + 02 + mana + mana_max`
+      `09 + 02 + mana + mana_max`
 
       Ejemplo:
 
-      `{10, 02, 230, 570}` <- La cantidad de mana actual es 230 de 570
+      `{09, 02, 230, 570}` <- La cantidad de mana actual es 230 de 570
 
     - __Nivel(03)__:
 
-      `10 + 03 + nivel`
+      `09 + 03 + nivel`
 
       Ejemplo:
 
-      `{10, 03, 5}` <- El nivel actual es 5
+      `{09, 03, 5}` <- El nivel actual es 5
 
     - __Experiencia(04)__:
 
-      `10 + 04 + experiencia + experiencia_max`
+      `09 + 04 + experiencia + experiencia_max`
 
       Ejemplo:
 
-      `{10, 04, 1020, 2500}` <- La cantidad de experiencia actual es 1020 de 2500     
+      `{09, 04, 1020, 2500}` <- La cantidad de experiencia actual es 1020 de 2500     
 
-11. **Login**:
+10. **Login**:
 
-    `11 + logueado`
+    `10 + logueado`
 
     Ejemplo:
 
-    `{11,0}` <- El jugador no se logueo correctamente
+    `{10,0}` <- El jugador no se logueo correctamente
 
-    `{11,1}` <- El jugador se logueo correctamente
+    `{10,1}` <- El jugador se logueo correctamente
+    
+11. **Aviso conección**:
+
+    `11 + idUsuario`
+    
+    Sirve como indicativo de que el usuario se conecto, para el cliente es la forma de pedir que le manden el estado del mundo
+    
+    Ejemplo:
+    
+    `{11, 1778}` <-- El jugador con id 1778 se conecto
 
 COMPLETAR

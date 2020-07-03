@@ -16,7 +16,10 @@ class Text : public Texture{
                 Uint8 aKeyBlue = 0/*, std::string &text, TTF_Font *gFont*/);
 
         Text(Text&& other);
-        Text& operator=(Text&& other);        
+        Text& operator=(Text&& other);       
+
+        Text(const Text& copy) = delete;
+        Text& operator=(Text& copy) = delete;  
 
         void loadText(std::string text, TTF_Font *gFont);    
 };

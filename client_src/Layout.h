@@ -26,14 +26,16 @@ private:
     TTF_Font* gFont;
 public:
     Layout(SDL_Renderer* mainRenderer);
+    Layout(const Layout& copy) = delete;
+    Layout& operator=(const Layout& copy) = delete;
     //Cambian el texto de oro/vida/mana/nivel a graficarse
     void changeGold(int gold);
     void changeLife(int life, int max_life);
     void changeMana(int mana, int max_mana);
     void changeLevel(int level);
     //Marca si el layout fue clickeado
-    bool isClicked(int x,int screen_width);
-    void render(Camera& camera);
+    bool isClicked(int x,int screen_width) const;
+    void render(const Camera& camera);
     ~Layout();
 };
 

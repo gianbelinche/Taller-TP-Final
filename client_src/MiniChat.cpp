@@ -14,7 +14,7 @@
 
 
 MiniChat::MiniChat(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer){
-    this->gFont = TTF_OpenFont("Fonts/OpenSans.ttf", FONT_SIZE);
+    this->gFont = TTF_OpenFont("Fonts/Palace.ttf", FONT_SIZE);
 }
 
 MiniChat::~MiniChat(){
@@ -38,7 +38,7 @@ void MiniChat::renderWord(std::string to_render_word,int x, int y, int screen_w,
     word.render(x,y,&clip,&rQuad);
 }
 
-void MiniChat::render(Camera& camera){
+void MiniChat::render(const Camera& camera){
     int screen_w = camera.getWidth();
     int screen_h = camera.getHeight();
     int lines = 0;

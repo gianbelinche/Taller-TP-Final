@@ -3,7 +3,7 @@
 
 LayoutManager::LayoutManager(Layout& layout,GraphicInventory& inventory,MiniChat& chat,ExpBar& expbar) : layout(layout),inventory(inventory),chat(chat),expbar(expbar) {}
 
-void LayoutManager::decodeInventoryMessage(std::vector<uint32_t> message){
+void LayoutManager::decodeInventoryMessage(const std::vector<uint32_t> message){
     if (message[1] == 0){
         inventory.addImage(message[2]);
     }
@@ -15,7 +15,7 @@ void LayoutManager::decodeInventoryMessage(std::vector<uint32_t> message){
     }
 }
 
-void LayoutManager::decodeStateMessage(std::vector<uint32_t> message){
+void LayoutManager::decodeStateMessage(const std::vector<uint32_t> message){
     if (message[1] == 0){
         layout.changeGold(message[2]);
     }
@@ -33,7 +33,7 @@ void LayoutManager::decodeStateMessage(std::vector<uint32_t> message){
     }
 }
 
-void LayoutManager::decodeChatMessage(std::vector<uint32_t> message){
+void LayoutManager::decodeChatMessage(const std::vector<uint32_t> message){
     std::stringstream recvd_message;
     if (message[1] == 0){
         recvd_message << "El jugador " << message[2] << " provoco un daño de " << message[3];

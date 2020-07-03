@@ -9,9 +9,9 @@ enum state {
     DESTROY_ENTITY,
     CHANGE_ENTITY_STATE,
     CHANGE_ENTITY_EQUIP,
+    CHAT,
     INVENTORY,
     LAYOUT_STATE,
-    CHAT,
     LOGIN
 };
 

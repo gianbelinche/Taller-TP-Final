@@ -86,7 +86,7 @@ void GraphicInventory::removeImage(int pos){
     present_images.erase(present_images.begin() + pos);
 }
 
-void GraphicInventory::render(Camera& camera){
+void GraphicInventory::render(const Camera& camera){
     int screen_w = camera.getWidth();
     int screen_h = camera.getHeight();
     this->renderEquiped(screen_w,screen_h);
@@ -129,7 +129,7 @@ void GraphicInventory::equip(int key){
 }
 
 
-int GraphicInventory::select(int x,int y,Camera& camera){
+int GraphicInventory::select(int x,int y,const Camera& camera){
     int screen_w = camera.getWidth();
     int screen_h = camera.getHeight();
     int selected = -1;

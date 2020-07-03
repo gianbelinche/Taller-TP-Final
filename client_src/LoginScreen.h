@@ -34,6 +34,8 @@ private:
     void renderWord(std::string to_render_word,int x, int y,int w,int h,int screen_w,int screen_h);
 public:
     LoginScreen(SDL_Renderer* mainRenderer);
+    LoginScreen(const LoginScreen& copy) = delete;
+    LoginScreen& operator=(const LoginScreen& copy) = delete;
     void render(Camera& camera);
     //Cambia de modo ingresar servidor a modo ingresar usuario y contraseña
     void changeToUserInput();
@@ -50,7 +52,7 @@ public:
     //Desactiva la pantalla de login
     void deactivate();
     //Informa si el login esta activado
-    bool is_active();
+    bool is_active() const;
 };
 
 #endif

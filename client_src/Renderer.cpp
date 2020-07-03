@@ -17,7 +17,8 @@ Renderer::Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap,
                                             inventory(anInventory), chat(aChat),
                                             expbar(anExpbar), 
                                             modelController(aModelController),
-                                            loginScreen(loginScreen) {}
+                                            loginScreen(loginScreen),
+                                            musicPlayer(), zone(0) {}
 
 Renderer::~Renderer() {}
 
@@ -34,6 +35,12 @@ void Renderer::run() {
             modelController.run(closed); //chequear
 
             camera.refresh(player.getPosX(), player.getPosY());
+            /*
+            if (mainMap.getZone(player.getPosX(), player.getPosY()) != zone){
+                zone = mainMap.getZone(player.getPosX(), player.getPosY());
+                musicPlayer.play(zone);
+            }
+            */
 
             SDL_RenderClear(renderer);
 

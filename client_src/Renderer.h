@@ -13,6 +13,7 @@
 #include "MiniChat.h"
 #include "ExpBar.h"
 #include "LoginScreen.h"
+#include "MusicPlayer.h"
 
 class Renderer : public Thread {
     private:
@@ -28,6 +29,8 @@ class Renderer : public Thread {
         ExpBar &expbar;
         ModelController &modelController;
         LoginScreen &loginScreen;
+        MusicPlayer musicPlayer;
+        int zone;
 
     public:
         Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap, 
