@@ -50,7 +50,7 @@ void receive_user(Socket &l){
         std::vector<uint32_t> answer;
         answer.emplace_back(10);
         if (user == "lobocampeon" && pass == "patata"){
-            answer.emplace_back(1);
+            answer.emplace_back(2);
         } else {
             answer.emplace_back(0);
         }
