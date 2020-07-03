@@ -419,5 +419,14 @@ A través de msgpack, se forma de la siguiente manera:
     `{10,0}` <- El jugador no se logueo correctamente
 
     `{10,1}` <- El jugador se logueo correctamente
+    
+11. **Aviso conección**:
+    `11 + idUsuario`
+    
+    Sirve como indicativo de que el usuario se conecto, para el cliente es la forma de pedir que le manden el estado del mundo
+    
+    Ejemplo:
+    
+    `{11, 1778}` <-- El jugador con id 1778 se conecto
 
 COMPLETAR
