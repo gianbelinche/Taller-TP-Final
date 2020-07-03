@@ -105,3 +105,9 @@ void GameState::playerDealtDamage(int id, int damage) {}
 void GameState::playerLeveledUp(int id) {}
 
 void GameState::playerExpGain(int id, int gain) {}
+
+void GameState::update() {
+  for (auto &it: entities) {
+    it.second->update();
+  }    
+}

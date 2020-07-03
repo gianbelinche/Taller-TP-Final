@@ -5,11 +5,15 @@
 #include <unordered_map>
 #include <utility>
 
+#include "Communication/MessageDispatcher.h"
 #include "Communication/ProtectedQueue.h"
 #include "Game.h"
+#include "Events/ServerEventHandler.h"
+#include "Events/ServerEventListener.h"
 #include "resources/GameState.h"
 #include "resources/Map.h"
 #include "resources/Persistor.h"
+#include "resources/ServerProtocol.h"
 
 Server::Server(const char* port, Configuration configuration)
     : clientAcceptor(port),
@@ -22,9 +26,15 @@ void Server::run() {
   std::atomic<uint32_t> idAssigner{1};
   Map map(MAP_PATH);
   GameState world(map.getCollisionMap(), 30);
-  Game game(world, idAssigner);
-  Persistor persistor;
+
+  MessageDispatcher dispatcher;
+  ServerEventListener listener(dispatcher);
+  ServerEventHandler handler(world, listener);
+  ServerProtocol protocol(handler);
+  
   ProtectedQueue<std::string> incomingMessages;
+  Game game(world, idAssigner, incomingMessages, protocol);
+  Persistor persistor;
 
   // game.init()  // quizas hay que hacer algo asi
   game.start();  // Lanza el hilo principal del juego

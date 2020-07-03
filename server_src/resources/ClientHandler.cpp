@@ -8,12 +8,14 @@
 
 ClientHandler::ClientHandler(Socket p, Persistor& persist, Map& worldMap,
                              std::atomic<uint32_t>& idAssigner,
-                             ProtectedQueue<std::string>& incoming)
+                             ProtectedQueue<std::string>& incoming,
+                             MessageDispatcher& msgDispatcher)
     : peer(std::move(p)),
       persistor(persist),
       map(worldMap),
       idGenerator(idAssigner),
-      incomingMessages(incoming) {}
+      incomingMessages(incoming),
+      dispatcher(msgDispatcher) {}
 
 ClientHandler::~ClientHandler() {}
 
@@ -25,7 +27,7 @@ void ClientHandler::run() {
 bool ClientHandler::finished() { return online; }
 
 std::vector<uint32_t> ClientHandler::getCredentials() {
-  // Si el jugador no existe hacer idPlayer = idAssigner++; es todo atomico
+  
   return {1, 2, 3};
 }
 

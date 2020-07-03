@@ -40,6 +40,8 @@ class GameState {
 
   bool playerCanAttack(PlayerNet* player, Entity* ent);
 
+  void update();
+
   /* ---------- Eventos ---------- */
 
   void playerExpGain(int id, int gain);
