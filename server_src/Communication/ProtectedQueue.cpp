@@ -5,7 +5,7 @@
 #include "ClosedQueueException.h"
 
 template <class T>
-ProtectedQueue<T>::ProtectedQueue() {}
+ProtectedQueue<T>::ProtectedQueue() : closed(false), enabled(true) {}
 
 template <class T>
 ProtectedQueue<T>::~ProtectedQueue() {}
