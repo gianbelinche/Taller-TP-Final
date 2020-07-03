@@ -20,15 +20,13 @@ LogIn::LogIn(QMainWindow *parent) : QMainWindow(parent),
     this->setMinimumSize(QSize(640, 480));
     this->setMaximumSize(QSize(640, 480));
     this->setStyleSheet(QStringLiteral("background-image: url(img/background.png)"));
-
-    this->setUpFirst();
-
     QRect screenGeometry = QApplication::desktop()->availableGeometry();
     int x = (screenGeometry.width() - this->width()) / 2;
     int y = (screenGeometry.height() - this->height()) / 2;
     this->move(x, y);
 
-    setEventsFirst();
+    this->setUpFirst();
+    this->setEventsFirst();
 }
 
 LogIn::~LogIn() {
