@@ -31,6 +31,7 @@ class LogIn : public QMainWindow {
         void setEventsSecond();
         void connectSrv();
         void exitApp();
+        void signIn();
 
     public:
         explicit LogIn(QMainWindow *parent = 0);

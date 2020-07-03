@@ -120,6 +120,11 @@ void LogIn::setUpSecond() {
 
 void LogIn::setEventsSecond() {
     //aca se tendria que cambiar el evento de los botones
+    // Conecto el evento del boton connect
+    QObject::disconnect(&this->button1, &QPushButton::clicked,
+                        this, &LogIn::connectSrv);
+    QObject::connect(&this->button1, &QPushButton::clicked,
+                     this, &LogIn::signIn);
 }
 
 void LogIn::connectSrv() {
@@ -137,4 +142,8 @@ void LogIn::connectSrv() {
         this->setUpSecond();
         this->setEventsSecond();
     }
+}
+
+void LogIn::signIn() {
+    
 }
