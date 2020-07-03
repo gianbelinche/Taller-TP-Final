@@ -12,7 +12,6 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QWidget>
-#include "ClientConnector.h"
 
 class LogIn : public QMainWindow {
     private:
@@ -25,8 +24,6 @@ class LogIn : public QMainWindow {
         QPushButton button2;
         QComboBox comboBox1;
         QComboBox comboBox2;
-        ClientConnector& clientConnector;
-        
 
         void setUpFirst();  // Elegir server
         void setUpSecond(); // Ingresar cuenta
@@ -36,11 +33,11 @@ class LogIn : public QMainWindow {
         void setEventsThird();
         void connectSrv();
         void exitApp();
-        void signIn();
         void createChar();
+        void signIn();
 
     public:
-        explicit LogIn(ClientConnector& clientConnector,QMainWindow *parent = 0);
+        explicit LogIn(QMainWindow *parent = 0);
         ~LogIn();
 };
 

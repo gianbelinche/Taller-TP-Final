@@ -2,7 +2,7 @@
 #define CLASS_LOGIN_CONTROLLER
 #include "LogIn.h"
 #include "ClientConnector.h"
-#include <QApplication>
+#include <QtWidgets/QApplication>
 
 class LogInController{
 private:
