@@ -1,5 +1,12 @@
 #include "MainMap.h"
 
+#define CITY_1 (x >= 4800 && x < 6528 && y >= 1376 && y < 3744)
+#define CITY_2 (x >= 1568  && x < 3264 && y >= 5376 && y < 6656)
+#define CITY_3 (x >= 5472 && x < 9088 && y >= 4512 && y < 7104)
+#define DESERT (x >= 0 && x < 5472 && y >= 1376 && y < 7104)
+#define CAVE (x >= 0 && x < 6528 && y >= 0 && y < 1376)
+#define FOREST (x >= 6528 && x < 9088 && y >= 0 && y < 4512)
+
 MainMap::MainMap(std::map<uint32_t, std::vector<std::string>> &tiles, 
                  SDL_Renderer *aRenderer, std::vector<std::vector<uint32_t>> aTexMap,
                  std::vector<std::vector<uint32_t>> aStrMap)
@@ -71,5 +78,17 @@ void MainMap::renderStructures(Camera &camera) {
         }
         y += 32;
         x = 0 - camera.getX();
+    }
+}
+
+uint8_t MainMap::getZone(uint16_t x, uint16_t y) {
+    if (CITY_1 || CITY_2 || CITY_3) {
+        return 0;
+    } else if (DESERT) {
+        return 1;
+    } else if (FOREST) {
+        return 2;
+    } else if (CAVE) {
+        return 3;
     }
 }
