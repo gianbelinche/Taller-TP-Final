@@ -1,4 +1,4 @@
-#include "Socket.h"
+#include "client_src/Socket.h"
 #include <thread>
 #include <vector>
 #include <iostream>
@@ -11,7 +11,7 @@
 void receive(Socket &l) {
     while (true) {
         //recibe largo
-        std::vector<char> lenBuff;
+        std::vector<char> lenBuff(4);
         l.recv(&lenBuff[0], 4);
         uint32_t len = (lenBuff[3] << 24) + (lenBuff[2] << 16) +
                         (lenBuff[1] << 8) + lenBuff[0];
@@ -19,7 +19,7 @@ void receive(Socket &l) {
         len = ntohl(len);
 
         //recibe paquete
-        std::vector<char> msgBuff;
+        std::vector<char> msgBuff(len);
         l.recv(&msgBuff[0], len);
         std::string ss(msgBuff.begin(), msgBuff.end());
 
@@ -32,6 +32,34 @@ void receive(Socket &l) {
             std::cout << m << ", ";
         }
         std::cout << "}" << '\n';
+        
+        //empaquetar
+        std::cout << "Re-empaqueto" << '\n';
+        std::stringstream buffer;
+        msgpack::pack(buffer, event);
+        std::string sbuffer = buffer.str();
+
+        std::vector<char> msg(sbuffer.begin(), sbuffer.end());
+
+        uint32_t len2 = msg.size();
+        len2 = htonl(len2);
+
+        char *lenBuff2 = (char*)&len2;
+        std::vector<char> msgLen(4);
+
+        for (int i = 0; i < 4; i++) {
+            msgLen[i] = lenBuff2[i];
+        }
+
+        std::cout << "Envio largo: " << len2 << '\n';
+
+        //enviar largo
+        l.send(&msgLen[0], 4);
+
+        std::cout << "Envio msg" << '\n';
+
+        //enviar paquete
+        l.send(&msg[0], msg.size());
     }
 }
 
@@ -75,6 +103,10 @@ void enviarprueba(Socket &l) {
     jugadorProtocolo.emplace_back(2500);
     jugadorProtocolo.emplace_back(2500);
     jugadorProtocolo.emplace_back(0);
+    jugadorProtocolo.emplace_back(2);
+    jugadorProtocolo.emplace_back(11);
+    jugadorProtocolo.emplace_back(15);
+    jugadorProtocolo.emplace_back(13);
 
     //empaquetar
     std::stringstream buffer3;

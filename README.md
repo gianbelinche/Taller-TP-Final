@@ -10,7 +10,7 @@ A través de msgpack, se forma de la siguiente manera:
   
     `{comando, enteros necesarios para comando}`
 
-Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros uint32_t
+*Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros uint32_t*
 
 ### Comandos Cliente a Servidor
 
@@ -51,19 +51,29 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
         Ejemplo:
 
-        `{02,00}` <- Seleccionar slot 0
+        `{02,120,00}` <- El jugador 120 selecciona slot 0
 
 3. **Comandos** (03):
 
     - **Cliente a Servidor**:
 
-        `03 + comando`
+        `03 + ID + comando` (comando esta codificado como vector de ints)
 
         Ejemplo:
 
-        `{03, "/meditar"}` <- El usuario escribió "/meditar" en el chat
+        `{03, 120, "/meditar"}` <- El usuario 120 escribió "/meditar" en el chat
 
-        `{03, "@Personaje2 hola como estas?"}` <- El usuario escribió "@Personaje2 hola como estas?" en el chat
+        `{03, 120, "@Personaje2 hola como estas?"}` <- El usuario 120 escribió "@Personaje2 hola como estas?" en el chat
+
+4. **Login** (04):
+
+    - **Cliente a Servidor**:
+
+      `04 + ID + user_size + user + password` (user y password estan codificados como vectores de ints)
+
+      Ejemplo:
+
+      `{04, 10, 6, matias, contraseña}` <- El usuario es matias y la contraseña contraseña.
 
 
       
@@ -94,7 +104,7 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
     - **Servidor a Cliente**:
 
-       `01 + ID + tipo de NPC/Mob + posX + posY` <- decidir si los npc los manda el servidor o el cliente sabe de antemano la info de estos
+       `01 + ID + tipo de NPC/Mob + posX + posY` *<- decidir si los npc los manda el servidor o el cliente sabe de antemano la info de estos*
 
         Ejemplo:
 
@@ -113,11 +123,11 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
     - **Servidor a Cliente**:
 
-       `02 + ID + raza + posX + posY + estado + armadura + arma + escudo` (lo equipado)
+       `02 + ID + raza + posX + posY + estado + arma + armadura + escudo + casco` (lo equipado)
 
        Ejemplo:
 
-       `{02, 456, 02, 12345, 1523, 0}` -> `Crear jugador` de ID `456` de raza `Enano` en pos (`12345`,`1523`) en estado `vivo`
+       `{02, 456, 02, 12345, 1523, 00, 02, 00, 00, 13}` -> `Crear jugador` de ID `456` de raza `Enano` en pos (`12345`,`1523`) en estado `vivo` con equipamiento: `Hacha`, `Sin Armadura`, `Sin Escudo` y `Capucha`
 
     - **Razas**: 
       - 00 -> Humano
@@ -127,9 +137,27 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
     - **Estado**: 
       - 00 -> Vivo
-      - 01 -> Muerto <- Muerto sería en modo fantasma
+      - 01 -> Muerto *<- Muerto sería en modo fantasma*
 
-    - **Armadura/Arma/Escudo**: COMPLETAR
+    - **Tipos de Equipables**: 
+      - 00 -> NADA (Vacío)
+      - 01 -> Espada
+      - 02 -> Hacha
+      - 03 -> Martillo
+      - 04 -> Vara de Fresno
+      - 05 -> Flauta Elfica
+      - 06 -> Baculo Nudoso
+      - 07 -> Baculo Engarzado
+      - 08 -> Arco Simple
+      - 09 -> Arco Compuesto
+      - 10 -> Armadura de Cuero
+      - 11 -> Armadura de Placas
+      - 12 -> Tunica Azul
+      - 13 -> Capucha
+      - 14 -> Casco de Hierro
+      - 15 -> Escudo Tortuga
+      - 16 -> Escudo de Hierro
+      - 17 -> Sombrero Magico
 
 3. **Spawn de un drop** (03):
 
@@ -142,23 +170,23 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
        `{03, 1595, 06, 1234, 4567}` -> `Crear drop` de ID `1234` de tipo `Baculo Engarzado` en pos (`1234`,`4567`)
 
     - **Tipos de Objetos**: 
-      - 00 -> Espada
-      - 01 -> Hacha
-      - 02 -> Martillo
-      - 03 -> Vara de Fresno
-      - 04 -> Flauta Elfica
-      - 05 -> Baculo Nudoso
-      - 06 -> Baculo Engarzado
-      - 07 -> Arco Simple
-      - 08 -> Arco Compuesto
-      - 09 -> Armadura de Cuero
-      - 10 -> Armadura de Placas
-      - 11 -> Tunica Azul
-      - 12 -> Capucha
-      - 13 -> Casco de Hierro
-      - 14 -> Escudo Tortuga
-      - 15 -> Escudo de Hierro
-      - 16 -> Sombrero Magico
+      - 01 -> Espada
+      - 02 -> Hacha
+      - 03 -> Martillo
+      - 04 -> Vara de Fresno
+      - 05 -> Flauta Elfica
+      - 06 -> Baculo Nudoso
+      - 07 -> Baculo Engarzado
+      - 08 -> Arco Simple
+      - 09 -> Arco Compuesto
+      - 10 -> Armadura de Cuero
+      - 11 -> Armadura de Placas
+      - 12 -> Tunica Azul
+      - 13 -> Capucha
+      - 14 -> Casco de Hierro
+      - 15 -> Escudo Tortuga
+      - 16 -> Escudo de Hierro
+      - 17 -> Sombrero Magico
 
 4. **Eliminación de una entidad** (04):
 
@@ -170,107 +198,149 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
         `{04, 12345}` -> `Eliminar` la entidad de ID `12345`
 
-        Aclaración: Si bien hay distintos llamados para crear distintos tipos de entidad, para la eliminación con uno solo alcanza. Se usa para todo tipo de entidad (jugador, mob o drop).
+        *Aclaración: Si bien hay distintos llamados para crear distintos tipos de entidad, para la eliminación con uno solo alcanza. Se usa para todo tipo de entidad (jugador, mob o drop).*
 
 5. **Cambiar estado de un personaje** (05):
 
     - **Servidor a Cliente**:
     
-        `05 + ID`
+        `05 + ID + estado`
 
         Ejemplo:
 
-        `{05, 123456}` -> `Murió` el jugador de ID `12345`
+        `{05, 12345, 00}` -> `Revivió` el jugador de ID `12345`
 
-        Aclaración: Este llamado es para indicar que un jugador pasó a ser fantasma. Si el jugador se desconectó el llamado es el (04).
+        `{05, 12345, 01}` -> `Murió` el jugador de ID `12345`
 
-6. **Mensajes que cliente debe imprimir** (06):
+    - **Estados**:
+      - 00 -> Vivo
+      - 01 -> Muerto
+
+        *Aclaración: Este llamado es para indicar que un jugador pasó a ser fantasma. Si el jugador se desconectó el llamado es el (04).*
+
+6. **Equipar/desequipar a un personaje**
+
+    *Aclaración: Este mensaje es para avisar que cierto personaje se equipó cierto objeto y debe ser enviado a todos los clientes conectados para poder renderizar correctamente a los jugadores*
+
+    - **Servidor a Cliente**:
+
+        `06 + ID + Tipo Equip + Objeto`
+
+        Ejemplo:
+
+        `{06, 12345, 0, 03}` -> `Se equipó` jugador de ID `12345` con un `Arma` de tipo `Martillo`
+
+        `{06, 12345, 2, 00}` -> `Se equipó` jugador de ID `12345` con un `Escudo` de tipo `NADA (vacio)`. *Es decir, se desequipó el escudo*
+
+    - **Tipo Equip**:
+      - 00 -> Arma
+      - 01 -> Armadura
+      - 02 -> Escudo
+      - 03 -> Casco
+
+    - **Tipos de Objetos**: 
+      - 00 -> NADA (Vacío)
+      - 01 -> Espada
+      - 02 -> Hacha
+      - 03 -> Martillo
+      - 04 -> Vara de Fresno
+      - 05 -> Flauta Elfica
+      - 06 -> Baculo Nudoso
+      - 07 -> Baculo Engarzado
+      - 08 -> Arco Simple
+      - 09 -> Arco Compuesto
+      - 10 -> Armadura de Cuero
+      - 11 -> Armadura de Placas
+      - 12 -> Tunica Azul
+      - 13 -> Capucha
+      - 14 -> Casco de Hierro
+      - 15 -> Escudo Tortuga
+      - 16 -> Escudo de Hierro
+      - 17 -> Sombrero Magico
+
+    *Aclaración: Si un jugador se desequipa cierto objeto se debe mandar este mismo mensaje con valor 00 en Objeto*
+
+7. **Mensajes que cliente debe imprimir** (07):
 
     ​	Son del estilo:
 
-    ​	`06 + codigo_mensaje_a_imprimir + ...`
+    ​	`07 + codigo_mensaje_a_imprimir + ...`
 
     - __Daño provocado (00):__ 
 
-      `06 + 00 + id + daño`
+      `07 + 00 + id + daño`
 
       Ejemplo:
 
-      `{06, 00, 488, 25}` --> El jugador `488` provoco un daño de `25`
+      `{07, 00, 488, 25}` --> El jugador `488` provoco un daño de `25`
 
     - **Daño recibido (01):** 
 
-      `06 + 01 + id + daño`
+      `07 + 01 + id + daño`
 
       Ejemplo:
 
-      `{06, 01, 987, 5}` --> El jugador `987` recibió 5 de daño
+      `{07, 01, 987, 5}` --> El jugador `987` recibió 5 de daño
 
     - __Curación(02)__:
 
-      `06 + 02 + id + puntos_curacion`
+      `07 + 02 + id + puntos_curacion`
 
       Ejemplo:
 
-      `{06, 02, 35, 100}` --> El jugador `35` recuperó `100` puntos de vida
+      `{07, 02, 35, 100}` --> El jugador `35` recuperó `100` puntos de vida
 
     - __Evasión del contrincante (03):__
 
-      `06 + 03 + id`
+      `07 + 03 + id`
 
       Ejemplo:
 
-      `{06, 03, 47}` --> Se le avisa al jugador `47` que el contrincante esquivo el ataque
+      `{07, 03, 47}` --> Se le avisa al jugador `47` que el contrincante esquivo el ataque
 
     - __Evasión por parte de nuestro jugador (04):__
 
-      `06 + 04 + id`
+      `07 + 04 + id`
 
       Ejemplo:
 
-      `{06, 04, 99}` --> El jugador 99 esquivo el ataque
+      `{07, 04, 99}` --> El jugador 99 esquivo el ataque
 
     - __Mensajes enviados al jugador (05):__
 
-      TBD
+      `07 + 05 + mensaje` (mensaje codificado como vector de ints)
+
+      Ejemplo:
+
+      `{07,05,"El Jugador @Mariano dice: hola que tal"}` 
 
     - __Ganancia de experiencia(06):__
 
-      `06 + 05 + id + cant_exp`
+      `07 + 05 + id + cant_exp`
 
       Ejemplo:
 
-      `{06, 05, 445, 168}` --> El jugador `445` gano `168` de experiencia
+      `{07, 05, 445, 168}` --> El jugador `445` gano `168` de experiencia
 
       Aclaración: `cant_exp` nunca va a ser mayor que la cantidad de experiencia que le falta al jugador para subir de nivel
 
-  - __Subida de nivel(07):__
+    - __Subida de nivel(07):__
 
-      _Mas que nada para resetear la barrita de experiencia._
-
-      TODO: Ver si hace falta mandar el nuevo nivel del jugador o si con solo decir que se incrementó alcanza
-
-      `06 + 07 + id`
+      `07 + 07 + id`
 
       Ejemplo:
 
-      `{06, 04, 11}` --> El jugador `11` subió de nivel
+      `{07, 04, 11}` --> El jugador `11` subió de nivel
 
-    
+8. **Comandos de inventario** (08):
 
-7. **Daño** (0X):
-
-    TBD: Se puede hacer con el mensaje (06), del subtipo **Daño recibido(01)**
-
-8. **Comandos de inventario** (8):
-
-    `8 + ID + SLOT/OBJ`
+    `08 + ID comando + SLOT/OBJ`
 
     Ejemplo:
 
-    `{8,00,00}` <- poner espada en inventario
+    `{08, 00, 00}` <- poner espada en inventario
 
-    `{8,01,02}` <- sacar objeto en slot 2 del inventario
+    `{08, 01, 02}` <- sacar objeto en slot 2 del inventario
 
     IDs:
       - 00 <- poner objeto
@@ -278,27 +348,27 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
       - 02 <- equipar objeto
 
     OBJs:
-      - 00 -> Espada
-      - 01 -> Hacha
-      - 02 -> Martillo
-      - 03 -> Vara de Fresno
-      - 04 -> Flauta Elfica
-      - 05 -> Baculo Nudoso
-      - 06 -> Baculo Engarzado
-      - 07 -> Arco Simple
-      - 08 -> Arco Compuesto
-      - 09 -> Armadura de Cuero
-      - 10 -> Armadura de Placas
-      - 11 -> Tunica Azul
-      - 12 -> Capucha
-      - 13 -> Casco de Hierro
-      - 14 -> Escudo Tortuga
-      - 15 -> Escudo de Hierro
-      - 16 -> Sombrero Magico
+      - 01 -> Espada
+      - 02 -> Hacha
+      - 03 -> Martillo
+      - 04 -> Vara de Fresno
+      - 05 -> Flauta Elfica
+      - 06 -> Baculo Nudoso
+      - 07 -> Baculo Engarzado
+      - 08 -> Arco Simple
+      - 09 -> Arco Compuesto
+      - 10 -> Armadura de Cuero
+      - 11 -> Armadura de Placas
+      - 12 -> Tunica Azul
+      - 13 -> Capucha
+      - 14 -> Casco de Hierro
+      - 15 -> Escudo Tortuga
+      - 16 -> Escudo de Hierro
+      - 17 -> Sombrero Magico
 
 9. **Actualizar estado**:
 
-    `9 + ID + cantidad + cant_max(opcional)`
+    `09 + ID + cantidad + cant_max(opcional)`
 
     - __Oro(00)__:
 
@@ -314,7 +384,7 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
 
       Ejemplo:
 
-      ´{09, 01, 150, 300} <- La cantidad de vida actual es 150 de 300
+      `{09, 01, 150, 300}` <- La cantidad de vida actual es 150 de 300
 
     - __Mana(02)__:
 
@@ -339,5 +409,26 @@ Aclaración: Los ejemplos de tipo `{00, 123}` son siempre vectores de enteros ui
       Ejemplo:
 
       `{09, 04, 1020, 2500}` <- La cantidad de experiencia actual es 1020 de 2500     
+
+
+10. **Login**:
+
+    `10 + logueado`
+
+    Ejemplo:
+
+    `{10,0}` <- El jugador no se logueo correctamente
+
+    `{10,1}` <- El jugador se logueo correctamente
+    
+11. **Aviso conección**:
+
+    `11 + idUsuario`
+    
+    Sirve como indicativo de que el usuario se conecto, para el cliente es la forma de pedir que le manden el estado del mundo
+    
+    Ejemplo:
+    
+    `{11, 1778}` <-- El jugador con id 1778 se conecto
 
 COMPLETAR
