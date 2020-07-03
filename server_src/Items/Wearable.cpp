@@ -1,4 +1,4 @@
-#include "Wearable.h"
+#include "../headers/Wearable.h"
 
 Wearable::Wearable(int id, int minDEF, int maxDEF)
     : Item(id), minDefense(minDEF), maxDefense(maxDEF) {}

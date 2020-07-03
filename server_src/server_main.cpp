@@ -2,31 +2,27 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <utility>
 
-#include "common_client_handler.h"
-#include "common_SocketExcept.h"
-#include "server_acceptor.h"
+//#include "Utils/Configuration.h"
+#include "Server.h"
+#include "Communication/SocketException.h"
 
 enum exit_codes{SUCCESS, ERROR};
 
 int main(int argc, const char* argv[]) {
-  if (argc != 3) {
+  if (argc != 2) {
     std::cerr << "Cantidad de argumentos incorrecta" << std::endl;
     return ERROR;
   }
-  std::vector<int> numbers;
-  std::ifstream num_file(argv[2]);
-  if (num_file.is_open()) {
-    for (std::string line; std::getline(num_file, line); ) {
-      numbers.push_back(std::stoi(line));
-    }
-  } else {
-    std::cerr << "Error al abrir el archivo " << argv[2] << std::endl;
-  }
+  // Aca se cargaria el archivo de configuracion
+  
+  //Configuration config(argv[1]);
+  Server server("8080");
 
-  Acceptor client_acceptor(argv[1], numbers);
   try {
-    client_acceptor.start();
+    server.start();
   } catch(SocketException &e) {
     std::cerr << e.what() << std::endl;
     return ERROR;
@@ -36,6 +32,6 @@ int main(int argc, const char* argv[]) {
   while (usr_input != "q") {
     std::cin >> usr_input;
   }
-  client_acceptor.stop_accepting();
+  // Parar al Server y cerrar todo
   return 0;
 }

@@ -410,6 +410,7 @@ A través de msgpack, se forma de la siguiente manera:
 
       `{09, 04, 1020, 2500}` <- La cantidad de experiencia actual es 1020 de 2500     
 
+
 10. **Login**:
 
     `10 + logueado`

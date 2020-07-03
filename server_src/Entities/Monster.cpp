@@ -1,34 +1,40 @@
-#include "Monster.h"
+#include "../headers/Monster.h"
 
+#include <algorithm>
 #include <cmath>
+#include <iostream>
 #include <random>
 
-#include "Condition.h"
-#include "IsAlive.h"
-#include "MonsterType.h"
-#include "PlayerNet.h"
+#include "../headers/Equations.h"
+#include "../headers/Condition.h"
+#include "../headers/IsAlive.h"
+#include "../headers/MonsterType.h"
+#include "../headers/PlayerNet.h"
 
-#define MIN_DIST 150  // Esto debe ser configurable no se como
+#define MIN_DIST 100  // Esto debe ser configurable no se como
 #define ATK_DIST 20
-#define STEP 6
+#define STEP 10
 
-Monster::Monster(MonsterType &type, int id, int x, int y, GameState &world)
-    : Entity(x, y, id, type.getHp()), kind(type), world(world) {}
+Monster::Monster(MonsterType &type, int id, int x, int y, int level,
+                 GameState &world)
+    : Entity(x, y, id, type.getHp(), type.getHp(), level),
+      kind(type), 
+      world(world) {}
 
 Monster::~Monster() {}
 
 void Monster::update() {
   currentFrame++;
-  if (currentFrame ==
-      30) {  // TODO: Hacer configurable el valor de alguna forma
-    PlayerNet *player = world.getNearestPlayer(*this, &Condition::isAlive);
+  if (currentFrame == 30) {  // TODO: Hacer configurable el valor
+    currentFrame = 0;
+    PlayerNet *player = world.getNearestPlayer(this, &Condition::isAlive);
     int new_x = x;
     int new_y = y;
 
     if (player != nullptr &&
-        world.entitiesDistance(*this, *player) < MIN_DIST) {
-      if (world.entitiesDistance(*this, *player) <= ATK_DIST) {
-        // ATACA
+        world.entitiesDistance(this, player) < MIN_DIST) {
+      if (world.entitiesDistance(this, player) <= ATK_DIST) {
+        attack(player);
       } else {
         float x_dist = abs(x - player->getX());
         float y_dist = abs(y - player->getY());
@@ -50,6 +56,7 @@ void Monster::update() {
           x = new_x;
           y = new_y;
           world.monsterMoved(id);
+          std::cout << "El mostro se movio a X: " << x << " Y: " << y << "\n\n";
         }
       }
     } else {  // Si no hay jugador cerca
@@ -58,19 +65,51 @@ void Monster::update() {
       std::uniform_real_distribution<> distr(0, 1);
       float rand_val = distr(gen);  // Valor random
       if (rand_val < 0.25) {
-        new_x -= 1;
+        new_x -= STEP;
       } else if (rand_val >= 0.25 && rand_val < 0.5) {
-        new_y -= 1;
+        new_y -= STEP;
       } else if (rand_val >= 0.5 && rand_val < 0.75) {
-        new_x += 1;
+        new_x += STEP;
       } else {
-        new_y += 1;
+        new_y += STEP;
       }
       if (world.isValidPosition(new_x, new_y)) {
         x = new_x;
         y = new_y;
         world.monsterMoved(id);
+        std::cout << "El mostro se movio a X: " << x << " Y: " << y << "\n\n";
       }
     }
   }
+}
+
+int Monster::takeDamage(int dmgToTake) {
+  int oldHp = hp;
+  hp = std::max(0, hp - dmgToTake);
+  std::cout << "Le hizo: " << dmgToTake << " daño al motro\n";
+  if (hp == 0) {
+    std::cout << "Se murio el mostro\n";
+    world.entityDisappear(id);
+  }
+  return oldHp - hp;
+}
+
+int Monster::attack(PlayerNet* player) {
+  int damageDealt = player->takeDamage(kind.getDamage());
+  world.playerTookDamage(player->getId(), damageDealt);
+  std::cout << "Ataco al jugador: " << player->getId() 
+            << " y le hizo un daño de: " << damageDealt << "\n\n";
+  return damageDealt;
+}
+
+int Monster::getDeathExp(int attackerLevel) {
+  return equation::monsterDeathExp(level, maxHp);
+}
+
+int Monster::getHitExp(int AttackerLevel, int damage) {
+  return equation::monsterHitExp(level, damage);
+}
+
+bool Monster::canBeAttackedBy(Entity* ent) {
+  return true;
 }

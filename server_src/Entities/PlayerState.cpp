@@ -1,18 +1,23 @@
-#include "PlayerState.h"
+#include "../headers/PlayerState.h"
 
-#include "../config/Equations.h"
-#include "PlayerNet.h"
+#include "../headers/Equations.h"
+#include "../headers/PlayerNet.h"
+
+#include <iostream>
 
 PlayerState::PlayerState() {}
 
 PlayerState::~PlayerState() {}
 
-int PlayerState::attack(PlayerNet &player, Entity *ent, int damage) {}
+int PlayerState::attack(PlayerNet &player, Entity *ent, int damage) {
+  return 0;
+}
 
 void PlayerState::lifeRecover(PlayerNet &player) {
   int healing = equation::pointsRecovery(
       player.getRaceRecovery(), player.getCurrFrame() / player.getFPS());
   player.heal(healing);
+  std::cout << "Recupera: " << healing << " ptos de vida\n";
 }
 
 void PlayerState::move(PlayerNet &player, int x, int y) {
@@ -22,7 +27,7 @@ void PlayerState::move(PlayerNet &player, int x, int y) {
 
 void PlayerState::update(PlayerNet &player) {
   lifeRecover(player);
-  manaRecover(player);
+  manaRecover(player); // Para el estado de meditacion cambia la recuperacion
 }
 
 void PlayerState::manaRecover(PlayerNet &player) {

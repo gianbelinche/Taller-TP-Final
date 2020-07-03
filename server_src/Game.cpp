@@ -1,9 +1,17 @@
-#include "Game.h"
+#include "headers/Game.h"
 
 #include <unistd.h>
+
 #include <iostream>
 
-Game::Game() : keep_running(true) {}
+Game::Game(GameState &world, std::atomic<uint32_t> &idGenerator,
+           ProtectedQueue<std::string> &incoming,
+           ServerProtocol &serverProtocol)
+    : world(world),
+      keep_running(true),
+      idAssigner(idGenerator),
+      incomingEvents(incoming),
+      protocol(serverProtocol) {}
 
 Game::~Game() {}
 
@@ -21,46 +29,8 @@ void Game::processInput() {
   std::vector<std::string> packedEvents;
   incomingEvents.emptyQueue(packedEvents);
   for (auto &ev : packedEvents) {
-    // Aca el protocolo decodificaria el evento
-    // Por ahora solo puede mover al jugador
-    movePlayer(ev);
+    protocol.decode(ev);
   }
 }
 
-void Game::update() {
-  for (auto &ent : entities) {
-    ent->update();
-  }
-}
-
-void Game::movePlayer(std::string &move) {
-  // Hardcodeo violento para testing
-  int id_user = std::stoi(move.substr(0, 1));
-  std::string direction = move.substr(1, 1);
-
-  const int x = onlinePlayers.at(id_user).getX();
-  const int y = onlinePlayers.at(id_user).getY();
-
-  int new_x = x;
-  int new_y = y;
-
-  if (direction == "u") {
-    new_y--;
-  } else if (direction == "d") {
-    new_y++;
-  } else if (direction == "l") {
-    new_x--;
-  } else if (direction == "r") {
-    new_x++;
-  }
-  // Aca se deberia chequear si el movimiento es valido
-
-  onlinePlayers.at(id_user).setX(new_x);
-  onlinePlayers.at(id_user).setY(new_y);
-
-  std::cout << "El user esta en X: " << new_x << " Y: " << new_y << std::endl;
-
-  // Enviar al usuario el movimiento
-}
-
-void Game::addIncoming(std::string s) { incomingEvents.push(s); }
+void Game::update() { world.update(); }
