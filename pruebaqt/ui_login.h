@@ -28,10 +28,10 @@ public:
     QWidget *centralwidget;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
-    QLabel *label_2;
-    QLineEdit *lineEdit_2;
     QLineEdit *lineEdit;
+    QLineEdit *lineEdit_2;
     QLabel *label;
+    QLabel *label_2;
 
     void setupUi(QMainWindow *LogIn)
     {
@@ -40,7 +40,7 @@ public:
         LogIn->resize(640, 480);
         LogIn->setMinimumSize(QSize(640, 480));
         LogIn->setMaximumSize(QSize(640, 480));
-        LogIn->setStyleSheet(QStringLiteral("background-image: url(:/new/prefix1/background.png)"));
+        LogIn->setStyleSheet(QStringLiteral("background-image: url(img/background.png)"));
         centralwidget = new QWidget(LogIn);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         pushButton = new QPushButton(centralwidget);
@@ -55,6 +55,19 @@ public:
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
         pushButton_2->setGeometry(QRect(260, 350, 89, 25));
         pushButton_2->setFont(font);
+        lineEdit = new QLineEdit(centralwidget);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        lineEdit->setGeometry(QRect(190, 150, 271, 29));
+        lineEdit->setFont(font);
+        lineEdit_2 = new QLineEdit(centralwidget);
+        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
+        lineEdit_2->setGeometry(QRect(190, 220, 271, 29));
+        lineEdit_2->setFont(font);
+        label = new QLabel(centralwidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(140, 140, 41, 51));
+        label->setFont(font);
+        label->setStyleSheet(QStringLiteral("background: transparent"));
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName(QStringLiteral("label_2"));
         label_2->setEnabled(true);
@@ -64,19 +77,6 @@ public:
         label_2->setAutoFillBackground(false);
         label_2->setStyleSheet(QStringLiteral("background: transparent"));
         label_2->setScaledContents(false);
-        lineEdit_2 = new QLineEdit(centralwidget);
-        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
-        lineEdit_2->setGeometry(QRect(190, 220, 271, 29));
-        lineEdit_2->setFont(font);
-        lineEdit = new QLineEdit(centralwidget);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setGeometry(QRect(190, 150, 271, 29));
-        lineEdit->setFont(font);
-        label = new QLabel(centralwidget);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(140, 140, 41, 51));
-        label->setFont(font);
-        label->setStyleSheet(QStringLiteral("background: transparent"));
         LogIn->setCentralWidget(centralwidget);
 
         retranslateUi(LogIn);
