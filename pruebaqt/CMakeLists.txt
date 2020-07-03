@@ -14,20 +14,20 @@ include_directories(.)
 # Los nombres de los headers generados se guardan en la variable pasada
 # como primer parámetro.
 # No, no los genera con la carpeta como prefijo.
-qt5_wrap_ui(UIS_HEADERS
-        login.ui
-)
+#qt5_wrap_ui(UIS_HEADERS
+#        login.ui
+#)
 
 # Agrego la carpeta con los headers autogenerados a los includes
 message("Agregando '${PROJECT_BINARY_DIR}' como directorio de includes")
 include_directories(${PROJECT_BINARY_DIR})
 
-message("Headers generados: ${UIS_HEADERS}")
+#message("Headers generados: ${UIS_HEADERS}")
 
 add_executable(prueba
   LogIn.cpp
   main.cpp
-  ${UIS_HEADERS})
+  )
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(prueba Qt5::Widgets)
