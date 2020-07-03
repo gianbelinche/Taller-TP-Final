@@ -69,11 +69,11 @@ A través de msgpack, se forma de la siguiente manera:
 
     - **Cliente a Servidor**:
 
-      `04 + ID + user_size + user + password` (user y password estan codificados como vectores de ints)
+      `04 + user_size + user + password` (user y password estan codificados como vectores de ints)
 
       Ejemplo:
 
-      `{04, 10, 6, matias, contraseña}` <- El usuario es matias y la contraseña contraseña.
+      `{04, 6, matias, contraseña}` <- El usuario es matias y la contraseña contraseña.
 
 
       

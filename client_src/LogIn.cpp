@@ -1,7 +1,10 @@
 #include "LogIn.h"
 
 #include <QDesktopWidget>
+#include <msgpack.hpp>
 #include "SocketException.h"
+#include <sstream>
+#include <string>
 
 #include <iostream> //sacar, solo para ejemplo
 
@@ -160,12 +163,13 @@ void LogIn::signIn() {
     //Enviar username y password
 
     std::vector<uint32_t> int_msg;
-    msg.emplace_back(username.length());
+    int_msg.emplace_back(4);
+    int_msg.emplace_back(username.length());
     for (unsigned int i = 0; i < username.length();i++){
-        msg.emplace_back(username[i]);
+        int_msg.emplace_back(username[i]);
     }
     for (unsigned int i = 0; i < password.length();i++){
-        msg.emplace_back(password[i]);
+        int_msg.emplace_back(password[i]);
     }
 
     std::stringstream buffer;
@@ -188,19 +192,33 @@ void LogIn::signIn() {
     //enviar paquete
     clientConnector.send(msg, msg.size());
 
-    std::vector<char> response = clientConnector.receive(2);
+    std::vector<char> longBuff = clientConnector.receive(4);
+    len = (longBuff[3] << 24) + (longBuff[2] << 16) +
+                    (longBuff[1] << 8) + longBuff[0];
+
+    len = ntohl(len);
+
+    //recibe paquete
+    std::vector<char> msgBuff = clientConnector.receive(len);
+    std::string ss(msgBuff.begin(), msgBuff.end());
+
+    //desempaqueta
+    std::vector<uint32_t> response;
+    msgpack::object_handle oh = msgpack::unpack(ss.data(), ss.size());
+    oh.get().convert(response);
 
     if (response[0] == 10){
-        switch (response[1]):
+        switch (response[1]){
             case 0:
                 break;
             case 1:
                 this->exitApp();
                 break;
             case 2:
-                this->setEventsThird();
-                this->setUpThird();
+                //this->setEventsThird();
+                //this->setUpThird();
                 break;
+        }        
     }
     this->lineEdit1.clear();
     this->lineEdit2.clear();
