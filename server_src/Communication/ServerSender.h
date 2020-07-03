@@ -13,9 +13,9 @@
 class ServerSender : public Thread {
  private:
   Socket& peer;
-  ProtectedQueue<std::vector<uint32_t>> outgoingMessages;  // Default init
+  ProtectedQueue<std::vector<uint32_t>>& outgoingMessages;  // Default init
  public:
-  ServerSender(Socket& p);
+  ServerSender(Socket& p, ProtectedQueue<std::vector<uint32_t>>& outgoing);
 
   ~ServerSender();
 

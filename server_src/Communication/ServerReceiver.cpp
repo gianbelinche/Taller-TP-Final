@@ -1,10 +1,13 @@
 #include "ServerReceiver.h"
 
-#include "arpa/inet.h"
+#include <string>
 #include <utility>
 
-ServerReceiver::ServerReceiver(Socket& peer, ProtectedStrQueue incoming)
-    : peer(peer), incomingEvents(incoming) {}
+#include "arpa/inet.h"
+
+ServerReceiver::ServerReceiver(Socket& peer,
+                               ProtectedQueue<std::string>& incoming)
+    : peer(peer), incomingEvents(incoming), keepRunning(true) {}
 
 ServerReceiver::~ServerReceiver() {}
 

@@ -16,7 +16,7 @@ class ServerReceiver : public Thread {
   std::atomic<bool> keepRunning;
 
  public:
-  ServerReceiver(Socket& peer, ProtectedQueue<std::string> incoming);
+  ServerReceiver(Socket& peer, ProtectedQueue<std::string>& incoming);
 
   ~ServerReceiver();
 
