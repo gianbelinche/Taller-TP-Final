@@ -16,8 +16,7 @@ void ServerSender::run() {
       std::string encodedEvent = std::move(encodeEvent(event));
       sendEvent(std::move(encodedEvent));
     }
-  } catch (const ClosedQueueException& e) {
-  }
+  } catch (const ClosedQueueException& e) {}
 }
 
 std::string ServerSender::encodeEvent(std::vector<uint32_t> event) {

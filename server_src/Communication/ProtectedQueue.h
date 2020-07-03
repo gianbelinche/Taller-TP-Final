@@ -14,11 +14,17 @@ class ProtectedQueue {
   std::queue<T> q;
   std::condition_variable cv;
   std::atomic<bool> closed;
-
+  bool enabled; // Indica si la cola esta lista para recibir mensajes
  public:
   ProtectedQueue();
 
   ~ProtectedQueue();
+
+  void disable();
+
+  void enable();
+
+  bool isEnabled();
 
   void close();
 

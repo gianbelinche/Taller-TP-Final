@@ -57,3 +57,18 @@ template <class T>
 bool ProtectedQueue<T>::empty() {
   return q.empty();
 }
+
+template <class T>
+void ProtectedQueue<T>::disable() {
+  enabled = false;
+}
+
+template <class T>
+void ProtectedQueue<T>::enable() {
+  enabled = true;
+}
+
+template <class T>
+bool ProtectedQueue<T>::isEnabled() {
+  return enabled;
+}
