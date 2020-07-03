@@ -8,6 +8,77 @@
 #include <map>
 #include <fstream>
 
+void receive_user(Socket &l){
+    //recibe largo
+    while (true){
+        std::vector<char> lenBuff(4);
+        l.recv(&lenBuff[0], 4);
+        uint32_t len = (lenBuff[3] << 24) + (lenBuff[2] << 16) +
+                        (lenBuff[1] << 8) + lenBuff[0];
+
+        len = ntohl(len);
+
+        //recibe paquete
+        std::vector<char> msgBuff(len);
+        l.recv(&msgBuff[0], len);
+        std::string ss(msgBuff.begin(), msgBuff.end());
+
+        //desempaqueta
+        std::vector<uint32_t> event;
+        msgpack::object_handle oh = msgpack::unpack(ss.data(), ss.size());
+        oh.get().convert(event);
+
+        std::cout << "{";
+        for (auto &m : event) {
+            std::cout << m << ", ";
+        }
+        std::cout << "}" << '\n';
+
+        //Convierte en strings
+        std::string user = "";
+        std::string pass = "";
+        if (event[0] == 4){
+            uint32_t user_len = event[1];
+            for (int i = 0; i < user_len; i++){
+                user += event[2+i];
+            }
+            for (int i = 0;i < event.size() - 2 - user_len;i++){
+                pass += event[2+user_len+i];
+            }
+        }
+        std::cout << user << std::endl << pass << std::endl;
+        std::vector<uint32_t> answer;
+        answer.emplace_back(10);
+        if (user == "lobocampeon" && pass == "patata"){
+            answer.emplace_back(1);
+        } else {
+            answer.emplace_back(0);
+        }
+        std::stringstream bufferEnt;
+        msgpack::pack(bufferEnt, answer);
+        std::string sbufferEnt = bufferEnt.str();
+
+        std::vector<char> msgEnt(sbufferEnt.begin(), sbufferEnt.end());
+
+        uint32_t lenEnt = msgEnt.size();
+        lenEnt = htonl(lenEnt);
+
+        char *lenBuffEnt = (char*)&lenEnt;
+        std::vector<char> msgLenEnt(4);
+
+        for (int i = 0; i < 4; i++) {
+            msgLenEnt[i] = lenBuffEnt[i];
+        }
+
+        //enviar largo
+        l.send(&msgLenEnt[0], 4);
+        //enviar paquete
+        l.send(&msgEnt[0], msgEnt.size());
+        if (answer[1] == 1) break;
+    }
+    
+}
+
 void receive(Socket &l) {
     while (true) {
         //recibe largo
@@ -371,6 +442,8 @@ int main(int argc, char const *argv[])
     s.bind(argv[1]);
     s.listen();
     Socket l = s.accept();
+
+    receive_user(l);
 
     //std::thread recibir(receive, l);
     enviarprueba(l);
