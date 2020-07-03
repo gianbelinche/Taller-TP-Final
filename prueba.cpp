@@ -74,7 +74,29 @@ void receive_user(Socket &l){
         l.send(&msgLenEnt[0], 4);
         //enviar paquete
         l.send(&msgEnt[0], msgEnt.size());
-        if (answer[1] == 1) break;
+        if (answer[1] == 2){
+            std::vector<char> lenBuff(4);
+            l.recv(&lenBuff[0], 4);
+            uint32_t len = (lenBuff[3] << 24) + (lenBuff[2] << 16) +
+                            (lenBuff[1] << 8) + lenBuff[0];
+
+            len = ntohl(len);
+
+            //recibe paquete
+            std::vector<char> msgBuff(len);
+            l.recv(&msgBuff[0], len);
+            std::string ss(msgBuff.begin(), msgBuff.end());
+
+            //desempaqueta
+            std::vector<uint32_t> event;
+            msgpack::object_handle oh = msgpack::unpack(ss.data(), ss.size());
+            oh.get().convert(event);
+            for (auto &m : event) {
+                std::cout << m << ", ";
+            }
+            std::cout << "}" << '\n';
+            break;
+        }
     }
     
 }

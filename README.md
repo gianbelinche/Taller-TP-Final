@@ -77,18 +77,37 @@ A través de msgpack, se forma de la siguiente manera:
 
 5. **Aviso conección**:
 
-    `11 + idUsuario`
+    `5 + idUsuario`
     
     Sirve como indicativo de que el usuario se conecto, para el cliente es la forma de pedir que le manden el estado del mundo
     
     Ejemplo:
     
-    `{5, 1778}` <-- El jugador con id 1778 se conecto      
+    `{5, 1778}` <-- El jugador con id 1778 se conecto 
+
+6. **Creación de Personaje**:
+
+    `6 + raza + clase`
+
+    Ejemplo:
+
+    `{06,00,01}` <- Se creo un personaje de raza Humano y clase Mago
+
+    - **Razas**: 
+      - 00 -> Humano
+      - 01 -> Elfo
+      - 02 -> Enano
+      - 03 -> Gnomo
+
+    - **Clases**:
+      - 00 -> Guerrero
+      - 01 -> Mago
+      - 02 -> Clerigo
+      - 03 -> Paladin
+    
 
 
-      
-
-
+    
 
 
 ### Comandos Servidor a Cliente

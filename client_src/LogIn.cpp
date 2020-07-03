@@ -266,6 +266,56 @@ int LogIn::getExit(){
 
 void LogIn::createChar() {
     //para probar comportamiento de los combobox
-    std::cout << comboBox1.currentText().toStdString() << '\n';
-    std::cout << comboBox2.currentText().toStdString() << '\n';
+    std::string race = comboBox1.currentText().toStdString();
+    std::string class_ = comboBox2.currentText().toStdString();
+
+    std::cout << race << "\n" << class_ << "\n";
+
+    std::vector<uint32_t> int_msg;
+    int_msg.emplace_back(6);
+    if (race == "Humano"){
+        int_msg.emplace_back(0);
+    }
+    if (race == "Elfo"){
+        int_msg.emplace_back(1);
+    }
+    if (race == "Enano"){
+        int_msg.emplace_back(2);
+    }
+    if (race == "Gnomo"){
+        int_msg.emplace_back(3);
+    }
+    if (class_ == "Guerrero"){
+        int_msg.emplace_back(0);
+    }
+    if (class_ == "Mago"){
+        int_msg.emplace_back(1);
+    }
+    if (class_ == "Clérigo"){
+        int_msg.emplace_back(2);
+    }
+    if (class_ == "Paladin"){
+        int_msg.emplace_back(3);
+    }
+    std::stringstream buffer;
+    msgpack::pack(buffer, int_msg);
+    std::string sbuffer = buffer.str();
+
+    std::vector<char> msg(sbuffer.begin(), sbuffer.end());
+    uint32_t len = msg.size();
+    len = htonl(len);
+    char *lenBuff = (char*)&len;
+    std::vector<char> msgLen(4);
+
+    for (int i = 0; i < 4; i++) {
+        msgLen[i] = lenBuff[i];
+    }
+
+    //enviar largo
+    clientConnector.send(msgLen, 4);
+
+    //enviar paquete
+    clientConnector.send(msg, msg.size());
+
+    this->exitApp();
 }
