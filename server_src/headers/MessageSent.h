@@ -1,3 +1,6 @@
+#ifndef MESSAGESENT_H
+#define MESSAGESENT_H
+
 #include "Event.h"
 
 #include <cstdint>
@@ -11,3 +14,5 @@ public:
 
   ~MessageSent();
 };
+
+#endif // MESSAGESENT_H

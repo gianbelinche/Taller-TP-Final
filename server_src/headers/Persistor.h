@@ -2,7 +2,7 @@
 #define CLASS_PERSISTOR
 
 #include <fstream>
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <vector>
 

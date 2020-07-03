@@ -76,7 +76,3 @@ void Server::releaseAllClients() {
     it = clients.erase(it);
   }
 }
-
-Server::Server(const char* port) {
-    
-}

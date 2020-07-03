@@ -15,7 +15,7 @@
 #define CLICK_ON_ENTITY 1
 #define CLICK_ON_INVENTORY 2
 #define COMMAND 3
-#define LOGIN 4
+#define LOGIN_O 4
 
 class ServerProtocol {
 private:

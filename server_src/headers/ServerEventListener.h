@@ -1,3 +1,5 @@
+#ifndef SERVEREVENTLISTENER_H
+#define SERVEREVENTLISTENER_H
 
 #include <cstdint>
 #include <unordered_map>
@@ -15,7 +17,7 @@
 #define PRINT_MSG 7
 #define INVENTORY_COMMAND 8
 #define STAT_CHANGE 9
-#define LOGIN 10
+#define LOGIN_I 10
 
 class ServerEventListener {
  private:
@@ -43,3 +45,5 @@ class ServerEventListener {
   // Jugadores que se desconectan o mobs que mueren
   void entityDisappear(int id);
 };
+
+#endif // SERVEREVENTLISTENER_H

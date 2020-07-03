@@ -12,5 +12,5 @@ Acceptor::~Acceptor() {}
 
 Socket Acceptor::accept() {
   Socket peer = sock.accept();
-  return std::move(peer);
+  return peer;
 }

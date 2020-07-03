@@ -51,7 +51,7 @@ void ServerEventHandler::handle(UserMoved& ev) {
   world.playerMoved(ev.getUser(), direction);
 }
 
-void ServerEventHandler::handleUserAttack(ClickEvent& ev) {
+void ServerEventHandler::handleUserAttack(EntityClick& ev) {
   PlayerNet* player = world.getPlayer(ev.getUser());
   if (player == nullptr) {
     std::cerr << "Jugador no encontrado: " << ev.getUser() << std::endl;

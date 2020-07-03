@@ -72,7 +72,7 @@ std::string ClientHandler::receiveMsg(uint32_t len) {
   std::vector<char> msgBuff(len);
   peer.recv(msgBuff.data(), len);
   std::string ss(msgBuff.begin(), msgBuff.end());
-  return std::move(ss);
+  return ss;
 }
 
 void ClientHandler::sendTiles() {

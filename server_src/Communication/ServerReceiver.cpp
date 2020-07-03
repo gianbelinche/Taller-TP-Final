@@ -23,11 +23,11 @@ std::string ServerReceiver::receiveMsg(uint32_t len) {
   std::vector<char> msgBuff(len);
   peer.recv(msgBuff.data(), len);
   std::string ss(msgBuff.begin(), msgBuff.end());
-  return std::move(ss);
+  return ss;
 }
 
 uint32_t ServerReceiver::receiveLen() {
-  char* lenBuff;
+  char lenBuff[4];
   peer.recv(lenBuff, sizeof(uint32_t));
   uint32_t len = *((uint32_t*)lenBuff);
   return ntohl(len);
