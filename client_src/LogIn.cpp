@@ -154,5 +154,57 @@ void LogIn::connectSrv() {
 }
 
 void LogIn::signIn() {
-    
+    std::string username = this->lineEdit1.text().toStdString();
+    std::string password = this->lineEdit2.text().toStdString();
+
+    //Enviar username y password
+
+    std::vector<uint32_t> int_msg;
+    msg.emplace_back(username.length());
+    for (unsigned int i = 0; i < username.length();i++){
+        msg.emplace_back(username[i]);
+    }
+    for (unsigned int i = 0; i < password.length();i++){
+        msg.emplace_back(password[i]);
+    }
+
+    std::stringstream buffer;
+    msgpack::pack(buffer, int_msg);
+    std::string sbuffer = buffer.str();
+
+    std::vector<char> msg(sbuffer.begin(), sbuffer.end());
+    uint32_t len = msg.size();
+    len = htonl(len);
+    char *lenBuff = (char*)&len;
+    std::vector<char> msgLen(4);
+
+    for (int i = 0; i < 4; i++) {
+        msgLen[i] = lenBuff[i];
+    }
+
+    //enviar largo
+    clientConnector.send(msgLen, 4);
+
+    //enviar paquete
+    clientConnector.send(msg, msg.size());
+
+    std::vector<char> response = clientConnector.receive(2);
+
+    if (response[0] == 10){
+        switch (response[1]):
+            case 0:
+                break;
+            case 1:
+                this->exitApp();
+                break;
+            case 2:
+                this->setEventsThird();
+                this->setUpThird();
+                break;
+    }
+    this->lineEdit1.clear();
+    this->lineEdit2.clear();
+
+
+
 }

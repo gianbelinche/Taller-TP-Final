@@ -9,7 +9,7 @@ private:
     QApplication app;
     LogIn logIn;
 public:
-    LogInController(int argc, char* argv[],ClientConnector& clientConnector);
+    LogInController(int& argc, char* argv[],ClientConnector& clientConnector);
     int run();
 };
 

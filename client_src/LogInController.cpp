@@ -1,7 +1,7 @@
 #include "LogInController.h"
 
 
-LogInController::LogInController(int argc, char* argv[],
+LogInController::LogInController(int& argc, char* argv[],
 ClientConnector& clientConnector) : app(argc,argv),logIn(clientConnector) {}
 
 int LogInController::run(){

@@ -14,8 +14,6 @@
 #include "LayoutManager.h"
 #include <exception>
 #include <iostream>
-//#include "LoginScreen.h"
-//#include "LoginManager.h"
 #include "SocketException.h"
 #include "LogInController.h"
 
@@ -34,6 +32,8 @@ int main(int argc, char* argv[]) {
         LogInController logInController(argc,argv,clientConnector);
         int end = logInController.run();
         std::cout << end << std::endl;
+
+        
 
 
 
