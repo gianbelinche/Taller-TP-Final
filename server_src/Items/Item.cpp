@@ -1,5 +1,5 @@
-#include "Item.h"
-#include "../Entities/PlayerNet.h"
+#include "../headers/Item.h"
+#include "../headers/PlayerNet.h"
 
 Item::Item(int itemID) {}
 

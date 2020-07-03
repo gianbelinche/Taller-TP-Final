@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <string>
 
-#include "../resources/Thread.h"
+#include "Thread.h"
 #include "ProtectedQueue.h"
 #include "Socket.h"
 

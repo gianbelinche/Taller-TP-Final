@@ -6,12 +6,12 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Communication/ProtectedQueue.h"
-#include "Entities/Entity.h"
-#include "Events/ServerEventHandler.h"
-#include "resources/GameState.h"
-#include "resources/Thread.h"
-#include "resources/ServerProtocol.h"
+#include "ProtectedQueue.h"
+#include "Entity.h"
+#include "ServerEventHandler.h"
+#include "GameState.h"
+#include "Thread.h"
+#include "ServerProtocol.h"
 
 class Game : public Thread {
  private:

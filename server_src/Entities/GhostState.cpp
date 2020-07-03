@@ -1,4 +1,4 @@
-#include "GhostState.h"
+#include "../headers/GhostState.h"
 
 GhostState PlayerState::dead{};
 

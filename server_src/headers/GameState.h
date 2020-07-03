@@ -5,8 +5,8 @@
 #include <vector>
 
 #include "Condition.h"
-#include "Entities/Entity.h"
-#include "Entities/PlayerNet.h"
+#include "Entity.h"
+#include "PlayerNet.h"
 
 #define TILE_SIZE 32
 

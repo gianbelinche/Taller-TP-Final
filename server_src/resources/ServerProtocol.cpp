@@ -1,4 +1,4 @@
-#include "ServerProtocol.h"
+#include "../headers/ServerProtocol.h"
 
 #include <msgpack.hpp>
 #include <utility>

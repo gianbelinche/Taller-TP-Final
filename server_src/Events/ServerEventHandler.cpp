@@ -1,8 +1,8 @@
-#include "ServerEventHandler.h"
+#include "../headers/ServerEventHandler.h"
 
 #include <iostream>
 
-#include "Entities/PlayerNet.h"
+#include "../headers/PlayerNet.h"
 
 ServerEventHandler::ServerEventHandler(GameState& state,
                                        ServerEventListener& eventListener)

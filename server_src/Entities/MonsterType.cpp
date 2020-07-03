@@ -1,4 +1,4 @@
-#include "MonsterType.h"
+#include "../headers/MonsterType.h"
 
 MonsterType::MonsterType(int hp, int damage) : hp(hp), damage(damage) {}
 

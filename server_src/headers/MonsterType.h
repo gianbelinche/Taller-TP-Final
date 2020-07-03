@@ -1,7 +1,7 @@
 #ifndef MONSTERTYPE_H
 #define MONSTERTYPE_H
 
-#include "../GameState.h"
+#include "GameState.h"
 #include "Monster.h"
 
 class MonsterType {

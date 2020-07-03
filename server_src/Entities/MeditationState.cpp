@@ -1,6 +1,6 @@
-#include "MeditationState.h"
+#include "../headers/MeditationState.h"
 
-#include "../config/Equations.h"
+#include "../headers/Equations.h"
 
 MeditationState PlayerState::meditating{};
 

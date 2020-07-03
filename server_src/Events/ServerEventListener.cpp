@@ -1,4 +1,4 @@
-#include "ServerEventListener.h"
+#include "../headers/ServerEventListener.h"
 
 ServerEventListener::ServerEventListener(MessageDispatcher& msgDispatcher)
     : dispatcher(msgDispatcher) {}

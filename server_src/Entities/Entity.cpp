@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "Entity.h"
+#include "../headers/Entity.h"
 
 Entity::Entity(int x, int y, int id, int maxHp, int hp, int level)
     : x(x),

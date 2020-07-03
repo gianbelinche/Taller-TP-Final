@@ -3,11 +3,11 @@
 
 #include <cstdint>
 
-#include "Events/EntityClick.h"
-#include "Events/InventoryClick.h"
-#include "Events/MessageSent.h"
-#include "Events/ServerEventListener.h"
-#include "Events/UserMoved.h"
+#include "EntityClick.h"
+#include "InventoryClick.h"
+#include "MessageSent.h"
+#include "ServerEventListener.h"
+#include "UserMoved.h"
 #include "GameState.h"
 #include "Thread.h"
 

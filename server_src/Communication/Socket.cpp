@@ -4,8 +4,8 @@
 #include <cstring>
 #include <stdexcept>
 
-#include "Socket.h"
-#include "SocketException.h"
+#include "../headers/Socket.h"
+#include "../headers/SocketException.h"
 
 #define LISTEN_QUEUE_SIZE 10
 

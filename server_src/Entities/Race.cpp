@@ -1,4 +1,4 @@
-#include "Race.h"
+#include "../headers/Race.h"
 
 Race::Race(char race_t, float hpFac, float recFac, float manaFac)
     : race_type(race_t), 

@@ -1,4 +1,4 @@
-#include "NormalState.h"
+#include "../headers/NormalState.h"
 
 NormalState PlayerState::normal{};
 

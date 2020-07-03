@@ -1,4 +1,4 @@
-#include "MessageDispatcher.h"
+#include "../headers/MessageDispatcher.h"
 
 MessageDispatcher::MessageDispatcher() {}
 

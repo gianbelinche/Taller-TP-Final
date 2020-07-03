@@ -3,10 +3,10 @@
 
 class GameState;
 
-#include "../Items/Armor.h"
-#include "../Items/Helmet.h"
-#include "../Items/Shield.h"
-#include "../Items/Weapon.h"
+#include "Armor.h"
+#include "Helmet.h"
+#include "Shield.h"
+#include "Weapon.h"
 #include "Class.h"
 #include "Entity.h"
 #include "PlayerState.h"

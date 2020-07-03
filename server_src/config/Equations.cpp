@@ -3,7 +3,7 @@
 #include <random>
 #include <iostream>
 
-#include "Equations.h"
+#include "../headers/Equations.h"
 
 // Castea el resultado a int para que no moleste
 int equation::pointsRecovery(float raceRecoveryFac, float seconds) {

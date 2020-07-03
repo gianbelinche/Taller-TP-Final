@@ -1,15 +1,15 @@
-#include "Monster.h"
+#include "../headers/Monster.h"
 
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <random>
 
-#include "../config/Equations.h"
-#include "../Condition.h"
-#include "../IsAlive.h"
-#include "MonsterType.h"
-#include "PlayerNet.h"
+#include "../headers/Equations.h"
+#include "../headers/Condition.h"
+#include "../headers/IsAlive.h"
+#include "../headers/MonsterType.h"
+#include "../headers/PlayerNet.h"
 
 #define MIN_DIST 100  // Esto debe ser configurable no se como
 #define ATK_DIST 20

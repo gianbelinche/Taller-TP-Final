@@ -1,6 +1,6 @@
-#include "Weapon.h"
+#include "../headers/Weapon.h"
 
-#include "../config/Equations.h"
+#include "../headers/Equations.h"
 
 Weapon::Weapon(int itemID, int minDMG, int maxDMG, int rang)
     : Item(itemID), minDmg(minDMG), maxDmg(maxDMG), range(rang) {}

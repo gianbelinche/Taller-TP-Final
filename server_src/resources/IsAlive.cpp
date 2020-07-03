@@ -1,4 +1,4 @@
-#include "IsAlive.h"
+#include "../headers/IsAlive.h"
 
 IsAlive Condition::isAlive{};
 

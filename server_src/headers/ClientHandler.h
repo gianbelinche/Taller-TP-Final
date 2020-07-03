@@ -5,10 +5,10 @@
 #include <string>
 #include <vector>
 
-#include "Communication/MessageDispatcher.h"
-#include "Communication/ProtectedQueue.h"
-#include "Communication/ServerReceiver.h"
-#include "Communication/ServerSender.h"
+#include "MessageDispatcher.h"
+#include "ProtectedQueue.h"
+#include "ServerReceiver.h"
+#include "ServerSender.h"
 #include "Map.h"
 #include "Persistor.h"
 #include "Socket.h"

@@ -6,22 +6,24 @@
 #include <string>
 #include <unordered_map>
 
-#include "config/Configuration.h"
-#include "resources/Acceptor.h"
-#include "resources/ClientHandler.h"
-#include "resources/Thread.h"
+#include "Configuration.h"
+#include "Acceptor.h"
+#include "ClientHandler.h"
+#include "Thread.h"
 
 #define MAP_PATH "../map.json"
 
 class Server : public Thread {
  private:
   Acceptor clientAcceptor;
-  Configuration config;
+  //Configuration config;
   std::list<ClientHandler*> clients;  // efficient erase
   std::atomic<bool> keepAccepting;
 
  public:
-  Server(const char* port, Configuration configuration);
+  //Server(const char* port, Configuration configuration);
+  Server(const char* port);
+
 
   ~Server();
 

@@ -1,4 +1,4 @@
-#include "Class.h"
+#include "../headers/Class.h"
 
 Class::Class(char class_type, float hpFac, float manaFac, float meditFac)
     : class_type(class_type),

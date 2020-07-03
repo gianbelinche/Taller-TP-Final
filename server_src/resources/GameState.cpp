@@ -1,4 +1,4 @@
-#include "GameState.h"
+#include "../headers/GameState.h"
 
 #include <cmath>
 #include <limits>

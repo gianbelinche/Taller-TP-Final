@@ -6,7 +6,7 @@
 #include <utility>
 #include <vector>
 
-#include "../resources/Thread.h"
+#include "Thread.h"
 #include "ProtectedQueue.h"
 #include "Socket.h"
 

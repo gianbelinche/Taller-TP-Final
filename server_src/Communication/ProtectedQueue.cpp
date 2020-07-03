@@ -1,8 +1,8 @@
-#include "ProtectedQueue.h"
+#include "../headers/ProtectedQueue.h"
 
 #include <utility>
 
-#include "ClosedQueueException.h"
+#include "../headers/ClosedQueueException.h"
 
 template <class T>
 ProtectedQueue<T>::ProtectedQueue() : closed(false), enabled(true) {}

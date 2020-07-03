@@ -1,7 +1,7 @@
-#include "PlayerState.h"
+#include "../headers/PlayerState.h"
 
-#include "../config/Equations.h"
-#include "PlayerNet.h"
+#include "../headers/Equations.h"
+#include "../headers/PlayerNet.h"
 
 #include <iostream>
 

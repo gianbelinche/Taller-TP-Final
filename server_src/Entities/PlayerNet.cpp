@@ -1,13 +1,13 @@
-#include "PlayerNet.h"
+#include "../headers/PlayerNet.h"
 
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 
-#include "../GameState.h"
-#include "../config/Equations.h"
-#include "GhostState.h"
-#include "PlayerState.h"
+#include "../headers/GameState.h"
+#include "../headers/Equations.h"
+#include "../headers/GhostState.h"
+#include "../headers/PlayerState.h"
 
 PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int hp,
                      int mana, int velocity, int currExp, int currLevel,

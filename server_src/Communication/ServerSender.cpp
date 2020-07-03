@@ -1,9 +1,9 @@
-#include "ServerSender.h"
+#include "../headers/ServerSender.h"
 
 #include <msgpack.hpp>
 #include <sstream>
 
-#include "ClosedQueueException.h"
+#include "../headers/ClosedQueueException.h"
 
 ServerSender::ServerSender(Socket& p,
                            ProtectedQueue<std::vector<uint32_t>>& outgoing)

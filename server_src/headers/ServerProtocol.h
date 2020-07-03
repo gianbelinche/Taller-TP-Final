@@ -5,10 +5,10 @@
 #include <string>
 #include <vector>
 
-#include "Events/Event.h"
-#include "Events/EntityClick.h"
-#include "Events/MessageSent.h"
-#include "Events/UserMoved.h"
+#include "Event.h"
+#include "EntityClick.h"
+#include "MessageSent.h"
+#include "UserMoved.h"
 #include "ServerEventHandler.h"
 
 #define PLAYER_MOVEMENT 0

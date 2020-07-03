@@ -1,7 +1,7 @@
 #ifndef CONDITION_H
 #define CONDITION_H
 
-#include "Entities/PlayerNet.h"
+#include "PlayerNet.h"
 
 class IsAlive;
 class PlayerNet;

@@ -1,7 +1,7 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include "../Entities/Entity.h"
+#include "Entity.h"
 #include "Item.h"
 
 class Weapon : public Item {

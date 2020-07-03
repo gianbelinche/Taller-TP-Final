@@ -1,4 +1,4 @@
-#include "EntityClick.h"
+#include "../headers/EntityClick.h"
 
 EntityClick::EntityClick(int originUser, int destinyEntity)
     : Event(originUser), destinyId(destinyEntity) {}

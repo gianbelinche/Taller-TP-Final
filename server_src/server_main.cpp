@@ -5,8 +5,9 @@
 #include <unordered_map>
 #include <utility>
 
-#include "Utils/Configuration.h"
+//#include "Utils/Configuration.h"
 #include "Server.h"
+#include "Communication/SocketException.h"
 
 enum exit_codes{SUCCESS, ERROR};
 
@@ -17,8 +18,8 @@ int main(int argc, const char* argv[]) {
   }
   // Aca se cargaria el archivo de configuracion
   
-  Configuration config(argv[1]);
-  Server server(config.getPort(), std::move(config));
+  //Configuration config(argv[1]);
+  Server server("8080");
 
   try {
     server.start();

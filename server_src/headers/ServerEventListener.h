@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../Communication/MessageDispatcher.h"
+#include "MessageDispatcher.h"
 
 #define PLAYER_MOVEMENT 0
 #define NPS_SPAWN 1
