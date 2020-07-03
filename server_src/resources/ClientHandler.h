@@ -7,6 +7,8 @@
 
 #include "Communication/MessageDispatcher.h"
 #include "Communication/ProtectedQueue.h"
+#include "Communication/ServerReceiver.h"
+#include "Communication/ServerSender.h"
 #include "Map.h"
 #include "Persistor.h"
 #include "Socket.h"
@@ -20,6 +22,7 @@ class ClientHandler : public Thread {
   Map& map;
   std::atomic<uint32_t>& idGenerator;
   ProtectedQueue<std::string>& incomingMessages;
+  ProtectedQueue<std::vector<uint32_t>> outgoingMessages;
   MessageDispatcher& dispatcher;
 
  public:
@@ -38,6 +41,8 @@ class ClientHandler : public Thread {
   std::vector<uint32_t> getCredentials();
 
   void sendMap();
+
+  std::string receiveMsg(uint32_t len);
 
   void sendMsg(std::string msg);
 
