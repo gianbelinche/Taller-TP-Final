@@ -5,7 +5,7 @@
 #include "ProtMsgQueue.h"
 #include "EntityManager.h"
 #include "LayoutManager.h"
-#include "LoginScreen.h"
+//#include "LoginScreen.h"
 #include <atomic>
 
 class ModelController {
@@ -13,13 +13,11 @@ class ModelController {
         EntityManager &entityManager;
         ProtMsgQueue &msgQueue;
         LayoutManager &layoutManager;
-        LoginScreen &loginScreen;
         void handle(std::vector<uint32_t> &event);
         
     public:
         ModelController(EntityManager &anEntityManager, 
-                        ProtMsgQueue &aMsgQueue,LayoutManager &layoutManager,
-                        LoginScreen &loginScreen);
+                        ProtMsgQueue &aMsgQueue,LayoutManager &layoutManager);
         ~ModelController();
 
         ModelController(const ModelController& copy) = delete;

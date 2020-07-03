@@ -17,12 +17,10 @@ enum state {
 
 ModelController::ModelController(EntityManager &anEntityManager, 
                                  ProtMsgQueue &aMsgQueue,
-                                 LayoutManager &layoutManager,
-                                 LoginScreen &loginScreen) : 
+                                 LayoutManager &layoutManager) : 
                                         entityManager(anEntityManager),
                                         msgQueue(aMsgQueue),
-                                        layoutManager(layoutManager),
-                                        loginScreen(loginScreen) {}
+                                        layoutManager(layoutManager){}
 
 ModelController::~ModelController() {}
 
@@ -91,9 +89,9 @@ void ModelController::handle(std::vector<uint32_t> &event) {
 
         case LOGIN:
             if (event[1] == 0){
-                loginScreen.showError("Contraseña incorrecta");
+                
             } else {
-                loginScreen.deactivate();
+                
             }
             break;    
         

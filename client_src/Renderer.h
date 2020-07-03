@@ -12,7 +12,7 @@
 #include "GraphicInventory.h"
 #include "MiniChat.h"
 #include "ExpBar.h"
-#include "LoginScreen.h"
+//#include "LoginScreen.h"
 #include "MusicPlayer.h"
 
 class Renderer : public Thread {
@@ -28,7 +28,6 @@ class Renderer : public Thread {
         MiniChat &chat;
         ExpBar &expbar;
         ModelController &modelController;
-        LoginScreen &loginScreen;
         MusicPlayer musicPlayer;
         int zone;
 
@@ -37,8 +36,7 @@ class Renderer : public Thread {
                  EntityManager &anEntityManager, SDL_Renderer *aRenderer,
                  Layout &aLayout, GraphicInventory &anInventory, 
                  MiniChat &aChat, ExpBar &anExpbar,
-                 ModelController &aModelController,
-                 LoginScreen &loginScreen);
+                 ModelController &aModelController);
         ~Renderer();
 
         Renderer(const Renderer& copy) = delete;

@@ -14,8 +14,8 @@
 #include "LayoutManager.h"
 #include <exception>
 #include <iostream>
-#include "LoginScreen.h"
-#include "LoginManager.h"
+//#include "LoginScreen.h"
+//#include "LoginManager.h"
 #include "SocketException.h"
 
 #define ERROR 1
@@ -34,21 +34,8 @@ int main(int argc, char* argv[]) {
         ProtMsgQueue receiverQueue;
         ClientProtocol clientProtocol;
 
-        LoginScreen loginScreen(mainRenderer);
-        LoginManager loginManager(loginScreen,mainRenderer);
         ClientConnector clientConnector;
-        bool connected = false;
-        while (!connected){
-            try {
-                std::vector<std::string> server = loginManager.run();
-                clientConnector.connect(server[0].c_str(),server[1].c_str());
-            } catch(const SocketException& e){
-                loginScreen.showError("Error al conectarse al servidor");
-                continue;
-            }
-            connected = true;
-            loginScreen.changeToUserInput();
-        }
+        clientConnector.connect(argv[1],argv[2]);
         
 
         Player player = clientConnector.getPlayer(mainRenderer);
@@ -69,13 +56,12 @@ int main(int argc, char* argv[]) {
         EntityManager entityManager(mainRenderer, player, player.getID());
 
         EventManager eventManager(entityManager, player.getID(), senderQueue, 
-                                  camera, clientProtocol,miniChat, gInventory,
-                                 loginScreen);
+                                  camera, clientProtocol,miniChat, gInventory);
         ModelController modelController(entityManager, receiverQueue,
-                                         layoutManager, loginScreen);
+                                         layoutManager);
         Renderer renderer(camera, player, mainMap, entityManager, 
                           mainRenderer, layout, gInventory, miniChat, expBar,
-                          modelController,loginScreen);
+                          modelController);
 
         ClientController clientController(receiver, sender, modelController,
                                           eventManager, renderer, clientConnector);

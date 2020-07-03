@@ -7,8 +7,7 @@ Renderer::Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap,
                    EntityManager &anEntityManager, SDL_Renderer *aRenderer,
                    Layout &aLayout, GraphicInventory &anInventory, 
                    MiniChat &aChat, ExpBar &anExpbar, 
-                   ModelController &aModelController,
-                   LoginScreen &loginScreen) : 
+                   ModelController &aModelController) : 
                                             closed(false), camera(aCamera),
                                             player(aPlayer), mainMap(aMainMap),
                                             entityManager(anEntityManager),
@@ -17,7 +16,6 @@ Renderer::Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap,
                                             inventory(anInventory), chat(aChat),
                                             expbar(anExpbar), 
                                             modelController(aModelController),
-                                            loginScreen(loginScreen),
                                             musicPlayer(), zone(0) {}
 
 Renderer::~Renderer() {}
@@ -44,17 +42,15 @@ void Renderer::run() {
 
             SDL_RenderClear(renderer);
 
-            if (loginScreen.is_active()){
-                loginScreen.render(camera);
-            } else {
-                mainMap.renderTerrain(camera);
-                entityManager.renderEntities(camera);
-                mainMap.renderStructures(camera);
-                layout.render(camera);
-                inventory.render(camera);
-                expbar.render(camera);
-                chat.render(camera);
-            }
+            
+            mainMap.renderTerrain(camera);
+            entityManager.renderEntities(camera);
+            mainMap.renderStructures(camera);
+            layout.render(camera);
+            inventory.render(camera);
+            expbar.render(camera);
+            chat.render(camera);
+            
 
             SDL_RenderPresent(renderer);
             
