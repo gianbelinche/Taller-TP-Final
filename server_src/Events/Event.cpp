@@ -1,6 +1,6 @@
 
 
-#include "Event.h"
+#include "../headers/Event.h"
 
 Event::Event(int id) : originUserId(id) {}
 

@@ -1,4 +1,4 @@
-#include "Armor.h"
+#include "../headers/Armor.h"
 
 Armor::Armor(int id, int minDef, int maxDef) : Wearable(id, minDef, maxDef) {}
 

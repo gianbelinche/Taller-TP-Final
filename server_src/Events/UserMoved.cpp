@@ -1,12 +1,17 @@
+#include "../headers/UserMoved.h"
 
-
-#include "UserMoved.h"
-
-UserMoved::UserMoved(int originUser, int pos_x, int pos_y)
-    : Event(originUser), x(pos_x), y(pos_y) {}
+UserMoved::UserMoved(int originUser, char direction)
+    : Event(originUser), direction(direction) {}
 
 UserMoved::~UserMoved() {}
 
-int UserMoved::getX() { return x; }
+char UserMoved::getDirection() { return direction; }
 
-int UserMoved::getY() { return y; }
+UserMoved::UserMoved(UserMoved&& other)
+    : Event(other.originUserId), direction(other.direction) {}
+
+UserMoved& UserMoved::operator=(UserMoved&& other) {
+  this->originUserId = other.originUserId;
+  this->direction = other.direction;
+  return *this;
+}
