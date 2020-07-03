@@ -26,6 +26,7 @@ class LogIn : public QMainWindow {
         QComboBox comboBox1;
         QComboBox comboBox2;
         ClientConnector& clientConnector;
+        int normal_exit;
         
 
         void setUpFirst();  // Elegir server
@@ -35,10 +36,12 @@ class LogIn : public QMainWindow {
         void connectSrv();
         void exitApp();
         void signIn();
+        void exitEntireApp();
 
     public:
         explicit LogIn(ClientConnector& clientConnector,QMainWindow *parent = 0);
         ~LogIn();
+        int getExit();
 };
 
 #endif // __LOG_IN_H__

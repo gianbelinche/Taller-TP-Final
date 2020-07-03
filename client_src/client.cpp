@@ -30,12 +30,9 @@ int main(int argc, char* argv[]) {
 
         ClientConnector clientConnector;
         LogInController logInController(argc,argv,clientConnector);
-        int end = logInController.run();
-        std::cout << end << std::endl;
-
-        
-
-
+        if (logInController.run() == -1){
+            return SUCCESS;
+        }
 
         MainWindow mainWindow;
         SDL_Renderer *mainRenderer = mainWindow.getRenderer();

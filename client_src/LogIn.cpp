@@ -5,6 +5,7 @@
 #include "SocketException.h"
 #include <sstream>
 #include <string>
+#include "QuitException.h"
 
 #include <iostream> //sacar, solo para ejemplo
 
@@ -19,7 +20,8 @@ LogIn::LogIn(ClientConnector& clientConnector,QMainWindow *parent) :
                                     label2(&centralWidget),
                                     comboBox1(&centralWidget),
                                     comboBox2(&centralWidget),
-                                    clientConnector(clientConnector) {
+                                    clientConnector(clientConnector),
+                                    normal_exit(0) {
     if (this->objectName().isEmpty())
         this->setObjectName(QStringLiteral("LogIn"));
     this->resize(640, 480);
@@ -51,6 +53,11 @@ void LogIn::exitApp() {
     this->close();
 }
 
+void LogIn::exitEntireApp(){
+    this->exitApp();
+    normal_exit = -1;
+}
+
 void LogIn::setEventsFirst() {
     // Conecto el evento del boton connect
     QObject::connect(&this->button1, &QPushButton::clicked,
@@ -58,7 +65,7 @@ void LogIn::setEventsFirst() {
 
     // Conecto el evento del boton exit
     QObject::connect(&this->button2, &QPushButton::clicked,
-                     this, &LogIn::exitApp);
+                     this, &LogIn::exitEntireApp);
 }
 
 void LogIn::setUpFirst() {
@@ -222,7 +229,8 @@ void LogIn::signIn() {
     }
     this->lineEdit1.clear();
     this->lineEdit2.clear();
+}
 
-
-
+int LogIn::getExit(){
+    return normal_exit;
 }
