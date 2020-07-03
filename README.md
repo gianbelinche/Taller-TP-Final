@@ -75,6 +75,16 @@ A través de msgpack, se forma de la siguiente manera:
 
       `{04, 6, matias, contraseña}` <- El usuario es matias y la contraseña contraseña.
 
+5. **Aviso conección**:
+
+    `11 + idUsuario`
+    
+    Sirve como indicativo de que el usuario se conecto, para el cliente es la forma de pedir que le manden el estado del mundo
+    
+    Ejemplo:
+    
+    `{5, 1778}` <-- El jugador con id 1778 se conecto      
+
 
       
 
@@ -419,16 +429,10 @@ A través de msgpack, se forma de la siguiente manera:
 
     `{10,0}` <- El jugador no se logueo correctamente
 
-    `{10,1}` <- El jugador se logueo correctamente
-    
-11. **Aviso conección**:
+    `{10,1}` <- El jugador se logueo correctamente, en un usuario ya existente
 
-    `11 + idUsuario`
+    `{10,2}` <- El jugador se logue correctamente, pero el usuario es nuevo y hay que crear el personaje
     
-    Sirve como indicativo de que el usuario se conecto, para el cliente es la forma de pedir que le manden el estado del mundo
-    
-    Ejemplo:
-    
-    `{11, 1778}` <-- El jugador con id 1778 se conecto
+
 
 COMPLETAR
