@@ -4,6 +4,21 @@ project(argentum)
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+# Find the QtWidgets library
+find_package(Qt5Widgets)
+
+include_directories(.)
+
+# Esta macro toma cada uno los parámetros y ejecuta *uic* sobre ellos
+# La aplicacion uic genera headers con la definición de los widgets
+# a partir de un archivo .ui
+# Los nombres de los headers generados se guardan en la variable pasada
+# como primer parámetro.
+# No, no los genera con la carpeta como prefijo.
+#qt5_wrap_ui(UIS_HEADERS
+#        login.ui
+#)
+
 add_library(clientLib
   client_src/ClientController.cpp
   client_src/ClientProtocol.cpp
@@ -49,8 +64,6 @@ add_library(clientLib
   client_src/Thread.cpp
   client_src/Equippable.cpp
   client_src/LayoutManager.cpp
-  client_src/LoginScreen.cpp
-  client_src/LoginManager.cpp
   client_src/Music.cpp
   client_src/MusicPlayer.cpp
 )
@@ -61,9 +74,11 @@ include_directories(${PROJECT_BINARY_DIR})
 
 
 add_executable (client
+  client_src/LogIn.cpp
+  client_src/LogInController.cpp
   client_src/client.cpp
 )
 
 #target_link_libraries(testgian errors sounds textures layout SDL2 SDL2_image SDL2_mixer SDL2_ttf)
 #target_link_libraries(prueba controllers connection entities textures images layout errors threads SDL2 SDL2_image SDL2_mixer SDL2_ttf pthread)
-target_link_libraries(client clientLib SDL2 SDL2_image SDL2_mixer SDL2_ttf pthread)
+target_link_libraries(client clientLib SDL2 SDL2_image SDL2_mixer SDL2_ttf pthread Qt5::Widgets)

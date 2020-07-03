@@ -17,6 +17,7 @@
 //#include "LoginScreen.h"
 //#include "LoginManager.h"
 #include "SocketException.h"
+#include "LogInController.h"
 
 #define ERROR 1
 #define SUCCESS 0
@@ -28,14 +29,21 @@ int main(int argc, char* argv[]) {
     try {
         //if (argc != 3) return 1; //SACAR ESTO
         //ClientConnector clientConnector(argv[1], argv[2]); //CAMBIAR, PASAR DE OTRA FORMA EL IP Y SERVICE
+
+        ClientConnector clientConnector;
+        LogInController logInController(argc,argv,clientConnector);
+        int end = logInController.run();
+        std::cout << end << std::endl;
+
+
+
         MainWindow mainWindow;
         SDL_Renderer *mainRenderer = mainWindow.getRenderer();
         BlockingMsgQueue senderQueue;
         ProtMsgQueue receiverQueue;
         ClientProtocol clientProtocol;
 
-        ClientConnector clientConnector;
-        clientConnector.connect(argv[1],argv[2]);
+        
         
 
         Player player = clientConnector.getPlayer(mainRenderer);
