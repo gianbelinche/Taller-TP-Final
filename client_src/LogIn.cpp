@@ -232,6 +232,9 @@ void LogIn::signIn() {
         msgBox.exec();
         return;
     }
+    screen_w = stoi(resolution);
+    screen_h = stoi(resolution.substr(resolution.find("x") + 1));
+    /*
     if (resolution == "200x100"){
         screen_w = 200;
         screen_h = 100;
@@ -255,7 +258,7 @@ void LogIn::signIn() {
     if (resolution == "1920x1080"){
         screen_w = 1920;
         screen_h = 1080;
-    }
+    }*/
 
     std::string username = this->lineEdit1.text().toStdString();
     std::string password = this->lineEdit2.text().toStdString();
