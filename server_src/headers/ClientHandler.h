@@ -65,6 +65,16 @@ class ClientHandler : public Thread {
   void sendTerrain();
 
   void sendStructures();
+
+  void sendSuccesfulLogin();
+
+  void sendFailedLogin();
+
+  void sendPlayerCreationNeeded();
+
+  void handleNewPlayer(std::string user);
+
+  std::vector<uint32_t> getSendablePlayerInfo(std::vector<uint32_t>& playerData);
 };
 
 #endif  // CLIENTHANDLER_H
