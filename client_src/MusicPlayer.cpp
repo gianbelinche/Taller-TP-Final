@@ -1,10 +1,10 @@
 #include "MusicPlayer.h"
 
 enum SONGS{
-    CAVE,
     CITY,
+    DESERT,
     FOREST,
-    DESERT
+    CAVE
 };
 
 MusicPlayer::MusicPlayer() : songs(){

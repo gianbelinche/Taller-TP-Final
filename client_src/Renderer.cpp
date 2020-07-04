@@ -33,12 +33,12 @@ void Renderer::run() {
             modelController.run(closed); //chequear
 
             camera.refresh(player.getPosX(), player.getPosY());
-            /*
+            
             if (mainMap.getZone(player.getPosX(), player.getPosY()) != zone){
                 zone = mainMap.getZone(player.getPosX(), player.getPosY());
                 musicPlayer.play(zone);
             }
-            */
+            
 
             SDL_RenderClear(renderer);
 
