@@ -19,7 +19,9 @@ class ClientProtocol {
         std::vector<uint32_t> makeMsgSendCommand(uint32_t ID,
                                                  std::string command);
         std::vector<uint32_t> makeMsgLogin(uint32_t ID,std::string user,
-                                           std::string password);                                   
+                                           std::string password);      
+        std::vector<uint32_t> makeMsgConnection(uint32_t ID);                                    
+
 };
 
 #endif

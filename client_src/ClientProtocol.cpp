@@ -4,6 +4,7 @@
 #define CLICK_INVENTORY 2
 #define SEND_MESSAGE 3
 #define LOGIN 4
+#define CONNECTION 5
 ClientProtocol::ClientProtocol() {}
 
 ClientProtocol::~ClientProtocol() {}
@@ -57,5 +58,12 @@ std::vector<uint32_t> ClientProtocol::makeMsgLogin(uint32_t ID,
     for (unsigned int i = 0; i < password.size();i++){
         msg.emplace_back((uint32_t)password[i]);
     }
+    return std::move(msg);
+}
+
+std::vector<uint32_t> ClientProtocol::makeMsgConnection(uint32_t ID){
+    std::vector<uint32_t> msg;
+    msg.emplace_back(CONNECTION);
+    msg.emplace_back(ID);
     return std::move(msg);
 }
