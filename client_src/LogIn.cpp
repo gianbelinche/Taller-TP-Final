@@ -326,8 +326,6 @@ void LogIn::createChar() {
     std::string race = comboBox1.currentText().toStdString();
     std::string class_ = comboBox2.currentText().toStdString();
 
-    std::cout << race << "\n" << class_ << "\n";
-
     std::vector<uint32_t> int_msg;
     int_msg.emplace_back(6);
     if (race == "Humano"){
