@@ -5,8 +5,9 @@
 
 #define FRAMES_PER_SECOND 30
 
-GameState::GameState(std::vector<std::vector<bool>>& collisions, int fps)
-    : colisionMap(collisions), framesPerSecond(fps) {}
+GameState::GameState(std::vector<std::vector<bool>>& collisions, int fps,
+                     ServerEventListener& eventListener)
+    : colisionMap(collisions), framesPerSecond(fps), listener(eventListener) {}
 
 GameState::~GameState() {}
 
@@ -95,20 +96,19 @@ void GameState::addPlayer(PlayerNet* player) {
   // Idem anterior, hay que brodcastear que aparecio
 }
 
-void GameState::playerDied(int id) {}
+void GameState::addPlayerFromData(std::vector<uint32_t>& playerData) {
+  PlayerNet* newPlayer =
+      new PlayerNet(playerData[1], playerData[2], playerData[0], *this, 100, 97,
+                    6, playerData[4], playerData[3], playerData[7], nullptr,
+                    nullptr, nullptr, nullptr, &PlayerState::normal,
+                    new Class(0, 2, 2, 3), new Race(0, 20, 2, 3), listener);
 
-void GameState::playerTookDamage(int id, int damage) {}
-
-void GameState::entityDisappear(int id) {}
-
-void GameState::playerDealtDamage(int id, int damage) {}
-
-void GameState::playerLeveledUp(int id) {}
-
-void GameState::playerExpGain(int id, int gain) {}
+  players[newPlayer->getId()] = newPlayer;
+  entities[newPlayer->getId()] = newPlayer;
+}
 
 void GameState::update() {
-  for (auto &it: entities) {
+  for (auto& it : entities) {
     it.second->update();
-  }    
+  }
 }

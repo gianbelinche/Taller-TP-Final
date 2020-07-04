@@ -33,6 +33,8 @@ class Persistor {
 
   void addPassword(std::string user, std::string pass);
 
+  void persistUsrMap();
+
   ~Persistor();
 };
 

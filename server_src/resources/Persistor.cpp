@@ -5,9 +5,9 @@
 #include <msgpack.hpp>
 #include <sstream>
 
-#define DATA_SIZE 35
-#define PLAYERS_MAP "players_map"
-#define FILE_NAME "usr.cfg"
+#define DATA_SIZE 33
+#define PLAYERS_MAP "players.cfg"
+#define PLAYERS_DATA "usr.cfg"
 #define PASSWORDS_FILE "pass.cfg"
 
 Persistor::Persistor() {
@@ -43,7 +43,7 @@ Persistor::~Persistor() {
 void Persistor::persistPasswordMap() {
   std::unique_lock<std::mutex> l(passMutex);
 
-  file.open(FILE_NAME, std::fstream::out | std::fstream::trunc);
+  file.open(PASSWORDS_FILE, std::fstream::out | std::fstream::trunc);
   std::stringstream buff;
   msgpack::pack(buff, passwords);
   buff.seekg(0);
@@ -78,10 +78,10 @@ std::unordered_map<std::string, std::string> Persistor::obtainPasswordMap(
 void Persistor::persistPlayer(std::vector<uint32_t> data, std::string player) {
   std::unique_lock<std::mutex> l(usersMutex);
   if (players.find(player) == players.end()) {
-    file.open(FILE_NAME, std::fstream::app);
+    file.open(PLAYERS_DATA, std::fstream::app);
     players[player] = file.tellg();
   } else {
-    file.open(FILE_NAME);
+    file.open(PLAYERS_DATA);
     file.seekg(players[player]);
   }
   for (int i = 0; i < DATA_SIZE; i++) {
@@ -101,7 +101,7 @@ std::vector<uint32_t> Persistor::obtainPlayerData(std::string player) {
     return data;
   }
   int offset = players[player];
-  file.open(FILE_NAME);
+  file.open(PLAYERS_DATA);
   file.seekg(offset);
   for (int i = 0; i < DATA_SIZE; i++) {
     char* binary_data = (char*)malloc(4);
@@ -117,3 +117,18 @@ std::vector<uint32_t> Persistor::obtainPlayerData(std::string player) {
 std::unordered_map<std::string, std::string>& Persistor::getPasswords() {
   return passwords;
 }
+
+void Persistor::persistUsrMap() {
+  file.open(PLAYERS_MAP, std::fstream::out | std::fstream::trunc);
+  std::stringstream buff;
+  msgpack::pack(buff, players);
+  buff.seekg(0);
+  file.write(&buff.str()[0], buff.str().size());
+  file.close();
+}
+
+void Persistor::addPassword(std::string user, std::string pass) {
+  std::unique_lock<std::mutex> l(passMutex);
+  passwords[user] = pass;
+}
+
