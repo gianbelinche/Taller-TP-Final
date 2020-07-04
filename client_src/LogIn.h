@@ -26,6 +26,7 @@ class LogIn : public QMainWindow {
         QPushButton button2;
         QComboBox comboBox1;
         QComboBox comboBox2;
+        QComboBox comboBox3;
         QMessageBox msgBox;
         ClientConnector& clientConnector;
         int normal_exit;

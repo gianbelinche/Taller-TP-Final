@@ -29,6 +29,7 @@ LogIn::LogIn(ClientConnector& clientConnector,QMainWindow *parent) :
                                     label2(&centralWidget),
                                     comboBox1(&centralWidget),
                                     comboBox2(&centralWidget),
+                                    comboBox3(&centralWidget),
                                     clientConnector(clientConnector),
                                     normal_exit(-1) {
     if (this->objectName().isEmpty())
@@ -59,6 +60,7 @@ void LogIn::exitApp() {
     this->label2.close();
     this->comboBox1.close();
     this->comboBox2.close();
+    this->comboBox3.close();
     this->close();
 }
 
@@ -130,6 +132,7 @@ void LogIn::setUpFirst() {
 
     this->comboBox1.hide();
     this->comboBox2.hide();
+    this->comboBox3.hide();
 }
 
 void LogIn::setEventsSecond() {
@@ -149,11 +152,25 @@ void LogIn::setUpSecond() {
     this->label2.move(105, 210);
     this->lineEdit1.clear();
     this->lineEdit2.clear();
+    this->comboBox3.setObjectName(QStringLiteral("comboBox"));
+    this->comboBox3.setGeometry(QRect(380, 293, 180, 25));
+    this->comboBox3.show();
+    this->comboBox3.clear();
+    this->comboBox3.insertItems(0, QStringList()
+        << QApplication::translate("LogIn", "Select Resolution", Q_NULLPTR)
+        << QApplication::translate("LogIn", "200x100", Q_NULLPTR)
+        << QApplication::translate("LogIn", "320x240", Q_NULLPTR)
+        << QApplication::translate("LogIn", "640x480", Q_NULLPTR)
+        << QApplication::translate("LogIn", "800x600", Q_NULLPTR)
+        << QApplication::translate("LogIn", "1280x720", Q_NULLPTR)
+        << QApplication::translate("LogIn", "1920x1080", Q_NULLPTR)
+    );
 }
 
 void LogIn::setUpThird() {
     this->lineEdit1.hide();
     this->lineEdit2.hide();
+    this->comboBox3.hide();
 
     this->comboBox1.setObjectName(QStringLiteral("comboBox"));
     this->comboBox1.setGeometry(QRect(252, 180, 110, 25));
