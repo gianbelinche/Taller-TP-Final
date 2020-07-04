@@ -61,7 +61,7 @@ void ClientHandler::run() {
   sender.join();
 }
 
-bool ClientHandler::finished() { return online; }
+bool ClientHandler::finished() { return !online; }
 
 std::vector<uint32_t> ClientHandler::getCredentials() {
   std::string user_s;
