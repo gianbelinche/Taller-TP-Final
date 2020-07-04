@@ -19,6 +19,13 @@
 #define STAT_CHANGE 9
 #define LOGIN_I 10
 
+#define GOLD_UPDATE 0
+#define LIFE_UPDATE 1
+#define MANA_UPDATE 2
+#define LEVEL_UPDATE 3
+#define EXP_UPDATE 4
+
+
 class ServerEventListener {
  private:
   MessageDispatcher& dispatcher;
@@ -46,6 +53,16 @@ class ServerEventListener {
   void entityDisappear(int id);
 
   void playerConnected(int id);
+
+  void goldUpdate(uint32_t id, uint32_t amount);
+
+  void lifeUpdate(uint32_t id, uint32_t hp, uint32_t maxHp);
+
+  void manaUpdate(uint32_t id, uint32_t mana, uint32_t maxMana);
+
+  void levelUpdate(uint32_t id, uint32_t level);
+
+  void expUpdate(uint32_t id, uint32_t exp, uint32_t maxExp);
 };
 
 #endif // SERVEREVENTLISTENER_H

@@ -90,7 +90,20 @@ void ServerEventHandler::handle(InventoryClick &ev) {}
 void ServerEventHandler::handle(MessageSent &ev) {}
 
 void ServerEventHandler::handle(PlayerConnection &ev) {
-  listener.playerConnected(ev.getUser());
+  uint32_t id = ev.getUser();
+  PlayerNet* player = world.getPlayer(id);
+  if (player == nullptr) {
+    std::cerr << "No se encontro el usuario\n";
+    return;
+  }
+  listener.playerConnected(id);
+  listener.goldUpdate(id, player->getGold());
+  listener.lifeUpdate(id, player->getHp(), player->getMaxHp());
+  listener.manaUpdate(id, player->getMana(), player->getMaxMana());
+  //listener.levelUpdate(id, player->getLevel());
+  listener.levelUpdate(id, 17);
+  //listener.expUpdate(id, player->getExp(), player->getMaxExp());
+  listener.expUpdate(id, 589, 987);
   // Mandarle el estado del mundo
 }
 

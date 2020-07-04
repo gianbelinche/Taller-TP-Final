@@ -76,12 +76,16 @@ int PlayerNet::attack(Entity* ent) {
 
 void PlayerNet::changeState(PlayerState* new_state) { state = new_state; }
 
-void PlayerNet::heal(int points) { hp = std::min(hp + points, maxHp); }
+void PlayerNet::heal(int points) { 
+  hp = std::min(hp + points, maxHp);
+  listener.lifeUpdate(id, hp, maxHp);
+}
 
 void PlayerNet::move(int x, int y) { state->move(*this, x, y); }
 
 void PlayerNet::recoverMana(int mPoints) {
   mana = std::min(mana + mPoints, maxMana);
+  listener.manaUpdate(id, mana, maxMana);
 }
 
 int PlayerNet::takeDamage(int dmgToTake) {
@@ -94,6 +98,7 @@ int PlayerNet::takeDamage(int dmgToTake) {
 
   hp = std::max(0, hp - finalDmg);
   listener.playerTookDamage(id, oldHp - hp);
+  listener.lifeUpdate(id, hp, maxHp);
   if (hp == 0) {
     changeState(&PlayerState::dead);
     listener.playerDied(id);
@@ -173,3 +178,17 @@ void PlayerNet::levelUp() {
 bool PlayerNet::canBeAttackedBy(Entity* ent) {
   return (abs(ent->getLevel() - level) <= 10) && (level > 12);
 }
+
+int PlayerNet::getGold() { return gold; }
+
+int PlayerNet::getHp() { return hp; }
+
+int PlayerNet::getMaxHp() { return maxHp; }
+
+int PlayerNet::getMana() { return mana; }
+
+int PlayerNet::getMaxMana() { return maxMana; }
+
+int PlayerNet::getExp() { return exp; }
+
+int PlayerNet::getMaxExp() { return maxExp; }

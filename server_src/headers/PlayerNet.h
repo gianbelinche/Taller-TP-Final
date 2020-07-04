@@ -68,6 +68,20 @@ class PlayerNet : public Entity {
 
   int getVelocity();
 
+  int getGold();
+
+  int getHp();
+
+  int getMaxHp();
+
+  int getMana();
+
+  int getMaxMana();
+
+  int getExp();
+
+  int getMaxExp();
+
   /* ---------- Acciones ---------- */
 
   int attack(Entity* ent);
