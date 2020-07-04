@@ -452,7 +452,7 @@ A través de msgpack, se forma de la siguiente manera:
 
     `{10,2}` <- El jugador se logue correctamente, pero el usuario es nuevo y hay que crear el personaje
 
-11. **Ataque a un NPC**
+11. **Ataque a un NPC**:
 
     `11 + ARMA EQUIPADA`
 
@@ -470,6 +470,14 @@ A través de msgpack, se forma de la siguiente manera:
       - 07 -> Baculo Engarzado
       - 08 -> Arco Simple
       - 09 -> Arco Compuesto
+
+12. **Tomar una pocion**:      
+
+    `12`
+
+    Ejemplo:
+
+    `{12}` <- El jugador tomo una poción 
     
 
 

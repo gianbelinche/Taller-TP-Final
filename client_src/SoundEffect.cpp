@@ -6,6 +6,7 @@ SoundEffect::SoundEffect(std::string path){
     if (gSoundEffect == NULL){
         throw SDLError("Error al crear SoundEffect: %s\n",Mix_GetError());
     }
+    Mix_VolumeChunk(gSoundEffect, MIX_MAX_VOLUME);
 }
 
 SoundEffect::~SoundEffect(){

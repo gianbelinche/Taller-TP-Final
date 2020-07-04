@@ -1,6 +1,6 @@
 #include "ModelController.h"
 #include <exception>
-
+#define POTION 0
 enum state {
     MOVE_ENTITY,
     CREATE_NPC,
@@ -12,7 +12,9 @@ enum state {
     CHAT,
     INVENTORY,
     LAYOUT_STATE,
-    LOGIN
+    LOGIN,
+    ATTACK,
+    DRINK_POTION
 };
 
 ModelController::ModelController(EntityManager &anEntityManager, 
@@ -88,12 +90,15 @@ void ModelController::handle(std::vector<uint32_t> &event) {
             break;
 
         case LOGIN:
-            if (event[1] == 0){
-                
-            } else {
-                
-            }
-            break;    
+            break;   
+
+        case ATTACK:
+            soundEffectPlayer.play(event[1]);
+            break;
+
+        case DRINK_POTION:
+            soundEffectPlayer.play(POTION);
+            break;         
         
         default:
             break;

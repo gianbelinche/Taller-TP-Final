@@ -66,6 +66,8 @@ add_library(clientLib
   client_src/LayoutManager.cpp
   client_src/Music.cpp
   client_src/MusicPlayer.cpp
+  client_src/SoundEffect.cpp
+  client_src/SoundEffectPlayer.cpp
 )
 
 # Agrego la carpeta con los headers autogenerados a los includes

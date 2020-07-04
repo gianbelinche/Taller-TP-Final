@@ -102,6 +102,7 @@ void receive_user(Socket &l){
 }
 
 void receive(Socket &l) {
+    int sonido = 0;
     while (true) {
         //recibe largo
         std::vector<char> lenBuff(4);
@@ -125,6 +126,31 @@ void receive(Socket &l) {
             std::cout << m << ", ";
         }
         std::cout << "}" << '\n';
+
+        std::vector<uint32_t> ans;
+        if (event[0] == 2){
+            ans.emplace_back(11);
+            ans.emplace_back(sonido);
+            sonido++;
+            if (sonido > 9) sonido = 0;
+            std::stringstream buffer;
+            msgpack::pack(buffer, ans);
+            std::string sbuffer = buffer.str();
+
+            std::vector<char> msg(sbuffer.begin(), sbuffer.end());
+
+            uint32_t len2 = msg.size();
+            len2 = htonl(len2);
+
+            char *lenBuff2 = (char*)&len2;
+            std::vector<char> msgLen(4);
+
+            for (int i = 0; i < 4; i++) {
+                msgLen[i] = lenBuff2[i];
+            }
+            l.send(&msgLen[0], 4);
+            l.send(&msg[0], msg.size());
+        }
         
         //empaquetar
         std::cout << "Re-empaqueto" << '\n';

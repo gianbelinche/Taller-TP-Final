@@ -8,7 +8,7 @@ class SoundEffectPlayer {
 private:
     std::map<int,SoundEffect> sounds;
 public:
-    SoundEffectPlayer() : sounds() {}
+    SoundEffectPlayer();
     SoundEffectPlayer(const SoundEffectPlayer& copy) = delete;
     SoundEffectPlayer& operator=(const SoundEffectPlayer& copy) = delete;
     //Añade un efecto de sonido
