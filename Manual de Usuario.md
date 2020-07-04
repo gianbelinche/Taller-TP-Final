@@ -27,6 +27,8 @@ Para la conexión del cliente se debe iniciar el programa y en la pantalla que a
 
 Una vez conectado, se le pedirá el ingreso de un usuario y contraseña, en caso de que sea la primera vez que ingresa, se creará un nuevo usuario junto a la contraseña ingresada, siempre que no exista un usuario con el mismo nombre, en caso de que no sea la primera vez que se conecta, ingresará su usuario y contraseña y si esta es correcta, podrá iniciar el juego, en caso contrario, se le notificará del error.
 
+Si es la primera vez que entra al juego, aparecera una pantalla de creación de personaje, donde tendrá un menu desplegable desde el que podrá elegir su raza y su clase.
+
 Una vez iniciado el juego, se podrá observar el personaje, el cuál puede moverse con las teclas WASD, además se puede observar un layout, en el que se muestra la cantidad de oro, vida, mana y nivel actuales, junto con una barra que representa la experiencia y se ira llenando a medida que se obtiene, además se puede observar unos slots que corresponden al inventario, y a medida que consigan objetos se iran llenando, el inventario puede ser clickeado para seleccionar un objeto, también hay 4 slots especiales en donde figuraran los objetos equipados actualmente, por ultimo se encuentra una ventana de chat, en la que apretando ENTER podrá empezar a escribir, y apretando ENTER nuevamente, enviará el mensaje.
 
 ## Apéndice de errores
