@@ -7,8 +7,7 @@
 #include <string>
 #include <sstream>
 
-ClientConnector::ClientConnector() {
-}
+ClientConnector::ClientConnector() {}
 
 ClientConnector::~ClientConnector() {}
 
@@ -96,6 +95,33 @@ MainMap ClientConnector::getMainMap(SDL_Renderer *renderer) {
     //Genero MainMap
     MainMap mainMap(tiles, renderer, matrixLayer0, matrixLayer1);
     return std::move(mainMap);
+}
+
+void ClientConnector::sendReceivedSignal(ClientProtocol &clientProtocol, uint32_t ID) {
+    std::vector<uint32_t> event = clientProtocol.makeMsgConnection(ID);
+    
+    //empaquetar
+    std::stringstream buffer;
+    msgpack::pack(buffer, event);
+    std::string sbuffer = buffer.str();
+
+    std::vector<char> msg(sbuffer.begin(), sbuffer.end());
+
+    uint32_t len = msg.size();
+    len = htonl(len);
+
+    char *lenBuff = (char*)&len;
+    std::vector<char> msgLen(4);
+
+    for (int i = 0; i < 4; i++) {
+        msgLen[i] = lenBuff[i];
+    }
+
+    //enviar largo
+    this->send(msgLen, 4);
+
+    //enviar paquete
+    this->send(msg, msg.size());
 }
 
 Sender ClientConnector::getSender(BlockingMsgQueue &queue) {

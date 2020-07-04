@@ -25,11 +25,9 @@
 
 int main(int argc, char* argv[]) {
     try {
-        //if (argc != 3) return 1; //SACAR ESTO
-        //ClientConnector clientConnector(argv[1], argv[2]); //CAMBIAR, PASAR DE OTRA FORMA EL IP Y SERVICE
-
+        ClientProtocol clientProtocol;
         ClientConnector clientConnector;
-        LogInController logInController(argc,argv,clientConnector);
+        LogInController logInController(argc, argv, clientConnector);
         if (logInController.run() == -1){
             return SUCCESS;
         }
@@ -38,13 +36,10 @@ int main(int argc, char* argv[]) {
         SDL_Renderer *mainRenderer = mainWindow.getRenderer();
         BlockingMsgQueue senderQueue;
         ProtMsgQueue receiverQueue;
-        ClientProtocol clientProtocol;
-
-        
-        
 
         Player player = clientConnector.getPlayer(mainRenderer);
         MainMap mainMap = clientConnector.getMainMap(mainRenderer);
+        clientConnector.sendReceivedSignal(clientProtocol, player.getID());
         Sender sender = clientConnector.getSender(senderQueue);
         Receiver receiver = clientConnector.getReceiver(receiverQueue);
 

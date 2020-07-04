@@ -10,6 +10,7 @@ class ClientConnector;
 #include "Receiver.h"
 #include "BlockingMsgQueue.h"
 #include "ProtMsgQueue.h"
+#include "ClientProtocol.h"
 #include <vector>
 
 class ClientConnector {
@@ -33,6 +34,7 @@ class ClientConnector {
         MainMap getMainMap(SDL_Renderer *renderer);
         Sender getSender(BlockingMsgQueue &queue);
         Receiver getReceiver(ProtMsgQueue &queue);
+        void sendReceivedSignal(ClientProtocol &clientProtocol, uint32_t ID);
 
         std::vector<char> receive(uint32_t len);
         void send(std::vector<char> &msg, uint32_t len);
