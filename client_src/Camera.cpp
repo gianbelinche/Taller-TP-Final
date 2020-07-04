@@ -1,10 +1,11 @@
 #include "Camera.h"
 
 Camera::Camera(uint16_t posX, uint16_t posY, uint16_t aPlayerHeight,
-        uint16_t aPlayerWidth) : playerHeight(aPlayerHeight), 
-                                playerWidth(aPlayerWidth) {
-    this->height = SCREEN_HEIGHT;
-    this->width = SCREEN_WIDTH;
+        uint16_t aPlayerWidth,uint16_t height,uint16_t width) : 
+                                playerHeight(aPlayerHeight), 
+                                playerWidth(aPlayerWidth),
+                                height(height),
+                                width(width) {
     this->x = (posX + playerWidth / 2) - width / 2;
     this->y = (posY + playerHeight / 2) - height / 2;
 

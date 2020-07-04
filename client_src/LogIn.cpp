@@ -226,6 +226,37 @@ void LogIn::connectSrv() {
 }
 
 void LogIn::signIn() {
+    std::string resolution = comboBox3.currentText().toStdString();
+    if (resolution == "Select Resolution"){
+        msgBox.setText("Seleccione una resolución");
+        msgBox.exec();
+        return;
+    }
+    if (resolution == "200x100"){
+        screen_w = 200;
+        screen_h = 100;
+    }
+    if (resolution == "320x240"){
+        screen_w = 320;
+        screen_h = 240;
+    }
+    if (resolution == "640x480"){
+        screen_w = 640;
+        screen_h = 480;
+    }
+    if (resolution == "800x600"){
+        screen_w = 800;
+        screen_h = 600;
+    }
+    if (resolution == "1280x720"){
+        screen_w = 1280;
+        screen_h = 720;
+    }
+    if (resolution == "1920x1080"){
+        screen_w = 1920;
+        screen_h = 1080;
+    }
+
     std::string username = this->lineEdit1.text().toStdString();
     std::string password = this->lineEdit2.text().toStdString();
 
@@ -338,4 +369,12 @@ void LogIn::createChar() {
     clientConnector.send(msg, msg.size());
 
     this->exitNormalApp();
+}
+
+uint16_t LogIn::getWidth(){
+    return screen_w;
+}
+        
+uint16_t LogIn::getHeigth(){
+    return screen_h;
 }

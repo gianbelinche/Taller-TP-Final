@@ -33,7 +33,8 @@ int main(int argc, char* argv[]) {
             return SUCCESS;
         }
 
-        MainWindow mainWindow;
+        MainWindow mainWindow(logInController.getHeigth(),
+                            logInController.getWidth());
         SDL_Renderer *mainRenderer = mainWindow.getRenderer();
         BlockingMsgQueue senderQueue;
         ProtMsgQueue receiverQueue;
@@ -52,7 +53,8 @@ int main(int argc, char* argv[]) {
         LayoutManager layoutManager(layout,gInventory,miniChat,expBar);
 
         Camera camera(player.getPosX(), player.getPosY(), player.getHeight(), 
-                      player.getWidth());
+                      player.getWidth(),logInController.getHeigth(),
+                      logInController.getWidth());
 
         EntityManager entityManager(mainRenderer, player, player.getID());
 

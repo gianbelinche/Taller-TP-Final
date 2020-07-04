@@ -11,6 +11,8 @@ private:
 public:
     LogInController(int& argc, char* argv[],ClientConnector& clientConnector);
     int run();
+    uint16_t getWidth();
+    uint16_t getHeigth();
 };
 
 #endif

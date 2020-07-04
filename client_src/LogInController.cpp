@@ -10,3 +10,11 @@ int LogInController::run(){
     if (app_error != 0) return app_error;
     return logIn.getExit();
 }
+
+uint16_t LogInController::getWidth(){
+    return logIn.getWidth();
+}
+        
+uint16_t LogInController::getHeigth(){
+    return logIn.getHeigth();
+}
