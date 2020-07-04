@@ -451,6 +451,25 @@ A través de msgpack, se forma de la siguiente manera:
     `{10,1}` <- El jugador se logueo correctamente, en un usuario ya existente
 
     `{10,2}` <- El jugador se logue correctamente, pero el usuario es nuevo y hay que crear el personaje
+
+11. **Ataque a un NPC**
+
+    `11 + ARMA EQUIPADA`
+
+    Ejemplo:
+
+    `{11,03}` <- El jugador ataco con Martillo
+
+    - **Armas**:
+      - 01 -> Espada
+      - 02 -> Hacha
+      - 03 -> Martillo
+      - 04 -> Vara de Fresno
+      - 05 -> Flauta Elfica
+      - 06 -> Baculo Nudoso
+      - 07 -> Baculo Engarzado
+      - 08 -> Arco Simple
+      - 09 -> Arco Compuesto
     
 
 
