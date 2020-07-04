@@ -1,6 +1,10 @@
 #include "Player.h"
 
 #define B 0
+#define WEAPON  0
+#define ARMOR   1
+#define SHIELD  2
+#define HELMET  3
 
 Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID, 
                uint16_t aPosX, uint16_t aPosY, uint8_t aState, 
@@ -207,19 +211,19 @@ void Player::changeState(uint8_t aState) {
 
 void Player::changeEquipment(EquipType equipType, uint8_t what) {
     switch (what) {
-        case 0: //cambiar numeros magicos
+        case WEAPON:
             weapon.updateEquipment(equipType);
             break;
         
-        case 1:
+        case ARMOR:
             armor.updateEquipment(equipType);
             break;
 
-        case 2:
+        case SHIELD:
             shield.updateEquipment(equipType);
             break;
 
-        case 3:
+        case HELMET:
             helmet.updateEquipment(equipType);
             break;
 

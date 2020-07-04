@@ -48,18 +48,10 @@ void Sender::run() {
 
             std::vector<char> msg(sbuffer.begin(), sbuffer.end());
 
-            uint32_t len = msg.size();
-            len = htonl(len);
-
-            char *lenBuff = (char*)&len;
-            std::vector<char> msgLen(4);
-
-            for (int i = 0; i < 4; i++) {
-                msgLen[i] = lenBuff[i];
-            }
+            uint32_t len = htonl(msg.size());
 
             //enviar largo
-            clConnector->send(msgLen, 4);
+            clConnector->send((char*)&len, 4);
 
             //enviar paquete
             clConnector->send(msg, msg.size());

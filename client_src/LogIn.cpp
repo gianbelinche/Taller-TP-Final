@@ -220,25 +220,17 @@ void LogIn::signIn() {
     std::string sbuffer = buffer.str();
 
     std::vector<char> msg(sbuffer.begin(), sbuffer.end());
-    uint32_t len = msg.size();
-    len = htonl(len);
-    char *lenBuff = (char*)&len;
-    std::vector<char> msgLen(4);
-
-    for (int i = 0; i < 4; i++) {
-        msgLen[i] = lenBuff[i];
-    }
+    uint32_t len = htonl(msg.size());
 
     //enviar largo
-    clientConnector.send(msgLen, 4);
+    clientConnector.send((char*)&len, 4);
 
     //enviar paquete
     clientConnector.send(msg, msg.size());
 
+    //recivo largo
     std::vector<char> longBuff = clientConnector.receive(4);
-    len = (longBuff[3] << 24) + (longBuff[2] << 16) +
-                    (longBuff[1] << 8) + longBuff[0];
-
+    uint32_t len = *((uint32_t*)&lenBuff[0]);
     len = ntohl(len);
 
     //recibe paquete
@@ -272,7 +264,6 @@ int LogIn::getExit(){
 }
 
 void LogIn::createChar() {
-    //para probar comportamiento de los combobox
     std::string race = comboBox1.currentText().toStdString();
     std::string class_ = comboBox2.currentText().toStdString();
 
@@ -304,22 +295,16 @@ void LogIn::createChar() {
     if (class_ == "Paladin"){
         int_msg.emplace_back(3);
     }
+    
     std::stringstream buffer;
     msgpack::pack(buffer, int_msg);
     std::string sbuffer = buffer.str();
 
     std::vector<char> msg(sbuffer.begin(), sbuffer.end());
-    uint32_t len = msg.size();
-    len = htonl(len);
-    char *lenBuff = (char*)&len;
-    std::vector<char> msgLen(4);
-
-    for (int i = 0; i < 4; i++) {
-        msgLen[i] = lenBuff[i];
-    }
+    uint32_t len = htonl(msg.size());
 
     //enviar largo
-    clientConnector.send(msgLen, 4);
+    clientConnector.send((char*)&len, 4);
 
     //enviar paquete
     clientConnector.send(msg, msg.size());

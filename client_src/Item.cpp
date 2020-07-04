@@ -1,5 +1,6 @@
 #include "Item.h"
 #include "SpriteClipCreator.h"
+#include "OSError.h"
 
 Item::Item(SDL_Renderer *renderer, uint32_t anID, uint16_t aPosX, 
            uint16_t aPosY, ItemType type) : Entity(anID, aPosX, aPosY), 
@@ -74,28 +75,23 @@ Item::Item(SDL_Renderer *renderer, uint32_t anID, uint16_t aPosX,
             break;
 
         default:
-            //ERROR
+            throw OSError("Error Item Constructor: ItemType invalido.");
             break;
     }
 }
 
 Item::~Item() {}
 
-void Item::refreshPosition(MovementType move) {
-    //DO NOTHING
-}
+void Item::refreshPosition(MovementType move) {}
 
 void Item::render(Camera &camera) {
     image.render(posX - camera.getX(), posY - camera.getY(), NULL, NULL);
 }
 
 bool Item::collision(uint16_t x, uint16_t y) {
-    //LOS ITEMS NO SON CLICKEABLES
     return false;
 }
 
-void Item::changeState(uint8_t aState) {
-    //DO NOTHING
-}
+void Item::changeState(uint8_t aState) {}
 
 void Item::changeEquipment(EquipType equipType, uint8_t what) {}

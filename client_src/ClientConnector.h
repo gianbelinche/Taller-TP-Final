@@ -37,6 +37,7 @@ class ClientConnector {
         void sendReceivedSignal(ClientProtocol &clientProtocol, uint32_t ID);
 
         std::vector<char> receive(uint32_t len);
+        void send(char *msg, uint32_t len);
         void send(std::vector<char> &msg, uint32_t len);
 };
 

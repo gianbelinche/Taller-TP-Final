@@ -35,13 +35,7 @@ uint32_t ClientConnector::receiveLen() {
     char lenBuff[4];
     socket.recv(lenBuff, 4);
 
-    uint32_t len;
-
-    char *lenPointer = (char*)&len;
-    lenPointer[0] = lenBuff[0];
-    lenPointer[1] = lenBuff[1];
-    lenPointer[2] = lenBuff[2];
-    lenPointer[3] = lenBuff[3];
+    uint32_t len = *((uint32_t*)lenBuff);
 
     return ntohl(len);
 }
@@ -64,7 +58,7 @@ Player ClientConnector::getPlayer(SDL_Renderer *renderer) {
 
     Player player(renderer, (PlayerRace)msg[2], msg[1], msg[3], msg[4], msg[5],
                   (EquipType)msg[6], (EquipType)msg[7], (EquipType)msg[8], 
-                  (EquipType)msg[9]); //chequear
+                  (EquipType)msg[9]);
 
     return std::move(player);
 }
@@ -107,18 +101,10 @@ void ClientConnector::sendReceivedSignal(ClientProtocol &clientProtocol, uint32_
 
     std::vector<char> msg(sbuffer.begin(), sbuffer.end());
 
-    uint32_t len = msg.size();
-    len = htonl(len);
-
-    char *lenBuff = (char*)&len;
-    std::vector<char> msgLen(4);
-
-    for (int i = 0; i < 4; i++) {
-        msgLen[i] = lenBuff[i];
-    }
+    uint32_t len = htonl(msg.size());
 
     //enviar largo
-    this->send(msgLen, 4);
+    this->send((char*)&len, 4);
 
     //enviar paquete
     this->send(msg, msg.size());
@@ -140,6 +126,10 @@ std::vector<char> ClientConnector::receive(uint32_t len) {
         throw SocketException("Error al recibir: Se cerró socket.");
     }
     return std::move(msg);
+}
+
+void ClientConnector::send(char *msg, uint32_t len) {
+    socket.send(msg, len);
 }
 
 void ClientConnector::send(std::vector<char> &msg, uint32_t len) {

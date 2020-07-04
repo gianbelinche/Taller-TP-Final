@@ -38,9 +38,8 @@ void Receiver::run() {
         while (true) {
             //recibe largo
             std::vector<char> lenBuff = clConnector->receive(4);
-            uint32_t len = (lenBuff[3] << 24) + (lenBuff[2] << 16) +
-                           (lenBuff[1] << 8) + lenBuff[0];
 
+            uint32_t len = *((uint32_t*)&lenBuff[0]);
             len = ntohl(len);
 
             //recibe paquete
