@@ -153,32 +153,35 @@ void receive(Socket &l) {
         }
         
         //empaquetar
-        std::cout << "Re-empaqueto" << '\n';
-        std::stringstream buffer;
-        msgpack::pack(buffer, event);
-        std::string sbuffer = buffer.str();
+        if (event[0] != 5){
+            std::cout << "Re-empaqueto" << '\n';
+            std::stringstream buffer;
+            msgpack::pack(buffer, event);
+            std::string sbuffer = buffer.str();
 
-        std::vector<char> msg(sbuffer.begin(), sbuffer.end());
+            std::vector<char> msg(sbuffer.begin(), sbuffer.end());
 
-        uint32_t len2 = msg.size();
-        len2 = htonl(len2);
+            uint32_t len2 = msg.size();
+            len2 = htonl(len2);
 
-        char *lenBuff2 = (char*)&len2;
-        std::vector<char> msgLen(4);
+            char *lenBuff2 = (char*)&len2;
+            std::vector<char> msgLen(4);
 
-        for (int i = 0; i < 4; i++) {
-            msgLen[i] = lenBuff2[i];
+            for (int i = 0; i < 4; i++) {
+                msgLen[i] = lenBuff2[i];
+            }
+
+            std::cout << "Envio largo: " << len2 << '\n';
+
+            //enviar largo
+            l.send(&msgLen[0], 4);
+
+            std::cout << "Envio msg" << '\n';
+
+            //enviar paquete
+            l.send(&msg[0], msg.size());
         }
-
-        std::cout << "Envio largo: " << len2 << '\n';
-
-        //enviar largo
-        l.send(&msgLen[0], 4);
-
-        std::cout << "Envio msg" << '\n';
-
-        //enviar paquete
-        l.send(&msg[0], msg.size());
+        
     }
 }
 

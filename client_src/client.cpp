@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
 
         Player player = clientConnector.getPlayer(mainRenderer);
         MainMap mainMap = clientConnector.getMainMap(mainRenderer);
-        //clientConnector.sendReceivedSignal(clientProtocol, player.getID());
+        clientConnector.sendReceivedSignal(clientProtocol, player.getID());
         Sender sender = clientConnector.getSender(senderQueue);
         Receiver receiver = clientConnector.getReceiver(receiverQueue);
 
