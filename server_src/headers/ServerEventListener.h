@@ -44,6 +44,8 @@ class ServerEventListener {
 
   // Jugadores que se desconectan o mobs que mueren
   void entityDisappear(int id);
+
+  void playerConnected(int id);
 };
 
 #endif // SERVEREVENTLISTENER_H

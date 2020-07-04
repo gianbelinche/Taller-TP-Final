@@ -23,3 +23,8 @@ ServerEventListener::ServerEventListener(MessageDispatcher& msgDispatcher)
   void ServerEventListener::playerDied(int id) {}
 
   void ServerEventListener::entityDisappear(int id) {}
+
+  void ServerEventListener::playerConnected(int id) {
+    dispatcher.playerConnected(id);
+  }
+

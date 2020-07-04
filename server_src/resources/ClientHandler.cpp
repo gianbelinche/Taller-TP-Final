@@ -110,7 +110,6 @@ std::vector<uint32_t> ClientHandler::getCredentials() {
         continue;
       }
     } else {
-      std::cout << "Entro a la creacion\n";
       sendPlayerCreationNeeded();
       correctCredentials = true;
       creationNeeded = true;

@@ -89,3 +89,9 @@ void ServerEventHandler::handle(EntityClick &ev) {}
 void ServerEventHandler::handle(InventoryClick &ev) {}
 
 void ServerEventHandler::handle(MessageSent &ev) {}
+
+void ServerEventHandler::handle(PlayerConnection &ev) {
+  listener.playerConnected(ev.getUser());
+  // Mandarle el estado del mundo
+}
+
