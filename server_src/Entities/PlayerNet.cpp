@@ -105,7 +105,7 @@ int PlayerNet::takeDamage(int dmgToTake) {
 
 void PlayerNet::update() {
   currentFrame++;
-  if (currentFrame == 30) {
+  if (currentFrame == 100) {
     std::cout << "Tenia " << hp << "de vida\n";
     state->update(*this);
     std::cout << "Ahora tiene:" << hp << std::endl;

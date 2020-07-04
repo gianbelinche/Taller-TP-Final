@@ -18,11 +18,13 @@ void ServerEventHandler::handle(UserMoved& ev) {
     return;
   }
 
+  uint32_t direction = ev.getDirection();
+
   if (ev.getDirection() == STOP) {
-    // Broadcast a todos y return
+    listener.entityMoved(ev.getUser(), direction);
+    return;
   }
 
-  uint32_t direction = ev.getDirection();
   int velocity = player->getVelocity();
   int x = player->getX();
   int y = player->getY();
@@ -44,11 +46,13 @@ void ServerEventHandler::handle(UserMoved& ev) {
       break;
   }
 
+/*
   if (!world.isValidPosition(x, y)) {
     return;
   }
+  */
   player->move(x, y);
-  world.playerMoved(ev.getUser(), direction);
+  listener.entityMoved(ev.getUser(), direction);
 }
 
 void ServerEventHandler::handleUserAttack(EntityClick& ev) {
@@ -79,3 +83,9 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
   std::cout << "La experiencia ganada es de: " << expGain << "\n";
   player->receiveExp(expGain);
 }
+
+void ServerEventHandler::handle(EntityClick &ev) {}
+
+void ServerEventHandler::handle(InventoryClick &ev) {}
+
+void ServerEventHandler::handle(MessageSent &ev) {}

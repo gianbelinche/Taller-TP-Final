@@ -13,7 +13,7 @@ class Class {
   float strengthFactor = 1;
   float constitutionFactor = 1;
   float intelligenceFactor = 15;
-  float agilityFactor;
+  float agilityFactor = 2;
 
  public:
   Class(char class_type, float hpFac, float manaFac, float meditFac);

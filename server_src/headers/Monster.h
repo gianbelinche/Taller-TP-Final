@@ -1,19 +1,22 @@
 #ifndef MONSTER_H
 #define MONSTER_H
 
-#include "GameState.h"
 #include "Entity.h"
+#include "GameState.h"
+#include "ServerEventListener.h"
 
 class MonsterType;
 
 class Monster : public Entity {
   friend class MonsterType;  // Para que pueda acceder al constructor
  private:
-  MonsterType &kind;
-  GameState &world;
+  MonsterType& kind;
+  GameState& world;
+  ServerEventListener& listener;
 
  public:
-  Monster(MonsterType &type, int id, int x, int y, int level, GameState &world);
+  Monster(MonsterType& type, int id, int x, int y, int level, GameState& world,
+          ServerEventListener& eventListener);
 
   ~Monster();
 
@@ -29,6 +32,8 @@ class Monster : public Entity {
   int takeDamage(int dmgToTake) override;
 
   void update() override;
+
+  void moveTo(int new_x, int new_y, int direction);
 };
 
 #endif  // MONSTER_H
