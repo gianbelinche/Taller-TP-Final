@@ -10,6 +10,7 @@ class GameState;
 #include "Class.h"
 #include "Entity.h"
 #include "PlayerState.h"
+#include "ServerEventListener.h"
 #include "Race.h"
 
 class PlayerNet : public Entity {
@@ -29,12 +30,13 @@ class PlayerNet : public Entity {
   Armor* armor;
   Helmet* helmet;
   Shield* shield;
+  ServerEventListener& listener;
 
  public:
   PlayerNet(int x, int y, int id, GameState& currState, int hp, int mana,
             int velocity, int currExp, int currLevel, int currGold, Weapon* wea,
             Armor* arm, Helmet* helm, Shield* sh, PlayerState* sta, Class* cla,
-            Race* ra);
+            Race* ra, ServerEventListener& eventListener);
 
   ~PlayerNet();
 
@@ -65,6 +67,20 @@ class PlayerNet : public Entity {
   float getStrength();
 
   int getVelocity();
+
+  int getGold();
+
+  int getHp();
+
+  int getMaxHp();
+
+  int getMana();
+
+  int getMaxMana();
+
+  int getExp();
+
+  int getMaxExp();
 
   /* ---------- Acciones ---------- */
 

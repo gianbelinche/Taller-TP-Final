@@ -6,6 +6,7 @@
 #include "EntityClick.h"
 #include "InventoryClick.h"
 #include "MessageSent.h"
+#include "PlayerConnection.h"
 #include "ServerEventListener.h"
 #include "UserMoved.h"
 #include "GameState.h"
@@ -35,6 +36,8 @@ class ServerEventHandler {
   void handle(InventoryClick &ev);
 
   void handle(MessageSent &ev);
+
+  void handle(PlayerConnection &ev);
 
   void handleUserAttack(EntityClick &ev);
 };

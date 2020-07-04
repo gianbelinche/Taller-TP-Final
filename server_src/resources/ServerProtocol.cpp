@@ -30,6 +30,9 @@ void ServerProtocol::decode(std::string packedEvent) {
     case COMMAND:
       messageSent(event);
       break;
+    case NEW_CONNECTION:
+      playerConnection(event);
+      break;
     default:
       break;
   }
@@ -64,5 +67,11 @@ void ServerProtocol::messageSent(std::vector<uint32_t> event) {
   }
   std::string text(msg.begin(), msg.end());
   MessageSent ev(playerId, text);
+  handler.handle(ev);
+}
+
+void ServerProtocol::playerConnection(std::vector<uint32_t> event) {
+  uint32_t playerId = event[1];
+  PlayerConnection ev(playerId);
   handler.handle(ev);
 }

@@ -27,3 +27,8 @@ void MessageDispatcher::addPlayerQueue(
   players.insert(
       std::pair<uint32_t, ProtectedQueue<std::vector<uint32_t>>*>(id, q));
 }
+
+void MessageDispatcher::playerConnected(uint32_t id) {
+  std::unique_lock<std::mutex> l(m);
+  players[id]->enable();
+}

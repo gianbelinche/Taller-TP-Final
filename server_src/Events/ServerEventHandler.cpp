@@ -46,11 +46,10 @@ void ServerEventHandler::handle(UserMoved& ev) {
       break;
   }
 
-/*
+
   if (!world.isValidPosition(x, y)) {
     return;
   }
-  */
   player->move(x, y);
   listener.entityMoved(ev.getUser(), direction);
 }
@@ -74,7 +73,7 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
   }
 
   int damageDealt = player->attack(entity);
-  world.playerDealtDamage(player->getId(), damageDealt);
+  listener.playerDealtDamage(player->getId(), damageDealt);
 
   int expGain = entity->getHitExp(player->getLevel(), damageDealt);
   if (!entity->isAlive()) {
@@ -89,3 +88,22 @@ void ServerEventHandler::handle(EntityClick &ev) {}
 void ServerEventHandler::handle(InventoryClick &ev) {}
 
 void ServerEventHandler::handle(MessageSent &ev) {}
+
+void ServerEventHandler::handle(PlayerConnection &ev) {
+  uint32_t id = ev.getUser();
+  PlayerNet* player = world.getPlayer(id);
+  if (player == nullptr) {
+    std::cerr << "No se encontro el usuario\n";
+    return;
+  }
+  listener.playerConnected(id);
+  listener.goldUpdate(id, player->getGold());
+  listener.lifeUpdate(id, player->getHp(), player->getMaxHp());
+  listener.manaUpdate(id, player->getMana(), player->getMaxMana());
+  //listener.levelUpdate(id, player->getLevel());
+  listener.levelUpdate(id, 17);
+  //listener.expUpdate(id, player->getExp(), player->getMaxExp());
+  listener.expUpdate(id, 589, 987);
+  // Mandarle el estado del mundo
+}
+

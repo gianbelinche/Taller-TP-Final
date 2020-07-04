@@ -30,10 +30,10 @@ Server::~Server() {}
 void Server::run() {
   std::atomic<uint32_t> idAssigner{1};
   Map map(MAP_PATH);
-  GameState world(map.getCollisionMap(), 30);
 
   MessageDispatcher dispatcher;
   ServerEventListener listener(dispatcher);
+  GameState world(map.getCollisionMap(), 30, listener);
   ServerEventHandler handler(world, listener);
   ServerProtocol protocol(handler);
 
