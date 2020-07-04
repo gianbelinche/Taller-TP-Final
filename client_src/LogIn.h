@@ -30,6 +30,8 @@ class LogIn : public QMainWindow {
         QMessageBox msgBox;
         ClientConnector& clientConnector;
         int normal_exit;
+        uint16_t screen_w;
+        uint16_t screen_h;
         
 
         void setUpFirst();  // Elegir server
@@ -50,6 +52,8 @@ class LogIn : public QMainWindow {
         explicit LogIn(ClientConnector& clientConnector,QMainWindow *parent = 0);
         ~LogIn();
         int getExit();
+        uint16_t getWidth();
+        uint16_t getHeigth();
 };
 
 #endif // __LOG_IN_H__

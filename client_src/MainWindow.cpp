@@ -2,8 +2,6 @@
 
 #include "MainWindow.h"
 #include "SDLError.h"
-#include "MainMap.h"
-#include "EntityManager.h"
 #include <iostream>
 
 /* NOMBRE DE LA PANTALLA */
@@ -13,7 +11,7 @@
 #define FRECUENCY 22050
 #define CHANNELS 2
 #define CHUNKSIZE 2048
-MainWindow::MainWindow() {
+MainWindow::MainWindow(uint16_t height,uint16_t width) {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         throw SDLError("Error: SDL no pudo inicializarse. SDL_Error: %s", 
                        SDL_GetError());
@@ -30,8 +28,8 @@ MainWindow::MainWindow() {
     }
 
     this->mainWindow = SDL_CreateWindow(WINDOW_NAME, SDL_WINDOWPOS_UNDEFINED, 
-                                    SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, 
-                                    SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+                                    SDL_WINDOWPOS_UNDEFINED, width, 
+                                    height, SDL_WINDOW_SHOWN);
     if (this->mainWindow == NULL) {
         throw SDLError("Error: no se pudo crear ventana. SDL_Error: %s",
                         SDL_GetError());

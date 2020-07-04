@@ -12,7 +12,7 @@ class MainWindow {
         SDL_Renderer* mainRenderer;
 
     public:
-        MainWindow();
+        MainWindow(uint16_t height,uint16_t width);
         ~MainWindow();
 
         MainWindow(const MainWindow& copy) = delete;

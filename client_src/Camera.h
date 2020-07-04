@@ -5,8 +5,6 @@ class Camera;
 
 #include "stdint.h"
 
-#define SCREEN_WIDTH 1080
-#define SCREEN_HEIGHT 720
 #define LEVEL_WIDTH 9056
 #define LEVEL_HEIGHT 7392
 
@@ -21,7 +19,7 @@ class Camera {
 
     public:
         Camera(uint16_t posX, uint16_t posY, uint16_t playerHeight,
-        uint16_t playerWidth);
+        uint16_t playerWidth,uint16_t height,uint16_t width);
         ~Camera();
 
         Camera(const Camera &copy) = delete;
