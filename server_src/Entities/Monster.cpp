@@ -12,13 +12,13 @@
 #include "../headers/PlayerNet.h"
 
 #define MIN_DIST 200  // Esto debe ser configurable no se como
-#define ATK_DIST 10
-#define STEP 2
+#define ATK_DIST 20
+#define STEP 3
 
 Monster::Monster(MonsterType &type, int id, int x, int y, int level,
                  GameState &world, ServerEventListener& eventListener)
     : Entity(x, y, id, type.getHp(), type.getHp(), level),
-      kind(type), 
+      kind(type),
       world(world),
       listener(eventListener) {}
 
@@ -26,7 +26,7 @@ Monster::~Monster() {}
 
 void Monster::update() {
   currentFrame++;
-  if (currentFrame == 3) {  // TODO: Hacer configurable el valor
+  if (currentFrame == 5) {  // TODO: Hacer configurable el valor
     currentFrame = 0;
     PlayerNet *player = world.getNearestPlayer(this, &Condition::isAlive);
     int new_x = x;
@@ -125,6 +125,10 @@ void Monster::moveTo(int new_x, int new_y, int direction) {
   //for (int i = 0; i < STEP; i++) {
   listener.entityMoved(id, direction);
   //}
-  listener.entityMoved(id, 4);
+  animFrame++;
+  if (animFrame == 4) {
+    listener.entityMoved(id, 4);
+    animFrame = 0;
+  }
 }
 

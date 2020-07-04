@@ -13,6 +13,7 @@ class Monster : public Entity {
   MonsterType& kind;
   GameState& world;
   ServerEventListener& listener;
+  int animFrame = 0;
 
  public:
   Monster(MonsterType& type, int id, int x, int y, int level, GameState& world,
