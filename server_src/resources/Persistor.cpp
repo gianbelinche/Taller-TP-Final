@@ -7,10 +7,12 @@
 
 #define DATA_SIZE 35
 #define PLAYERS_MAP "players_map"
+#define FILE_NAME "usr.cfg"
+#define PASSWORDS_FILE "pass.cfg"
 
 Persistor::Persistor() {
   file.open(PLAYERS_MAP);
-  std::unordered_map<int, int> map;
+  std::unordered_map<std::string, int> map;
   file.seekg(0, std::ios::end);
   int size = file.tellg();
   if (size > 0) {
@@ -25,6 +27,8 @@ Persistor::Persistor() {
     free(str);
   }
   file.close();
+
+  passwords = obtainPasswordMap(PASSWORDS_FILE);
 }
 
 Persistor::~Persistor() {
@@ -36,20 +40,23 @@ Persistor::~Persistor() {
   file.close();
 }
 
-void Persistor::persistPasswordMap(
-    std::string file_name, std::unordered_map<int, std::string> passwords) {
-  file.open(file_name, std::fstream::out | std::fstream::trunc);
+void Persistor::persistPasswordMap() {
+  std::unique_lock<std::mutex> l(passMutex);
+
+  file.open(FILE_NAME, std::fstream::out | std::fstream::trunc);
   std::stringstream buff;
   msgpack::pack(buff, passwords);
   buff.seekg(0);
+
   file.write(&buff.str()[0], buff.str().size());
   file.close();
 }
 
-std::unordered_map<int, std::string> Persistor::obtainPasswordMap(
+std::unordered_map<std::string, std::string> Persistor::obtainPasswordMap(
     std::string file_name) {
+  std::unique_lock<std::mutex> l(passMutex);
   file.open(file_name);
-  std::unordered_map<int, std::string> passwords;
+  std::unordered_map<std::string, std::string> passwords;
   file.seekg(0, std::ios::end);
   int size = file.tellg();
   if (size <= 0) {
@@ -68,13 +75,13 @@ std::unordered_map<int, std::string> Persistor::obtainPasswordMap(
   return passwords;
 }
 
-void Persistor::persistPlayer(std::string file_name, std::vector<uint32_t> data,
-                              int player) {
+void Persistor::persistPlayer(std::vector<uint32_t> data, std::string player) {
+  std::unique_lock<std::mutex> l(usersMutex);
   if (players.find(player) == players.end()) {
-    file.open(file_name, std::fstream::app);
+    file.open(FILE_NAME, std::fstream::app);
     players[player] = file.tellg();
   } else {
-    file.open(file_name);
+    file.open(FILE_NAME);
     file.seekg(players[player]);
   }
   for (int i = 0; i < DATA_SIZE; i++) {
@@ -86,16 +93,15 @@ void Persistor::persistPlayer(std::string file_name, std::vector<uint32_t> data,
   file.close();
 }
 
-std::vector<uint32_t> Persistor::obtainPlayerData(std::string file_name,
-                                                  int player) {
+std::vector<uint32_t> Persistor::obtainPlayerData(std::string player) {
   std::vector<uint32_t> data;
-
+  std::unique_lock<std::mutex> l(usersMutex);
   if (players.find(player) == players.end()) {
     // throw Exception , player not in file
     return data;
   }
   int offset = players[player];
-  file.open(file_name);
+  file.open(FILE_NAME);
   file.seekg(offset);
   for (int i = 0; i < DATA_SIZE; i++) {
     char* binary_data = (char*)malloc(4);
@@ -106,4 +112,8 @@ std::vector<uint32_t> Persistor::obtainPlayerData(std::string file_name,
   }
   file.close();
   return data;
+}
+
+std::unordered_map<std::string, std::string>& Persistor::getPasswords() {
+  return passwords;
 }
