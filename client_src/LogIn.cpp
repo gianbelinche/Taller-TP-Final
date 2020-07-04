@@ -258,7 +258,7 @@ void LogIn::signIn() {
                 msgBox.exec();
                 break;
             case 1:
-                this->exitApp();
+                this->exitNormalApp();
                 break;
             case 2:
                 this->setUpThird();
