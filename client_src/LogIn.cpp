@@ -30,7 +30,7 @@ LogIn::LogIn(ClientConnector& clientConnector,QMainWindow *parent) :
                                     comboBox1(&centralWidget),
                                     comboBox2(&centralWidget),
                                     clientConnector(clientConnector),
-                                    normal_exit(0) {
+                                    normal_exit(-1) {
     if (this->objectName().isEmpty())
         this->setObjectName(QStringLiteral("LogIn"));
     this->resize(640, 480);
@@ -65,6 +65,11 @@ void LogIn::exitApp() {
 void LogIn::exitEntireApp(){
     this->exitApp();
     normal_exit = -1;
+}
+
+void LogIn::exitNormalApp(){
+    this->exitApp();
+    normal_exit = 0;
 }
 
 void LogIn::setEventsFirst() {
@@ -311,5 +316,5 @@ void LogIn::createChar() {
     //enviar paquete
     clientConnector.send(msg, msg.size());
 
-    this->exitApp();
+    this->exitNormalApp();
 }

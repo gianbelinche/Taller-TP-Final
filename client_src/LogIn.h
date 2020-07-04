@@ -40,6 +40,7 @@ class LogIn : public QMainWindow {
         void signIn();
         void exitEntireApp();
         void createChar();
+        void exitNormalApp();
 
         //void closeEvent(QCloseEvent *event) override;
     public:
