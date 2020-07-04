@@ -8,7 +8,7 @@
 #include "MessageDispatcher.h"
 
 #define PLAYER_MOVEMENT 0
-#define NPS_SPAWN 1
+#define NPC_SPAWN 1
 #define PLAYER_SPAWN 2
 #define DROP_SPAWN 3
 #define DELETE_ENTITY 4
@@ -32,7 +32,7 @@ class ServerEventListener {
 
   void playerLeveledUp(int id);
 
-  void playerMoved(int id, uint32_t direction);  // Ver  si conviene mergearlos en uno solo
+  void entityMoved(int id, uint32_t direction);  // Ver  si conviene mergearlos en uno solo
 
   void playerDealtDamage(int id, int damage);
 

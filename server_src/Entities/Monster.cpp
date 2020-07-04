@@ -11,26 +11,27 @@
 #include "../headers/MonsterType.h"
 #include "../headers/PlayerNet.h"
 
-#define MIN_DIST 100  // Esto debe ser configurable no se como
+#define MIN_DIST 200  // Esto debe ser configurable no se como
 #define ATK_DIST 20
-#define STEP 10
+#define STEP 3
 
 Monster::Monster(MonsterType &type, int id, int x, int y, int level,
-                 GameState &world)
+                 GameState &world, ServerEventListener& eventListener)
     : Entity(x, y, id, type.getHp(), type.getHp(), level),
-      kind(type), 
-      world(world) {}
+      kind(type),
+      world(world),
+      listener(eventListener) {}
 
 Monster::~Monster() {}
 
 void Monster::update() {
   currentFrame++;
-  if (currentFrame == 30) {  // TODO: Hacer configurable el valor
+  if (currentFrame == 5) {  // TODO: Hacer configurable el valor
     currentFrame = 0;
     PlayerNet *player = world.getNearestPlayer(this, &Condition::isAlive);
     int new_x = x;
     int new_y = y;
-
+    int direction;
     if (player != nullptr &&
         world.entitiesDistance(this, player) < MIN_DIST) {
       if (world.entitiesDistance(this, player) <= ATK_DIST) {
@@ -42,20 +43,22 @@ void Monster::update() {
         if (x_dist < y_dist) {  // Me muevo en el eje en que haya mas distancia
           if (y < player->getY()) {
             new_y = y + STEP;
+            direction = 1;
           } else {
             new_y = y - STEP;
+            direction = 0;
           }
         } else {
           if (x < player->getX()) {
             new_x = x + STEP;
+            direction = 3;
           } else {
             new_x = x - STEP;
+            direction = 2;
           }
         }
         if (world.isValidPosition(new_x, new_y)) {
-          x = new_x;
-          y = new_y;
-          world.monsterMoved(id);
+          moveTo(new_x, new_y, direction);
           std::cout << "El mostro se movio a X: " << x << " Y: " << y << "\n\n";
         }
       }
@@ -66,17 +69,19 @@ void Monster::update() {
       float rand_val = distr(gen);  // Valor random
       if (rand_val < 0.25) {
         new_x -= STEP;
+        direction = 2;
       } else if (rand_val >= 0.25 && rand_val < 0.5) {
         new_y -= STEP;
+        direction = 0;
       } else if (rand_val >= 0.5 && rand_val < 0.75) {
+        direction = 3;
         new_x += STEP;
       } else {
         new_y += STEP;
+        direction = 1;
       }
       if (world.isValidPosition(new_x, new_y)) {
-        x = new_x;
-        y = new_y;
-        world.monsterMoved(id);
+        moveTo(new_x, new_y, direction);
         std::cout << "El mostro se movio a X: " << x << " Y: " << y << "\n\n";
       }
     }
@@ -113,3 +118,17 @@ int Monster::getHitExp(int AttackerLevel, int damage) {
 bool Monster::canBeAttackedBy(Entity* ent) {
   return true;
 }
+
+void Monster::moveTo(int new_x, int new_y, int direction) {
+  x = new_x;
+  y = new_y;
+  //for (int i = 0; i < STEP; i++) {
+  listener.entityMoved(id, direction);
+  //}
+  animFrame++;
+  if (animFrame == 4) {
+    listener.entityMoved(id, 4);
+    animFrame = 0;
+  }
+}
+

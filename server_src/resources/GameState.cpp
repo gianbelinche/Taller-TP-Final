@@ -19,14 +19,15 @@ PlayerNet* GameState::getPlayer(int id) {
 }
 
 bool GameState::isValidPosition(int x, int y) {
-  if (y < 0 || y >= (int)colisionMap.size() || x < 0 ||
+  return true;
+  /*if (y < 0 || y >= (int)colisionMap.size() || x < 0 ||
       x >= (int)colisionMap[0].size()) {
     return false;
   } else if (colisionMap[y / TILE_SIZE][x / TILE_SIZE] != 0) {
     return false;
   } else {
     return true;
-  }
+  }*/
 }
 
 void GameState::playerMoved(int id, char direction) {

@@ -4,8 +4,8 @@
 #include <iostream>
 #include <utility>
 
-#include "../../JsonError.h"
-#include "../../json/json.h"
+#include "../headers/JsonError.h"
+#include "../json/json.h"
 
 Map::Map(const char* mapPath) {
   std::ifstream mapFile(mapPath);
@@ -115,19 +115,25 @@ Map::Map(const char* mapPath) {
 
   const Json::Value& tilesets = mapValues["tilesets"];  // Array de tilesets
 
+  std::cout << "Tamaño: " << tiles.size() << std::endl;
+
   for (Json::Value::ArrayIndex i = 0; i < tilesets.size(); i++) {
     std::ifstream ifsl(tilesets[i]["source"].asString());
     Json::Value vall;
     mapReader.parse(ifsl, vall);
 
     uint32_t key = tilesets[i]["firstgid"].asUInt();
-    std::vector<std::string> v;
+    std::vector<std::string> vt;
 
-    v.emplace_back(vall["image"].asString());
-    v.emplace_back(vall["tileheight"].asString());
-    v.emplace_back(vall["tilewidth"].asString());
+    vt.emplace_back(vall["image"].asString());
+    vt.emplace_back(vall["tileheight"].asString());
+    vt.emplace_back(vall["tilewidth"].asString());
 
-    tiles[key] = v;
+    tiles[key] = vt;
+    std::cout << "Valor: " << vt[0] << std::endl;
+    std::cout << "Valor: " << vt[1] << std::endl;
+    std::cout << "Valor: " << vt[2] << std::endl;
+
   }
 }
 

@@ -3,6 +3,7 @@
 
 #include "GameState.h"
 #include "Monster.h"
+#include "ServerEventListener.h"
 
 class MonsterType {
  private:
@@ -18,7 +19,8 @@ class MonsterType {
 
   int getDamage();
 
-  Monster* newMonster(int id, int x, int y, int level, GameState& world);
+  Monster* newMonster(int id, int x, int y, int level, GameState& world,
+                      ServerEventListener& eventListener);
 };
 
 #endif  // MONSTERTYPE_H

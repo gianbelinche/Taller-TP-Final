@@ -6,8 +6,8 @@
 #include <utility>
 
 //#include "Utils/Configuration.h"
-#include "Server.h"
-#include "Communication/SocketException.h"
+#include "headers/Server.h"
+#include "headers/SocketException.h"
 
 enum exit_codes{SUCCESS, ERROR};
 

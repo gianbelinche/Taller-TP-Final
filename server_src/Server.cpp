@@ -4,6 +4,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <utility>
+#include <string>
 
 #include "headers/MessageDispatcher.h"
 #include "headers/ProtectedQueue.h"
@@ -47,7 +48,7 @@ void Server::run() {
     Socket peer = std::move(clientAcceptor.accept());
     ClientHandler* cli =
         new ClientHandler(std::move(peer), persistor, map, idAssigner,
-                          incomingMessages, dispatcher);
+                          incomingMessages, dispatcher, world, listener);
 
     clients.push_back(cli);
     cli->start();
