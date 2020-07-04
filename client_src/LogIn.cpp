@@ -203,6 +203,8 @@ void LogIn::connectSrv() {
     }catch(const SocketException& e){
         this->lineEdit1.clear();
         this->lineEdit2.clear();
+        msgBox.setText("Error al conectar al servidor.");
+        msgBox.exec();
     }
 }
 
@@ -252,6 +254,8 @@ void LogIn::signIn() {
     if (response[0] == 10){
         switch (response[1]){
             case 0:
+                msgBox.setText("Contraseña Incorrecta.");
+                msgBox.exec();
                 break;
             case 1:
                 this->exitApp();
