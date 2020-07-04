@@ -1,16 +1,16 @@
-#include "../headers/Persistor.h"
-
-#define DATA_SIZE 35
+#include "Persistor.h"
 
 #include <ios>
 #include <iostream>
 #include <msgpack.hpp>
 #include <sstream>
 
+#define DATA_SIZE 35
+#define PLAYERS_MAP "players_map"
+
 Persistor::Persistor() {
-  file.open("playersMap.json");
-  std::cout << "const " << file.is_open() << std::endl;
-  std::map<int, int> map;
+  file.open(PLAYERS_MAP);
+  std::unordered_map<int, int> map;
   file.seekg(0, std::ios::end);
   int size = file.tellg();
   if (size > 0) {
@@ -28,13 +28,44 @@ Persistor::Persistor() {
 }
 
 Persistor::~Persistor() {
-  file.open("playersMap.json", std::fstream::out | std::fstream::trunc);
-  std::cout << "Dest " << file.is_open() << std::endl;
+  file.open(PLAYERS_MAP, std::fstream::out | std::fstream::trunc);
   std::stringstream buff;
   msgpack::pack(buff, players);
   buff.seekg(0);
   file.write(&buff.str()[0], buff.str().size());
   file.close();
+}
+
+void Persistor::persistPasswordMap(
+    std::string file_name, std::unordered_map<int, std::string> passwords) {
+  file.open(file_name, std::fstream::out | std::fstream::trunc);
+  std::stringstream buff;
+  msgpack::pack(buff, passwords);
+  buff.seekg(0);
+  file.write(&buff.str()[0], buff.str().size());
+  file.close();
+}
+
+std::unordered_map<int, std::string> Persistor::obtainPasswordMap(
+    std::string file_name) {
+  file.open(file_name);
+  std::unordered_map<int, std::string> passwords;
+  file.seekg(0, std::ios::end);
+  int size = file.tellg();
+  if (size <= 0) {
+    file.close();
+    return passwords;
+  }
+  char* str = (char*)malloc(size);
+  file.seekg(0);
+  file.read(str, size);
+  std::string string(str, size);
+  msgpack::object_handle oh = msgpack::unpack(string.data(), size);
+  msgpack::object deserialized = oh.get();
+  deserialized.convert(passwords);
+  free(str);
+  file.close();
+  return passwords;
 }
 
 void Persistor::persistPlayer(std::string file_name, std::vector<uint32_t> data,
@@ -74,9 +105,5 @@ std::vector<uint32_t> Persistor::obtainPlayerData(std::string file_name,
     free(binary_data);
   }
   file.close();
-  return std::move(data);
-}
-
-std::unordered_map<int, int>& Persistor::getPlayersMap() {
-  return players;
+  return data;
 }

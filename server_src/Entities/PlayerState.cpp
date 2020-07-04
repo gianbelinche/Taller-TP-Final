@@ -23,6 +23,7 @@ void PlayerState::lifeRecover(PlayerNet &player) {
 void PlayerState::move(PlayerNet &player, int x, int y) {
   player.setX(x);
   player.setY(y);
+  std::cout << "El jugador se movio a X: " << x << "y: " << y << std::endl;
 }
 
 void PlayerState::update(PlayerNet &player) {

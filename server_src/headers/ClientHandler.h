@@ -5,12 +5,21 @@
 #include <string>
 #include <vector>
 
+#include "Class.h"
+#include "GameState.h"
+#include "Map.h"
 #include "MessageDispatcher.h"
+#include "Monster.h"
+#include "MonsterType.h"
+#include "NormalState.h"
+#include "Persistor.h"
+#include "PlayerNet.h"
+#include "PlayerState.h"
 #include "ProtectedQueue.h"
+#include "Race.h"
+#include "ServerEventListener.h"
 #include "ServerReceiver.h"
 #include "ServerSender.h"
-#include "Map.h"
-#include "Persistor.h"
 #include "Socket.h"
 #include "Thread.h"
 
@@ -24,12 +33,15 @@ class ClientHandler : public Thread {
   ProtectedQueue<std::string>& incomingMessages;
   ProtectedQueue<std::vector<uint32_t>> outgoingMessages;
   MessageDispatcher& dispatcher;
+  GameState& world;
+  ServerEventListener& listener;
 
  public:
   ClientHandler(Socket p, Persistor& persist, Map& worldMap,
                 std::atomic<uint32_t>& idAssigner,
                 ProtectedQueue<std::string>& incoming,
-                MessageDispatcher& msgDispatcher);
+                MessageDispatcher& msgDispatcher, GameState& state,
+                ServerEventListener& eventListener);
 
   ~ClientHandler();
 

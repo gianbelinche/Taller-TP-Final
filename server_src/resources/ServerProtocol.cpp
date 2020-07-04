@@ -1,5 +1,6 @@
 #include "../headers/ServerProtocol.h"
 
+#include <iostream>
 #include <msgpack.hpp>
 #include <utility>
 
@@ -10,6 +11,7 @@ ServerProtocol::~ServerProtocol() {}
 
 void ServerProtocol::decode(std::string packedEvent) {
   std::vector<uint32_t> event;
+  std::cout << "Lo recibido: " << packedEvent << std::endl;
   msgpack::object_handle oh =
       msgpack::unpack(packedEvent.data(), packedEvent.size());
   oh.get().convert(event);
@@ -57,7 +59,7 @@ void ServerProtocol::inventoryClick(std::vector<uint32_t> event) {
 void ServerProtocol::messageSent(std::vector<uint32_t> event) {
   uint32_t playerId = event[1];
   std::vector<char> msg;
-  for (int i = 2; i < event.size(); i++) {
+  for (size_t i = 2; i < event.size(); i++) {
     msg.push_back(event[i]);
   }
   std::string text(msg.begin(), msg.end());
