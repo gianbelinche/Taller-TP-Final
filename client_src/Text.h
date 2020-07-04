@@ -11,9 +11,8 @@ class Text : public Texture{
         Uint8 blue;
 
     public:
-        //Text(SDL_Renderer *aRenderer);
         Text(SDL_Renderer *aRenderer, Uint8 aKeyRed = 0, Uint8 aKeyGreen = 0,
-                Uint8 aKeyBlue = 0/*, std::string &text, TTF_Font *gFont*/);
+                Uint8 aKeyBlue = 0);
 
         Text(Text&& other);
         Text& operator=(Text&& other);       

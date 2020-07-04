@@ -7,7 +7,6 @@
 #include "ClientProtocol.h"
 #include "MiniChat.h"
 #include "GraphicInventory.h"
-//#include "LoginScreen.h"
 
 class EventManager {
     private:

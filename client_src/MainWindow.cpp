@@ -11,7 +11,8 @@
 
 /* FRECUENCIA DE SONIDO */
 #define FRECUENCY 22050
-
+#define CHANNELS 2
+#define CHUNKSIZE 2048
 MainWindow::MainWindow() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         throw SDLError("Error: SDL no pudo inicializarse. SDL_Error: %s", 
@@ -51,7 +52,7 @@ MainWindow::MainWindow() {
                         SDL_GetError());
     }
 
-    if(Mix_OpenAudio(FRECUENCY, MIX_DEFAULT_FORMAT, 2, 2048) < 0 ){ //No me acuerdo que son los otros dos numeros, despues me fijo y pongo defines
+    if(Mix_OpenAudio(FRECUENCY, MIX_DEFAULT_FORMAT, CHANNELS, CHUNKSIZE) < 0 ){
 		throw SDLError("No se pudo inicializar el sonido: %S\n", Mix_GetError());
 	}
 }
