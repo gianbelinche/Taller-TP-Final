@@ -9,12 +9,14 @@
 
 #include <iostream> //sacar, solo para ejemplo
 
-#include <QCloseEvent>
+
+/*#include <QCloseEvent>
 
 void LogIn::closeEvent(QCloseEvent *event){
     this->exitEntireApp();
     event->accept();
-}
+}*/
+
 
 LogIn::LogIn(ClientConnector& clientConnector,QMainWindow *parent) :
                                     QMainWindow(parent),
@@ -230,7 +232,7 @@ void LogIn::signIn() {
 
     //recivo largo
     std::vector<char> longBuff = clientConnector.receive(4);
-    uint32_t len = *((uint32_t*)&lenBuff[0]);
+    len = *((uint32_t*)&longBuff[0]);
     len = ntohl(len);
 
     //recibe paquete
