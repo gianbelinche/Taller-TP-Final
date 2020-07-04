@@ -9,6 +9,13 @@
 
 #include <iostream> //sacar, solo para ejemplo
 
+#include <QCloseEvent>
+
+void LogIn::closeEvent(QCloseEvent *event){
+    this->exitEntireApp();
+    event->accept();
+}
+
 LogIn::LogIn(ClientConnector& clientConnector,QMainWindow *parent) :
                                     QMainWindow(parent),
                                     centralWidget(this),

@@ -41,6 +41,7 @@ class LogIn : public QMainWindow {
         void exitEntireApp();
         void createChar();
 
+        void closeEvent(QCloseEvent *event) override;
     public:
         explicit LogIn(ClientConnector& clientConnector,QMainWindow *parent = 0);
         ~LogIn();
