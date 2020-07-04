@@ -1,12 +1,15 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
+#include <cstdint>
 #include <unordered_map>
 #include <vector>
 
 #include "Condition.h"
 #include "Entity.h"
+#include "NormalState.h"
 #include "PlayerNet.h"
+#include "PlayerState.h"
 
 #define TILE_SIZE 32
 
@@ -16,9 +19,11 @@ class GameState {
   std::unordered_map<int, PlayerNet*> players;
   std::unordered_map<int, Entity*> entities;  // Jugadores y monstruos
   int framesPerSecond;
+  ServerEventListener& listener;
 
  public:
-  GameState(std::vector<std::vector<bool>>& collisions, int fps);
+  GameState(std::vector<std::vector<bool>>& collisions, int fps,
+            ServerEventListener& eventListener);
 
   ~GameState();
 
@@ -40,6 +45,8 @@ class GameState {
 
   bool playerCanAttack(PlayerNet* player, Entity* ent);
 
+  void addPlayerFromData(std::vector<uint32_t>& playerData);
+
   void update();
 
   /* ---------- Eventos ---------- */
@@ -48,7 +55,8 @@ class GameState {
 
   void playerLeveledUp(int id);
 
-  void playerMoved(int id, char direction);  // Ver si conviene mergearlos en uno solo
+  void playerMoved(int id,
+                   char direction);  // Ver si conviene mergearlos en uno solo
 
   void playerDealtDamage(int id, int damage);
 

@@ -4,15 +4,16 @@
 #include <cmath>
 #include <iostream>
 
-#include "../headers/GameState.h"
 #include "../headers/Equations.h"
+#include "../headers/GameState.h"
 #include "../headers/GhostState.h"
 #include "../headers/PlayerState.h"
 
 PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int hp,
                      int mana, int velocity, int currExp, int currLevel,
                      int currGold, Weapon* wea, Armor* arm, Helmet* helm,
-                     Shield* sh, PlayerState* sta, Class* cla, Race* ra)
+                     Shield* sh, PlayerState* sta, Class* cla, Race* ra,
+                     ServerEventListener& eventListener)
     : Entity(x, y, id,
              equation::playerMaxHp(
                  cla->getConstitutionFactor() * ra->getConstitution(),
@@ -29,7 +30,8 @@ PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int hp,
       weapon(wea),
       armor(arm),
       helmet(helm),
-      shield(sh) {
+      shield(sh),
+      listener(eventListener) {
   maxMana = equation::playerMaxMana(getIntelligence(), cla->getManaFactor(),
                                     ra->getManaFactor(), level);
   maxExp = equation::playerMaxExp(level);
@@ -91,10 +93,10 @@ int PlayerNet::takeDamage(int dmgToTake) {
   int oldHp = hp;
 
   hp = std::max(0, hp - finalDmg);
-  world.playerTookDamage(id, oldHp - hp);
+  listener.playerTookDamage(id, oldHp - hp);
   if (hp == 0) {
     changeState(&PlayerState::dead);
-    world.playerDied(id);
+    listener.playerDied(id);
     std::cout << "Se murió el jugador" << std::endl;
 
     // Dropear los items
@@ -129,10 +131,10 @@ void PlayerNet::receiveExp(int amount) {
     levelUp();
     std::cout << "subio de nivel\n";
   } else {
-    world.playerExpGain(id, amount);
+    listener.playerExpGain(id, amount);
   }
-  std::cout << "El jugador gano: " << amount << " de exp y ahora tiene: "
-            << exp << " de experiencia\n";
+  std::cout << "El jugador gano: " << amount << " de exp y ahora tiene: " << exp
+            << " de experiencia\n";
 }
 
 int PlayerNet::getLevel() { return level; }
@@ -165,7 +167,7 @@ void PlayerNet::levelUp() {
   updateMaxExp();
   hp = maxHp;
   mana = maxMana;
-  world.playerLeveledUp(id);
+  listener.playerLeveledUp(id);
 }
 
 bool PlayerNet::canBeAttackedBy(Entity* ent) {

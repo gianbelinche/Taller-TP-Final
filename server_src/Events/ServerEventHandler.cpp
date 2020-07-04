@@ -74,7 +74,7 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
   }
 
   int damageDealt = player->attack(entity);
-  world.playerDealtDamage(player->getId(), damageDealt);
+  listener.playerDealtDamage(player->getId(), damageDealt);
 
   int expGain = entity->getHitExp(player->getLevel(), damageDealt);
   if (!entity->isAlive()) {
