@@ -46,11 +46,10 @@ void ServerEventHandler::handle(UserMoved& ev) {
       break;
   }
 
-/*
+
   if (!world.isValidPosition(x, y)) {
     return;
   }
-  */
   player->move(x, y);
   listener.entityMoved(ev.getUser(), direction);
 }
