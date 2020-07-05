@@ -4,6 +4,19 @@ ServerEventListener::ServerEventListener(MessageDispatcher& msgDispatcher)
     : dispatcher(msgDispatcher) {}
 ServerEventListener::~ServerEventListener() {}
 
+void ServerEventListener::npcAttack(int id,int equipped_item){
+  std::vector<uint32_t> event;
+  event.push_back(NPC_ATTACK);
+  event.push_back(equipped_item);
+  dispatcher.sendMessage(id,event);
+}
+
+void ServerEventListener::potionTaken(int id){
+  std::vector<uint32_t> event;
+  event.push_back(POTION_TAKEN);
+  dispatcher.sendMessage(id,event);
+}
+
 void ServerEventListener::playerExpGain(int id, int gain) {
   std::vector<uint32_t> event;
   event.push_back(PRINT_MSG);
@@ -82,10 +95,84 @@ void ServerEventListener::playerSendMessageToChat(int id,std::string message){
   dispatcher.sendMessage(id,event);
 }
 
+void ServerEventListener::inventoryAddItem(int id,int item){
+  std::vector<uint32_t> event;
+  event.push_back(INVENTORY_COMMAND);
+  event.push_back(ADD_ITEM);
+  event.push_back(item);
+  dispatcher.sendMessage(id,event);
+}
 
-void ServerEventListener::playerDied(int id) {}
+void ServerEventListener::inventoryRemoveItem(int id,int slot){
+  std::vector<uint32_t> event;
+  event.push_back(INVENTORY_COMMAND);
+  event.push_back(REMOVE_ITEM);
+  event.push_back(slot);
+  dispatcher.sendMessage(id,event);
+}
 
-void ServerEventListener::entityDisappear(int id) {}
+void ServerEventListener::inventoryEquipItem(int id,int slot){
+  std::vector<uint32_t> event;
+  event.push_back(INVENTORY_COMMAND);
+  event.push_back(EQUIP_ITEM);
+  event.push_back(slot);
+  dispatcher.sendMessage(id,event);
+}
+
+
+void ServerEventListener::playerDied(int id) {
+  std::vector<uint32_t> event;
+  event.push_back(PLAYER_STATE_CHANGE);
+  event.push_back(DEAD);
+  event.push_back(id);
+  dispatcher.broadcastMessage(event);
+}
+
+void ServerEventListener::playerRevived(int id) {
+  std::vector<uint32_t> event;
+  event.push_back(PLAYER_STATE_CHANGE);
+  event.push_back(REVIVED);
+  event.push_back(id);
+  dispatcher.broadcastMessage(event);
+}
+
+void ServerEventListener::playerEquipedItem(int id,int eq_type,int object){
+  std::vector<uint32_t> event;
+  event.push_back(EQUIP_ITEM);
+  event.push_back(id);
+  event.push_back(eq_type);
+  event.push_back(object);
+  dispatcher.broadcastMessage(event);
+}
+
+void ServerEventListener::dropSpawn(int object_id,
+                                   int object_type, int posx, int posy){
+  std::vector<uint32_t> event;  
+  event.push_back(DROP_SPAWN);
+  event.push_back(object_id);
+  event.push_back(object_type);
+  event.push_back(posx);
+  event.push_back(posy);
+  dispatcher.broadcastMessage(event);
+
+}
+
+void npcSpawn(int npc_id,int npc_type,int posx,int posy){
+  std::vector<uint32_t> event;  
+  event.push_back(NPC_SPAWN);
+  event.push_back(npc_id);
+  event.push_back(npc_type);
+  event.push_back(posx);
+  event.push_back(posy);
+  dispatcher.broadcastMessage(event);
+}
+
+void ServerEventListener::entityDisappear(int id,int entity_id) {
+  std::vector<uint32_t> event;
+  event.push_back(DELETE_ENTITY);
+  event.push_back(entity_id);
+  dispatcher.broadcastMessage(event);
+}
 
 void ServerEventListener::playerConnected(int id) {
   dispatcher.playerConnected(id);
