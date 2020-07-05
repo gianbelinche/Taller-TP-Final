@@ -35,11 +35,6 @@ bool GameState::isValidPosition(int x, int y) {
   }
 }
 
-void GameState::playerMoved(int id, char direction) {
-  // Aca se llama a algo que encole el mensaje del jugador en la cola de
-  // mensajes salientes
-}
-
 float GameState::entitiesDistance(Entity* ent1, Entity* ent2) {
   int dist_x = abs(ent1->getX() - ent2->getX());
   int dist_y = abs(ent1->getY() - ent2->getY());
@@ -58,11 +53,6 @@ PlayerNet* GameState::getNearestPlayer(Entity* ent, Condition* cond) {
     }
   }
   return nearest;
-}
-
-void GameState::monsterMoved(int id) {
-  // Busca el bichito en el map de bichos(o no) y manda el mensaje
-  // Ver si no conviene mergear con el playerMoved
 }
 
 int GameState::getFPS() { return framesPerSecond; }
