@@ -13,11 +13,19 @@ ServerReceiver::ServerReceiver(Socket& peer,
 ServerReceiver::~ServerReceiver() {}
 
 void ServerReceiver::run() {
-  while (keepRunning) {
-    uint32_t msgLen = receiveLen();
-    std::string msg = std::move(receiveMsg(msgLen));
-    incomingEvents.push(std::move(msg));
+  try {
+    while (keepRunning) {
+      uint32_t msgLen = receiveLen();
+      if (msgLen == 0) {
+        return;
+      }
+      std::string msg = std::move(receiveMsg(msgLen));
+      incomingEvents.push(std::move(msg));
+    }
+  } catch (const SocketException& e) {
+    std::cout << "Atrapo la excepcion" << std::endl;
   }
+  
 }
 
 std::string ServerReceiver::receiveMsg(uint32_t len) {
@@ -29,7 +37,14 @@ std::string ServerReceiver::receiveMsg(uint32_t len) {
 
 uint32_t ServerReceiver::receiveLen() {
   char lenBuff[4];
-  peer.recv(lenBuff, sizeof(uint32_t));
+  if (peer.recv(lenBuff, sizeof(uint32_t)) == 0) {
+    return 0;
+  } 
   uint32_t len = *((uint32_t*)lenBuff);
   return htonl(len);
+}
+
+
+void ServerReceiver::stop() {
+  keepRunning = false;
 }

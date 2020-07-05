@@ -8,6 +8,7 @@
 #include "Thread.h"
 #include "ProtectedQueue.h"
 #include "Socket.h"
+#include "SocketException.h"
 
 class ServerReceiver : public Thread {
  private:
@@ -25,6 +26,8 @@ class ServerReceiver : public Thread {
   std::string receiveMsg(uint32_t len);
 
   uint32_t receiveLen();
+
+  void stop();
 };
 
 #endif  // SERVERRECEIVER_H

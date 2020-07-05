@@ -9,6 +9,7 @@
 #include "Thread.h"
 #include "ProtectedQueue.h"
 #include "Socket.h"
+#include "SocketException.h"
 
 class ServerSender : public Thread {
  private:

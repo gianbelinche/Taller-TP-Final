@@ -2,6 +2,7 @@
 #define GAMESTATE_H
 
 #include <cstdint>
+#include <mutex>
 #include <unordered_map>
 #include <vector>
 
@@ -22,6 +23,7 @@ class GameState {
   int framesPerSecond;
   ServerEventListener& listener;
   MasterFactory& factory;
+  std::mutex entitiesMapMutex;
 
  public:
   GameState(std::vector<std::vector<bool>>& collisions, int fps,
@@ -32,6 +34,8 @@ class GameState {
   void addEntity(Entity* ent);
 
   void addPlayer(PlayerNet* player);
+
+  void rmPlayer(int id);
 
   Entity* getEntity(int id);
 

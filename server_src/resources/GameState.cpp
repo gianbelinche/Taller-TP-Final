@@ -92,7 +92,7 @@ void GameState::addPlayer(PlayerNet* player) {
 
 void GameState::addPlayerFromData(std::vector<uint32_t>& playerData) {
   PlayerNet* newPlayer = factory.createPlayer(playerData, *this);
-
+  std::unique_lock<std::mutex> l(entitiesMapMutex);
   players[newPlayer->getId()] = newPlayer;
   entities[newPlayer->getId()] = newPlayer;
 }
@@ -122,4 +122,10 @@ void GameState::spawnUnParDeMobs() {
                     newSpider->getX(), newSpider->getY());
   listener.npcSpawn(newZombie->getId(), newZombie->getNpcType(),
                     newZombie->getX(), newZombie->getY());
+}
+
+void GameState::rmPlayer(int id) {
+  std::unique_lock<std::mutex> l(entitiesMapMutex);
+  entities.erase(id);
+  players.erase(id);
 }

@@ -25,6 +25,9 @@ void ServerSender::run() {
       sendEvent(std::move(encodedEvent));
     }
   } catch (const ClosedQueueException& e) {
+
+  } catch (const SocketException& s) {
+    std::cout << s.what() << std::endl;
   }
 }
 
