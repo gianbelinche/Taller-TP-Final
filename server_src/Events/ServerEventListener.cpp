@@ -4,6 +4,19 @@ ServerEventListener::ServerEventListener(MessageDispatcher& msgDispatcher)
     : dispatcher(msgDispatcher) {}
 ServerEventListener::~ServerEventListener() {}
 
+void ServerEventListener::npcAttack(int id,int equipped_item){
+  std::vector<uint32_t> event;
+  event.push_back(NPC_ATTACK);
+  event.push_back(equipped_item);
+  dispatcher.sendMessage(id,event);
+}
+
+void ServerEventListener::potionTaken(int id){
+  std::vector<uint32_t> event;
+  event.push_back(POTION_TAKEN);
+  dispatcher.sendMessage(id,event);
+}
+
 void ServerEventListener::playerExpGain(int id, int gain) {
   std::vector<uint32_t> event;
   event.push_back(PRINT_MSG);
@@ -79,6 +92,30 @@ void ServerEventListener::playerSendMessageToChat(int id,std::string message){
   for (int i = 0; i < message.size(); i++){
     event.push_back(message[i]);
   }
+  dispatcher.sendMessage(id,event);
+}
+
+void ServerEventListener::inventoryAddItem(int id,int item){
+  std::vector<uint32_t> event;
+  event.push_back(INVENTORY_COMMAND);
+  event.push_back(ADD_ITEM);
+  event.push_back(item);
+  dispatcher.sendMessage(id,event);
+}
+
+void ServerEventListener::inventoryRemoveItem(int id,int slot){
+  std::vector<uint32_t> event;
+  event.push_back(INVENTORY_COMMAND);
+  event.push_back(REMOVE_ITEM);
+  event.push_back(slot);
+  dispatcher.sendMessage(id,event);
+}
+
+void ServerEventListener::inventoryEquipItem(int id,int slot){
+  std::vector<uint32_t> event;
+  event.push_back(INVENTORY_COMMAND);
+  event.push_back(EQUIP_ITEM);
+  event.push_back(slot);
   dispatcher.sendMessage(id,event);
 }
 

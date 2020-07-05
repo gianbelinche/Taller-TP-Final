@@ -18,6 +18,8 @@
 #define INVENTORY_COMMAND 8
 #define STAT_CHANGE 9
 #define LOGIN_I 10
+#define NPC_ATTACK 11
+#define POTION_TAKEN 12
 
 #define GOLD_UPDATE 0
 #define LIFE_UPDATE 1
@@ -34,6 +36,9 @@
 #define MSG_EXP 6
 #define MSG_LEVEL_UP 7
 
+#define ADD_ITEM 0
+#define REMOVE_ITEM 1
+#define EQUIP_ITEM 2
 
 class ServerEventListener {
  private:
@@ -43,6 +48,10 @@ class ServerEventListener {
   ServerEventListener(MessageDispatcher& msgDispatcher);
 
   ~ServerEventListener();
+
+  void npcAttack(int id,int equipped_item);
+
+  void potionTaken(int id);
 
   void playerSendMessageToChat(int id,std::string message);
 
@@ -65,6 +74,12 @@ class ServerEventListener {
   void monsterMoved(int id);
 
   void playerDied(int id);
+
+  void inventoryAddItem(int id,int item);
+
+  void inventoryRemoveItem(int id,int slot);
+
+  void inventoryEquipItem(int id,int slot);
 
   // Jugadores que se desconectan o mobs que mueren
   void entityDisappear(int id);
