@@ -44,6 +44,10 @@ La clase Texture, encapsula el renderizado de una textura, y las clases Image, F
 
 Luego, la clase Music y la clase SoundEffect encapsulan la reproducción de musica y Chunks (efectos de sonido), estas representan una unica musica o efecto de sonido, por otro lado, MusicPlayer y SoundEffectPlayer, funcionan como un reproductor, el al cual se le pueden agregar canciones o sonidos respectivamente, y luego elegir cual reproducir entre ellos.
 
+Diagrama de clases
+
+![Diagrama1](img/diagrama_wrap_sdl.png)
+
 ### Módulo Layout
 
 Este módulo consiste de todas las clases que intervienen en el manejo del layout, es decir, la interfaz gráfica del juego, estas clases son:
