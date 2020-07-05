@@ -9,9 +9,9 @@ class MonsterType {
  private:
   int hp;
   int damage;
-
+  int level;
  public:
-  MonsterType(int hp, int damage);
+  MonsterType(int hp, int damage, int level);
 
   ~MonsterType();
 
@@ -19,7 +19,7 @@ class MonsterType {
 
   int getDamage();
 
-  Monster* newMonster(int id, int x, int y, int level, GameState& world,
+  Monster* newMonster(int id, int x, int y, GameState& world,
                       ServerEventListener& eventListener);
 };
 
