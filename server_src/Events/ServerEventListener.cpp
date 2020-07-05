@@ -157,6 +157,16 @@ void ServerEventListener::dropSpawn(int object_id,
 
 }
 
+void npcSpawn(int npc_id,int npc_type,int posx,int posy){
+  std::vector<uint32_t> event;  
+  event.push_back(NPC_SPAWN);
+  event.push_back(npc_id);
+  event.push_back(npc_type);
+  event.push_back(posx);
+  event.push_back(posy);
+  dispatcher.broadcastMessage(event);
+}
+
 void ServerEventListener::entityDisappear(int id,int entity_id) {
   std::vector<uint32_t> event;
   event.push_back(DELETE_ENTITY);

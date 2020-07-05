@@ -52,63 +52,64 @@ class ServerEventListener {
 
   ~ServerEventListener();
 
-  void monsterMoved(int id);
+  void playerConnected(int id); 
 
-  void entityMoved(int id, uint32_t direction);  // Ver  si conviene mergearlos en uno solo
+  void monsterMoved(int id); //No estoy seguro de que es esto
 
+  void entityMoved(int id, uint32_t direction);  // Ver  si conviene mergearlos en uno solo 
+
+  void npcSpawn(int npc_id,int npc_type,int posx,int posy)
   
-
-
-  void npcAttack(int id,int equipped_item);
-
-  void potionTaken(int id);
-
-  void playerSendMessageToChat(int id,std::string message);
-
-  void playerExpGain(int id, int gain);
-
-  void playerLeveledUp(int id);
-
-  void playerDealtDamage(int id, int damage);
-
-  void playerTookDamage(int id, int damage);
-
-  void playerHealed(int id, int life);
-
-  void entityEvadedAttack(int id,int entity_id);
-
-  void playerEvadedAttack(int id);
-
-  
-  void playerEquipedItem(int id,int eq_type,int object);
-
-  void playerDied(int id);
-
-  void playerRevived(int id);
-
-
-  void inventoryAddItem(int id,int item);
-
-  void inventoryRemoveItem(int id,int slot);
-
-  void inventoryEquipItem(int id,int slot);
-
+  void dropSpawn(int object_id,int object_type, int posx, int posy); //3
 
   // Jugadores que se desconectan o mobs que mueren
-  void entityDisappear(int id,int entity_id);
+  void entityDisappear(int id,int entity_id); //4
+
+  void playerDied(int id); //5
+
+  void playerRevived(int id); //5
+
+  void playerEquipedItem(int id,int eq_type,int object); //6
 
 
-  void playerConnected(int id);
+  void playerSendMessageToChat(int id,std::string message); //7
 
-  void goldUpdate(uint32_t id, uint32_t amount);
+  void playerExpGain(int id, int gain); //7
 
-  void lifeUpdate(uint32_t id, uint32_t hp, uint32_t maxHp);
+  void playerLeveledUp(int id); //7
 
-  void manaUpdate(uint32_t id, uint32_t mana, uint32_t maxMana);
+  void playerDealtDamage(int id, int damage); //7
 
-  void levelUpdate(uint32_t id, uint32_t level);
+  void playerTookDamage(int id, int damage); //7
 
-  void expUpdate(uint32_t id, uint32_t exp, uint32_t maxExp);
+  void playerHealed(int id, int life); //7
+
+  void entityEvadedAttack(int id,int entity_id); //7
+
+  void playerEvadedAttack(int id); //7
+
+
+
+  void inventoryAddItem(int id,int item); //8
+
+  void inventoryRemoveItem(int id,int slot); //8
+
+  void inventoryEquipItem(int id,int slot); //8
+  
+
+  void goldUpdate(uint32_t id, uint32_t amount); //9
+
+  void lifeUpdate(uint32_t id, uint32_t hp, uint32_t maxHp); //9
+
+  void manaUpdate(uint32_t id, uint32_t mana, uint32_t maxMana); //9
+
+  void levelUpdate(uint32_t id, uint32_t level); //9
+
+  void expUpdate(uint32_t id, uint32_t exp, uint32_t maxExp); //9
+
+  void npcAttack(int id,int equipped_item); //11
+
+  void potionTaken(int id); //12
 };
 
 #endif // SERVEREVENTLISTENER_H
