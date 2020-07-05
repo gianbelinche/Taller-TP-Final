@@ -1,6 +1,8 @@
 #ifndef MONSTER_H
 #define MONSTER_H
 
+#include <vector>
+
 #include "Entity.h"
 #include "GameState.h"
 #include "ServerEventListener.h"
@@ -35,6 +37,11 @@ class Monster : public Entity {
   void update() override;
 
   void moveTo(int new_x, int new_y, int direction);
+
+  std::vector<uint32_t> getSendable() override;
+
+  int getNpcType();
+
 };
 
 #endif  // MONSTER_H

@@ -6,7 +6,7 @@ enum { HUMAN, ELF, DWARF, GNOME };
 // tienen multiplicadores
 class Race {
  private:
-  char race_type;
+  int race_type;
   float hpFactor;
   float recoveryFactor;
   float manaFactor;
@@ -16,7 +16,7 @@ class Race {
   int agility;
 
  public:
-  Race(char race_t, float hpFac, float recFac, float manaFac, int consti,
+  Race(int race_t, float hpFac, float recFac, float manaFac, int consti,
        int str, int intell, int agil);
 
   ~Race();
@@ -34,6 +34,8 @@ class Race {
   int getIntelligence();
 
   int getAgility();
+
+  int getRaceT();
 };
 
 #endif  // RACE_H
