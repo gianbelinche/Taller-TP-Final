@@ -10,7 +10,6 @@ EventManager::EventManager(EntityManager &anEntityManager, uint32_t aPlayerID,
                            BlockingMsgQueue &aMsgQueue, Camera &aCamera, 
                            ClientProtocol &aClProtocol, MiniChat &chat,
                            GraphicInventory &inventory) :
-                                                writing(false),
                                                 entityManager(anEntityManager),
                                                 playerID(aPlayerID), 
                                                 msgQueue(aMsgQueue),
