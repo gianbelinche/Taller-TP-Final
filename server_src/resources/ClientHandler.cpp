@@ -14,7 +14,8 @@ ClientHandler::ClientHandler(Socket p, Persistor& persist, Map& worldMap,
                              std::atomic<uint32_t>& idAssigner,
                              ProtectedQueue<std::string>& incoming,
                              MessageDispatcher& msgDispatcher, GameState& state,
-                             ServerEventListener& eventListener)
+                             ServerEventListener& eventListener,
+                             Configuration& config)
     : peer(std::move(p)),
       persistor(persist),
       online(true),
@@ -23,7 +24,8 @@ ClientHandler::ClientHandler(Socket p, Persistor& persist, Map& worldMap,
       incomingMessages(incoming),
       dispatcher(msgDispatcher),
       world(state),
-      listener(eventListener) {}
+      listener(eventListener),
+      config(config) {}
 
 ClientHandler::~ClientHandler() {}
 
@@ -98,7 +100,6 @@ std::vector<uint32_t> ClientHandler::getCredentials() {
     std::cout << "User:" << user_s << std::endl;
     std::cout << "Pass:" << pass_s << std::endl;
 
-
     if (passwords.find(user_s) != passwords.end()) {
       if (passwords[user_s] == pass_s) {  // Aplicar SHA
         sendSuccesfulLogin();
@@ -119,7 +120,7 @@ std::vector<uint32_t> ClientHandler::getCredentials() {
   if (creationNeeded) {
     handleNewPlayer(user_s);
     persistor.addPassword(user_s, pass_s);
-    //passwords[user_s] = pass_s;  // Aplicar sha
+    // passwords[user_s] = pass_s;  // Aplicar sha
     persistor.persistPasswordMap();
   }
   std::vector<uint32_t> playerInfo = persistor.obtainPlayerData(user_s);
@@ -215,20 +216,19 @@ void ClientHandler::handleNewPlayer(std::string user) {
 
   std::vector<uint32_t> playerInfo;
 
-  // Esto luego se va a hacer con el Configurator
-  playerInfo.push_back(idGenerator++);  // Id
-  playerInfo.push_back(2500);           // X
-  playerInfo.push_back(2500);           // Y
-  playerInfo.push_back(1);              // Nivel
-  playerInfo.push_back(0);              // Exp
-  playerInfo.push_back(choices[1]);     // Raza
-  playerInfo.push_back(choices[2]);     // Clase
-  playerInfo.push_back(100);            // Oro
-  playerInfo.push_back(0);              // Estado
-  playerInfo.push_back(0);              // Arma
-  playerInfo.push_back(0);              // Casco
-  playerInfo.push_back(0);              // Armadura
-  playerInfo.push_back(0);              // Escudo
+  playerInfo.push_back(idGenerator++);                                // Id
+  playerInfo.push_back(config.getValues("Player")["initialX"]);       // X
+  playerInfo.push_back(config.getValues("Player")["initialY"]);       // Y
+  playerInfo.push_back(config.getValues("Player")["initialLevel"]);   // Nivel
+  playerInfo.push_back(config.getValues("Player")["initialExp"]);     // Exp
+  playerInfo.push_back(choices[1]);                                   // Raza
+  playerInfo.push_back(choices[2]);                                   // Clase
+  playerInfo.push_back(config.getValues("Player")["initialGold"]);    // Oro
+  playerInfo.push_back(config.getValues("Player")["initialState"]);   // Estado
+  playerInfo.push_back(config.getValues("Player")["initialWeapon"]);  // Arma
+  playerInfo.push_back(config.getValues("Player")["initialHelmet"]);  // Casco
+  playerInfo.push_back(config.getValues("Player")["initialArmor"]);  // Armadura
+  playerInfo.push_back(config.getValues("Player")["initialShield"]);  // Escudo
 
   for (int i = 0; i < INVENTORY_SIZE; i++) {
     playerInfo.push_back(0);

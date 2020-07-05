@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "Class.h"
+#include "Configuration.h"
 #include "GameState.h"
 #include "Map.h"
 #include "MessageDispatcher.h"
@@ -35,13 +36,14 @@ class ClientHandler : public Thread {
   MessageDispatcher& dispatcher;
   GameState& world;
   ServerEventListener& listener;
+  Configuration& config;
 
  public:
   ClientHandler(Socket p, Persistor& persist, Map& worldMap,
                 std::atomic<uint32_t>& idAssigner,
                 ProtectedQueue<std::string>& incoming,
                 MessageDispatcher& msgDispatcher, GameState& state,
-                ServerEventListener& eventListener);
+                ServerEventListener& eventListener, Configuration& config);
 
   ~ClientHandler();
 

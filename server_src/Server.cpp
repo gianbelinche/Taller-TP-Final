@@ -42,10 +42,9 @@ void Server::run() {
 
   while (keepAccepting) {
     Socket peer = std::move(clientAcceptor.accept());
-    std::cout << "Acepto uno\n";
     ClientHandler* cli =
         new ClientHandler(std::move(peer), persistor, map, idAssigner,
-                          incomingMessages, dispatcher, world, listener);
+                          incomingMessages, dispatcher, world, listener, config);
 
     clients.push_back(cli);
     cli->start();
