@@ -50,6 +50,7 @@ add_library(server_lib
   resources/ServerProtocol.cpp 
   resources/Thread.cpp
   Utils/sha256.cpp
+  Utils/Configuration.cpp
   )
 
   include_directories(headers json)

@@ -1,6 +1,6 @@
 #include "../headers/Configuration.h"
 
-#include "json/json.h"
+#include "../json/json.h"
 
 #include <iostream>
 
