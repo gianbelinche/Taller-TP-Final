@@ -1,20 +1,23 @@
 #include <atomic>
 #include <vector>
 
+#include "Armor.h"
 #include "Class.h"
 #include "Configuration.h"
 #include "GameState.h"
-#include "Monster.h"
-#include "MonsterType.h"
-#include "PlayerNet.h"
-#include "Race.h"
-#include "ServerEventListener.h"
-#include "Weapon.h"
-#include "Wearable.h"
-#include "Armor.h"
-#include "Shield.h"
+#include "GhostState.h"
 #include "Helmet.h"
 #include "Item.h"
+#include "Monster.h"
+#include "MonsterType.h"
+#include "NormalState.h"
+#include "PlayerNet.h"
+#include "PlayerState.h"
+#include "Race.h"
+#include "ServerEventListener.h"
+#include "Shield.h"
+#include "Weapon.h"
+#include "Wearable.h"
 
 #define GOBLIN "goblin"
 #define SKELETON "skeleton"
@@ -40,7 +43,6 @@
 #define WIZARD_ID 1
 #define CLERIC_ID 2
 #define PALADIN_ID 3
-
 
 class MasterFactory {
  private:

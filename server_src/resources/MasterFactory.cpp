@@ -110,6 +110,17 @@ PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData) {
   Race* playerRace = races[playerData[5]];
   Class* playerClass = classes[playerData[6]];
   uint32_t gold = playerData[7];
+  PlayerState* state;
+  if (playerData[8] == 0) {
+    state = &PlayerState::normal;
+  } else {
+    state = &PlayerState::dead;
+  }
+
+  return new PlayerNet(
+      x, y, id, world, 6, exp, level, gold, createWeapon(playerData[9]),
+      createArmor(playerData[11]), createHelmet(playerData[10]),
+      createShield(playerData[12]), state, playerClass, playerRace, listener);
 }
 
 Weapon* MasterFactory::createWeapon(int itemType) {
