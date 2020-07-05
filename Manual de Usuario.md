@@ -1,23 +1,44 @@
 # Manual de Usuario
 
 ## Instalación
-#### Requerimientos de Software
 
-#### Requerimientos de Hardware
-El programa fue probado con las siguiente especificaciones de hardware:
+### Requerimientos de Software
+
+***COMPLETAR CON OS, bibliotecas y herramientas necesarias para instalar el programa***
+
+### Requerimientos de Hardware
+
+El programa fue probado con las siguientes tres especificaciones de hardware:
+
+1. Primera computadora:
 
     - Procesador AMD 10-7850K
     - 16 GB de RAM
     - Placa de Video Radeon R9 380
 
+2. Segunda computadora:
+
+    - Procesador Intel i7 8700
+    - 16 GB de RAM
+    - Placa de Video GTX 1080Ti
+
+2. Tercera computadora:
+
+    - ***COMPLETAR***
+    - ***COMPLETAR***
+    - ***COMPLETAR***
+
 Se asegura que el programa funcionará en sistemas con especificaciones similares o superiores.
 
-#### Proceso de instalación
+### Proceso de instalación
 
+***COMPLETAR***
 
 ## Configuración
 
 Se provee un archivo de configuración en formato JSON, el cual contiene todas las variables que pueden ser modificadas para cambiar el comportamiento del programa.
+
+Para la resolución de la ventana, se provee una selección de resoluciones al momento del login.
 
 ## Forma de uso
 
@@ -32,3 +53,5 @@ Si es la primera vez que entra al juego, aparecera una pantalla de creación de 
 Una vez iniciado el juego, se podrá observar el personaje, el cuál puede moverse con las teclas WASD, además se puede observar un layout, en el que se muestra la cantidad de oro, vida, mana y nivel actuales, junto con una barra que representa la experiencia y se ira llenando a medida que se obtiene, además se puede observar unos slots que corresponden al inventario, y a medida que consigan objetos se iran llenando, el inventario puede ser clickeado para seleccionar un objeto, también hay 4 slots especiales en donde figuraran los objetos equipados actualmente, por ultimo se encuentra una ventana de chat, en la que apretando ENTER podrá empezar a escribir, y apretando ENTER nuevamente, enviará el mensaje.
 
 ## Apéndice de errores
+
+***COMPLETAR***
