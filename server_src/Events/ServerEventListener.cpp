@@ -157,7 +157,7 @@ void ServerEventListener::dropSpawn(int object_id,
 
 }
 
-void npcSpawn(int npc_id,int npc_type,int posx,int posy){
+void ServerEventListener::npcSpawn(int npc_id,int npc_type,int posx,int posy){
   std::vector<uint32_t> event;  
   event.push_back(NPC_SPAWN);
   event.push_back(npc_id);
