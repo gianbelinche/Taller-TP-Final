@@ -1,0 +1,38 @@
+{
+  "config": {
+    "FPS": 30,
+    "port": 8080
+  },
+  "Player": {
+    "initialX": 3900,
+    "initialY": 2550,
+    "initialLevel": 5,
+    "initialExp": 0,
+    "initialGold": 98,
+    "initialState": 0,
+    "initialWeapon": 2,
+    "initialHelmet": 1,
+    "initialArmor": 1,
+    "initialShield": 1
+  },
+  "goblin": {
+    "hp": 30,
+    "damage": 7,
+    "level" : 3
+  },
+  "spider": {
+    "hp": 15,
+    "damage": 15,
+    "level" : 5
+  },
+  "skeleton": {
+    "hp": 30,
+    "damage": 10,
+    "level" : 4
+  },
+  "zombie": {
+    "hp": 40,
+    "damage": 4,
+    "level" : 9
+  }
+}
