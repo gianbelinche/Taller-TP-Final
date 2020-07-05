@@ -5,8 +5,8 @@
 #include "NPC.h"
 
 #define SPYDER_PATH "img/spyder.png"
-#define SPYDER_HEIGHT 26
-#define SPYDER_WIDTH 20
+#define SPYDER_HEIGHT 20
+#define SPYDER_WIDTH 26
 #define SPYDER_VERT_SPRITES 4
 #define SPYDER_HOR_SPRITES 4
 #define SPYDER_SPEED 6 //cambiar

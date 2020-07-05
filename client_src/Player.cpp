@@ -6,6 +6,9 @@
 #define SHIELD  2
 #define HELMET  3
 
+#define ALIVE 0
+#define DEAD 1
+
 Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID, 
                uint16_t aPosX, uint16_t aPosY, uint8_t aState, 
                EquipType aWeapon, EquipType anArmor, EquipType aShield, 
@@ -28,6 +31,8 @@ Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID,
     this->bodyFrameX = 0;
     this->bodyFrameY = 0;
     this->headFrameX = 0;
+    this->ghostFrameX = 0;
+    this->ghostFrameY = 0;
 
     switch (aRace) {
         case HUMAN:
@@ -78,6 +83,8 @@ Player::Player(Player&& other) : Entity(std::move(other)),
                                  bodyFrameX(other.bodyFrameX),
                                  bodyFrameY(other.bodyFrameY), 
                                  headFrameX(other.headFrameX),
+                                 ghostFrameX(other.ghostFrameX),
+                                 ghostFrameY(other.ghostFrameY),
                                  state(other.state),
                                  bodyImage(std::move(other.bodyImage)),
                                  headImage(std::move(other.headImage)),
@@ -106,6 +113,8 @@ Player& Player::operator=(Player&& other) {
     this->bodyFrameX = other.bodyFrameX;
     this->bodyFrameY = other.bodyFrameY;
     this->headFrameX = other.headFrameX;
+    this->ghostFrameX = other.ghostFrameX;
+    this->ghostFrameY = other.ghostFrameY;
     this->state = other.state;
     this->bodyImage = std::move(other.bodyImage);
     this->headImage = std::move(other.headImage);
@@ -123,7 +132,7 @@ Player& Player::operator=(Player&& other) {
 
 Player::~Player() {}
 
-void Player::refreshPosition(MovementType move) {
+void Player::refreshAlivePosition(MovementType move) {
     switch (move) {
         case MOVE_UP:
             this->posY -= this->speed;
@@ -170,8 +179,55 @@ void Player::refreshPosition(MovementType move) {
     helmet.updateFrame(bodyFrameX, bodyFrameY);
 }
 
+void Player::refreshDeadPosition(MovementType move) {
+    switch (move) {
+        case MOVE_UP:
+            this->posY -= this->speed;
+            this->ghostFrameX++;
+            if (this->ghostFrameX >= GHOST_ANIMATION_FRAMES) ghostFrameX = 0;
+            this->ghostFrameY = 1;
+            break;
+
+        case MOVE_LEFT:
+            this->posX -= this->speed;
+            this->ghostFrameX++;
+            if (this->ghostFrameX >= GHOST_ANIMATION_FRAMES) ghostFrameX = 0;
+            this->ghostFrameY = 2;
+            break;
+
+        case MOVE_DOWN:
+            this->posY += this->speed;
+            this->ghostFrameX++;
+            if (this->ghostFrameX >= GHOST_ANIMATION_FRAMES) ghostFrameX = 0;
+            this->ghostFrameY = 0;
+            break;
+
+        case MOVE_RIGHT:
+            this->posX += this->speed;
+            this->ghostFrameX++;
+            if (this->ghostFrameX >= GHOST_ANIMATION_FRAMES) ghostFrameX = 0;
+            this->ghostFrameY = 3;
+            break;
+
+        case STOP:
+            this->ghostFrameX = 0;
+            break;
+        
+        default:
+            break;
+    }
+}
+
+void Player::refreshPosition(MovementType move) {
+    if (state == ALIVE) {
+        this->refreshAlivePosition(move);
+    } else if (state == DEAD) {
+        this->refreshDeadPosition(move);
+    }
+}
+
 void Player::renderGhost(Camera &camera) {
-    SDL_Rect *currentGhostClip = &(this->ghostClips[bodyFrameX + bodyFrameY * 
+    SDL_Rect *currentGhostClip = &(this->ghostClips[ghostFrameX + ghostFrameY * 
                                    BODY_ANIMATION_FRAMES]);
     SDL_Rect ghostQuad = {this->posX - camera.getX(), this->posY - 
                           camera.getY(), ghostWidth, ghostHeight};
@@ -193,9 +249,9 @@ void Player::renderPlayer(Camera &camera) {
 }
 
 void Player::render(Camera &camera) {
-    if (state == 0) {
+    if (state == ALIVE) {
         this->renderPlayer(camera);
-    } else if (state == 1) {
+    } else if (state == DEAD) {
         this->renderGhost(camera);
     }
 }

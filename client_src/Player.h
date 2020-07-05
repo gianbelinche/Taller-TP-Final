@@ -56,6 +56,8 @@ class Player : public Entity {
         uint8_t bodyFrameX;
         uint8_t bodyFrameY;
         uint8_t headFrameX;
+        uint8_t ghostFrameX;
+        uint8_t ghostFrameY;
         uint8_t state;
         FilteredImage bodyImage;
         FilteredImage headImage;
@@ -70,6 +72,8 @@ class Player : public Entity {
         
         void renderGhost(Camera &camera);
         void renderPlayer(Camera &camera);
+        void refreshAlivePosition(MovementType move);
+        void refreshDeadPosition(MovementType move);
 
     public:
         Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID, 
