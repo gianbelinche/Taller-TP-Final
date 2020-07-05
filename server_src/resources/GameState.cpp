@@ -106,8 +106,10 @@ void GameState::update() {
 void GameState::sendState(int id) {
   std::vector<uint32_t> sendable;
   for (auto& ent : entities) {
-    sendable = (ent.second)->getSendable();
-    listener.updateUserWorldState(id, sendable);
+    if ((ent.second)->getId() != id) {
+      sendable = (ent.second)->getSendable();
+      listener.updateUserWorldState(id, sendable);
+    }
   }
 }
 
