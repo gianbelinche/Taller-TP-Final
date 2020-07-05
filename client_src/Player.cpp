@@ -228,7 +228,7 @@ void Player::refreshPosition(MovementType move) {
 
 void Player::renderGhost(Camera &camera) {
     SDL_Rect *currentGhostClip = &(this->ghostClips[ghostFrameX + ghostFrameY * 
-                                   BODY_ANIMATION_FRAMES]);
+                                   GHOST_ANIMATION_FRAMES]);
     SDL_Rect ghostQuad = {this->posX - camera.getX(), this->posY - 
                           camera.getY(), ghostWidth, ghostHeight};
     this->ghostImage.render(ghostQuad.x, ghostQuad.y, currentGhostClip, 
