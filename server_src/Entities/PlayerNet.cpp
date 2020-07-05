@@ -96,7 +96,11 @@ int PlayerNet::takeDamage(int dmgToTake) {
   int oldHp = hp;
 
   hp = std::max(0, hp - finalDmg);
-  listener.playerTookDamage(id, oldHp - hp);
+  int effectiveDamage = oldHp - hp;
+
+  if (effectiveDamage > 0) {
+    listener.playerTookDamage(id, effectiveDamage);
+  }
   listener.lifeUpdate(id, hp, maxHp);
   if (hp == 0) {
     changeState(&PlayerState::dead);

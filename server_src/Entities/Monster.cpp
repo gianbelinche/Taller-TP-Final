@@ -101,7 +101,6 @@ int Monster::takeDamage(int dmgToTake) {
 
 int Monster::attack(PlayerNet* player) {
   int damageDealt = player->takeDamage(kind.getDamage());
-  listener.playerTookDamage(player->getId(), damageDealt);
   std::cout << "Ataco al jugador: " << player->getId() 
             << " y le hizo un daño de: " << damageDealt << "\n\n";
   return damageDealt;
