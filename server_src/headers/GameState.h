@@ -10,6 +10,7 @@
 #include "NormalState.h"
 #include "PlayerNet.h"
 #include "PlayerState.h"
+#include "MasterFactory.h"
 
 #define TILE_SIZE 32
 
@@ -20,10 +21,11 @@ class GameState {
   std::unordered_map<int, Entity*> entities;  // Jugadores y monstruos
   int framesPerSecond;
   ServerEventListener& listener;
+  MasterFactory& factory;
 
  public:
   GameState(std::vector<std::vector<bool>>& collisions, int fps,
-            ServerEventListener& eventListener);
+            ServerEventListener& eventListener, MasterFactory& fac);
 
   ~GameState();
 
@@ -49,6 +51,8 @@ class GameState {
 
   void update();
 
+  void sendState(int id);
+
   /* ---------- Eventos ---------- */
 
   void playerExpGain(int id, int gain);
@@ -68,6 +72,8 @@ class GameState {
 
   // Jugadores que se desconectan o mobs que mueren
   void entityDisappear(int id);
+
+  void spawnUnParDeMobs();
 };
 
 #endif  // GAMESTATE_H

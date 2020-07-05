@@ -59,19 +59,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/bin/cmake
+CMAKE_COMMAND = /usr/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/bin/cmake -E rm -f
+RM = /usr/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/media/sf_Orga_de_compus/Facultad/Taller de Programacion I/Taller-TP-Final"
+CMAKE_SOURCE_DIR = "/home/julianc/Facultad/Taller 1/TPFinal/Taller-TP-Final"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/media/sf_Orga_de_compus/Facultad/Taller de Programacion I/Taller-TP-Final"
+CMAKE_BINARY_DIR = "/home/julianc/Facultad/Taller 1/TPFinal/Taller-TP-Final"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,7 +79,7 @@ CMAKE_BINARY_DIR = "/media/sf_Orga_de_compus/Facultad/Taller de Programacion I/T
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/local/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -89,8 +89,8 @@ rebuild_cache/fast: rebuild_cache
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/local/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -100,9 +100,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/media/sf_Orga_de_compus/Facultad/Taller de Programacion I/Taller-TP-Final/CMakeFiles" "/media/sf_Orga_de_compus/Facultad/Taller de Programacion I/Taller-TP-Final/CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/julianc/Facultad/Taller 1/TPFinal/Taller-TP-Final/CMakeFiles" "/home/julianc/Facultad/Taller 1/TPFinal/Taller-TP-Final/CMakeFiles/progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/media/sf_Orga_de_compus/Facultad/Taller de Programacion I/Taller-TP-Final/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/julianc/Facultad/Taller 1/TPFinal/Taller-TP-Final/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -131,19 +131,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named clientLib
-
-# Build rule for target.
-clientLib: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clientLib
-.PHONY : clientLib
-
-# fast build rule for target.
-clientLib/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/clientLib.dir/build.make CMakeFiles/clientLib.dir/build
-.PHONY : clientLib/fast
-
-#=============================================================================
 # Target rules for targets named client
 
 # Build rule for target.
@@ -155,6 +142,19 @@ client: cmake_check_build_system
 client/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/build
 .PHONY : client/fast
+
+#=============================================================================
+# Target rules for targets named clientLib
+
+# Build rule for target.
+clientLib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clientLib
+.PHONY : clientLib
+
+# fast build rule for target.
+clientLib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/clientLib.dir/build.make CMakeFiles/clientLib.dir/build
+.PHONY : clientLib/fast
 
 client_src/Banker.o: client_src/Banker.cpp.o
 

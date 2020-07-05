@@ -52,7 +52,9 @@ class ServerEventListener {
 
   ~ServerEventListener();
 
-  void playerConnected(int id); 
+  void playerConnected(int id);
+
+  void entitySpawn(std::vector<uint32_t>& entInfo);
 
   void monsterMoved(int id); //No estoy seguro de que es esto
 
@@ -63,14 +65,13 @@ class ServerEventListener {
   void dropSpawn(int object_id,int object_type, int posx, int posy); //3
 
   // Jugadores que se desconectan o mobs que mueren
-  void entityDisappear(int id,int entity_id); //4
+  void entityDisappear(int entity_id); //4
 
   void playerDied(int id); //5
 
   void playerRevived(int id); //5
 
   void playerEquipedItem(int id,int eq_type,int object); //6
-
 
   void playerSendMessageToChat(int id,std::string message); //7
 
@@ -110,6 +111,8 @@ class ServerEventListener {
   void npcAttack(int id,int equipped_item); //11
 
   void potionTaken(int id); //12
+
+  void updateUserWorldState(int id, std::vector<uint32_t> entInfo);
 };
 
 #endif // SERVEREVENTLISTENER_H

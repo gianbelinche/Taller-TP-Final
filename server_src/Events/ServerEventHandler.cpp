@@ -96,14 +96,18 @@ void ServerEventHandler::handle(PlayerConnection &ev) {
     std::cerr << "No se encontro el usuario\n";
     return;
   }
+  std::vector<uint32_t> playerSendable = player->getSendable();
+  listener.entitySpawn(playerSendable);
+
   listener.playerConnected(id);
   listener.goldUpdate(id, player->getGold());
   listener.lifeUpdate(id, player->getHp(), player->getMaxHp());
   listener.manaUpdate(id, player->getMana(), player->getMaxMana());
-  //listener.levelUpdate(id, player->getLevel());
-  listener.levelUpdate(id, 17);
-  //listener.expUpdate(id, player->getExp(), player->getMaxExp());
-  listener.expUpdate(id, 589, 987);
+  listener.levelUpdate(id, player->getLevel());
+  listener.expUpdate(id, player->getExp(), player->getMaxExp());
   // Mandarle el estado del mundo
+  world.sendState(player->getId());
+  // PRUEBA
+  world.spawnUnParDeMobs();
 }
 

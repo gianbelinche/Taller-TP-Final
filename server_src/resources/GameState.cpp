@@ -3,11 +3,16 @@
 #include <cmath>
 #include <limits>
 
+#include "../headers/Monster.h"
+
 #define FRAMES_PER_SECOND 30
 
 GameState::GameState(std::vector<std::vector<bool>>& collisions, int fps,
-                     ServerEventListener& eventListener)
-    : colisionMap(collisions), framesPerSecond(fps), listener(eventListener) {}
+                     ServerEventListener& eventListener, MasterFactory& fac)
+    : colisionMap(collisions),
+      framesPerSecond(fps),
+      listener(eventListener),
+      factory(fac) {}
 
 GameState::~GameState() {}
 
@@ -96,11 +101,7 @@ void GameState::addPlayer(PlayerNet* player) {
 }
 
 void GameState::addPlayerFromData(std::vector<uint32_t>& playerData) {
-  PlayerNet* newPlayer =
-      new PlayerNet(playerData[1], playerData[2], playerData[0], *this, 100, 97,
-                    6, playerData[4], playerData[3], playerData[7], nullptr,
-                    nullptr, nullptr, nullptr, &PlayerState::normal,
-                    new Class(0, 2, 2, 3), new Race(0, 20, 2, 3), listener);
+  PlayerNet* newPlayer = factory.createPlayer(playerData, *this);
 
   players[newPlayer->getId()] = newPlayer;
   entities[newPlayer->getId()] = newPlayer;
@@ -110,4 +111,23 @@ void GameState::update() {
   for (auto& it : entities) {
     it.second->update();
   }
+}
+
+void GameState::sendState(int id) {
+  std::vector<uint32_t> sendable;
+  for (auto& ent : entities) {
+    sendable = (ent.second)->getSendable();
+    listener.updateUserWorldState(id, sendable);
+  }
+}
+
+void GameState::spawnUnParDeMobs() {
+  Monster* newSpider = factory.newSpider(4000, 2550, *this);
+  entities[newSpider->getId()] = newSpider;
+  Monster* newZombie = factory.newZombie(3801, 2540, *this);
+  entities[newZombie->getId()] = newZombie;
+  listener.npcSpawn(newSpider->getId(), newSpider->getNpcType(),
+                    newSpider->getX(), newSpider->getY());
+  listener.npcSpawn(newZombie->getId(), newZombie->getNpcType(),
+                    newZombie->getX(), newZombie->getY());
 }

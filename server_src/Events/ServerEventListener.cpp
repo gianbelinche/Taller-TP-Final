@@ -4,6 +4,11 @@ ServerEventListener::ServerEventListener(MessageDispatcher& msgDispatcher)
     : dispatcher(msgDispatcher) {}
 ServerEventListener::~ServerEventListener() {}
 
+void ServerEventListener::entitySpawn(std::vector<uint32_t>& entInfo) {
+  dispatcher.broadcastMessage(entInfo);
+}
+
+
 void ServerEventListener::npcAttack(int id,int equipped_item){
   std::vector<uint32_t> event;
   event.push_back(NPC_ATTACK);
@@ -89,7 +94,7 @@ void ServerEventListener::playerSendMessageToChat(int id,std::string message){
   std::vector<uint32_t> event;
   event.push_back(PRINT_MSG);
   event.push_back(MSG_SEND_MSG);
-  for (int i = 0; i < message.size(); i++){
+  for (size_t i = 0; i < message.size(); i++){
     event.push_back(message[i]);
   }
   dispatcher.sendMessage(id,event);
@@ -167,7 +172,7 @@ void ServerEventListener::npcSpawn(int npc_id,int npc_type,int posx,int posy){
   dispatcher.broadcastMessage(event);
 }
 
-void ServerEventListener::entityDisappear(int id,int entity_id) {
+void ServerEventListener::entityDisappear(int entity_id) {
   std::vector<uint32_t> event;
   event.push_back(DELETE_ENTITY);
   event.push_back(entity_id);
@@ -204,3 +209,8 @@ void ServerEventListener::expUpdate(uint32_t id, uint32_t exp,
   std::vector<uint32_t> event = {STAT_CHANGE, EXP_UPDATE, exp, maxExp};
   dispatcher.sendMessage(id, event);
 }
+
+void ServerEventListener::updateUserWorldState(int id, std::vector<uint32_t> entInfo) {
+  dispatcher.sendMessage(id, entInfo);
+}
+
