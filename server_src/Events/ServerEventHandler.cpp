@@ -98,15 +98,14 @@ void ServerEventHandler::handle(PlayerConnection &ev) {
   }
   std::vector<uint32_t> playerSendable = player->getSendable();
   listener.entitySpawn(playerSendable);
-
+  
+  world.sendState(player->getId());
   listener.playerConnected(id);
   listener.goldUpdate(id, player->getGold());
   listener.lifeUpdate(id, player->getHp(), player->getMaxHp());
   listener.manaUpdate(id, player->getMana(), player->getMaxMana());
   listener.levelUpdate(id, player->getLevel());
   listener.expUpdate(id, player->getExp(), player->getMaxExp());
-  // Mandarle el estado del mundo
-  world.sendState(player->getId());
   // PRUEBA
   world.spawnUnParDeMobs();
 }
