@@ -15,14 +15,14 @@ std::vector<uint32_t> ClientProtocol::makeMsgMove(uint32_t ID,
     msg.emplace_back(MOVE);
     msg.emplace_back(ID);
     msg.emplace_back(moveType);
-    return std::move(msg);
+    return msg;
 }
 
 std::vector<uint32_t> ClientProtocol::makeMsgClickEntity(uint32_t ID) {
     std::vector<uint32_t> msg;
     msg.emplace_back(CLICK_ENTITY);
     msg.emplace_back(ID);
-    return std::move(msg);
+    return msg;
 }
 
 std::vector<uint32_t> ClientProtocol::makeMsgClickInventory(uint32_t ID,
@@ -31,7 +31,7 @@ std::vector<uint32_t> ClientProtocol::makeMsgClickInventory(uint32_t ID,
     msg.emplace_back(CLICK_INVENTORY);
     msg.emplace_back(ID);
     msg.emplace_back(slot);
-    return std::move(msg);
+    return msg;
 }
 
 std::vector<uint32_t> ClientProtocol::makeMsgSendCommand(uint32_t ID,
@@ -42,7 +42,7 @@ std::vector<uint32_t> ClientProtocol::makeMsgSendCommand(uint32_t ID,
     for (unsigned int i = 0; i < command.size();i++){
         msg.emplace_back((uint32_t)command[i]);
     }
-    return std::move(msg);
+    return msg;
 }
 
 std::vector<uint32_t> ClientProtocol::makeMsgLogin(uint32_t ID,
@@ -58,12 +58,12 @@ std::vector<uint32_t> ClientProtocol::makeMsgLogin(uint32_t ID,
     for (unsigned int i = 0; i < password.size();i++){
         msg.emplace_back((uint32_t)password[i]);
     }
-    return std::move(msg);
+    return msg;
 }
 
 std::vector<uint32_t> ClientProtocol::makeMsgConnection(uint32_t ID){
     std::vector<uint32_t> msg;
     msg.emplace_back(CONNECTION);
     msg.emplace_back(ID);
-    return std::move(msg);
+    return msg;
 }

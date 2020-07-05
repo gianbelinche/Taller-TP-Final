@@ -9,7 +9,7 @@
     "initialLevel": 5,
     "initialExp": 0,
     "initialGold": 98,
-    "initialState": 0,
+    "initialState": 1,
     "initialWeapon": 6,
     "initialHelmet": 14,
     "initialArmor": 11,

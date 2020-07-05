@@ -73,22 +73,22 @@ void EventManager::checkKeyDown(SDL_Event &event) {
     if (!writing) {
         switch (event.key.keysym.sym) {
             case SDLK_w:
-                msg = clProtocol.makeMsgMove(playerID,MOVE_UP);
+                msg = std::move(clProtocol.makeMsgMove(playerID,MOVE_UP));
                 msgQueue.push(msg);
                 break;
 
             case SDLK_a:
-                msg = clProtocol.makeMsgMove(playerID, MOVE_LEFT);
+                msg = std::move(clProtocol.makeMsgMove(playerID, MOVE_LEFT));
                 msgQueue.push(msg);
                 break;
 
             case SDLK_s:
-                msg = clProtocol.makeMsgMove(playerID, MOVE_DOWN);
+                msg = std::move(clProtocol.makeMsgMove(playerID, MOVE_DOWN));
                 msgQueue.push(msg);
                 break;
 
             case SDLK_d:
-                msg = clProtocol.makeMsgMove(playerID, MOVE_RIGHT);
+                msg = std::move(clProtocol.makeMsgMove(playerID, MOVE_RIGHT));
                 msgQueue.push(msg);
                 break;
 
@@ -108,7 +108,7 @@ void EventManager::checkKeyDown(SDL_Event &event) {
                 command = chat.sendMessage();
                 SDL_StopTextInput();
                 writing = false;
-                msg = clProtocol.makeMsgSendCommand(playerID,command);
+                msg = std::move(clProtocol.makeMsgSendCommand(playerID,command));
                 msgQueue.push(msg);
                 break;
 
@@ -130,7 +130,7 @@ void EventManager::checkKeyUp(SDL_Event &event) {
             case SDLK_a:
             case SDLK_s:
             case SDLK_d:
-                msg = clProtocol.makeMsgMove(playerID, STOP);
+                msg = std::move(clProtocol.makeMsgMove(playerID, STOP));
                 msgQueue.push(msg);
                 break;
             
@@ -143,8 +143,8 @@ void EventManager::checkKeyUp(SDL_Event &event) {
 void EventManager::checkClick(SDL_Event &event) {
     int slot = inventory.select(event.button.x,event.button.y,camera);
     if (slot != -1) {
-        std::vector<uint32_t> msg = clProtocol.makeMsgClickInventory(playerID, 
-                                                                     slot);
+        std::vector<uint32_t> msg = std::move(clProtocol.makeMsgClickInventory(playerID, 
+                                                                     slot));
         msgQueue.push(msg);
     } else {
         uint32_t IDClicked = entityManager.checkClickEntities(camera, 
@@ -152,7 +152,7 @@ void EventManager::checkClick(SDL_Event &event) {
                                                             event.button.y);
         if (IDClicked) {
             std::vector<uint32_t> msg =
-            clProtocol.makeMsgClickEntity(IDClicked);
+            std::move(clProtocol.makeMsgClickEntity(IDClicked));
             msgQueue.push(msg);
         }
     }  

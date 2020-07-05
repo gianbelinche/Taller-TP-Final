@@ -92,7 +92,7 @@ MainMap ClientConnector::getMainMap(SDL_Renderer *renderer) {
 }
 
 void ClientConnector::sendReceivedSignal(ClientProtocol &clientProtocol, uint32_t ID) {
-    std::vector<uint32_t> event = clientProtocol.makeMsgConnection(ID);
+    std::vector<uint32_t> event = std::move(clientProtocol.makeMsgConnection(ID));
     
     //empaquetar
     std::stringstream buffer;
