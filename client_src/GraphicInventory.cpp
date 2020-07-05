@@ -19,6 +19,7 @@
 #define SELECTED_EXT_BOX_X (screen_w * 305 / 500)
 #define SELECTED_EXT_BOX_Y (screen_h / 48)
 #define SELECTED_EXT_BOX_H (screen_h * 104 / 1100)
+#define NO_TYPE 4
 #define SELECTED_TYPE_0 0
 #define SELECTED_TYPE_1 1
 #define SELECTED_TYPE_2 2
@@ -41,7 +42,8 @@ enum items{
     IRON_HELMET,
     TURTLE_SHIELD,
     IRON_SHIELD,
-    MAGIC_HAT
+    MAGIC_HAT,
+    POTION
 };
 
 
@@ -58,14 +60,20 @@ mainRenderer(mainRenderer), itemBoxes(NULL) {
     this->insert(AXE,"Layout_graphics/Inventory/hacha.png",SELECTED_TYPE_0);
     this->insert(HAMMER,"Layout_graphics/Inventory/martillo.png",SELECTED_TYPE_0);
     this->insert(FRESNO_ROD,"Layout_graphics/Inventory/vara de fresno.png",SELECTED_TYPE_0);
+    this->insert(ELFIC_FLUTE,"Layout_graphics/Inventory/flauta elfica.png",SELECTED_TYPE_0);
     this->insert(BACULO_NUDOSO,"Layout_graphics/Inventory/baculo nudoso.png",SELECTED_TYPE_0);
     this->insert(BACULO_ENGARZADO,"Layout_graphics/Inventory/baculo engarzado.png",SELECTED_TYPE_0);
     this->insert(SIMPLE_BOW,"Layout_graphics/Inventory/arco simple.png",SELECTED_TYPE_0);
     this->insert(COMPOSED_BOW,"Layout_graphics/Inventory/arco compuesto.png",SELECTED_TYPE_0);
     this->insert(LEATHER_ARMOR,"Layout_graphics/Inventory/armadura de cuero.png",SELECTED_TYPE_1);
     this->insert(PLATE_ARMOR,"Layout_graphics/Inventory/armadura de placas.png",SELECTED_TYPE_1);
+    this->insert(BLUE_TUNIC,"Layout_graphics/Inventory/tunica azul.png",SELECTED_TYPE_1);
+    this->insert(HOOD,"Layout_graphics/Inventory/capucha.png",SELECTED_TYPE_2);
     this->insert(IRON_HELMET,"Layout_graphics/Inventory/casco de hierro.png",SELECTED_TYPE_2);
+    this->insert(TURTLE_SHIELD,"Layout_graphics/Inventory/escudo de tortuga.png",SELECTED_TYPE_3);
     this->insert(IRON_SHIELD,"Layout_graphics/Inventory/escudo de hierro.png",SELECTED_TYPE_3);
+    this->insert(MAGIC_HAT,"Layout_graphics/Inventory/sombrero magico.png",SELECTED_TYPE_2);
+    this->insert(POTION,"Layout_graphics/Inventory/potion.png",NO_TYPE);
 }
 
 void GraphicInventory::insert(int key,std::string path,int position){
