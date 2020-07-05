@@ -16,13 +16,9 @@
 #include "headers/Persistor.h"
 #include "headers/ServerProtocol.h"
 
-/* Server::Server(const char* port, Configuration configuration)
+Server::Server(const char* port, Configuration& configuration)
     : clientAcceptor(port),
-      config(std::move(configuration)),
-      keepAccepting(true) {} */
-
-Server::Server(const char* port)
-    : clientAcceptor(port),
+      config(configuration),
       keepAccepting(true) {}
 
 Server::~Server() {}
@@ -33,7 +29,7 @@ void Server::run() {
 
   MessageDispatcher dispatcher;
   ServerEventListener listener(dispatcher);
-  GameState world(map.getCollisionMap(), 30, listener);
+  GameState world(map.getCollisionMap(), config.getFPS(), listener);
   ServerEventHandler handler(world, listener);
   ServerProtocol protocol(handler);
 
@@ -46,6 +42,7 @@ void Server::run() {
 
   while (keepAccepting) {
     Socket peer = std::move(clientAcceptor.accept());
+    std::cout << "Acepto uno\n";
     ClientHandler* cli =
         new ClientHandler(std::move(peer), persistor, map, idAssigner,
                           incomingMessages, dispatcher, world, listener);

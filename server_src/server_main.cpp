@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <utility>
 
-//#include "Utils/Configuration.h"
+#include "headers/Configuration.h"
 #include "headers/Server.h"
 #include "headers/SocketException.h"
 
@@ -17,9 +17,8 @@ int main(int argc, const char* argv[]) {
     return ERROR;
   }
   // Aca se cargaria el archivo de configuracion
-  
-  //Configuration config(argv[1]);
-  Server server("8080");
+  Configuration config(argv[1]);
+  Server server(config.getPort(), config);
 
   try {
     server.start();

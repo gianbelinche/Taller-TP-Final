@@ -16,14 +16,12 @@
 class Server : public Thread {
  private:
   Acceptor clientAcceptor;
-  //Configuration config;
+  Configuration& config;
   std::list<ClientHandler*> clients;  // efficient erase
   std::atomic<bool> keepAccepting;
 
  public:
-  //Server(const char* port, Configuration configuration);
-  Server(const char* port);
-
+  Server(const char* port, Configuration& configuration);
 
   ~Server();
 
