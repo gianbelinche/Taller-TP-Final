@@ -59,6 +59,8 @@ void ClientHandler::run() {
   std::stringstream bufferEnt;
   msgpack::pack(bufferEnt, esqueleto);
   sendMsg(bufferEnt.str());*/
+  sender.join();
+  receiver.stop();
   receiver.join();
   std::cout << "Se llego al join de receiver\n";
   world.rmPlayer(playerInfo[0]); // Id
@@ -67,7 +69,6 @@ void ClientHandler::run() {
   std::cout << "Se llego al outgoind message close\n";
   listener.entityDisappear(playerInfo[1]);
   std::cout << "Se llego al entity disappear\n";
-  sender.join();
   online = false;
   std::cout << "Se llego a desconectar todo piola\n";
 }
