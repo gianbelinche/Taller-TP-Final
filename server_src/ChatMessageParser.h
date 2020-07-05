@@ -2,10 +2,14 @@
 #define CLASS_CHAT_MESSAGE_PARSER
 
 #include <vector>
+#include <utility>
 
 class ChatMessageParser{
 public:
     int parse(std::vector<uint32_t> command);
+
+    std::pair<std::string,std::string> 
+    getUserAndMessage(std::vector<uint32_t> command);
 };
 
 #endif

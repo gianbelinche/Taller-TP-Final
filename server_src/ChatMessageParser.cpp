@@ -57,5 +57,16 @@ int ChatMessageParser::parse(std::vector<uint32_t> command){
         return NO_COMMAND;
     }
     return NO_COMMAND;
+}
 
+std::pair<std::string,std::string> 
+ChatMessageParser::getUserAndMessage(std::vector<uint32_t> command){
+    std::string str_command = "";
+    for (int i = 3;i < command.size();i++){
+        str_command += (char) command[i];
+    }
+    std::string user = str_command.substr(0,str_command.find(" "));
+    std::string message = str_command.substr(str_command.find(" ") + 1);
+    std::pair<std::string,std::string> data(user,message);
+    return data;
 }
