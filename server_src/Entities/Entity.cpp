@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include "../headers/Entity.h"
 
@@ -42,3 +43,8 @@ int Entity::getDeathExp(int attackerLevel) {
 int Entity::getLevel() {
   return level;    
 }
+
+std::vector<uint32_t> Entity::getSendable() {
+  return {};
+}
+

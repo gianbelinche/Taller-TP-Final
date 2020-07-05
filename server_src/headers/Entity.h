@@ -1,6 +1,9 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include <vector>
+#include <cstdint>
+
 class Entity {
  protected:
 
@@ -41,6 +44,8 @@ class Entity {
   bool virtual canBeAttackedBy(Entity* ent) = 0;
 
   int virtual takeDamage(int dmgToTake) = 0;
+
+  std::vector<uint32_t> virtual getSendable();
 };
 
 #endif  // ENTITY_H

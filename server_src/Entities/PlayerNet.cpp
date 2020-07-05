@@ -191,3 +191,22 @@ int PlayerNet::getMaxMana() { return maxMana; }
 int PlayerNet::getExp() { return exp; }
 
 int PlayerNet::getMaxExp() { return maxExp; }
+
+std::vector<uint32_t> PlayerNet::getSendable() {
+  std::vector<uint32_t> playerInfo = {2, (uint32_t)id};
+  playerInfo.push_back(playerRace->getRaceT());
+  playerInfo.push_back(x);
+  playerInfo.push_back(y);
+  if (hp == 0) {
+    playerInfo.push_back(1);
+  } else {
+    playerInfo.push_back(0);
+  }
+  playerInfo.push_back(weapon->getItemType());
+  playerInfo.push_back(armor->getItemType());
+  playerInfo.push_back(shield->getItemType());
+  playerInfo.push_back(helmet->getItemType());
+
+  return playerInfo;
+}
+

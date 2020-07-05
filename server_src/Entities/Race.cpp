@@ -1,6 +1,6 @@
 #include "../headers/Race.h"
 
-Race::Race(char race_t, float hpFac, float recFac, float manaFac, int consti,
+Race::Race(int race_t, float hpFac, float recFac, float manaFac, int consti,
        int str, int intell, int agil)
     : race_type(race_t), 
       hpFactor(hpFac),
@@ -26,3 +26,7 @@ int Race::getStrength() { return strength; }
 int Race::getIntelligence() { return intelligence; }
 
 int Race::getAgility() { return agility; }
+
+int Race::getRaceT() {
+  return race_type;
+}

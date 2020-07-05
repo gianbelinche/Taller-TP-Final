@@ -17,7 +17,7 @@
 
 Monster::Monster(MonsterType &type, int id, int x, int y, int level,
                  GameState &world, ServerEventListener& eventListener)
-    : Entity(x, y, id, type.getHp(), type.getHp(), level),
+    : Entity(x, y, id, type.getHp(), level),
       kind(type),
       world(world),
       listener(eventListener) {}
@@ -94,14 +94,14 @@ int Monster::takeDamage(int dmgToTake) {
   std::cout << "Le hizo: " << dmgToTake << " daño al motro\n";
   if (hp == 0) {
     std::cout << "Se murio el mostro\n";
-    world.entityDisappear(id);
+    listener.entityDisappear(id);
   }
   return oldHp - hp;
 }
 
 int Monster::attack(PlayerNet* player) {
   int damageDealt = player->takeDamage(kind.getDamage());
-  world.playerTookDamage(player->getId(), damageDealt);
+  listener.playerTookDamage(player->getId(), damageDealt);
   std::cout << "Ataco al jugador: " << player->getId() 
             << " y le hizo un daño de: " << damageDealt << "\n\n";
   return damageDealt;
@@ -130,5 +130,18 @@ void Monster::moveTo(int new_x, int new_y, int direction) {
     listener.entityMoved(id, 4);
     animFrame = 0;
   }
+}
+
+std::vector<uint32_t> Monster::getSendable() {
+  std::vector<uint32_t> monsterInfo = {1};
+  monsterInfo.push_back(id);
+  monsterInfo.push_back(kind.getNpcType());
+  monsterInfo.push_back(x);
+  monsterInfo.push_back(y);
+  return monsterInfo;
+}
+
+int Monster::getNpcType() {
+  return kind.getNpcType();
 }
 

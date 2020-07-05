@@ -1,6 +1,6 @@
 #include "../headers/Class.h"
 
-Class::Class(char class_type, float hpFac, float manaFac, float meditFac,
+Class::Class(int class_type, float hpFac, float manaFac, float meditFac,
              float strFac, float constFac, float intFac, float agiFac)
     : class_type(class_type),
       hpFactor(hpFac),
@@ -26,3 +26,5 @@ float Class::getConstitutionFactor() { return constitutionFactor; }
 float Class::getIntelligenceFactor() { return intelligenceFactor; }
 
 float Class::getAgilityFactor() { return agilityFactor; }
+
+int Class::getClassT() { return class_type; }
