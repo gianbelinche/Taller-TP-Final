@@ -34,6 +34,9 @@
 #define MSG_EXP 6
 #define MSG_LEVEL_UP 7
 
+#define ADD_ITEM 0
+#define REMOVE_ITEM 1
+#define EQUIP_ITEM 2
 
 class ServerEventListener {
  private:
@@ -65,6 +68,12 @@ class ServerEventListener {
   void monsterMoved(int id);
 
   void playerDied(int id);
+
+  void inventoryAddItem(int id,int item);
+
+  void inventoryRemoveItem(int id,int slot);
+
+  void inventoryEquipItem(int id,int slot);
 
   // Jugadores que se desconectan o mobs que mueren
   void entityDisappear(int id);

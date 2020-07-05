@@ -82,6 +82,30 @@ void ServerEventListener::playerSendMessageToChat(int id,std::string message){
   dispatcher.sendMessage(id,event);
 }
 
+void ServerEventListener::inventoryAddItem(int id,int item){
+  std::vector<uint32_t> event;
+  event.push_back(INVENTORY_COMMAND);
+  event.push_back(ADD_ITEM);
+  event.push_back(item);
+  dispatcher.sendMessage(id,event);
+}
+
+void ServerEventListener::inventoryRemoveItem(int id,int slot){
+  std::vector<uint32_t> event;
+  event.push_back(INVENTORY_COMMAND);
+  event.push_back(REMOVE_ITEM);
+  event.push_back(slot);
+  dispatcher.sendMessage(id,event);
+}
+
+void ServerEventListener::inventoryEquipItem(int id,int slot){
+  std::vector<uint32_t> event;
+  event.push_back(INVENTORY_COMMAND);
+  event.push_back(EQUIP_ITEM);
+  event.push_back(slot);
+  dispatcher.sendMessage(id,event);
+}
+
 
 void ServerEventListener::playerDied(int id) {}
 
