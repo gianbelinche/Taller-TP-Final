@@ -1,14 +1,16 @@
+#ifndef MASTERFACTORY_H
+#define MASTERFACTORY_H
+
 #include <atomic>
+#include <unordered_map>
 #include <vector>
 
 #include "Armor.h"
 #include "Class.h"
 #include "Configuration.h"
-#include "GameState.h"
 #include "GhostState.h"
 #include "Helmet.h"
 #include "Item.h"
-#include "Monster.h"
 #include "MonsterType.h"
 #include "NormalState.h"
 #include "PlayerNet.h"
@@ -44,11 +46,14 @@
 #define CLERIC_ID 2
 #define PALADIN_ID 3
 
+// Avoid circular dependencies
+class GameState; 
+class Monster;
+
 class MasterFactory {
  private:
   std::atomic<uint32_t>& idGenerator;
   Configuration& config;
-  GameState& world;
   ServerEventListener& listener;
   MonsterType goblin;
   MonsterType spider;
@@ -62,24 +67,24 @@ class MasterFactory {
   Class wizard;
   Class cleric;
   Class paladin;
-  std::vector<uint32_t, Race*> races;
-  std::vector<uint32_t, Class*> classes;
+  std::unordered_map<uint32_t, Race*> races;
+  std::unordered_map<uint32_t, Class*> classes;
 
  public:
   MasterFactory(std::atomic<uint32_t>& idCounter, Configuration& configuration,
-                GameState& gameState, ServerEventListener& eventListener);
+                ServerEventListener& eventListener);
 
   ~MasterFactory();
 
-  Monster* newGoblin(int x, int y);
+  Monster* newGoblin(int x, int y, GameState& world);
 
-  Monster* newSkeleton(int x, int y);
+  Monster* newSkeleton(int x, int y, GameState& world);
 
-  Monster* newSpider(int x, int y);
+  Monster* newSpider(int x, int y, GameState& world);
 
-  Monster* newZombie(int x, int y);
+  Monster* newZombie(int x, int y, GameState& world);
 
-  PlayerNet* createPlayer(std::vector<uint32_t>& playerData);
+  PlayerNet* createPlayer(std::vector<uint32_t>& playerData, GameState& world);
 
   Weapon* createWeapon(int itemType);
 
@@ -89,3 +94,5 @@ class MasterFactory {
 
   Shield* createShield(int itemType);
 };
+
+#endif  // MASTERFACTORY_H

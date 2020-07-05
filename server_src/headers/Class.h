@@ -6,7 +6,7 @@ enum { WIZARD, CLERIC, PALADIN, WARRIOR };  // Esto seria class_type
 // y cada jugador tiene una referencia/puntero a la que le corresponde
 class Class {
  private:
-  char class_type;
+  int class_type;
   float hpFactor;
   float manaFactor;        // 0 para el guerrero
   float meditationFactor;  // idem
@@ -16,7 +16,7 @@ class Class {
   float agilityFactor;
 
  public:
-  Class(char class_type, float hpFac, float manaFac, float meditFac,
+  Class(int class_type, float hpFac, float manaFac, float meditFac,
         float strFac, float constFac, float intFac, float agiFac);
 
   ~Class();
@@ -34,6 +34,8 @@ class Class {
   float getIntelligenceFactor();
 
   float getAgilityFactor();
+
+  int getClassT();
 };
 
 #endif  // CLASS_H

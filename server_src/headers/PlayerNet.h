@@ -82,6 +82,8 @@ class PlayerNet : public Entity {
 
   int getMaxExp();
 
+  std::vector<uint32_t> getSendable() override;
+
   /* ---------- Acciones ---------- */
 
   int attack(Entity* ent);
