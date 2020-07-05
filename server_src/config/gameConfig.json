@@ -73,8 +73,8 @@
   },
   "warrior": {
     "hpFactor" : 2,
-    "manaFactor": 1,
-    "meditFac": 1,
+    "manaFactor": 0,
+    "meditFac": 0,
     "strengthFactor": 1.4,
     "constitutionFactor" : 1.3,
     "intelligenceFactor": 1,
@@ -189,6 +189,4 @@
     "minDef": 6,
     "maxDef": 10
   }
-
-  
 }
