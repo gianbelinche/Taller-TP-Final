@@ -89,7 +89,7 @@ void GraphicInventory::addImage(int key){
 }
 
 void GraphicInventory::removeImage(int pos){
-    if (pos >= present_images.size()){
+    if ((unsigned int) pos >= present_images.size()){
         throw SDLError("No hay ningun objeto en la posicion a eliminar\n");
     }
     present_images.erase(present_images.begin() + pos);

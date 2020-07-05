@@ -73,7 +73,6 @@ void Layout::render(const Camera& camera){
     int screen_heigth = camera.getHeight();
     SDL_Rect clip = {0,0,screen_width,layout.getHeight()};
     SDL_Rect rq = {0,0,LAY_W,screen_heigth};
-    int lay_w = LAY_W;
     layout.render(LAY_X,0,&clip,&rq);
     clip = {0,0,screen_width,screen_heigth};
     rq = {0,0,TEXT_W, TEXT_H};

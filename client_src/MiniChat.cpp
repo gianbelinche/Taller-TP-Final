@@ -23,7 +23,7 @@ MiniChat::~MiniChat(){
 
 std::vector<std::string> MiniChat::getPartialString(std::string string,int n){
     std::vector<std::string> partial_strings;
-    for (int i = 0; i < string.length(); i += n){
+    for (unsigned int i = 0; i < string.length(); i += n){
         partial_strings.push_back(string.substr(i,n));
     }
     return std::move(partial_strings);
