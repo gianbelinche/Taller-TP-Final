@@ -12,7 +12,7 @@ add_library(server_lib
   Communication/ServerReceiver.cpp
   Communication/ServerSender.cpp
   Communication/Socket.cpp
-  Communication/SocketException.cpp 
+  Communication/SocketException.cpp
   config/Equations.cpp
   Entities/Class.cpp
   Entities/Entity.cpp
@@ -46,10 +46,12 @@ add_library(server_lib
   jsoncpp.cpp 
   resources/JsonError.cpp 
   resources/Map.cpp 
+  resources/MasterFactory.cpp
   resources/Persistor.cpp 
   resources/ServerProtocol.cpp 
   resources/Thread.cpp
   Utils/sha256.cpp
+  Utils/Configuration.cpp
   )
 
   include_directories(headers json)
