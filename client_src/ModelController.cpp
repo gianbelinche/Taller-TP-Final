@@ -28,7 +28,7 @@ ModelController::~ModelController() {}
 
 void ModelController::run(std::atomic<bool> &closed) {
     while (!msgQueue.isEmpty()) {
-        std::vector<uint32_t> event = msgQueue.pop();
+        std::vector<uint32_t> event = std::move(msgQueue.pop());
         this->handle(event);
     }
 

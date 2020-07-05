@@ -23,7 +23,7 @@ std::vector<uint32_t> ProtMsgQueue::pop() {
 
     std::vector<uint32_t> element(std::move(this->queue.front()));
     this->queue.pop();
-    return std::move(element);
+    return element;
 }
 
 void ProtMsgQueue::close() {

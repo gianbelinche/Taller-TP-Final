@@ -27,7 +27,7 @@ std::vector<uint32_t> BlockingMsgQueue::pop() {
 
     std::vector<uint32_t> element(std::move(this->queue.front()));
     this->queue.pop();
-    return std::move(element);
+    return element;
 }
 
 void BlockingMsgQueue::close() {
