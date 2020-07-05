@@ -1,10 +1,31 @@
 #include "../headers/Configuration.h"
 
-#include "../json/json.h"
-
 #include <iostream>
 
-Configuration::Configuration(std::string configFile) { parse(configFile); }
+#include "../json/json.h"
+
+Configuration::Configuration(std::string configFile) {
+  parse(configFile);
+  // Comienza el hardcodeo cosmico
+  itemToStr[0] = "Sin equipamiento";
+  itemToStr[1] = "Espada";
+  itemToStr[2] = "Hacha";
+  itemToStr[3] = "Martillo";
+  itemToStr[4] = "Vara de Fresno";
+  itemToStr[5] = "Flauta Elfica";
+  itemToStr[6] = "Baculo Nudoso";
+  itemToStr[7] = "Baculo Engarzado";
+  itemToStr[8] = "Arco Simple";
+  itemToStr[9] = "Arco Compuesto";
+  itemToStr[10] = "Armadura de Cuero";
+  itemToStr[11] = "Armadura de Placas";
+  itemToStr[12] = "Tunica Azul";
+  itemToStr[13] = "Capucha";
+  itemToStr[14] = "Casco de Hierro";
+  itemToStr[15] = "Escudo Tortuga";
+  itemToStr[16] = "Escudo de Hierro";
+  itemToStr[17] = "Sombrero Magico";
+}
 
 Configuration::~Configuration() {}
 
@@ -28,12 +49,13 @@ void Configuration::parse(std::string configFile) {
 }
 
 void Configuration::printConfig() {
-  for (auto& k: configValues) {
+  for (auto& k : configValues) {
     std::cout << k.first << std::endl;
-    for (auto& kint: k.second) {
-      std::cout << "Clav: " << kint.first << " Valor: " << kint.second << std::endl;
+    for (auto& kint : k.second) {
+      std::cout << "Clav: " << kint.first << " Valor: " << kint.second
+                << std::endl;
     }
-  std::cout << "\n";
+    std::cout << "\n";
   }
 }
 
@@ -43,11 +65,14 @@ const char* Configuration::getPort() {
   return port_s.data();
 }
 
-int Configuration::getFPS() {
-  return (int)configValues["config"]["FPS"];
-}
+int Configuration::getFPS() { return (int)configValues["config"]["FPS"]; }
 
-std::unordered_map<std::string, float>& Configuration::getValues(std::string key) {
+std::unordered_map<std::string, float>& Configuration::getValues(
+    std::string key) {
   return configValues[key];
 }
 
+std::unordered_map<std::string, float>& Configuration::getValuesByItemType(
+    int itemType) {
+  return configValues[itemToStr[itemType]];
+}

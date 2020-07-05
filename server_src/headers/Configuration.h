@@ -9,6 +9,7 @@ class Configuration {
   std::fstream file;
   std::unordered_map<std::string, std::unordered_map<std::string, float>>
       configValues;
+  std::unordered_map<int, std::string> itemToStr;
 
  public:
   Configuration(std::string configFile);
@@ -25,6 +26,8 @@ class Configuration {
   int getFPS();
 
   std::unordered_map<std::string, float>& getValues(std::string key);
+
+  std::unordered_map<std::string, float>& getValuesByItemType(int itemType);
 };
 
 #endif
