@@ -1,7 +1,7 @@
 #include "../headers/Wearable.h"
 
-Wearable::Wearable(int id, int minDEF, int maxDEF)
-    : Item(id), minDefense(minDEF), maxDefense(maxDEF) {}
+Wearable::Wearable(int id, int itemType, int minDEF, int maxDEF)
+    : Item(id, itemType), minDefense(minDEF), maxDefense(maxDEF) {}
 
 Wearable::~Wearable() {}
 

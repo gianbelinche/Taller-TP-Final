@@ -2,8 +2,8 @@
 
 #include "../headers/Equations.h"
 
-Weapon::Weapon(int itemID, int minDMG, int maxDMG, int rang)
-    : Item(itemID), minDmg(minDMG), maxDmg(maxDMG), range(rang) {}
+Weapon::Weapon(int itemID, int itemType, int minDMG, int maxDMG, int rang)
+    : Item(itemID, itemType), minDmg(minDMG), maxDmg(maxDMG), range(rang) {}
 
 Weapon::~Weapon() {}
 

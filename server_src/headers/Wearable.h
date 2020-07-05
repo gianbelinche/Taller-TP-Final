@@ -9,7 +9,7 @@ class Wearable : public Item {
   int maxDefense;
 
  public:
-  Wearable(int id, int minDEF, int maxDEF);
+  Wearable(int id, int itemType, int minDEF, int maxDEF);
 
   ~Wearable();
 

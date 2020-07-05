@@ -6,13 +6,16 @@ class PlayerNet;
 class Item {
  private:
   int id;
+  int typeOfItem;
 
  public:
-  Item(int itemID);
+  Item(int itemID, int itemType);
 
   ~Item();
 
   int getId();
+
+  int getItemType();
 
   void virtual beEquiped(PlayerNet &player);
 };

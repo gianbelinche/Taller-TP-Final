@@ -6,7 +6,7 @@
 class Helmet : public Wearable {
  private:
  public:
-  Helmet(int id, int minDef, int maxDef);
+  Helmet(int id, int itemType, int minDef, int maxDef);
 
   ~Helmet();
 };

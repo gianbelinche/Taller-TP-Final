@@ -6,7 +6,7 @@
 class Armor : public Wearable {
  private:
  public:
-  Armor(int id, int minDef, int maxDef);
+  Armor(int id, int itemType, int minDef, int maxDef);
 
   ~Armor();
 };
