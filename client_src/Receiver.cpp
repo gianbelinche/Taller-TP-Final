@@ -37,13 +37,13 @@ void Receiver::run() {
     try {
         while (true) {
             //recibe largo
-            std::vector<char> lenBuff = clConnector->receive(4);
+            std::vector<char> lenBuff = std::move(clConnector->receive(4));
 
             uint32_t len = *((uint32_t*)&lenBuff[0]);
             len = ntohl(len);
 
             //recibe paquete
-            std::vector<char> msgBuff = clConnector->receive(len);
+            std::vector<char> msgBuff = std::move(clConnector->receive(len));
             std::string ss(msgBuff.begin(), msgBuff.end());
 
             //desempaqueta
