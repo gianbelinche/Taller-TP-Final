@@ -36,13 +36,13 @@ void LayoutManager::decodeStateMessage(const std::vector<uint32_t> message){
 void LayoutManager::decodeChatMessage(const std::vector<uint32_t> message){
     std::stringstream recvd_message;
     if (message[1] == 0){
-        recvd_message << "El jugador " << message[2] << " provoco un daño de " << message[3];
+        recvd_message << "El jugador " << message[2] << " provoco un dano de " << message[3];
     }
     if (message[1] == 1){
-        recvd_message << "El jugador " << message[2] << " recibió " << message[3] << " de daño";
+        recvd_message << "El jugador " << message[2] << " recibio " << message[3] << " de dano";
     }
     if (message[1] == 2){
-        recvd_message << "El jugador " << message[2] << " recuperó " << message[3] << " puntos de vida";
+        recvd_message << "El jugador " << message[2] << " recupero " << message[3] << " puntos de vida";
     }
     if (message[1] == 3){
         recvd_message << " Se le avisa al jugador" << message[2] << " que el contrincante esquivo el ataque";
@@ -59,7 +59,7 @@ void LayoutManager::decodeChatMessage(const std::vector<uint32_t> message){
         recvd_message << "El jugador " << message[2] << " gano " << message[3] << " de experiencia";
     }
     if (message[1] == 7){
-        recvd_message <<  "El jugador " << message[2] << " subió de nivel";
+        recvd_message <<  "El jugador " << message[2] << " subio de nivel";
     }
     chat.addMessage(recvd_message.str());
 }

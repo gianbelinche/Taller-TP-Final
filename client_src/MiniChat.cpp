@@ -1,20 +1,23 @@
 #include "MiniChat.h"
 #include "Text.h"
 #define FONT_SIZE 50
-#define MESSAGES_MAX_SIZE 10
+//10
+#define MESSAGES_MAX_SIZE 20
 #define MAX_LETTERS_IN_A_WORD 21
 #define MESSAGES_X (screen_w * 205 / 300)
 #define MESSAGES_Y (screen_h * 17 / 20)
-#define MESSAGES_H (screen_h / 20)
+//screen_h / 20
+#define MESSAGES_H (screen_h / 40)
 #define TO_RENDER_WORD_X (screen_w * 205 / 300)
 #define TO_RENDER_WORD_Y (screen_h * 18 / 20)
 #define TO_RENDER_WORD_W (screen_w * to_render_word.length() / 80)
-#define TO_RENDER_WORD_H (screen_h / 20)
+//screen_h / 20
+#define TO_RENDER_WORD_H (screen_h / 40)
 
 
 
 MiniChat::MiniChat(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer){
-    this->gFont = TTF_OpenFont("Fonts/Palace.ttf", FONT_SIZE);
+    this->gFont = TTF_OpenFont("Fonts/OpenSans.ttf", FONT_SIZE);
 }
 
 MiniChat::~MiniChat(){
