@@ -4,9 +4,22 @@ ServerEventListener::ServerEventListener(MessageDispatcher& msgDispatcher)
     : dispatcher(msgDispatcher) {}
 ServerEventListener::~ServerEventListener() {}
 
-void ServerEventListener::playerExpGain(int id, int gain) {}
+void ServerEventListener::playerExpGain(int id, int gain) {
+  std::vector<uint32_t> event;
+  event.push_back(PRINT_MSG);
+  event.push_back(MSG_EXP);
+  event.push_back(id);
+  event.push_back(gain);
+  dispatcher.sendMessage(id,event);
+}
 
-void ServerEventListener::playerLeveledUp(int id) {}
+void ServerEventListener::playerLeveledUp(int id) {
+  std::vector<uint32_t> event;
+  event.push_back(PRINT_MSG);
+  event.push_back(MSG_LEVEL_UP);
+  event.push_back(id);
+  dispatcher.sendMessage(id,event);
+}
 
 void ServerEventListener::entityMoved(int id, uint32_t direction) {
   std::vector<uint32_t> event;
@@ -16,9 +29,59 @@ void ServerEventListener::entityMoved(int id, uint32_t direction) {
   dispatcher.broadcastMessage(event);
 }
 
-void ServerEventListener::playerDealtDamage(int id, int damage) {}
+void ServerEventListener::playerDealtDamage(int id, int damage) {
+  std::vector<uint32_t> event;
+  event.push_back(PRINT_MSG);
+  event.push_back(MSG_DAMAGE_DEALT);
+  event.push_back(id);
+  event.push_back(damage);
+  dispatcher.sendMessage(id,event);
+}
 
-void ServerEventListener::playerTookDamage(int id, int damage) {}
+void ServerEventListener::playerTookDamage(int id, int damage) {
+  std::vector<uint32_t> event;
+  event.push_back(PRINT_MSG);
+  event.push_back(MSG_DAMAGE_TOOK);
+  event.push_back(id);
+  event.push_back(damage);
+  dispatcher.sendMessage(id,event);
+}
+
+void ServerEventListener::playerHealed(int id, int life){
+  std::vector<uint32_t> event;
+  event.push_back(PRINT_MSG);
+  event.push_back(MSG_HEALING);
+  event.push_back(id);
+  event.push_back(life);
+  dispatcher.sendMessage(id,event);
+}
+
+void ServerEventListener::entityEvadedAttack(int id,int entity_id){
+  std::vector<uint32_t> event;
+  event.push_back(PRINT_MSG);
+  event.push_back(MSG_ENTITY_EVASION);
+  event.push_back(entity_id);
+  dispatcher.sendMessage(id,event);
+}
+
+void ServerEventListener::playerEvadedAttack(int id){
+  std::vector<uint32_t> event;
+  event.push_back(PRINT_MSG);
+  event.push_back(MSG_PLAYER_EVASION);
+  event.push_back(id);
+  dispatcher.sendMessage(id,event);
+}
+
+void ServerEventListener::playerSendMessageToChat(int id,std::string message){
+  std::vector<uint32_t> event;
+  event.push_back(PRINT_MSG);
+  event.push_back(MSG_SEND_MSG);
+  for (int i = 0; i < message.size(); i++){
+    event.push_back(message[i]);
+  }
+  dispatcher.sendMessage(id,event);
+}
+
 
 void ServerEventListener::playerDied(int id) {}
 

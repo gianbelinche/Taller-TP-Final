@@ -345,11 +345,11 @@ A través de msgpack, se forma de la siguiente manera:
 
     - __Ganancia de experiencia(06):__
 
-      `07 + 05 + id + cant_exp`
+      `07 + 06 + id + cant_exp`
 
       Ejemplo:
 
-      `{07, 05, 445, 168}` --> El jugador `445` gano `168` de experiencia
+      `{07, 06, 445, 168}` --> El jugador `445` gano `168` de experiencia
 
       Aclaración: `cant_exp` nunca va a ser mayor que la cantidad de experiencia que le falta al jugador para subir de nivel
 
@@ -359,7 +359,7 @@ A través de msgpack, se forma de la siguiente manera:
 
       Ejemplo:
 
-      `{07, 04, 11}` --> El jugador `11` subió de nivel
+      `{07, 07, 11}` --> El jugador `11` subió de nivel
 
 8. **Comandos de inventario** (08):
 

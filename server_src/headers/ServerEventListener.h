@@ -25,6 +25,15 @@
 #define LEVEL_UPDATE 3
 #define EXP_UPDATE 4
 
+#define MSG_DAMAGE_DEALT 0
+#define MSG_DAMAGE_TOOK 1
+#define MSG_HEALING 2
+#define MSG_ENTITY_EVASION 3
+#define MSG_PLAYER_EVASION 4
+#define MSG_SEND_MSG 5
+#define MSG_EXP 6
+#define MSG_LEVEL_UP 7
+
 
 class ServerEventListener {
  private:
@@ -35,15 +44,23 @@ class ServerEventListener {
 
   ~ServerEventListener();
 
+  void playerSendMessageToChat(int id,std::string message);
+
+  void entityMoved(int id, uint32_t direction);  // Ver  si conviene mergearlos en uno solo
+
   void playerExpGain(int id, int gain);
 
   void playerLeveledUp(int id);
 
-  void entityMoved(int id, uint32_t direction);  // Ver  si conviene mergearlos en uno solo
-
   void playerDealtDamage(int id, int damage);
 
   void playerTookDamage(int id, int damage);
+
+  void playerHealed(int id, int life);
+
+  void entityEvadedAttack(int id,int entity_id);
+
+  void playerEvadedAttack(int id);
 
   void monsterMoved(int id);
 
