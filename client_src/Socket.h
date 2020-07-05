@@ -32,7 +32,7 @@ public:
 
   void send(const char* msg, size_t length);
 
-  int recv(char* buffer, size_t length);
+  size_t recv(char* buffer, size_t length);
 
   void shutdown_close();
 

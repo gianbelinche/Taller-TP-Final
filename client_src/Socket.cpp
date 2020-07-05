@@ -128,7 +128,7 @@ void Socket::send(const char* msg, size_t length) {
   }
 }
 
-int Socket::recv(char* buffer, size_t length) {
+size_t Socket::recv(char* buffer, size_t length) {
   size_t bytes_recv = 0;
   int s;
   while ( bytes_recv < length ) {

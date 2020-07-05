@@ -12,9 +12,9 @@
 
 class MainMap {
     private:
-        std::map<uint32_t, MapImage> textures;
         std::vector<std::vector<uint32_t>> texMap;
         std::vector<std::vector<uint32_t>> strMap;
+        std::map<uint32_t, MapImage> textures;
         
     public:
         MainMap(std::map<uint32_t, std::vector<std::string>> &tiles, 

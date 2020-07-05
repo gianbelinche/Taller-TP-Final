@@ -7,13 +7,12 @@ NPC::NPC(SDL_Renderer *renderer, uint32_t anID, uint16_t aPosX, uint16_t aPosY)
 
 NPC::~NPC() {}
 
-NPC::NPC(NPC&& other) : Entity(std::move(other)), height(other.height), 
-                        width(other.width), speed(other.speed),
-                        view(other.view), frame(other.frame),
-                        vertClips(other.vertClips),
-                        horClips(other.horClips),
-                        clips(std::move(other.clips)),
-                        quad(other.quad), image(std::move(other.image)) {}
+NPC::NPC(NPC&& other) : Entity(std::move(other)), image(std::move(other.image)),
+                        height(other.height), width(other.width), 
+                        speed(other.speed), view(other.view), 
+                        frame(other.frame), vertClips(other.vertClips),
+                        horClips(other.horClips), clips(std::move(other.clips)),
+                        quad(other.quad) {}
 
 NPC& NPC::operator=(NPC&& other) {
     if (this == &other) {

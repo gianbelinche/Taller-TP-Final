@@ -57,17 +57,17 @@ class Player : public Entity {
         uint8_t bodyFrameY;
         uint8_t headFrameX;
         uint8_t state;
+        FilteredImage bodyImage;
+        FilteredImage headImage;
+        FilteredImage ghostImage;
         Equippable weapon;
         Equippable armor;
         Equippable shield;
         Equippable helmet;
-        FilteredImage bodyImage;
-        FilteredImage headImage;
-        FilteredImage ghostImage;
-
         std::vector <SDL_Rect> bodyClips;
         std::vector <SDL_Rect> headClips;
         std::vector <SDL_Rect> ghostClips;
+        
         void renderGhost(Camera &camera);
         void renderPlayer(Camera &camera);
 

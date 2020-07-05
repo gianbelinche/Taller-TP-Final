@@ -19,7 +19,7 @@ class Entity {
 
     public:
         Entity(uint32_t anID, uint16_t aPosX, uint16_t aPosY);
-        ~Entity();
+        virtual ~Entity();
 
         Entity(const Entity &copy) = delete;
         Entity(Entity&& other);

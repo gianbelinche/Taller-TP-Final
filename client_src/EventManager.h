@@ -14,11 +14,11 @@ class EventManager {
         uint32_t playerID;
         BlockingMsgQueue &msgQueue;
         EntityManager &entityManager;
-        SDL_Event event;
         Camera &camera;
         ClientProtocol &clProtocol;
         MiniChat &chat;
         GraphicInventory &inventory;
+        SDL_Event event;
 
         void checkKeyDown(SDL_Event &event);
         void checkKeyUp(SDL_Event &event);

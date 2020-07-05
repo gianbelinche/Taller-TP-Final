@@ -10,10 +10,10 @@ Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID,
                uint16_t aPosX, uint16_t aPosY, uint8_t aState, 
                EquipType aWeapon, EquipType anArmor, EquipType aShield, 
                EquipType aHelmet) : Entity(anID, aPosX, aPosY),
+                                    state(aState),
                                     bodyImage(aRenderer, B, B, B),
                                     headImage(aRenderer, B, B, B),
                                     ghostImage(aRenderer, B, B, B),
-                                    state(aState),
                                     weapon(aRenderer, aWeapon),
                                     armor(aRenderer, anArmor),
                                     shield(aRenderer, aShield),
@@ -79,13 +79,13 @@ Player::Player(Player&& other) : Entity(std::move(other)),
                                  bodyFrameY(other.bodyFrameY), 
                                  headFrameX(other.headFrameX),
                                  state(other.state),
+                                 bodyImage(std::move(other.bodyImage)),
+                                 headImage(std::move(other.headImage)),
+                                 ghostImage(std::move(other.ghostImage)),
                                  weapon(std::move(other.weapon)),
                                  armor(std::move(other.armor)),
                                  shield(std::move(other.shield)),
                                  helmet(std::move(other.helmet)),
-                                 bodyImage(std::move(other.bodyImage)),
-                                 headImage(std::move(other.headImage)),
-                                 ghostImage(std::move(other.ghostImage)),
                                  bodyClips(std::move(other.bodyClips)), 
                                  headClips(std::move(other.headClips)),
                                  ghostClips(std::move(other.ghostClips)) {}
@@ -107,13 +107,13 @@ Player& Player::operator=(Player&& other) {
     this->bodyFrameY = other.bodyFrameY;
     this->headFrameX = other.headFrameX;
     this->state = other.state;
+    this->bodyImage = std::move(other.bodyImage);
+    this->headImage = std::move(other.headImage);
+    this->ghostImage = std::move(other.ghostImage);
     this->weapon = std::move(other.weapon);
     this->armor = std::move(other.armor);
     this->shield = std::move(other.shield);
     this->helmet = std::move(other.helmet);
-    this->bodyImage = std::move(other.bodyImage);
-    this->headImage = std::move(other.headImage);
-    this->ghostImage = std::move(other.ghostImage);
     this->bodyClips = std::move(other.bodyClips);
     this->headClips = std::move(other.headClips);
     this->ghostClips = std::move(other.ghostClips);

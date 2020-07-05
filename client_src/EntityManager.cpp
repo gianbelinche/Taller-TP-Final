@@ -1,8 +1,8 @@
 #include "EntityManager.h"
 
 EntityManager::EntityManager(SDL_Renderer *aRenderer, Player &aPlayer, uint32_t aPlayerID) : 
-                                                        playerID(aPlayerID),
                                                         player(aPlayer), 
+                                                        playerID(aPlayerID),
                                                         renderer(aRenderer) {}
 
 EntityManager::~EntityManager() {

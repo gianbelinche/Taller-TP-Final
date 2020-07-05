@@ -19,7 +19,7 @@ class Camera {
 
     public:
         Camera(uint16_t posX, uint16_t posY, uint16_t playerHeight,
-        uint16_t playerWidth,uint16_t height,uint16_t width);
+        uint16_t playerWidth, uint16_t height, uint16_t width);
         ~Camera();
 
         Camera(const Camera &copy) = delete;

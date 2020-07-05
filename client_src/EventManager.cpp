@@ -10,9 +10,10 @@ EventManager::EventManager(EntityManager &anEntityManager, uint32_t aPlayerID,
                            BlockingMsgQueue &aMsgQueue, Camera &aCamera, 
                            ClientProtocol &aClProtocol, MiniChat &chat,
                            GraphicInventory &inventory) :
-                                                entityManager(anEntityManager),
+                                                writing(false),
                                                 playerID(aPlayerID), 
                                                 msgQueue(aMsgQueue),
+                                                entityManager(anEntityManager),
                                                 camera(aCamera),
                                                 clProtocol(aClProtocol),
                                                 chat(chat),
@@ -141,9 +142,9 @@ void EventManager::checkKeyUp(SDL_Event &event) {
 
 void EventManager::checkClick(SDL_Event &event) {
     uint32_t slot = inventory.select(event.button.x,event.button.y,camera);
-    if (slot  != -1) {
-        std::vector<uint32_t> msg = 
-        clProtocol.makeMsgClickInventory(playerID, slot);
+    if (slot != -1) {
+        std::vector<uint32_t> msg = clProtocol.makeMsgClickInventory(playerID, 
+                                                                     slot);
         msgQueue.push(msg);
     } else {
         uint32_t IDClicked = entityManager.checkClickEntities(camera, 

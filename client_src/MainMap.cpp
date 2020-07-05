@@ -90,5 +90,7 @@ uint8_t MainMap::getZone(uint16_t x, uint16_t y) {
         return 2;
     } else if (CAVE) {
         return 3;
+    } else {
+        return 0; // Sería un error llegar acá (chequear)
     }
 }
