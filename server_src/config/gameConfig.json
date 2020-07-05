@@ -10,10 +10,10 @@
     "initialExp": 0,
     "initialGold": 98,
     "initialState": 0,
-    "initialWeapon": 2,
-    "initialHelmet": 1,
-    "initialArmor": 1,
-    "initialShield": 1
+    "initialWeapon": 6,
+    "initialHelmet": 14,
+    "initialArmor": 11,
+    "initialShield": 15
   },
   "goblin": {
     "hp": 30,
@@ -106,5 +106,89 @@
     "constitutionFactor" : 1.5,
     "intelligenceFactor": 1,
     "agilityFactor": 1
+  },
+  "Sin equipamiento": {
+    "minDmg": 2,
+    "maxDmg": 4,
+    "range": 10
+  },
+  "Espada": {
+    "minDmg": 8,
+    "maxDmg": 15,
+    "range": 15
+  },
+  "Hacha": {
+    "minDmg": 10,
+    "maxDmg": 18,
+    "range": 12
+  },
+  "Martillo": {
+    "minDmg": 6,
+    "maxDmg": 8,
+    "range": 11
+  },
+  "Vara de Fresno": {
+    "minDmg": 10,
+    "maxDmg": 14,
+    "range": 60
+  },
+  "Flauta Elfica": {
+    "minDmg": -40,
+    "maxDmg": -10,
+    "range": 0
+  },
+  "Baculo Nudoso": {
+    "minDmg": 12,
+    "maxDmg": 17,
+    "range": 65
+  },
+  "Baculo Engarzado": {
+    "minDmg": 15,
+    "maxDmg": 30,
+    "range": 70
+  },
+  "Arco Simple": {
+    "minDmg": 10,
+    "maxDmg": 15,
+    "range": 50
+  },
+  "Arco Compuesto": {
+    "minDmg": 15,
+    "maxDmg": 20,
+    "range": 60
+  },
+  "Armadura de Cuero": {
+    "minDef": 3,
+    "maxDef": 5
+  },
+  "Armadura de Placas": {
+    "minDef": 5,
+    "maxDef": 9
+  },
+  "Tunica Azul": {
+    "minDef": 1,
+    "maxDef": 2
+  },
+  "Capucha": {
+    "minDef": 1,
+    "maxDef": 2
+  },
+  "Casco de Hierro": {
+    "minDef": 2,
+    "maxDef": 4
+  },
+  "Sombrero Magico": {
+    "minDef": 2,
+    "maxDef": 2
+  },
+  "Escudo Tortuga": {
+    "minDef": 4,
+    "maxDef": 7
+  },
+  "Escudo de Hierro": {
+    "minDef": 6,
+    "maxDef": 10
   }
+
+  
 }
