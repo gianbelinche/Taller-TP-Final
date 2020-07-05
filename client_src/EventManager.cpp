@@ -141,7 +141,7 @@ void EventManager::checkKeyUp(SDL_Event &event) {
 }
 
 void EventManager::checkClick(SDL_Event &event) {
-    uint32_t slot = inventory.select(event.button.x,event.button.y,camera);
+    int slot = inventory.select(event.button.x,event.button.y,camera);
     if (slot != -1) {
         std::vector<uint32_t> msg = clProtocol.makeMsgClickInventory(playerID, 
                                                                      slot);
