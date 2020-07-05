@@ -26,6 +26,7 @@
 #define SELECTED_TYPE_3 3
 
 enum items{
+    EMPTY,
     SWORD,
     AXE,
     HAMMER,

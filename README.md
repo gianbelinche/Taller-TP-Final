@@ -216,6 +216,7 @@ A través de msgpack, se forma de la siguiente manera:
       - 15 -> Escudo Tortuga
       - 16 -> Escudo de Hierro
       - 17 -> Sombrero Magico
+      - 18 -> Pocion
 
 4. **Eliminación de una entidad** (04):
 
@@ -394,6 +395,7 @@ A través de msgpack, se forma de la siguiente manera:
       - 15 -> Escudo Tortuga
       - 16 -> Escudo de Hierro
       - 17 -> Sombrero Magico
+      - 18 -> Pocion
 
 9. **Actualizar estado**:
 
