@@ -19,7 +19,7 @@ enum messages{
 int ChatMessageParser::parse(std::vector<uint32_t> command){
     std::string str_command = "";
     for (int i = 2;i < command.size();i++){
-        str_command += command[i];
+        str_command += (char) command[i];
     }
     if (str_command[0] == "@"){
         return PLAYER_MSG;
