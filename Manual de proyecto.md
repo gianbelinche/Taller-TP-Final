@@ -8,7 +8,7 @@
 |     Botta, Guido Tomas     | 102103 |
 |       Crespo, Julian       | 100490 |
 
-[Link al enunciado]() 	
+[Link al enunciado](https://github.com/gianbelinche/Taller-TP-Final/blob/master/2020.01.ejercicio.final.Argentum.pdf) 	
 
 ## División de tareas
 
