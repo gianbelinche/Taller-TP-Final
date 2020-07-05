@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <utility>
+#include <string>
+#include <cstdint>
 
 class ChatMessageParser{
 public:

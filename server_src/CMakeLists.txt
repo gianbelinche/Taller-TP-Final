@@ -52,6 +52,7 @@ add_library(server_lib
   resources/Thread.cpp
   Utils/sha256.cpp
   Utils/Configuration.cpp
+  ChatMessageParser.cpp
   )
 
   include_directories(headers json)
