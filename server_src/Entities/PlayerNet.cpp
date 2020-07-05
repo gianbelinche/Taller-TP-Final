@@ -9,20 +9,18 @@
 #include "../headers/GhostState.h"
 #include "../headers/PlayerState.h"
 
-PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int hp,
-                     int mana, int velocity, int currExp, int currLevel,
-                     int currGold, Weapon* wea, Armor* arm, Helmet* helm,
-                     Shield* sh, PlayerState* sta, Class* cla, Race* ra,
-                     ServerEventListener& eventListener)
+PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int velocity,
+                     int currExp, int currLevel, int currGold, Weapon* wea,
+                     Armor* arm, Helmet* helm, Shield* sh, PlayerState* sta,
+                     Class* cla, Race* ra, ServerEventListener& eventListener)
     : Entity(x, y, id,
              equation::playerMaxHp(
                  cla->getConstitutionFactor() * ra->getConstitution(),
                  cla->getHpFactor(), ra->getHpFactor(), currLevel),
-             hp, currLevel),
+             currLevel),
       state(sta),
       playerClass(cla),
       playerRace(ra),
-      mana(mana),
       velocity(velocity),
       exp(currExp),
       gold(currGold),
@@ -34,6 +32,7 @@ PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int hp,
       listener(eventListener) {
   maxMana = equation::playerMaxMana(getIntelligence(), cla->getManaFactor(),
                                     ra->getManaFactor(), level);
+  mana = maxMana;
   maxExp = equation::playerMaxExp(level);
   maxGold = equation::maxGold(level);
 }
@@ -76,7 +75,7 @@ int PlayerNet::attack(Entity* ent) {
 
 void PlayerNet::changeState(PlayerState* new_state) { state = new_state; }
 
-void PlayerNet::heal(int points) { 
+void PlayerNet::heal(int points) {
   hp = std::min(hp + points, maxHp);
   listener.lifeUpdate(id, hp, maxHp);
 }

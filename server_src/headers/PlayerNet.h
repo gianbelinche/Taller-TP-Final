@@ -4,14 +4,14 @@
 class GameState;
 
 #include "Armor.h"
-#include "Helmet.h"
-#include "Shield.h"
-#include "Weapon.h"
 #include "Class.h"
 #include "Entity.h"
+#include "Helmet.h"
 #include "PlayerState.h"
-#include "ServerEventListener.h"
 #include "Race.h"
+#include "ServerEventListener.h"
+#include "Shield.h"
+#include "Weapon.h"
 
 class PlayerNet : public Entity {
  private:
@@ -33,10 +33,10 @@ class PlayerNet : public Entity {
   ServerEventListener& listener;
 
  public:
-  PlayerNet(int x, int y, int id, GameState& currState, int hp, int mana,
-            int velocity, int currExp, int currLevel, int currGold, Weapon* wea,
-            Armor* arm, Helmet* helm, Shield* sh, PlayerState* sta, Class* cla,
-            Race* ra, ServerEventListener& eventListener);
+  PlayerNet(int x, int y, int id, GameState& currState, int velocity,
+            int currExp, int currLevel, int currGold, Weapon* wea, Armor* arm,
+            Helmet* helm, Shield* sh, PlayerState* sta, Class* cla, Race* ra,
+            ServerEventListener& eventListener);
 
   ~PlayerNet();
 

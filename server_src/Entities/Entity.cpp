@@ -2,11 +2,11 @@
 
 #include "../headers/Entity.h"
 
-Entity::Entity(int x, int y, int id, int maxHp, int hp, int level)
+Entity::Entity(int x, int y, int id, int maxHp, int level)
     : x(x),
       y(y), 
       id(id),
-      hp(hp),
+      hp(maxHp),
       maxHp(maxHp), 
       level(level),
       currentFrame(0) {

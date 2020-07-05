@@ -14,7 +14,7 @@ class Entity {
   int currentFrame;
 
  public:
-  Entity(int x, int y, int id, int maxHp, int hp, int level);
+  Entity(int x, int y, int id, int maxHp, int level);
 
   ~Entity();
 
