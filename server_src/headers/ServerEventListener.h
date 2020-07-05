@@ -18,6 +18,8 @@
 #define INVENTORY_COMMAND 8
 #define STAT_CHANGE 9
 #define LOGIN_I 10
+#define NPC_ATTACK 11
+#define POTION_TAKEN 12
 
 #define GOLD_UPDATE 0
 #define LIFE_UPDATE 1
@@ -46,6 +48,10 @@ class ServerEventListener {
   ServerEventListener(MessageDispatcher& msgDispatcher);
 
   ~ServerEventListener();
+
+  void npcAttack(int id,int equipped_item);
+
+  void potionTaken(int id);
 
   void playerSendMessageToChat(int id,std::string message);
 

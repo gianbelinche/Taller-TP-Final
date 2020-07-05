@@ -4,6 +4,19 @@ ServerEventListener::ServerEventListener(MessageDispatcher& msgDispatcher)
     : dispatcher(msgDispatcher) {}
 ServerEventListener::~ServerEventListener() {}
 
+void ServerEventListener::npcAttack(int id,int equipped_item){
+  std::vector<uint32_t> event;
+  event.push_back(NPC_ATTACK);
+  event.push_back(equipped_item);
+  dispatcher.sendMessage(id,event);
+}
+
+void ServerEventListener::potionTaken(int id){
+  std::vector<uint32_t> event;
+  event.push_back(POTION_TAKEN);
+  dispatcher.sendMessage(id,event);
+}
+
 void ServerEventListener::playerExpGain(int id, int gain) {
   std::vector<uint32_t> event;
   event.push_back(PRINT_MSG);
