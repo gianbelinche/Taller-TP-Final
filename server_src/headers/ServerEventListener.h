@@ -58,7 +58,7 @@ class ServerEventListener {
 
   void entityMoved(int id, uint32_t direction);  // Ver  si conviene mergearlos en uno solo 
 
-  void npcSpawn(int npc_id,int npc_type,int posx,int posy)
+  void npcSpawn(int npc_id,int npc_type,int posx,int posy);
   
   void dropSpawn(int object_id,int object_type, int posx, int posy); //3
 
