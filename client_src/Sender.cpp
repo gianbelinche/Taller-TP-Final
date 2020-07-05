@@ -39,7 +39,7 @@ void Sender::run() {
     try {
         while (true) {
             //pop de la cola
-            std::vector<uint32_t> event = queue->pop();
+            std::vector<uint32_t> event = std::move(queue->pop());
 
             //empaquetar
             std::stringstream buffer;
