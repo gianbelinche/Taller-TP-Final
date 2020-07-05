@@ -10,13 +10,14 @@ class Race {
   float hpFactor;
   float recoveryFactor;
   float manaFactor;
-  int constitution = 5;
-  int strength = 1;
-  int intelligence = 4;
+  int constitution;
+  int strength;
+  int intelligence;
   int agility;
 
  public:
-  Race(char race_t, float hpFac, float recFac, float manaFac);
+  Race(char race_t, float hpFac, float recFac, float manaFac, int consti,
+       int str, int intell, int agil);
 
   ~Race();
 

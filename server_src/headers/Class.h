@@ -10,13 +10,14 @@ class Class {
   float hpFactor;
   float manaFactor;        // 0 para el guerrero
   float meditationFactor;  // idem
-  float strengthFactor = 1;
-  float constitutionFactor = 1;
-  float intelligenceFactor = 15;
-  float agilityFactor = 2;
+  float strengthFactor;
+  float constitutionFactor;
+  float intelligenceFactor;
+  float agilityFactor;
 
  public:
-  Class(char class_type, float hpFac, float manaFac, float meditFac);
+  Class(char class_type, float hpFac, float manaFac, float meditFac,
+        float strFac, float constFac, float intFac, float agiFac);
 
   ~Class();
 
