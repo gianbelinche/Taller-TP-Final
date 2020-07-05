@@ -65,7 +65,7 @@ class ServerEventListener {
   void dropSpawn(int object_id,int object_type, int posx, int posy); //3
 
   // Jugadores que se desconectan o mobs que mueren
-  void entityDisappear(int entity_id); //4
+  void entityDisappear(uint32_t entity_id); //4
 
   void playerDied(int id); //5
 

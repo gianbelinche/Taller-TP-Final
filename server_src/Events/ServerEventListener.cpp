@@ -172,7 +172,7 @@ void ServerEventListener::npcSpawn(int npc_id,int npc_type,int posx,int posy){
   dispatcher.broadcastMessage(event);
 }
 
-void ServerEventListener::entityDisappear(int entity_id) {
+void ServerEventListener::entityDisappear(uint32_t entity_id) {
   std::vector<uint32_t> event;
   event.push_back(DELETE_ENTITY);
   event.push_back(entity_id);

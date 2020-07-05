@@ -65,7 +65,7 @@ void ClientHandler::run() {
   std::cout << "Se llego al rm player\n";
   outgoingMessages.close();
   std::cout << "Se llego al outgoind message close\n";
-  listener.entityDisappear(playerInfo[1]);
+  listener.entityDisappear(playerInfo[0]);
   std::cout << "Se llego al entity disappear\n";
   sender.join();
   online = false;
