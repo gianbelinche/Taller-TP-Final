@@ -120,9 +120,49 @@ void ServerEventListener::inventoryEquipItem(int id,int slot){
 }
 
 
-void ServerEventListener::playerDied(int id) {}
+void ServerEventListener::playerDied(int id) {
+  std::vector<uint32_t> event;
+  event.push_back(PLAYER_STATE_CHANGE);
+  event.push_back(DEAD);
+  event.push_back(id);
+  dispatcher.broadcastMessage(event);
+}
 
-void ServerEventListener::entityDisappear(int id) {}
+void ServerEventListener::playerRevived(int id) {
+  std::vector<uint32_t> event;
+  event.push_back(PLAYER_STATE_CHANGE);
+  event.push_back(REVIVED);
+  event.push_back(id);
+  dispatcher.broadcastMessage(event);
+}
+
+void ServerEventListener::playerEquipedItem(int id,int eq_type,int object){
+  std::vector<uint32_t> event;
+  event.push_back(EQUIP_ITEM);
+  event.push_back(id);
+  event.push_back(eq_type);
+  event.push_back(object);
+  dispatcher.broadcastMessage(event);
+}
+
+void ServerEventListener::dropSpawn(int object_id,
+                                   int object_type, int posx, int posy){
+  std::vector<uint32_t> event;  
+  event.push_back(DROP_SPAWN);
+  event.push_back(object_id);
+  event.push_back(object_type);
+  event.push_back(posx);
+  event.push_back(posy);
+  dispatcher.broadcastMessage(event);
+
+}
+
+void ServerEventListener::entityDisappear(int id,int entity_id) {
+  std::vector<uint32_t> event;
+  event.push_back(DELETE_ENTITY);
+  event.push_back(entity_id);
+  dispatcher.broadcastMessage(event);
+}
 
 void ServerEventListener::playerConnected(int id) {
   dispatcher.playerConnected(id);

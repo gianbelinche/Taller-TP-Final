@@ -40,6 +40,9 @@
 #define REMOVE_ITEM 1
 #define EQUIP_ITEM 2
 
+#define REVIVED 0
+#define DEAD 1
+
 class ServerEventListener {
  private:
   MessageDispatcher& dispatcher;
@@ -49,13 +52,18 @@ class ServerEventListener {
 
   ~ServerEventListener();
 
+  void monsterMoved(int id);
+
+  void entityMoved(int id, uint32_t direction);  // Ver  si conviene mergearlos en uno solo
+
+  
+
+
   void npcAttack(int id,int equipped_item);
 
   void potionTaken(int id);
 
   void playerSendMessageToChat(int id,std::string message);
-
-  void entityMoved(int id, uint32_t direction);  // Ver  si conviene mergearlos en uno solo
 
   void playerExpGain(int id, int gain);
 
@@ -71,9 +79,13 @@ class ServerEventListener {
 
   void playerEvadedAttack(int id);
 
-  void monsterMoved(int id);
+  
+  void playerEquipedItem(int id,int eq_type,int object);
 
   void playerDied(int id);
+
+  void playerRevived(int id);
+
 
   void inventoryAddItem(int id,int item);
 
@@ -81,8 +93,10 @@ class ServerEventListener {
 
   void inventoryEquipItem(int id,int slot);
 
+
   // Jugadores que se desconectan o mobs que mueren
-  void entityDisappear(int id);
+  void entityDisappear(int id,int entity_id);
+
 
   void playerConnected(int id);
 
