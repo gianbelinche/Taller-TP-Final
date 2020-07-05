@@ -114,7 +114,7 @@ void ServerEventListener::inventoryRemoveItem(int id,int slot){
 void ServerEventListener::inventoryEquipItem(int id,int slot){
   std::vector<uint32_t> event;
   event.push_back(INVENTORY_COMMAND);
-  event.push_back(EQUIP_ITEM);
+  event.push_back(INV_EQUIP_ITEM);
   event.push_back(slot);
   dispatcher.sendMessage(id,event);
 }

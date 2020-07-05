@@ -38,7 +38,7 @@
 
 #define ADD_ITEM 0
 #define REMOVE_ITEM 1
-#define EQUIP_ITEM 2
+#define INV_EQUIP_ITEM 2
 
 #define REVIVED 0
 #define DEAD 1
