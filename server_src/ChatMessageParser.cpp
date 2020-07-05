@@ -1,5 +1,4 @@
 #include "ChatMessageParser.h"
-#include <string>
 
 #define NO_COMMAND -1
 enum messages{
@@ -18,12 +17,12 @@ enum messages{
 
 int ChatMessageParser::parse(std::vector<uint32_t> command){
     std::string str_command = "";
-    for (int i = 2;i < command.size();i++){
+    for (unsigned int i = 2;i < command.size();i++){
         str_command += (char) command[i];
     }
-    if (str_command[0] == "@"){
+    if (str_command[0] == '@'){
         return PLAYER_MSG;
-    } else if (str_command[0] == "/"){
+    } else if (str_command[0] == '/'){
         if (str_command.find("meditar") != std::string::npos){
             return MEDITAR;
         }
@@ -57,5 +56,16 @@ int ChatMessageParser::parse(std::vector<uint32_t> command){
         return NO_COMMAND;
     }
     return NO_COMMAND;
+}
 
+std::pair<std::string,std::string> 
+ChatMessageParser::getUserAndMessage(std::vector<uint32_t> command){
+    std::string str_command = "";
+    for (unsigned int i = 3;i < command.size();i++){
+        str_command += (char) command[i];
+    }
+    std::string user = str_command.substr(0,str_command.find(" "));
+    std::string message = str_command.substr(str_command.find(" ") + 1);
+    std::pair<std::string,std::string> data(user,message);
+    return data;
 }
