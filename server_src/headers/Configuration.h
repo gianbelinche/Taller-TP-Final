@@ -23,6 +23,8 @@ class Configuration {
   const char* getPort();
 
   int getFPS();
+
+  std::unordered_map<std::string, float>& getValues(std::string key);
 };
 
 #endif
