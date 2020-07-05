@@ -289,12 +289,12 @@ void LogIn::signIn() {
     clientConnector.send(msg, msg.size());
 
     //recivo largo
-    std::vector<char> longBuff = clientConnector.receive(4);
+    std::vector<char> longBuff = std::move(clientConnector.receive(4));
     len = *((uint32_t*)&longBuff[0]);
     len = ntohl(len);
 
     //recibe paquete
-    std::vector<char> msgBuff = clientConnector.receive(len);
+    std::vector<char> msgBuff = std::move(clientConnector.receive(len));
     std::string ss(msgBuff.begin(), msgBuff.end());
 
     //desempaqueta

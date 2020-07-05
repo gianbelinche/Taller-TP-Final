@@ -45,12 +45,12 @@ std::string ClientConnector::receiveMsg(uint32_t len) {
     socket.recv(&msgBuff[0], len);
     std::string msgStr(msgBuff.begin(), msgBuff.end());
 
-    return std::move(msgStr);
+    return msgStr;
 }
 
 Player ClientConnector::getPlayer(SDL_Renderer *renderer) {
     uint32_t len = receiveLen();
-    std::string msgStr = receiveMsg(len);
+    std::string msgStr = std::move(receiveMsg(len));
 
     std::vector<uint32_t> msg;
     msgpack::object_handle oh = msgpack::unpack(msgStr.data(), msgStr.size());
@@ -60,27 +60,27 @@ Player ClientConnector::getPlayer(SDL_Renderer *renderer) {
                   (EquipType)msg[6], (EquipType)msg[7], (EquipType)msg[8], 
                   (EquipType)msg[9]);
 
-    return std::move(player);
+    return player;
 }
 
 MainMap ClientConnector::getMainMap(SDL_Renderer *renderer) {
     //Recibo tiles
     uint32_t tileLen = receiveLen();
-    std::string tMsgStr = receiveMsg(tileLen);
+    std::string tMsgStr = std::move(receiveMsg(tileLen));
 
     std::map<uint32_t, std::vector<std::string>> tiles;
     msgpack::unpack(tMsgStr.data(), tMsgStr.size()).get().convert(tiles);
 
     //Recibo matriz de terreno
     uint32_t matLen0 = receiveLen();
-    std::string mMsgStr0 = receiveMsg(matLen0);
+    std::string mMsgStr0 = std::move(receiveMsg(matLen0));
 
     std::vector<std::vector<uint32_t>> matrixLayer0;
     msgpack::unpack(mMsgStr0.data(), mMsgStr0.size()).get().convert(matrixLayer0);
 
     //Recibo matriz de estructuras
     uint32_t matLen1 = receiveLen();
-    std::string mMsgStr1 = receiveMsg(matLen1);
+    std::string mMsgStr1 = std::move(receiveMsg(matLen1));
     
     std::vector<std::vector<uint32_t>> matrixLayer1;
     msgpack::object_handle ohM1 = msgpack::unpack(mMsgStr1.data(), mMsgStr1.size());
@@ -88,7 +88,7 @@ MainMap ClientConnector::getMainMap(SDL_Renderer *renderer) {
 
     //Genero MainMap
     MainMap mainMap(tiles, renderer, matrixLayer0, matrixLayer1);
-    return std::move(mainMap);
+    return mainMap;
 }
 
 void ClientConnector::sendReceivedSignal(ClientProtocol &clientProtocol, uint32_t ID) {
@@ -112,12 +112,12 @@ void ClientConnector::sendReceivedSignal(ClientProtocol &clientProtocol, uint32_
 
 Sender ClientConnector::getSender(BlockingMsgQueue &queue) {
     Sender sender(this, &queue);
-    return std::move(sender);
+    return sender;
 }
 
 Receiver ClientConnector::getReceiver(ProtMsgQueue &queue) {
     Receiver receiver(this, &queue);
-    return std::move(receiver);
+    return receiver;
 }
 
 std::vector<char> ClientConnector::receive(uint32_t len) {
@@ -125,7 +125,7 @@ std::vector<char> ClientConnector::receive(uint32_t len) {
     if (socket.recv(&msg[0], len) < len) {
         throw SocketException("Error al recibir: Se cerró socket.");
     }
-    return std::move(msg);
+    return msg;
 }
 
 void ClientConnector::send(char *msg, uint32_t len) {
