@@ -17,7 +17,7 @@ void ServerReceiver::run() {
     while (keepRunning) {
       uint32_t msgLen = receiveLen();
       if (msgLen == 0) {
-        return;
+        continue;
       }
       std::string msg = std::move(receiveMsg(msgLen));
       incomingEvents.push(std::move(msg));
