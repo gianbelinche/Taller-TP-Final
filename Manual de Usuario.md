@@ -4,7 +4,21 @@
 
 ### Requerimientos de Software
 
-***COMPLETAR CON OS, bibliotecas y herramientas necesarias para instalar el programa***
+- **OS requerido**: 
+        - Linux
+        - ***MacOS??***
+        - ***Windows??***
+
+- **Bibliotecas requeridas**:
+        - jsoncpp: https://github.com/open-source-parsers/jsoncpp
+        - msgpack: https://github.com/msgpack/msgpack-c/tree/cpp_master
+        - SDL2: ***COMPLETAR***
+        - QT: ***COMPLETAR***
+        - ***COMPLETAR***
+
+- **Herramientas para la instalación del programa**:
+        - ***CMake??***
+        - ***Makefile?***
 
 ### Requerimientos de Hardware
 
