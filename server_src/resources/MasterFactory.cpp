@@ -1,21 +1,20 @@
 #include "../headers/MasterFactory.h"
 
 MasterFactory::MasterFactory(std::atomic<uint32_t>& idCounter,
-                             Configuration& configuration, GameState& gameState,
+                             Configuration& configuration,
                              ServerEventListener& eventListener)
     : idGenerator(idCounter),
       config(configuration),
-      world(gameState),
       listener(eventListener),
       goblin(config.getValues(GOBLIN)["hp"], config.getValues(GOBLIN)["damage"],
-             config.getValues(GOBLIN)["level"]),
+             config.getValues(GOBLIN)["level"], 2),
       spider(config.getValues(SPIDER)["hp"], config.getValues(SPIDER)["damage"],
-             config.getValues(SPIDER)["level"]),
+             config.getValues(SPIDER)["level"], 0),
       skeleton(config.getValues(SKELETON)["hp"],
                config.getValues(SKELETON)["damage"],
-               config.getValues(SKELETON)["level"]),
+               config.getValues(SKELETON)["level"], 1),
       zombie(config.getValues(ZOMBIE)["hp"], config.getValues(ZOMBIE)["damage"],
-             config.getValues(ZOMBIE)["level"]),
+             config.getValues(ZOMBIE)["level"], 3),
       human(HUMAN_ID, config.getValues(HUMAN)["hpFactor"],
             config.getValues(HUMAN)["recoveryFactor"],
             config.getValues(HUMAN)["manaFactor"],
@@ -85,23 +84,24 @@ MasterFactory::MasterFactory(std::atomic<uint32_t>& idCounter,
 
 MasterFactory::~MasterFactory() {}
 
-Monster* MasterFactory::newGoblin(int x, int y) {
+Monster* MasterFactory::newGoblin(int x, int y, GameState& world) {
   return goblin.newMonster(idGenerator++, x, y, world, listener);
 }
 
-Monster* MasterFactory::newSkeleton(int x, int y) {
+Monster* MasterFactory::newSkeleton(int x, int y, GameState& world) {
   return skeleton.newMonster(idGenerator++, x, y, world, listener);
 }
 
-Monster* MasterFactory::newSpider(int x, int y) {
+Monster* MasterFactory::newSpider(int x, int y, GameState& world) {
   return spider.newMonster(idGenerator++, x, y, world, listener);
 }
 
-Monster* MasterFactory::newZombie(int x, int y) {
+Monster* MasterFactory::newZombie(int x, int y, GameState& world) {
   return zombie.newMonster(idGenerator++, x, y, world, listener);
 }
 
-PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData) {
+PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData,
+                                       GameState& world) {
   uint32_t id = playerData[0];
   uint32_t x = playerData[1];
   uint32_t y = playerData[2];

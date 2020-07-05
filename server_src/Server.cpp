@@ -15,6 +15,7 @@
 #include "headers/Map.h"
 #include "headers/Persistor.h"
 #include "headers/ServerProtocol.h"
+#include "headers/MasterFactory.h"
 
 Server::Server(const char* port, Configuration& configuration)
     : clientAcceptor(port),
@@ -29,7 +30,8 @@ void Server::run() {
 
   MessageDispatcher dispatcher;
   ServerEventListener listener(dispatcher);
-  GameState world(map.getCollisionMap(), config.getFPS(), listener);
+  MasterFactory factory(idAssigner, config, listener);
+  GameState world(map.getCollisionMap(), config.getFPS(), listener, factory);
   ServerEventHandler handler(world, listener);
   ServerProtocol protocol(handler);
 
