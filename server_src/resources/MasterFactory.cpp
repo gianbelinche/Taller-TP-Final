@@ -72,7 +72,6 @@ MasterFactory::MasterFactory(std::atomic<uint32_t>& idCounter,
               config.getValues(PALADIN)["constitutionFactor"],
               config.getValues(PALADIN)["intelligenceFactor"],
               config.getValues(PALADIN)["agilityFactor"]) {
-  
   races[HUMAN_ID] = &human;
   races[ELF_ID] = &elf;
   races[DWARF_ID] = &dwarf;
@@ -82,7 +81,6 @@ MasterFactory::MasterFactory(std::atomic<uint32_t>& idCounter,
   classes[WIZARD_ID] = &wizard;
   classes[CLERIC_ID] = &cleric;
   classes[PALADIN_ID] = &paladin;
-
 }
 
 MasterFactory::~MasterFactory() {}
@@ -112,4 +110,32 @@ PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData) {
   Race* playerRace = races[playerData[5]];
   Class* playerClass = classes[playerData[6]];
   uint32_t gold = playerData[7];
+}
+
+Weapon* MasterFactory::createWeapon(int itemType) {
+  std::unordered_map<std::string, float>& weaponStats =
+      config.getValuesByItemType(itemType);
+  return new Weapon(idGenerator++, itemType, weaponStats["minDmg"],
+                    weaponStats["maxDmg"], weaponStats["range"]);
+}
+
+Armor* MasterFactory::createArmor(int itemType) {
+  std::unordered_map<std::string, float>& armorStats =
+      config.getValuesByItemType(itemType);
+  return new Armor(idGenerator++, itemType, armorStats["minDef"],
+                   armorStats["maxDef"]);
+}
+
+Helmet* MasterFactory::createHelmet(int itemType) {
+  std::unordered_map<std::string, float>& helmetStats =
+      config.getValuesByItemType(itemType);
+  return new Helmet(idGenerator++, itemType, helmetStats["minDef"],
+                    helmetStats["maxDef"]);
+}
+
+Shield* MasterFactory::createShield(int itemType) {
+  std::unordered_map<std::string, float>& shieldStats =
+      config.getValuesByItemType(itemType);
+  return new Shield(idGenerator++, itemType, shieldStats["minDef"],
+                    shieldStats["maxDef"]);
 }

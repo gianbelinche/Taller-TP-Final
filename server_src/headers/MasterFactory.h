@@ -9,6 +9,12 @@
 #include "PlayerNet.h"
 #include "Race.h"
 #include "ServerEventListener.h"
+#include "Weapon.h"
+#include "Wearable.h"
+#include "Armor.h"
+#include "Shield.h"
+#include "Helmet.h"
+#include "Item.h"
 
 #define GOBLIN "goblin"
 #define SKELETON "skeleton"
@@ -72,4 +78,12 @@ class MasterFactory {
   Monster* newZombie(int x, int y);
 
   PlayerNet* createPlayer(std::vector<uint32_t>& playerData);
+
+  Weapon* createWeapon(int itemType);
+
+  Armor* createArmor(int itemType);
+
+  Helmet* createHelmet(int itemType);
+
+  Shield* createShield(int itemType);
 };
