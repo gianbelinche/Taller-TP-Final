@@ -1,27 +1,44 @@
 # Manual del proyecto
 
-Integrantes:
+## Integrantes
 
-	- Belinche Gianluca Ernesto 102674
-	
-	- Botta Guido Tomas 102103
-	
-	- Crespo Julian  ***Completar Padron***
-	
+|           Nombre           | Padrón |
+|:--------------------------:|:------:|
+| Belinche, Gianluca Ernesto | 102674 |
+|     Botta, Guido Tomas     | 102103 |
+|       Crespo, Julian       | 100490 |
+
 [Link al enunciado]() 	
 
 ## División de tareas
 
-Para realizar este proyecto se dividieron las tares en tres grupos, cada uno correspondiente a un integrante.
+Para realizar este proyecto se dividieron las tares en tres partes, cada una correspondiente a un integrante:
 
-Los grupos fueron los propuestos en el enunciado, donde el trabajo correspondiente al alumno 1 lo realizó Julian Crespo, el alumno 2 Guido Botta y el alumno 3 Gianluca Belinche.
+Estas tres partes se dividen en:
+
+1. Servidor: Manejo de lógica del juego, carga de datos y comunicación con múltiples clientes en simultáneo. Fue realizada por Julian Crespo.
+
+2. Cliente 1: Manejo de la parte gráfica, diseño del mapa, drops, interacción por parte del usuario y comunicación con servidor. Fue realizada por Guido Botta.
+
+3. Cliente 2: Manejo del sonido, interfaz gráfica (inventario, chat, barra de vida, etc), pantalla de login, persistencia, configuración, interacción del usuario y comunicación con servidor. Fue realizada por Gianluca Belinche.
 
 ## Evolución del proyecto
 
-El cronograma propuesto al inicio del proyecto fue el propuesto en el enunciado, este se llevo relativamente bien con algunos cambios menores, por ejemplo, el contenido de la semana 1 y 2 del alumno 3 fue realizado en la primer semana,
-el contenido de la semana 3 fue realizado durante las semanas 2 y 3, y el contenido de la semana 4 fue realizado en la semana correspondiente.
+### Semanas 1-3
 
-Otros casos fueron ***COMPLETAR CON CASOS DE GUIDO Y JULIAN***
+El cronograma propuesto en el enunciado fue llevado a cabo con pocos cambios menores. Por ejemplo, por parte del alumno 3, las semanas 1 y 2 fueron realizadas en la semana 1, mientras que la semana 3 fue realizada entre las semanas 2 y 3. 
+
+Estas situaciones sucedieron de forma similar en todas las partes, pero no son considerablemente diferentes como para ser mencionadas.
+
+### Semana 4
+
+En la semana 4 se terminó la mayor parte del cliente, incluida la pantalla de login, y se empezó a combinar las partes 2 y 3 orientadas al cliente.
+
+### Semanas 5
+
+En la semana 5 se cambió la pantalla de login, escrita en SDL, por otra escrita en qt, para poder hacerla más amigable al usuario.
+
+Además, se empezaron a probar servidor y clientes juntos para, al terminar la semana, poder tener el juego completo.
 
 ## Inconvenientes encontrados
 
@@ -34,8 +51,10 @@ Un problema encontrado al intentar realizar el login en QT, es que QT no permite
 
 ## Herramientas
 
-Las herramientas externas para realizar el proyecto fueron, las librerias SDL, QT, msgpack, jsoncpp, ***SHA256???***
-El sistema de control de versiones usado fue git a través de github.
-Se utilizaron diversos programas para la creación de los gráficos y la música del juego, entre ellos, audacity, ZapSplat (biblioteca online de sonidos) y software de corrección de color para darle variedad a los sprites.
+- **Librerías externas:** Las librerías utilizadas para realizar el proyecto fueron: SDL, QT, msgpack, jsoncpp, ***SHA256???***
+
+- **Sistema de Control de Versiones**: El sistema de control de versiones usado fue git a través de GitHub.
+
+- **Gráficos y Sonido**: Se utilizaron diversos programas para la creación de los gráficos y la música del juego, entre ellos, Audacity, ZapSplat (biblioteca online de sonidos) y software de corrección de color para darle variedad a los sprites. Además, se utilizó tiled para la creación del mapa y Photoshop para la edición de ciertos sprites. También utilizamos QT Creator para facilitar la creación de la pantalla de login.
 
 ## Conclusiones
