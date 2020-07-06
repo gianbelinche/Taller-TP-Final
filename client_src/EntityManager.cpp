@@ -85,6 +85,12 @@ void EntityManager::moveEntity(uint32_t ID, MovementType moveType) {
     else entities[ID]->refreshPosition(moveType);
 }
 
+void EntityManager::teleportEntity(uint32_t ID, uint16_t posX, uint16_t posY) {
+    std::unique_lock<std::mutex> lk(mux);
+    if (ID == playerID) player.teleportTo(posX, posY);
+    else entities[ID]->teleportTo(posX, posY);
+}
+
 void EntityManager::renderEntities(Camera &camera) {
     std::unique_lock<std::mutex> lk(mux);
 

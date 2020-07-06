@@ -15,7 +15,8 @@ enum state {
     LAYOUT_STATE,
     LOGIN,
     ATTACK,
-    DRINK_POTION
+    DRINK_POTION,
+    TELEPORT
 };
 
 ModelController::ModelController(EntityManager &anEntityManager, 
@@ -100,7 +101,10 @@ void ModelController::handle(std::vector<uint32_t> &event) {
 
         case DRINK_POTION:
             soundEffectPlayer.play(POTION);
-            break;         
+            break;
+
+        case TELEPORT:
+            entityManager.teleportEntity(event[1], event[2], event[3]);
         
         default:
             break;

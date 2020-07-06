@@ -45,6 +45,7 @@ class Item : public Entity {
         virtual bool collision(uint16_t x, uint16_t y) override;
         virtual void changeState(uint8_t aState) override;
         virtual void changeEquipment(EquipType equipType, uint8_t what) override;
+        virtual void teleportTo(uint16_t posX, uint16_t posY) override;
 };
 
 #endif

@@ -30,6 +30,7 @@ class Entity {
         virtual bool collision(uint16_t x, uint16_t y) = 0;
         virtual void changeState(uint8_t aState) = 0;
         virtual void changeEquipment(EquipType equipType, uint8_t what) = 0;
+        virtual void teleportTo(uint16_t posX, uint16_t posY) = 0;
 
         uint32_t getID();
         uint16_t getPosX();

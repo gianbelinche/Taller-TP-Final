@@ -95,3 +95,5 @@ bool Item::collision(uint16_t x, uint16_t y) {
 void Item::changeState(uint8_t aState) {}
 
 void Item::changeEquipment(EquipType equipType, uint8_t what) {}
+
+void Item::teleportTo(uint16_t posX, uint16_t posY) {}

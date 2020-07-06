@@ -288,6 +288,11 @@ void Player::changeEquipment(EquipType equipType, uint8_t what) {
     }
 }
 
+void Player::teleportTo(uint16_t posX, uint16_t posY) {
+    this->posX = posX;
+    this->posY = posY;
+}
+
 uint16_t Player::getHeight() {
     return this->bodyHeight;
 }

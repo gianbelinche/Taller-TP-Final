@@ -43,6 +43,7 @@ class EntityManager {
         void changeEntityEquipment(uint32_t ID, EquipType equipType, uint8_t what);
 
         void moveEntity(uint32_t ID, MovementType moveType);
+        void teleportEntity(uint32_t ID, uint16_t posX, uint16_t posY);
         void renderEntities(Camera &camera);
 
         uint32_t checkClickEntities(Camera &camera, uint16_t x, uint16_t y);
