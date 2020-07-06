@@ -80,6 +80,8 @@ class GameState {
   bool isNpc(int id);
 
   void spawnUnParDeMobs();
+
+  
 };
 
 #endif  // GAMESTATE_H

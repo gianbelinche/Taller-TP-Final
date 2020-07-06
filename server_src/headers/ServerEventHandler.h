@@ -15,8 +15,7 @@
 
 #define UP 0
 #define DOWN 1
-#define LEFT 2  NPC* npc = world.getNpc(player->getSelectedNpc());
-
+#define LEFT 2
 #define RIGHT 3
 #define STOP 4
 
@@ -47,7 +46,7 @@ class ServerEventHandler {
 
   void handleMeditation(int playerId);
 
-  void handleResurrect(int playerId, NPC* npc);
+  void handleResurrect(int playerId);
 
   void handleHeal(int playerId, NPC* npc);
 
@@ -69,7 +68,7 @@ class ServerEventHandler {
 
   void handleDrop(int playerId, int slotChoice=-1);
 
-  void handlePlayerMsg(int playerId, int otherPlayerId=-1);
+  void handlePlayerMsg(int playerId, std::string msg, int otherPlayerId=-1);
 };
 
 #endif  // SERVEREVENTHANDLER_H

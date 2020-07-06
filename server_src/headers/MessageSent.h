@@ -13,6 +13,8 @@ public:
   MessageSent(uint32_t originId, std::string& sentMsg);
 
   ~MessageSent();
+
+  std::string& getMsg();
 };
 
 #endif // MESSAGESENT_H

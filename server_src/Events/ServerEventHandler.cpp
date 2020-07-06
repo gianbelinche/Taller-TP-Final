@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "../headers/ChatMessageParser.h"
 #include "../headers/MeditationState.h"
 #include "../headers/PlayerNet.h"
 #include "../headers/PlayerState.h"
@@ -106,10 +107,6 @@ void ServerEventHandler::handle(EntityClick &ev) {
 
 void ServerEventHandler::handle(InventoryClick &ev) {}
 
-void ServerEventHandler::handle(MessageSent &ev) {
-
-}
-
 void ServerEventHandler::handle(PlayerConnection &ev) {
   uint32_t id = ev.getUser();
   PlayerNet* player = world.getPlayer(id);
@@ -131,6 +128,79 @@ void ServerEventHandler::handle(PlayerConnection &ev) {
   world.spawnUnParDeMobs();
 }
 
+void ServerEventHandler::handle(MessageSent &ev) {
+  std::string& msg = ev.getMsg();
+  PlayerNet* player = world.getPlayer(ev.getUser());
+  if (player == nullptr) {
+    std::cerr << "No se encontro el usuario\n";
+    return;
+  }
+  int id = player->getId();
+
+  std::vector<std::string> msgTokens = ChatMessageParser::parseTokens(msg);
+  int messageCode = ChatMessageParser::parse(msgTokens[0]);
+
+  if (messageCode == NO_COMMAND) {
+    // O MANDAR EL MENSAJE AL CHAT GLOBAL
+    return;
+  } else if (messageCode == MEDITAR) {
+    handleMeditation(id);
+    return;
+  } else if (messageCode == PLAYER_MSG) {
+    int destinyPlayerId = world.getIdByUsername(msgTokens[0].substr(1));
+    std::vector<std::string> realMsg(msgTokens.cbegin() + 1, msgTokens.cend());
+    std::string joinedMsg = ChatMessageParser::makeMsgFromTokens(realMsg);
+    handlePlayerMsg(id, joinedMsg, destinyPlayerId);
+    return;
+  } else if (messageCode == TOMAR) {
+    return;
+  } else if (messageCode == TIRAR) {
+    return;
+  } else if (messageCode == RESUCITAR) {
+    handleResurrect(id);
+    return;
+  }
+
+  // Si llego aca es porque es un mensaje dirigido a algun NPC
+  if (!npcHandleVerification(id)) {
+    return;
+  }
+  NPC* npc = world.getNpc(player->getSelectedNpc());
+
+  if (messageCode == CURAR) {
+    handleHeal(id, npc);
+    return;
+  } else if (messageCode == DEPOSITAR) {
+    if (msgTokens.size() < 2 || !ChatMessageParser::isANumber(msgTokens[1])) {
+      listener.playerSendMessageToChat(id, "Ingrese el numero de slot");
+      return; // FALTA MANEJAR EL DEPOSITO DE ORO
+    }
+    handleItemDeposit(id, std::stoi(msgTokens[1]) ,npc);
+    return;
+  } else if (messageCode == RETIRAR) {
+    if (msgTokens.size() < 2 || !ChatMessageParser::isANumber(msgTokens[1])) {
+      listener.playerSendMessageToChat(id, "Ingrese el numero de item correctamente");
+      return; // FALTA MANEJAR LA EXTRACCION DE ORO
+    }
+    handleItemSubstraction(id, std::stoi(msgTokens[1]), npc);
+    return;
+  } else if (messageCode == COMPRAR) {
+    if (msgTokens.size() < 2 || !ChatMessageParser::isANumber(msgTokens[1])) {
+      listener.playerSendMessageToChat(id, "Ingrese el numero de item correctamente");
+      return;
+    }
+    handlePurchase(id, std::stoi(msgTokens[1]), npc);
+    return;
+  } else if (messageCode == VENDER) {
+    if (msgTokens.size() < 2 || !ChatMessageParser::isANumber(msgTokens[1])) {
+      listener.playerSendMessageToChat(id, "Ingrese el numero de slot correctamente");
+      return;
+    }
+    handleSell(id, npc, std::stoi(msgTokens[1]));
+    return;
+  }
+}
+
 bool ServerEventHandler::npcHandleVerification(int playerId) {
   PlayerNet* player = world.getPlayer(playerId);
   if (player == nullptr) {
@@ -147,7 +217,6 @@ bool ServerEventHandler::npcHandleVerification(int playerId) {
   return true;
 }
 
-
 void ServerEventHandler::handleMeditation(int playerId) {
   PlayerNet* player = world.getPlayer(playerId);
   if (player == nullptr) {
@@ -157,7 +226,7 @@ void ServerEventHandler::handleMeditation(int playerId) {
   player->changeState(&PlayerState::meditating);
 }
 
-void ServerEventHandler::handleResurrect(int playerId, NPC* npc) {
+void ServerEventHandler::handleResurrect(int playerId) {
   PlayerNet* player = world.getPlayer(playerId);
   NPC* npc = world.getNpc(player->getSelectedNpc());
   npc->resurrect(player);
@@ -239,7 +308,8 @@ void ServerEventHandler::handleTake(int playerId) {}
 
 void ServerEventHandler::handleDrop(int playerId, int slotChoice=-1) {}
 
-void ServerEventHandler::handlePlayerMsg(int playerId, int otherPlayerId=-1) {
-  //listener.playerSendMessageToChat()
+void ServerEventHandler::handlePlayerMsg(int playerId, std::string msg, int otherPlayerId) {
+  std::string playerUsername = world.getUsernameById(playerId);
+  listener.playerSendMessageToChat(otherPlayerId, playerUsername + ": " + msg);
 }
 
