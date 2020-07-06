@@ -5,8 +5,8 @@ class Camera;
 
 #include "stdint.h"
 
-#define LEVEL_WIDTH 9056
-#define LEVEL_HEIGHT 7392
+#define LEVEL_WIDTH 9920
+#define LEVEL_HEIGHT 7104
 
 class Camera {
     private:
