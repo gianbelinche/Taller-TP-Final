@@ -12,5 +12,9 @@ public:
 
   std::vector<Item*>& getUserItems(int id);
 
-  void addGoldTo(int id);
+  void addGoldTo(int id, int amount);
+
+  void substractGoldTo(int id, int amount);
+
+  int getUserGold(int id);
 };

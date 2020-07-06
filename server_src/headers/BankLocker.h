@@ -17,5 +17,7 @@ public:
   void addGold(int amount);
 
   void substractGold(int amount);
+
+  int getGold();
 };
 

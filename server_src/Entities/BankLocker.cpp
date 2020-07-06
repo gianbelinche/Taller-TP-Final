@@ -15,3 +15,8 @@ void BankLocker::addGold(int amount) {
 void BankLocker::substractGold(int amount) {
   gold -= amount;
 }
+
+int BankLocker::getGold() {
+  return gold;
+}
+
