@@ -67,7 +67,6 @@ void ModelController::handle(std::vector<uint32_t> &event) {
             break;
 
         case DESTROY_ENTITY:
-            std::cout << event[0] << " " << event[1] << std::endl;
             entityManager.destroyEntity(event[1]);
             break;
 

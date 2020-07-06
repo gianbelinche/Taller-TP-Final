@@ -70,13 +70,13 @@ void EntityManager::destroyEntity(uint32_t ID) {
 void EntityManager::changeEntityState(uint32_t ID, uint8_t state) {
     std::unique_lock<std::mutex> lk(mux);
     if (ID == playerID) player.changeState(state);
-    entities[ID]->changeState(state);
+    else entities[ID]->changeState(state);
 }
 
 void EntityManager::changeEntityEquipment(uint32_t ID, EquipType equipType, uint8_t what) {
     std::unique_lock<std::mutex> lk(mux);
     if (ID == playerID) player.changeEquipment(equipType, what);
-    entities[ID]->changeEquipment(equipType, what);
+    else entities[ID]->changeEquipment(equipType, what);
 }
 
 void EntityManager::moveEntity(uint32_t ID, MovementType moveType) {
