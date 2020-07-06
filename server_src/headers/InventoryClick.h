@@ -1,3 +1,6 @@
+#ifndef INVENTORYCLICK_H
+#define INVENTORYCLICK_H
+
 #include "Event.h"
 
 #include <cstdint>
@@ -10,3 +13,5 @@ public:
 
   ~InventoryClick();
 };
+
+#endif // INVENTORYCLICK_H

@@ -1,5 +1,6 @@
 #ifndef CLASS_CONFIGURATION
 #define CLASS_CONFIGURATION
+
 #include <fstream>
 #include <string>
 #include <unordered_map>

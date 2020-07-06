@@ -40,6 +40,16 @@ class ServerEventHandler {
   void handle(PlayerConnection &ev);
 
   void handleUserAttack(EntityClick &ev);
+
+  void handleMeditation(int playerId);
+
+  void handleResurrect(int playerId);
+
+  void handleHeal(int playerId);
+
+  void handleDeposit(int playerId, int slotChoice);
+
+  void handleItemSubstraction(int playerId, int itemChoice);
 };
 
 #endif  // SERVEREVENTHANDLER_H

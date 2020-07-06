@@ -1,4 +1,5 @@
-
+#ifndef ISALIVE_H
+#define ISALIVE_H
 
 #include "Condition.h"
 
@@ -11,3 +12,5 @@ class IsAlive : public Condition {
 
   bool evaluate(PlayerNet* player) override;
 };
+
+#endif // ISALIVE_H

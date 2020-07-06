@@ -1,3 +1,6 @@
+#ifndef IMMOBILIZEDSTATE_H
+#define IMMOBILIZEDSTATE_H
+
 #include "PlayerState.h"
 
 class ImmobilizedState : public PlayerState {
@@ -12,3 +15,5 @@ public:
 
   void virtual update(PlayerNet &player);
 };
+
+#endif // IMMOBILIZEDSTATE_H

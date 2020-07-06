@@ -1,9 +1,11 @@
+#ifndef BANKLOCKER_H
+#define BANKLOCKER_H
+
 #include "Item.h"
 
 #include <vector>
 
-class BankLocker
-{
+class BankLocker {
 private:
   int gold;
   std::vector<Item*> itemsInside;
@@ -25,3 +27,4 @@ public:
   Item* getItem(int itemType);
 };
 
+#endif // BANKLOCKER_H

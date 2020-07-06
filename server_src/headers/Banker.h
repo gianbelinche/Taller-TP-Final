@@ -1,3 +1,6 @@
+#ifndef BANKER_H
+#define BANKER_H
+
 #include "Bank.h"
 #include "Item.h"
 #include "NPC.h"
@@ -27,3 +30,5 @@ class Banker : public NPC {
 
   void buyItem(PlayerNet* player, int choice) override;
 };
+
+#endif // BANKER_H

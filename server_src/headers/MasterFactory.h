@@ -136,6 +136,8 @@ class MasterFactory {
   ManaPotion* MasterFactory::createManaPotion(int itemType);
 
   HpPotion* MasterFactory::createHpPotion(int itemType);
+
+  
 };
 
 #endif  // MASTERFACTORY_H

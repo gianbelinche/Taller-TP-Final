@@ -1,3 +1,6 @@
+#ifndef MERCHANT_H
+#define MERCHANT_H
+
 #include "NPC.h"
 
 class Merchant : public NPC {
@@ -8,3 +11,5 @@ class Merchant : public NPC {
 
   ~Merchant();
 };
+
+#endif // MERCHANT_H

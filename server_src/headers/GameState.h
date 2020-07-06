@@ -9,6 +9,7 @@
 #include "Condition.h"
 #include "Entity.h"
 #include "NormalState.h"
+#include "NPC.h"
 #include "PlayerNet.h"
 #include "PlayerState.h"
 #include "MasterFactory.h"
@@ -20,6 +21,7 @@ class GameState {
   std::vector<std::vector<bool>> colisionMap;
   std::unordered_map<int, PlayerNet*> players;
   std::unordered_map<int, Entity*> entities;  // Jugadores y monstruos
+  std::unordered_map<int, NPC*> npcs;
   int framesPerSecond;
   ServerEventListener& listener;
   MasterFactory& factory;
@@ -56,6 +58,8 @@ class GameState {
   void update();
 
   void sendState(int id);
+
+  bool isNpc(int id);
 
   void spawnUnParDeMobs();
 };

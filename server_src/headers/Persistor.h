@@ -1,5 +1,6 @@
 #ifndef CLASS_PERSISTOR
 #define CLASS_PERSISTOR
+
 #include <fstream>
 #include <mutex>
 #include <string>

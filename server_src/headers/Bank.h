@@ -1,3 +1,6 @@
+#ifndef BANK_H
+#define BANK_H
+
 #include "BankLocker.h"
 #include "Item.h"
 
@@ -23,3 +26,5 @@ public:
 
   Item* substractItem(int choice, int id);
 };
+
+#endif // BANK_H
