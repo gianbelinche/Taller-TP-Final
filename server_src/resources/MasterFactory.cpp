@@ -150,3 +150,35 @@ Shield* MasterFactory::createShield(int itemType) {
   return new Shield(idGenerator++, itemType, shieldStats["minDef"],
                     shieldStats["maxDef"]);
 }
+
+Item* MasterFactory::createItem(int itemType) {
+  if (itemType == POCIONMANA_TYPE) {
+    return createManaPotion(itemType);
+  } else if (itemType == POCIONHP_TYPE) {
+    return createHpPotion(itemType);
+  } else if (armors.find(itemType) != armors.end()) {
+    return createArmor(itemType);
+  } else if (helmets.find(itemType) != helmets.end()) {
+    return createHelmet(itemType);
+  } else if (shields.find(itemType) != shields.end()) {
+    return createShield(itemType);
+  } else if (weapons.find(itemType) != weapons.end()) {
+    return createWeapon(itemType);
+  }
+}
+
+ManaPotion* MasterFactory::createManaPotion(int itemType) {
+  std::unordered_map<std::string, float>& potionStats =
+      config.getValuesByItemType(itemType);
+  return new ManaPotion(idGenerator++, itemType, config.getItemName(itemType),
+                        potionStats["buyPrice"], potionStats["sellPrice"],
+                        potionStats["recovery"]);
+}
+
+HpPotion* MasterFactory::createHpPotion(int itemType) {
+  std::unordered_map<std::string, float>& potionStats =
+      config.getValuesByItemType(itemType);
+  return new HpPotion(idGenerator++, itemType, config.getItemName(itemType),
+                        potionStats["buyPrice"], potionStats["sellPrice"],
+                        potionStats["recovery"]);
+}

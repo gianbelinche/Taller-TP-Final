@@ -3,6 +3,7 @@
 
 #include <atomic>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include "Armor.h"
@@ -10,7 +11,9 @@
 #include "Configuration.h"
 #include "GhostState.h"
 #include "Helmet.h"
+#include "HpPotion.h"
 #include "Item.h"
+#include "ManaPotion.h"
 #include "MonsterType.h"
 #include "NormalState.h"
 #include "PlayerNet.h"
@@ -46,8 +49,31 @@
 #define CLERIC_ID 2
 #define PALADIN_ID 3
 
+enum itemsType {
+  NOTHING_TYPE,
+  ESPADA_TYPE,
+  HACHA_TYPE,
+  MARTILLO_TYPE,
+  VARAFRESNO_TYPE,
+  FLAUTAELFICA_TYPE,
+  BACULONUDOSO_TYPE,
+  BACULOENGARZADO_TYPE,
+  ARCOSIMPLE_TYPE,
+  ARCOCOMPUESTO_TYPE,
+  ARMADURACUERO_TYPE,
+  ARMADURAPLACAS_TYPE,
+  TUNICAAZUL_TYPE,
+  CAPUCHA_TYPE,
+  CASCOHIERRO_TYPE,
+  ESCUDOTORTUGA_TYPE,
+  ESCUDOHIERRO_TYPE,
+  SOMBREROMAGICO_TYPE,
+  POCIONHP_TYPE,
+  POCIONMANA_TYPE
+};
+
 // Avoid circular dependencies
-class GameState; 
+class GameState;
 class Monster;
 
 class MasterFactory {
@@ -69,6 +95,17 @@ class MasterFactory {
   Class paladin;
   std::unordered_map<uint32_t, Race*> races;
   std::unordered_map<uint32_t, Class*> classes;
+
+  // Unordered sets para busqueda O(1)
+  std::unordered_set<int> armors = {ARMADURACUERO_TYPE, ARMADURAPLACAS_TYPE};
+  std::unordered_set<int> shields = {ESCUDOHIERRO_TYPE, ESCUDOTORTUGA_TYPE};
+  std::unordered_set<int> helmets = {CASCOHIERRO_TYPE, CAPUCHA_TYPE,
+                                     SOMBREROMAGICO_TYPE};
+  std::unordered_set<int> weapons = {
+      ESPADA_TYPE,       HACHA_TYPE,        MARTILLO_TYPE,
+      VARAFRESNO_TYPE,   FLAUTAELFICA_TYPE, BACULOENGARZADO_TYPE,
+      BACULONUDOSO_TYPE, ARCOSIMPLE_TYPE,   ARCOCOMPUESTO_TYPE};
+  std::unordered_set<int> potions = {POCIONHP_TYPE, POCIONMANA_TYPE};
 
  public:
   MasterFactory(std::atomic<uint32_t>& idCounter, Configuration& configuration,
@@ -93,6 +130,12 @@ class MasterFactory {
   Helmet* createHelmet(int itemType);
 
   Shield* createShield(int itemType);
+
+  Item* createItem(int itemType);
+
+  ManaPotion* MasterFactory::createManaPotion(int itemType);
+
+  HpPotion* MasterFactory::createHpPotion(int itemType);
 };
 
 #endif  // MASTERFACTORY_H

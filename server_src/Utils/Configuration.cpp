@@ -25,6 +25,8 @@ Configuration::Configuration(std::string configFile) {
   itemToStr[15] = "Escudo Tortuga";
   itemToStr[16] = "Escudo de Hierro";
   itemToStr[17] = "Sombrero Magico";
+  itemToStr[18] = "Pocion de mana";
+  itemToStr[19] = "Pocion de vida";
 }
 
 Configuration::~Configuration() {}
