@@ -11,7 +11,6 @@ Entity::Entity(int x, int y, int id, int maxHp, int level)
       maxHp(maxHp), 
       level(level),
       currentFrame(0) {
-  std::cout << "Se creo con: " << maxHp << " de vida\n";
       }
 
 Entity::~Entity() {}

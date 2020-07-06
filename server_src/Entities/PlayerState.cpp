@@ -17,13 +17,11 @@ void PlayerState::lifeRecover(PlayerNet &player) {
   int healing = equation::pointsRecovery(
       player.getRaceRecovery(), player.getCurrFrame() / player.getFPS());
   player.heal(healing);
-  std::cout << "Recupera: " << healing << " ptos de vida\n";
 }
 
 void PlayerState::move(PlayerNet &player, int x, int y) {
   player.setX(x);
   player.setY(y);
-  std::cout << "El jugador se movio a X: " << x << "y: " << y << std::endl;
 }
 
 void PlayerState::update(PlayerNet &player) {

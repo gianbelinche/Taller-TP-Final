@@ -95,7 +95,6 @@ int PlayerNet::takeDamage(int dmgToTake) {
   int defense = equation::playerDefense(
       armor->getMinDef(), armor->getMaxDef(), shield->getMinDef(),
       shield->getMaxDef(), helmet->getMinDef(), helmet->getMaxDef());
-  std::cout << "La defensa resulto: " << defense << std::endl;
   int finalDmg = std::max(0, dmgToTake - defense);
   int oldHp = hp;
 
@@ -113,16 +112,13 @@ int PlayerNet::takeDamage(int dmgToTake) {
 
     // Dropear los items
   }
-  std::cout << "Ahora tiene vida: " << hp << std::endl;
   return oldHp - hp;  // Daño efectivo
 }
 
 void PlayerNet::update() {
   currentFrame++;
-  if (currentFrame == 100) {
-    std::cout << "Tenia " << hp << "de vida\n";
+  if (currentFrame == 500) {
     state->update(*this);
-    std::cout << "Ahora tiene:" << hp << std::endl;
     currentFrame = 0;
   }
 }

@@ -130,8 +130,8 @@ void ServerEventListener::inventoryEquipItem(int id,int slot){
 void ServerEventListener::playerDied(int id) {
   std::vector<uint32_t> event;
   event.push_back(PLAYER_STATE_CHANGE);
-  event.push_back(DEAD);
   event.push_back(id);
+  event.push_back(DEAD);
   dispatcher.broadcastMessage(event);
 }
 

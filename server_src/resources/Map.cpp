@@ -130,9 +130,6 @@ Map::Map(const char* mapPath) {
     vt.emplace_back(vall["tilewidth"].asString());
 
     tiles[key] = vt;
-    std::cout << "Valor: " << vt[0] << std::endl;
-    std::cout << "Valor: " << vt[1] << std::endl;
-    std::cout << "Valor: " << vt[2] << std::endl;
 
   }
 }

@@ -59,7 +59,6 @@ void Monster::update() {
         }
         if (world.isValidPosition(new_x, new_y)) {
           moveTo(new_x, new_y, direction);
-          std::cout << "El mostro se movio a X: " << x << " Y: " << y << "\n\n";
         }
       }
     } else {  // Si no hay jugador cerca
@@ -82,7 +81,6 @@ void Monster::update() {
       }
       if (world.isValidPosition(new_x, new_y)) {
         moveTo(new_x, new_y, direction);
-        std::cout << "El mostro se movio a X: " << x << " Y: " << y << "\n\n";
       }
     }
   }
@@ -101,8 +99,7 @@ int Monster::takeDamage(int dmgToTake) {
 
 int Monster::attack(PlayerNet* player) {
   int damageDealt = player->takeDamage(kind.getDamage());
-  std::cout << "Ataco al jugador: " << player->getId() 
-            << " y le hizo un daño de: " << damageDealt << "\n\n";
+
   return damageDealt;
 }
 
