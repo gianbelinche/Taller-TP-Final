@@ -47,6 +47,16 @@ El problema se soluciono haciendo que la pantalla de login se implementara con Q
 
 Un problema encontrado al intentar realizar el login en QT, es que QT no permite el lanzamiento de excepciones, por lo que no podiamos diferenciar cuando la aplicacion de QT se cerraba porque habia terminado su ejecucion correctamente, o porque el usuario habia presionado la tecla exit o la cruz para salir del programa, el problema principal era la cruz, ya que no era posible redefinir el comportamiento de esta, se decidio usar una variable de estado, inicializada en -1, y en caso de que se saliera correctamente cambiarla a 0, de esta forma, aun no pudiendo redefinir el comportamiento de la cruz, se aseguraba que si esta era presionada, la variable valdria -1 y entonces podriamos verificar que debiamos terminar la ejecucion del programa.
 
+Una vez unidos el servidor y el cliente, se fueron encontrando diversos errores, entre ellos:
+
+Al principio si un cliente se desconectaba, el servidor se cerraba abruptamente, esto logro solucionarse ...
+
+Una vez solucionado el error anterior, ocurria que si luego de conectarse varios clientes, todos se desconectaban, si se queria conectar un nuevo cliente, el servidor se cerraba.
+
+Por ultimo, una vez solucionados estos ultimos, tambien llegaba a suceder, en muy contadas ocaciones, que un cliente se desconectara subitamente.
+
+Otro error encontrado, fue que si habia varios clientes conectados, solo se visualizaban los objetos equipados del jugador, pero no los de los demas, es decir, los otros jugadores se veian "desnudos"
+
 ## Analisis de puntos pendientes
 
 ## Herramientas
