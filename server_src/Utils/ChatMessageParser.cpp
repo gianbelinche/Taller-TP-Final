@@ -1,8 +1,12 @@
 #include "../headers/ChatMessageParser.h"
 
 #include <sstream>
+#include <iostream>
 
 int ChatMessageParser::parse(std::string& str_command) {
+  if (str_command.length() == 0){
+    return NO_COMMAND;
+  }
   if (str_command[0] == '@') {
     return PLAYER_MSG;
   } else if (str_command[0] == '/') {

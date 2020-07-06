@@ -138,7 +138,10 @@ void ServerEventHandler::handle(MessageSent &ev) {
   int id = player->getId();
 
   std::vector<std::string> msgTokens = ChatMessageParser::parseTokens(msg);
-  int messageCode = ChatMessageParser::parse(msgTokens[0]);
+  int messageCode = NO_COMMAND;
+  if (msgTokens.size() > 0){
+    messageCode = ChatMessageParser::parse(msgTokens[0]);
+  }
 
   if (messageCode == NO_COMMAND) {
     // O MANDAR EL MENSAJE AL CHAT GLOBAL
