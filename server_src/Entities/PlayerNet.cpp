@@ -70,6 +70,7 @@ float PlayerNet::getMeditationFactor() {
 float PlayerNet::getRaceRecovery() { return playerRace->getRecoveryFactor(); }
 
 int PlayerNet::attack(Entity* ent) {
+  selectNpc(-1);
   return state->attack(*this, ent, getDamage());
 }
 
@@ -80,7 +81,10 @@ void PlayerNet::heal(int points) {
   listener.lifeUpdate(id, hp, maxHp);
 }
 
-void PlayerNet::move(int x, int y) { state->move(*this, x, y); }
+void PlayerNet::move(int x, int y) {
+  selectNpc(-1);
+  state->move(*this, x, y);
+}
 
 void PlayerNet::recoverMana(int mPoints) {
   mana = std::min(mana + mPoints, maxMana);
@@ -217,4 +221,13 @@ std::vector<uint32_t> PlayerNet::getSendable() {
 void PlayerNet::substractGold(int amount) {
   gold -= amount;
   listener.goldUpdate(id, gold);
+}
+
+void PlayerNet::addGold(int amount) {
+  gold += amount;
+  listener.goldUpdate(id, gold);
+}
+
+void PlayerNet::selectNpc(int id) {
+  selectedNpc = id;
 }

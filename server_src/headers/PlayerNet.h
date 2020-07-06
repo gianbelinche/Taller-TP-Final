@@ -25,6 +25,7 @@ class PlayerNet : public Entity {
   int exp;
   int gold;
   int maxGold;
+  int selectedNpc = -1;
   GameState& world;
   Weapon* weapon;
   Armor* armor;
@@ -84,6 +85,9 @@ class PlayerNet : public Entity {
 
   void substractGold(int amount);
 
+  void addGold(int amount);
+
+
   std::vector<uint32_t> getSendable() override;
 
   /* ---------- Acciones ---------- */
@@ -104,6 +108,8 @@ class PlayerNet : public Entity {
   void recoverMana(int mPoints);
 
   int takeDamage(int dmgToTake) override;
+
+  void selectNpc(int id);
 
   void update() override;
 
