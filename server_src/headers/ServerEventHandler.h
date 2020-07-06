@@ -11,10 +11,12 @@
 #include "UserMoved.h"
 #include "GameState.h"
 #include "Thread.h"
+#include "NPC.h"
 
 #define UP 0
 #define DOWN 1
-#define LEFT 2
+#define LEFT 2  NPC* npc = world.getNpc(player->getSelectedNpc());
+
 #define RIGHT 3
 #define STOP 4
 
@@ -41,15 +43,33 @@ class ServerEventHandler {
 
   void handleUserAttack(EntityClick &ev);
 
+  bool npcHandleVerification(int playerId);
+
   void handleMeditation(int playerId);
 
-  void handleResurrect(int playerId);
+  void handleResurrect(int playerId, NPC* npc);
 
-  void handleHeal(int playerId);
+  void handleHeal(int playerId, NPC* npc);
 
-  void handleDeposit(int playerId, int slotChoice);
+  void handleItemDeposit(int playerId, int slotChoice, NPC* npc);
 
-  void handleItemSubstraction(int playerId, int itemChoice);
+  void handleGoldDeposit(int playerId, int slotChoice, NPC* npc);
+
+  void handleItemSubstraction(int playerId, int itemChoice, NPC* npc);
+
+  void handleGoldSubstraction(int playerId, int amount, NPC* npc);
+
+  void handleListItems(int playerId, NPC* npc);
+
+  void handlePurchase(int playerId, int itemChoice, NPC* npc);
+
+  void handleSell(int playerId, NPC* npc, int slotChoice=-1);
+
+  void handleTake(int playerId);
+
+  void handleDrop(int playerId, int slotChoice=-1);
+
+  void handlePlayerMsg(int playerId, int otherPlayerId=-1);
 };
 
 #endif  // SERVEREVENTHANDLER_H

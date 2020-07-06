@@ -2,7 +2,11 @@
 
 #include <iostream>
 
+#include "../headers/MeditationState.h"
 #include "../headers/PlayerNet.h"
+#include "../headers/PlayerState.h"
+#include "../headers/Item.h"
+#include "../headers/Inventory.h"
 
 ServerEventHandler::ServerEventHandler(GameState& state,
                                        ServerEventListener& eventListener)
@@ -127,29 +131,115 @@ void ServerEventHandler::handle(PlayerConnection &ev) {
   world.spawnUnParDeMobs();
 }
 
-  void ServerEventHandler::handleMeditation(int playerId) {}
+bool ServerEventHandler::npcHandleVerification(int playerId) {
+  PlayerNet* player = world.getPlayer(playerId);
+  if (player == nullptr) {
+    std::cerr << "No se encontro el usuario\n";
+    return false;
+  }
+  if (player->getSelectedNpc() < 0) { // Nada seleccionado
+    return false;
+  }
+  if (world.getNpc(player->getSelectedNpc()) == nullptr) {
+    std::cerr << "Fatal: NPC no encontrado\n"; // Caso muy raro
+    return false;
+  }
+  return true;
+}
 
-  void ServerEventHandler::handleResurrect(int playerId) {}
 
-  void ServerEventHandler::handleHeal(int playerId) {}
+void ServerEventHandler::handleMeditation(int playerId) {
+  PlayerNet* player = world.getPlayer(playerId);
+  if (player == nullptr) {
+    std::cerr << "No se encontro el usuario\n";
+    return;
+  }
+  player->changeState(&PlayerState::meditating);
+}
 
-  void ServerEventHandler::handleItemDeposit(int playerId, int slotChoice) {}
+void ServerEventHandler::handleResurrect(int playerId, NPC* npc) {
+  PlayerNet* player = world.getPlayer(playerId);
+  NPC* npc = world.getNpc(player->getSelectedNpc());
+  npc->resurrect(player);
+}
 
-  void ServerEventHandler::handleGoldDeposit(int playerId, int slotChoice) {}
+void ServerEventHandler::handleHeal(int playerId, NPC* npc) {
+  PlayerNet* player = world.getPlayer(playerId);
+  NPC* npc = world.getNpc(player->getSelectedNpc());
+  npc->heal(player);
+}
 
-  void ServerEventHandler::handleItemSubstraction(int playerId, int itemChoice) {}
+void ServerEventHandler::handleItemDeposit(int playerId, int slotChoice, NPC* npc) {
+  PlayerNet* player = world.getPlayer(playerId);
+  if (slotChoice < 1 || slotChoice > player->getInventorySize()) {
+    listener.playerSendMessageToChat(player->getId(), "Ingrese un numero correcto de slot");
+    return;
+  }
+  Inventory& inventory = player->getInventory();
+  Item* item = inventory.getItem(slotChoice);
+  if (item == nullptr) {
+    return;
+  }
+  npc->depositItem(item, playerId);
+  inventory.removeItemAt(slotChoice);
+}
 
-  void ServerEventHandler::handleGoldSubstraction(int playerId, int amount) {}
+void ServerEventHandler::handleGoldDeposit(int playerId, int amount, NPC* npc) {
+  npc->goldDeposit(world.getPlayer(playerId), amount);
+}
 
-  void ServerEventHandler::handleListItems(int playerId) {}
+void ServerEventHandler::handleItemSubstraction(int playerId, int itemChoice, NPC* npc) {
+  PlayerNet* player = world.getPlayer(playerId);
+  Inventory& inventory = player->getInventory();
 
-  void ServerEventHandler::handlePurchase(int playerId, int itemChoice) {}
+  if (inventory.isFull()) {
+    return;
+  }
 
-  void ServerEventHandler::handleSell(int playerId, int slotChoice) {}
+  Item* item = npc->substractItem(itemChoice, playerId);
+  if (item == nullptr) {
+    listener.playerSendMessageToChat(player->getId(), "Id de item no reconocido");
+  }
+  inventory.addItem(item);
+  // Logica de mandarle al server el item que se agrego y en que slot
+}
 
-  void ServerEventHandler::handleTake(int playerId) {}
+void ServerEventHandler::handleGoldSubstraction(int playerId, int amount, NPC* npc) {
+  npc->goldExtraction(world.getPlayer(playerId), amount);
+}
 
-  void ServerEventHandler::handleDrop(int playerId, int slotChoice=-1) {}
+void ServerEventHandler::handleListItems(int playerId, NPC* npc) {
+  npc->listItems(world.getPlayer(playerId));
+}
 
-  void ServerEventHandler::handlePlayerMsg(int playerId, int otherPlayerId=-1) {}
+void ServerEventHandler::handlePurchase(int playerId, int itemChoice, NPC* npc) {
+  PlayerNet* player = world.getPlayer(playerId);
+  Item* item = npc->buyItem(player, itemChoice);
+  if (item == nullptr) {
+    return;
+  }
+  player->getInventory().addItem(item);
+  // AVISARLE AL CLIENTE QUE HAY ALGO NUEVO EN EL INVENTARIO
+}
+
+void ServerEventHandler::handleSell(int playerId, NPC* npc, int slotChoice) {
+  PlayerNet* player = world.getPlayer(playerId);
+  Inventory& inventory = player->getInventory();
+  if (slotChoice == -1) {
+    slotChoice = player->getSelectedSlot();
+  }
+  Item* item = inventory.getItem(slotChoice);
+  inventory.removeItemAt(slotChoice);
+  int profit = npc->sellItem(item);
+  player->addGold(profit);
+  // AVISARLE AL CLIENTE QUE HAY ALGO MENOS EN EL INVENTARIO
+}
+
+void ServerEventHandler::handleTake(int playerId) {}
+
+void ServerEventHandler::handleDrop(int playerId, int slotChoice=-1) {}
+
+void ServerEventHandler::handlePlayerMsg(int playerId, int otherPlayerId=-1) {
+  //listener.playerSendMessageToChat()
+}
 
