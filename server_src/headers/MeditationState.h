@@ -16,7 +16,7 @@ class MeditationState : public PlayerState {
 
   void manaRecover(PlayerNet &player) override;
 
-  int attack(PlayerNet &player, Entity *ent, int damage);
+  int attack(PlayerNet &player, Entity *ent, int damage) override;
 };
 
 #endif  // MEDITATIONSTATE_H

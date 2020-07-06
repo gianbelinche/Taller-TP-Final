@@ -7,6 +7,7 @@ class PlayerNet;
 class GhostState;
 class NormalState;
 class MeditationState;
+class ImmobilizedState;
 
 class PlayerState {
  private:
@@ -29,5 +30,6 @@ class PlayerState {
   static NormalState normal;
   static MeditationState meditating;
   static GhostState dead;
+  static ImmobilizedState immobilized;
 };
 #endif  // PLAYERSTATE_H
