@@ -214,3 +214,7 @@ std::vector<uint32_t> PlayerNet::getSendable() {
   return playerInfo;
 }
 
+void PlayerNet::substractGold(int amount) {
+  gold -= amount;
+  listener.goldUpdate(id, gold);
+}

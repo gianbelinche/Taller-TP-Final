@@ -82,6 +82,8 @@ class PlayerNet : public Entity {
 
   int getMaxExp();
 
+  void substractGold(int amount);
+
   std::vector<uint32_t> getSendable() override;
 
   /* ---------- Acciones ---------- */
