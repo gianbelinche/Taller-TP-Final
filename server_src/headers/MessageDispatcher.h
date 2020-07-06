@@ -25,6 +25,8 @@ public:
   void addPlayerQueue(uint32_t id, ProtectedQueue<std::vector<uint32_t>>* q);
 
   void playerConnected(uint32_t id);
+
+  void deletePlayerQueue(uint32_t id);
 };
 
 #endif // MESSAGEDISPATCHER_H
