@@ -480,6 +480,14 @@ A través de msgpack, se forma de la siguiente manera:
     Ejemplo:
 
     `{12}` <- El jugador tomo una poción 
+
+13. **Teletransportar**:
+
+  `13 + ID + posX + posY`
+
+  Ejemplo:
+
+  `{13, 20, 1200, 1350}` <- El jugador 20 se teletransporto a la posicion (1200,1350)
     
 
 
