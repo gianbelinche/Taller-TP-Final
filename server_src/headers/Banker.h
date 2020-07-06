@@ -15,6 +15,8 @@ public:
   void goldDeposit(PlayerNet* player, int amount) override;
 
   void goldExtraction(PlayerNet* player, int amount) override;
+
+  void depositItem(Item* item, int id) override;
 };
 
 

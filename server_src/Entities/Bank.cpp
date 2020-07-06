@@ -19,3 +19,8 @@ void Bank::substractGoldTo(int id, int amount) {
 int Bank::getUserGold(int id) {
   return lockers[id].getGold();
 }
+
+void Bank::addItemToUser(int id, Item* item) {
+  lockers[id].addItem(item);
+}
+

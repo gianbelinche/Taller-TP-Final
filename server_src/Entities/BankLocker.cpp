@@ -20,3 +20,7 @@ int BankLocker::getGold() {
   return gold;
 }
 
+void BankLocker::addItem(Item* item) {
+  itemsInside.push_back(item);
+}
+

@@ -34,3 +34,7 @@ void Banker::goldExtraction(PlayerNet* player, int amount) {
   player->addGold(amount);
   bank.substractGoldTo(player->getId(), amount);
 }
+
+void Banker::depositItem(Item* item, int id) {
+  bank.addItemToUser(id, item);
+}

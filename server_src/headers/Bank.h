@@ -1,4 +1,5 @@
 #include "BankLocker.h"
+#include "Item.h"
 
 #include <unordered_map>
 
@@ -17,4 +18,6 @@ public:
   void substractGoldTo(int id, int amount);
 
   int getUserGold(int id);
+
+  void addItemToUser(int id, Item* item);
 };
