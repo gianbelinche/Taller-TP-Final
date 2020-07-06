@@ -10,6 +10,7 @@ int ChatMessageParser::parse(std::string& str_command) {
   if (str_command[0] == '@') {
     return PLAYER_MSG;
   } else if (str_command[0] == '/') {
+    /*
     if (str_command.find("meditar") != std::string::npos) {
       return MEDITAR;
     }
@@ -39,7 +40,37 @@ int ChatMessageParser::parse(std::string& str_command) {
     }
     if (str_command.find("tirar") != std::string::npos) {
       return TIRAR;
+    }*/
+    if (str_command.substr(1) == "meditar"){
+      return MEDITAR;
     }
+    if (str_command.substr(1) == "resucitar") {
+      return RESUCITAR;
+    }
+    if (str_command.substr(1) == "curar") {
+      return CURAR;
+    }
+    if (str_command.substr(1,str_command.find(" ") - 1) == "depositar") {
+      return DEPOSITAR;
+    }
+    if (str_command.substr(1,str_command.find(" ") - 1) == "retirar") {
+      return RETIRAR;
+    }
+    if (str_command.substr(1) == "listar") {
+      return LISTAR;
+    }
+    if (str_command.substr(1,str_command.find(" ") - 1) == "comprar") {
+      return COMPRAR;
+    }
+    if (str_command.substr(1,str_command.find(" ") - 1) =="vender") {
+      return VENDER;
+    }
+    if (str_command.substr(1) == "tomar") {
+      return TOMAR;
+    }
+    if (str_command.substr(1) == "tirar") {
+      return TIRAR;
+    }  
     return NO_COMMAND;
   }
   return NO_COMMAND;
