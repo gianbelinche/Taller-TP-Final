@@ -9,7 +9,7 @@
     "initialLevel": 5,
     "initialExp": 0,
     "initialGold": 98,
-    "initialState": 1,
+    "initialState": 0,
     "initialWeapon": 6,
     "initialHelmet": 14,
     "initialArmor": 11,
@@ -18,25 +18,25 @@
   "goblin": {
     "hp": 30,
     "damage": 7,
-    "level" : 3
+    "level": 3
   },
   "spider": {
     "hp": 15,
     "damage": 15,
-    "level" : 5
+    "level": 5
   },
   "skeleton": {
     "hp": 30,
     "damage": 10,
-    "level" : 4
+    "level": 4
   },
   "zombie": {
     "hp": 40,
     "damage": 4,
-    "level" : 9
+    "level": 9
   },
-  "human" : {
-    "hpFactor" : 2,
+  "human": {
+    "hpFactor": 2,
     "recoveryFactor": 3,
     "manaFactor": 1,
     "constitution": 6,
@@ -44,8 +44,8 @@
     "intelligence": 4,
     "agility": 5
   },
-  "elf" : {
-    "hpFactor" : 1,
+  "elf": {
+    "hpFactor": 1,
     "recoveryFactor": 4,
     "manaFactor": 2,
     "constitution": 4,
@@ -53,8 +53,8 @@
     "intelligence": 8,
     "agility": 7
   },
-  "dwarf" : {
-    "hpFactor" : 3,
+  "dwarf": {
+    "hpFactor": 3,
     "recoveryFactor": 3,
     "manaFactor": 0.7,
     "constitution": 7,
@@ -62,8 +62,8 @@
     "intelligence": 3,
     "agility": 2
   },
-  "gnome" : {
-    "hpFactor" : 1,
+  "gnome": {
+    "hpFactor": 1,
     "recoveryFactor": 4,
     "manaFactor": 1,
     "constitution": 4,
@@ -72,38 +72,38 @@
     "agility": 8
   },
   "warrior": {
-    "hpFactor" : 2,
+    "hpFactor": 2,
     "manaFactor": 0,
     "meditFac": 0,
     "strengthFactor": 1.4,
-    "constitutionFactor" : 1.3,
+    "constitutionFactor": 1.3,
     "intelligenceFactor": 1,
     "agilityFactor": 1.2
   },
   "wizard": {
-    "hpFactor" : 1,
+    "hpFactor": 1,
     "manaFactor": 3,
     "meditFac": 2,
     "strengthFactor": 0.8,
-    "constitutionFactor" : 0.9,
+    "constitutionFactor": 0.9,
     "intelligenceFactor": 2,
     "agilityFactor": 0.9
   },
   "cleric": {
-    "hpFactor" : 1.5,
+    "hpFactor": 1.5,
     "manaFactor": 2,
     "meditFac": 1.6,
     "strengthFactor": 1,
-    "constitutionFactor" : 1.1,
+    "constitutionFactor": 1.1,
     "intelligenceFactor": 1.4,
     "agilityFactor": 1
   },
   "paladin": {
-    "hpFactor" : 2,
+    "hpFactor": 2,
     "manaFactor": 2,
     "meditFac": 1,
     "strengthFactor": 1.7,
-    "constitutionFactor" : 1.5,
+    "constitutionFactor": 1.5,
     "intelligenceFactor": 1,
     "agilityFactor": 1
   },
@@ -188,5 +188,11 @@
   "Escudo de Hierro": {
     "minDef": 6,
     "maxDef": 10
+  },
+  "Pocion de mana": {
+    "recovery": 50
+  },
+  "Pocion de vida": {
+    "recovery": 50
   }
 }
