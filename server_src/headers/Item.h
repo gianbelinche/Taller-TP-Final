@@ -1,9 +1,9 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "Configuration.h"
-
 #include <string>
+
+#include "Configuration.h"
 
 class PlayerNet;
 
@@ -12,8 +12,12 @@ class Item {
   int id;
   int typeOfItem;
   std::string name;
+  int buyPrice;
+  int sellPrice;
+
  public:
-  Item(int itemID, int itemType, std::string itemName);
+  Item(int itemID, int itemType, std::string itemName, int buyPrice,
+       int sellPrice);
 
   ~Item();
 
@@ -24,6 +28,10 @@ class Item {
   std::string getItemName();
 
   void virtual beEquiped(PlayerNet &player);
+
+  int getBuyPrice();
+
+  int getSellPrice();
 };
 
 #endif  // ITEM_H

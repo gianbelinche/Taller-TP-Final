@@ -1,7 +1,8 @@
 #include "../headers/Item.h"
 #include "../headers/PlayerNet.h"
 
-Item::Item(int itemID, int itemType, std::string itemName) {}
+Item::Item(int itemID, int itemType, std::string itemName, int buyPrice,
+       int sellPrice) {}
 
 Item::~Item() {}
 
@@ -17,4 +18,10 @@ std::string Item::getItemName() {
   return name;
 }
 
+int Item::getBuyPrice() {
+  return buyPrice;
+}
 
+int Item::getSellPrice() {
+  return sellPrice;
+}
