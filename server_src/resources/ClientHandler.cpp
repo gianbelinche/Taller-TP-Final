@@ -30,7 +30,10 @@ ClientHandler::ClientHandler(Socket p, Persistor& persist, Map& worldMap,
 ClientHandler::~ClientHandler() {}
 
 void ClientHandler::run() {
-  std::vector<uint32_t> playerInfo = std::move(getCredentials());
+  std::pair<std::string, std::vector<uint32_t>> playerDat =
+      std::move(getCredentials());
+  std::vector<uint32_t> playerInfo = playerDat.second;
+  
   sendMap();
 
   ServerSender sender(peer, outgoingMessages);
@@ -38,31 +41,20 @@ void ClientHandler::run() {
   outgoingMessages.disable();
   dispatcher.addPlayerQueue(playerInfo[0], &outgoingMessages);
   world.addPlayerFromData(playerInfo);
+  world.addUsernameId(playerDat.first, playerInfo[0]);
+  world.addIdUsername(playerInfo[0], playerDat.first);
 
   sender.start();
   receiver.start();
-  /* --- HARDCODEO --- */
 
-  /*Class* cl1 = new Class(0, 1, 2, 3);
-  Race* r1 = new Race(0, 100, 1, 2);
-  PlayerNet* player1 =
-      new PlayerNet(2500, 2500, 1550, world, 100, 50, 6, 200, 2, 90, nullptr,
-                    nullptr, nullptr, nullptr, &PlayerState::normal, cl1, r1);
-
-  world.addPlayer(player1);
-
-  usleep(10000000);
-  MonsterType* mt = new MonsterType(20, 10);
-  Monster* monst = mt->newMonster(20, 2500, 2700, 1, world, listener);
-  world.addEntity(monst);
-  std::vector<uint32_t> esqueleto = {1, 20, 1, 2500, 2700};
-  std::stringstream bufferEnt;
-  msgpack::pack(bufferEnt, esqueleto);
-  sendMsg(bufferEnt.str());*/
   sender.join();
   receiver.stop();
   receiver.join();
-  world.rmPlayer(playerInfo[0]); // Id
+
+  world.rmPlayer(playerInfo[0]);  // Id
+  world.rmIdUsr(playerInfo[0]);
+  world.rmUsrId(playerDat.first);
+
   outgoingMessages.close();
   listener.entityDisappear(playerInfo[0]);
   online = false;
@@ -70,7 +62,7 @@ void ClientHandler::run() {
 
 bool ClientHandler::finished() { return !online; }
 
-std::vector<uint32_t> ClientHandler::getCredentials() {
+std::pair<std::string, std::vector<uint32_t>> ClientHandler::getCredentials() {
   std::string user_s;
   std::string pass_s;
   std::unordered_map<std::string, std::string>& passwords =
@@ -142,7 +134,7 @@ std::vector<uint32_t> ClientHandler::getCredentials() {
   std::stringstream pInfoBuff;
   msgpack::pack(pInfoBuff, sendablePlayInfo);
   sendMsg(pInfoBuff.str());
-  return playerInfo;
+  return std::make_pair(user_s, playerInfo);
 }
 
 void ClientHandler::sendMap() {

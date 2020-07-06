@@ -4,6 +4,7 @@
 #include <atomic>
 #include <cstdint>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "Class.h"
@@ -53,7 +54,7 @@ class ClientHandler : public Thread {
   bool finished();
 
   // Devuelve un vector con los datos necesarios para crear al Player
-  std::vector<uint32_t> getCredentials();
+  std::pair<std::string, std::vector<uint32_t>> getCredentials();
 
   void sendMap();
 
