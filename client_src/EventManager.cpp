@@ -152,7 +152,7 @@ void EventManager::checkClick(SDL_Event &event) {
                                                             event.button.y);
         if (IDClicked) {
             std::vector<uint32_t> msg =
-            std::move(clProtocol.makeMsgClickEntity(IDClicked));
+            std::move(clProtocol.makeMsgClickEntity(playerID, IDClicked));
             msgQueue.push(msg);
         }
     }  

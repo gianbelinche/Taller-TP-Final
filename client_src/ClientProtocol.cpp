@@ -18,9 +18,11 @@ std::vector<uint32_t> ClientProtocol::makeMsgMove(uint32_t ID,
     return msg;
 }
 
-std::vector<uint32_t> ClientProtocol::makeMsgClickEntity(uint32_t ID) {
+std::vector<uint32_t> ClientProtocol::makeMsgClickEntity(uint32_t playerID, 
+                                                         uint32_t ID) {
     std::vector<uint32_t> msg;
     msg.emplace_back(CLICK_ENTITY);
+    msg.emplace_back(playerID);
     msg.emplace_back(ID);
     return msg;
 }
