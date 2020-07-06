@@ -32,3 +32,8 @@ void MessageDispatcher::playerConnected(uint32_t id) {
   std::unique_lock<std::mutex> l(m);
   players[id]->enable();
 }
+
+void MessageDispatcher::deletePlayerQueue(uint32_t id) {
+  players.erase(id);
+}
+
