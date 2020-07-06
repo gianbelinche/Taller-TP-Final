@@ -35,11 +35,11 @@ A través de msgpack, se forma de la siguiente manera:
 
    - **Cliente a Servidor**:
 
-       `01 + ID + ID`
+       `01 + ID Player + ID Entidad`
 
        Ejemplo:
 
-       `{01, 12345, 6789}` -> `Click` de entidad `12345` a entidad `6789`
+       `{01, 12345, 6789}` -> `Click` de jugador `12345` a entidad `6789`
 
     - **Tipos de entidad**: Player, NPC o Mob
 
