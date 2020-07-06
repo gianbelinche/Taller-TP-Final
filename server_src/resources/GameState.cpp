@@ -133,3 +133,46 @@ void GameState::rmPlayer(int id) {
 bool GameState::isNpc(int id) {
   return npcs.find(id) != npcs.end();
 }
+
+NPC* GameState::getNpc(int id) {
+  if (npcs.find(id) != npcs.end()) {
+    return npcs[id];
+  }
+  return nullptr;
+}
+
+void GameState::addUsernameId(std::string user, int id) {
+  std::unique_lock<std::mutex> l(usrIdMutex);
+  usrToId[user] = id;
+}
+
+void GameState::rmUsrId(std::string user) {
+  std::unique_lock<std::mutex> l(usrIdMutex);
+  usrToId.erase(user);
+}
+
+int GameState::getIdByUsername(std::string username) {
+  std::unique_lock<std::mutex> l(usrIdMutex);
+  if (usrToId.find(username) == usrToId.end()) {
+    return -1;
+  }
+  return usrToId[username];
+}
+
+void GameState::addIdUsername(int id, std::string user) {
+  std::unique_lock<std::mutex> l(idUsrMutex);
+  idToUsr[id] = user;
+}
+
+std::string GameState::getUsernameById(int id) {
+  std::unique_lock<std::mutex> l(idUsrMutex);
+  if (idToUsr.find(id) == idToUsr.end()) {
+    return "";
+  }
+  return idToUsr[id];
+}
+
+void GameState::rmIdUsr(int id) {
+  std::unique_lock<std::mutex> l(idUsrMutex);
+  idToUsr.erase(id);
+}
