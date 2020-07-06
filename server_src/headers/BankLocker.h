@@ -21,5 +21,7 @@ public:
   int getGold();
 
   void addItem(Item* item);
+
+  Item* getItem(int itemType);
 };
 

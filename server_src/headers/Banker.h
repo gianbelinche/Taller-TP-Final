@@ -1,5 +1,6 @@
 #include "NPC.h"
 #include "Bank.h"
+#include "Item.h"
 #include "ServerEventListener.h"
 
 class Banker : public NPC {
@@ -17,6 +18,8 @@ public:
   void goldExtraction(PlayerNet* player, int amount) override;
 
   void depositItem(Item* item, int id) override;
+
+  Item* substractItem(int choice, int id) override;
 };
 
 

@@ -24,3 +24,16 @@ void BankLocker::addItem(Item* item) {
   itemsInside.push_back(item);
 }
 
+Item* BankLocker::getItem(int itemType) {
+  Item* itemTaken = nullptr;
+  for (size_t i = 0; i < itemsInside.size(); i++) {
+    if (itemsInside[i]->getItemType() == itemType) {
+      itemTaken = itemsInside[i];
+      itemsInside.erase(itemsInside.begin() + i);
+      break;
+    }
+  }
+  return itemTaken;
+}
+
+

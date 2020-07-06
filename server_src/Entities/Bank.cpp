@@ -24,3 +24,7 @@ void Bank::addItemToUser(int id, Item* item) {
   lockers[id].addItem(item);
 }
 
+Item* Bank::substractItem(int choice, int id) {
+  return lockers[id].getItem(choice);
+}
+

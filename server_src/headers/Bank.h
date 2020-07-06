@@ -20,4 +20,6 @@ public:
   int getUserGold(int id);
 
   void addItemToUser(int id, Item* item);
+
+  Item* substractItem(int choice, int id);
 };
