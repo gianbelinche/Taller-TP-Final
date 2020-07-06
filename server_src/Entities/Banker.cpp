@@ -43,3 +43,7 @@ Item* Banker::substractItem(int choice, int id) {
   return bank.substractItem(choice, id);
 }
 
+int Banker::sellItem(Item* item) {
+  return -1; // Caso especial
+}
+

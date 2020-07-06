@@ -23,15 +23,19 @@ class NPC : public Entity {
 
   ~NPC();
 
-  void virtual listItems(PlayerNet* player);
+  virtual void listItems(PlayerNet* player);
 
   std::string getPrettyPrint(std::vector<Item*> items);
 
-  void virtual goldDeposit(PlayerNet* player, int amount);
+  virtual void goldDeposit(PlayerNet* player, int amount);
 
-  void virtual goldExtraction(PlayerNet* player, int amount);
+  virtual void goldExtraction(PlayerNet* player, int amount);
 
-  void virtual depositItem(Item* item, int id);
+  virtual void depositItem(Item* item, int id);
+
+  virtual Item* substractItem(int choice, int id);
+
+  virtual int sellItem(Item* item);
 };
 
 #endif // NPC_H

@@ -20,6 +20,8 @@ public:
   void depositItem(Item* item, int id) override;
 
   Item* substractItem(int choice, int id) override;
+
+  int sellItem(Item* item) override;
 };
 
 
