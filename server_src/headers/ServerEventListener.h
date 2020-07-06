@@ -20,6 +20,7 @@
 #define LOGIN_I 10
 #define NPC_ATTACK 11
 #define POTION_TAKEN 12
+#define TELEPORT 13
 
 #define GOLD_UPDATE 0
 #define LIFE_UPDATE 1
@@ -113,6 +114,8 @@ class ServerEventListener {
   void potionTaken(int id); //12
 
   void updateUserWorldState(int id, std::vector<uint32_t> entInfo);
+
+  void teleportPlayer(uint32_t id,uint16_t posX,uint16_t posY);
 };
 
 #endif // SERVEREVENTLISTENER_H

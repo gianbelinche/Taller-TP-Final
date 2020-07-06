@@ -217,3 +217,12 @@ void ServerEventListener::updateUserWorldState(int id, std::vector<uint32_t> ent
   dispatcher.sendMessage(id, entInfo);
 }
 
+void ServerEventListener::teleportPlayer(uint32_t id,uint16_t posX,uint16_t posY){
+  std::vector<uint32_t> event;
+  event.push_back(TELEPORT);
+  event.push_back(id);
+  event.push_back(posX);
+  event.push_back(posY);
+  dispatcher.broadcastMessage(event);
+}
+
