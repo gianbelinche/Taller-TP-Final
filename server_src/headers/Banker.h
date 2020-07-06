@@ -1,13 +1,15 @@
-#include "NPC.h"
 #include "Bank.h"
 #include "Item.h"
+#include "NPC.h"
 #include "ServerEventListener.h"
 
 class Banker : public NPC {
-private:
+ private:
   Bank& bank;
-public:
-  Banker(int id, int x, int y, ServerEventListener& eventListener,Bank& bank);
+
+ public:
+  Banker(int id, int x, int y, ServerEventListener& eventListener,
+         MasterFactory& factory, Bank& bank);
 
   ~Banker();
 
@@ -22,6 +24,6 @@ public:
   Item* substractItem(int choice, int id) override;
 
   int sellItem(Item* item) override;
+
+  void buyItem(PlayerNet* player, int choice) override;
 };
-
-

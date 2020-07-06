@@ -5,8 +5,8 @@
 #include "../headers/PlayerNet.h"
 
 Banker::Banker(int id, int x, int y, ServerEventListener& eventListener,
-               Bank& bank)
-    : NPC(id, x, y, eventListener), bank(bank) {}
+               MasterFactory& factory, Bank& bank)
+    : NPC(id, x, y, eventListener, factory), bank(bank) {}
 
 Banker::~Banker() {}
 
@@ -27,23 +27,22 @@ void Banker::goldDeposit(PlayerNet* player, int amount) {
 
 void Banker::goldExtraction(PlayerNet* player, int amount) {
   if (amount > bank.getUserGold(player->getId())) {
-    listener.playerSendMessageToChat(
-        player->getId(), "No tienes suficiente oro depositado");
+    listener.playerSendMessageToChat(player->getId(),
+                                     "No tienes suficiente oro depositado");
     return;
   }
   player->addGold(amount);
   bank.substractGoldTo(player->getId(), amount);
 }
 
-void Banker::depositItem(Item* item, int id) {
-  bank.addItemToUser(id, item);
-}
+void Banker::depositItem(Item* item, int id) { bank.addItemToUser(id, item); }
 
 Item* Banker::substractItem(int choice, int id) {
   return bank.substractItem(choice, id);
 }
 
 int Banker::sellItem(Item* item) {
-  return -1; // Caso especial
+  return -1;  // Caso especial
 }
 
+void Banker::buyItem(PlayerNet* player, int choice) {}
