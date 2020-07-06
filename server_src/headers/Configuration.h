@@ -28,6 +28,8 @@ class Configuration {
   std::unordered_map<std::string, float>& getValues(std::string key);
 
   std::unordered_map<std::string, float>& getValuesByItemType(int itemType);
+
+  std::string getItemName(int itemType);
 };
 
 #endif
