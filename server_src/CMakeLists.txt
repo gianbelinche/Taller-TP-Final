@@ -14,6 +14,13 @@ add_library(server_lib
   Communication/Socket.cpp
   Communication/SocketException.cpp
   config/Equations.cpp
+  Entities/Bank.cpp
+  Entities/Banker.cpp
+  Entities/BankLocker.cpp
+  Entities/ImmobilizedState.cpp
+  Entities/Merchant.cpp
+  Entities/NPC.cpp
+  Entities/Priest.cpp
   Entities/Class.cpp
   Entities/Entity.cpp
   Entities/GhostState.cpp
@@ -38,6 +45,9 @@ add_library(server_lib
   Items/Shield.cpp 
   Items/Weapon.cpp 
   Items/Wearable.cpp
+  Items/Inventory.cpp 
+  Items/HpPotion.cpp 
+  Items/ManaPotion.cpp 
   resources/Acceptor.cpp 
   resources/ClientHandler.cpp 
   resources/Condition.cpp 
@@ -52,7 +62,7 @@ add_library(server_lib
   resources/Thread.cpp
   Utils/sha256.cpp
   Utils/Configuration.cpp
-  ChatMessageParser.cpp
+  Utils/ChatMessageParser.cpp
   )
 
   include_directories(headers json)

@@ -35,9 +35,9 @@ void NPC::goldExtraction(PlayerNet* player, int amount) {}
 
 void NPC::depositItem(Item* item, int id) {}
 
-Item* NPC::substractItem(int choice, int id) {}
-
-int NPC::sellItem(Item* item) {}
+Item* NPC::substractItem(int choice, int id) {
+  return nullptr;
+}
 
 int NPC::sellItem(Item* item) {
   int moneyEarned = item->getSellPrice();

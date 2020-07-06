@@ -1,5 +1,6 @@
 #include "../headers/Priest.h"
 #include "../headers/PlayerState.h"
+#include "../headers/ImmobilizedState.h"
 //#include "../headers/"
 
 Priest::Priest(int id, int x, int y, ServerEventListener& eventListener,

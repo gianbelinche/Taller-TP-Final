@@ -19,7 +19,7 @@ class Item {
   Item(int itemID, int itemType, std::string itemName, int buyPrice,
        int sellPrice);
 
-  ~Item();
+  virtual ~Item();
 
   int getId();
 

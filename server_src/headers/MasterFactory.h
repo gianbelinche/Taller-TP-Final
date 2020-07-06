@@ -133,11 +133,9 @@ class MasterFactory {
 
   Item* createItem(int itemType);
 
-  ManaPotion* MasterFactory::createManaPotion(int itemType);
+  ManaPotion* createManaPotion(int itemType);
 
-  HpPotion* MasterFactory::createHpPotion(int itemType);
-
-  
+  HpPotion* createHpPotion(int itemType);
 };
 
 #endif  // MASTERFACTORY_H

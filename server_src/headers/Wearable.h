@@ -9,7 +9,8 @@ class Wearable : public Item {
   int maxDefense;
 
  public:
-  Wearable(int id, int itemType, int minDEF, int maxDEF);
+  Wearable(int id, int itemType, int minDEF, int maxDEF, std::string itemName,
+           int buyPrice, int sellPrice);
 
   ~Wearable();
 

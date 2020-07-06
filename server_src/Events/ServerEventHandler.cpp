@@ -92,9 +92,9 @@ void ServerEventHandler::handle(EntityClick &ev) {
   int id = ev.getUser();
   int destintyId = ev.getDestinyEntityID();
 
-  PlayerNet* player = world.getPlayer(ev.getUser());
+  PlayerNet* player = world.getPlayer(id);
   if (player == nullptr) {
-    std::cerr << "Jugador no encontrado: " << ev.getUser() << std::endl;
+    std::cerr << "Jugador no encontrado: " << id << std::endl;
     return;
   }
 
@@ -234,7 +234,6 @@ void ServerEventHandler::handleResurrect(int playerId) {
 
 void ServerEventHandler::handleHeal(int playerId, NPC* npc) {
   PlayerNet* player = world.getPlayer(playerId);
-  NPC* npc = world.getNpc(player->getSelectedNpc());
   npc->heal(player);
 }
 
@@ -306,7 +305,7 @@ void ServerEventHandler::handleSell(int playerId, NPC* npc, int slotChoice) {
 
 void ServerEventHandler::handleTake(int playerId) {}
 
-void ServerEventHandler::handleDrop(int playerId, int slotChoice=-1) {}
+void ServerEventHandler::handleDrop(int playerId, int slotChoice) {}
 
 void ServerEventHandler::handlePlayerMsg(int playerId, std::string msg, int otherPlayerId) {
   std::string playerUsername = world.getUsernameById(playerId);

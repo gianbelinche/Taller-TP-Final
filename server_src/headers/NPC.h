@@ -25,7 +25,7 @@ class NPC : public Entity {
   NPC(int id, int x, int y, ServerEventListener& eventListener,
       MasterFactory& factory);
 
-  ~NPC();
+  virtual ~NPC();
 
   virtual void listItems(PlayerNet* player);
 

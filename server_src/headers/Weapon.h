@@ -11,7 +11,8 @@ class Weapon : public Item {
   int range;
 
  public:
-  Weapon(int itemID, int itemType, int minDMG, int maxDMG, int rang);
+  Weapon(int itemID, int itemType, int minDMG, int maxDMG, int rang,
+         std::string itemName, int buyPrice, int sellPrice);
 
   ~Weapon();
 

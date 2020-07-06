@@ -2,8 +2,12 @@
 
 #include "../headers/Equations.h"
 
-Weapon::Weapon(int itemID, int itemType, int minDMG, int maxDMG, int rang)
-    : Item(itemID, itemType), minDmg(minDMG), maxDmg(maxDMG), range(rang) {}
+Weapon::Weapon(int itemID, int itemType, int minDMG, int maxDMG, int rang,
+               std::string itemName, int buyPrice, int sellPrice)
+    : Item(itemID, itemType, itemName, buyPrice, sellPrice),
+      minDmg(minDMG),
+      maxDmg(maxDMG),
+      range(rang) {}
 
 Weapon::~Weapon() {}
 
@@ -16,6 +20,4 @@ int Weapon::getMinDmg() { return minDmg; }
 
 int Weapon::getMaxDmg() { return maxDmg; }
 
-int Weapon::getAttackRange() {
-  return range;
-}
+int Weapon::getAttackRange() { return range; }

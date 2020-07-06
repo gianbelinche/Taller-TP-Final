@@ -32,5 +32,11 @@ bool Inventory::isFull() {
   return items.size() >= INVENTORY_SIZE;
 }
 
-
-
+void Inventory::addItem(Item* item) {
+  for (int i = 0; i < INVENTORY_SIZE; i++) {
+    if (items.find(i) == items.end()) { // Esta vacio
+      items[i] = item;
+      return;
+    }
+  }
+}

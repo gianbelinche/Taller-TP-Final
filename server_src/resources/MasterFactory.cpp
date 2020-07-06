@@ -127,28 +127,33 @@ Weapon* MasterFactory::createWeapon(int itemType) {
   std::unordered_map<std::string, float>& weaponStats =
       config.getValuesByItemType(itemType);
   return new Weapon(idGenerator++, itemType, weaponStats["minDmg"],
-                    weaponStats["maxDmg"], weaponStats["range"]);
+                    weaponStats["maxDmg"], weaponStats["range"],
+                    config.getItemName(itemType), weaponStats["buyPrice"],
+                    weaponStats["sellPrice"]);
 }
 
 Armor* MasterFactory::createArmor(int itemType) {
   std::unordered_map<std::string, float>& armorStats =
       config.getValuesByItemType(itemType);
   return new Armor(idGenerator++, itemType, armorStats["minDef"],
-                   armorStats["maxDef"]);
+                   armorStats["maxDef"], config.getItemName(itemType),
+                   armorStats["buyPrice"], armorStats["sellPrice"]);
 }
 
 Helmet* MasterFactory::createHelmet(int itemType) {
   std::unordered_map<std::string, float>& helmetStats =
       config.getValuesByItemType(itemType);
   return new Helmet(idGenerator++, itemType, helmetStats["minDef"],
-                    helmetStats["maxDef"]);
+                    helmetStats["maxDef"], config.getItemName(itemType),
+                    helmetStats["buyPrice"], helmetStats["sellPrice"]);
 }
 
 Shield* MasterFactory::createShield(int itemType) {
   std::unordered_map<std::string, float>& shieldStats =
       config.getValuesByItemType(itemType);
   return new Shield(idGenerator++, itemType, shieldStats["minDef"],
-                    shieldStats["maxDef"]);
+                    shieldStats["maxDef"], config.getItemName(itemType),
+                    shieldStats["buyPrice"], shieldStats["sellPrice"]);
 }
 
 Item* MasterFactory::createItem(int itemType) {
@@ -165,6 +170,7 @@ Item* MasterFactory::createItem(int itemType) {
   } else if (weapons.find(itemType) != weapons.end()) {
     return createWeapon(itemType);
   }
+  return nullptr;
 }
 
 ManaPotion* MasterFactory::createManaPotion(int itemType) {
@@ -179,6 +185,6 @@ HpPotion* MasterFactory::createHpPotion(int itemType) {
   std::unordered_map<std::string, float>& potionStats =
       config.getValuesByItemType(itemType);
   return new HpPotion(idGenerator++, itemType, config.getItemName(itemType),
-                        potionStats["buyPrice"], potionStats["sellPrice"],
-                        potionStats["recovery"]);
+                      potionStats["buyPrice"], potionStats["sellPrice"],
+                      potionStats["recovery"]);
 }

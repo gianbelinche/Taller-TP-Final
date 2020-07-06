@@ -6,11 +6,11 @@
   "Player": {
     "initialX": 3900,
     "initialY": 2550,
-    "initialLevel": 5,
+    "initialLevel": 1,
     "initialExp": 0,
     "initialGold": 98,
     "initialState": 0,
-    "initialWeapon": 6,
+    "initialWeapon": 2,
     "initialHelmet": 14,
     "initialArmor": 11,
     "initialShield": 15

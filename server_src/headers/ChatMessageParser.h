@@ -31,6 +31,6 @@ std::vector<std::string> parseTokens(std::string& message);
 std::string makeMsgFromTokens(std::vector<std::string> tokens);
 
 bool isANumber(std::string s);
-};  // namespace ChatMessageParser
+} // namespace ChatMessageParser
 
 #endif

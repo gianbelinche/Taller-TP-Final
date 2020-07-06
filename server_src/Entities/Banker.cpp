@@ -45,4 +45,6 @@ int Banker::sellItem(Item* item) {
   return -1;  // Caso especial
 }
 
-Item* Banker::buyItem(PlayerNet* player, int choice) {}
+Item* Banker::buyItem(PlayerNet* player, int choice) {
+  return nullptr;
+}
