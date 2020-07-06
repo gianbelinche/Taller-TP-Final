@@ -231,3 +231,25 @@ void PlayerNet::addGold(int amount) {
 void PlayerNet::selectNpc(int id) {
   selectedNpc = id;
 }
+
+int PlayerNet::getSelectedNpc() {
+  return selectedNpc;
+}
+
+int PlayerNet::getInventorySize() {
+  return inventory.getSize();
+}
+
+Inventory& PlayerNet::getInventory() {
+  return inventory;
+}
+
+int PlayerNet::getSelectedSlot() {
+  return selectedSlot;
+}
+
+void PlayerNet::selectSlot(int slot) {
+  selectedSlot = slot;
+}
+
+

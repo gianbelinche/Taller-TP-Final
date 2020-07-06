@@ -7,6 +7,7 @@ class GameState;
 #include "Class.h"
 #include "Entity.h"
 #include "Helmet.h"
+#include "Inventory.h"
 #include "PlayerState.h"
 #include "Race.h"
 #include "ServerEventListener.h"
@@ -18,6 +19,7 @@ class PlayerNet : public Entity {
   PlayerState* state;  // Ver si puede ser una referencia
   Class* playerClass;
   Race* playerRace;
+  Inventory inventory;
   int mana;
   int maxMana;
   int velocity;
@@ -26,6 +28,7 @@ class PlayerNet : public Entity {
   int gold;
   int maxGold;
   int selectedNpc = -1;
+  int selectedSlot = -1;
   GameState& world;
   Weapon* weapon;
   Armor* armor;
@@ -83,10 +86,13 @@ class PlayerNet : public Entity {
 
   int getMaxExp();
 
-  void substractGold(int amount);
+  int getSelectedNpc();
 
-  void addGold(int amount);
+  int getSelectedSlot();
 
+  int getInventorySize();
+
+  Inventory& getInventory();
 
   std::vector<uint32_t> getSendable() override;
 
@@ -110,6 +116,12 @@ class PlayerNet : public Entity {
   int takeDamage(int dmgToTake) override;
 
   void selectNpc(int id);
+
+  void selectSlot(int slot);
+
+  void substractGold(int amount);
+
+  void addGold(int amount);
 
   void update() override;
 

@@ -24,5 +24,6 @@ void Priest::heal(PlayerNet* player) {
 }
 
 void Priest::resurrect(PlayerNet* player) {
-  player->changeState()
+  player->changeState(&PlayerState::immobilized);
+  // COMPLETAR
 }

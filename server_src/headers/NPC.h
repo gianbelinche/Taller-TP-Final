@@ -41,7 +41,7 @@ class NPC : public Entity {
 
   virtual int sellItem(Item* item);
 
-  virtual void buyItem(PlayerNet* player, int choice);
+  virtual Item* buyItem(PlayerNet* player, int choice);
 
   virtual void heal(PlayerNet* player);
 

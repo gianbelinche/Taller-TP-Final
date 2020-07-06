@@ -45,7 +45,7 @@ int NPC::sellItem(Item* item) {
   return moneyEarned;
 }
 
-void NPC::buyItem(PlayerNet* player, int choice) {
+Item* NPC::buyItem(PlayerNet* player, int choice) {
   int itemPos = -1;
   size_t i;
   for (i = 0; i < itemsAvailable.size(); i++) {
@@ -58,15 +58,14 @@ void NPC::buyItem(PlayerNet* player, int choice) {
   if (itemPos < 0) {
     listener.playerSendMessageToChat(player->getId(),
                                      "El item pedido no se ha encontrado");
-    return;
+    return nullptr;
   }
   if (itemsAvailable[i]->getBuyPrice() > player->getGold()) {
     listener.playerSendMessageToChat(
         player->getId(), "No se tiene el oro suficiente para comprar el item");
-    return;
+    return nullptr;
   }
-  Item* itemBought = factory.createItem(choice);
-  // AGREGAR AL INVENTARIO
+  return factory.createItem(choice);
 }
 
 void NPC::heal(PlayerNet* player) {}

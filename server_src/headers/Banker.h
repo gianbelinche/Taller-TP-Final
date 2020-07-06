@@ -28,7 +28,7 @@ class Banker : public NPC {
 
   int sellItem(Item* item) override;
 
-  void buyItem(PlayerNet* player, int choice) override;
+  Item* buyItem(PlayerNet* player, int choice) override;
 };
 
 #endif // BANKER_H
