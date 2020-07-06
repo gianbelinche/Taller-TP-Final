@@ -129,3 +129,7 @@ void GameState::rmPlayer(int id) {
   entities.erase(id);
   players.erase(id);
 }
+
+bool GameState::isNpc(int id) {
+  return npcs.find(id) != npcs.end();
+}

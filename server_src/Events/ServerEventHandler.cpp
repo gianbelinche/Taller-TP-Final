@@ -83,11 +83,28 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
   player->receiveExp(expGain);
 }
 
-void ServerEventHandler::handle(EntityClick &ev) {}
+void ServerEventHandler::handle(EntityClick &ev) {
+  int id = ev.getUser();
+  int destintyId = ev.getDestinyEntityID();
+
+  PlayerNet* player = world.getPlayer(ev.getUser());
+  if (player == nullptr) {
+    std::cerr << "Jugador no encontrado: " << ev.getUser() << std::endl;
+    return;
+  }
+
+  if (world.isNpc(destintyId)) {
+    player->selectNpc(destintyId);
+  } else {
+    handleUserAttack(ev);
+  }
+}
 
 void ServerEventHandler::handle(InventoryClick &ev) {}
 
-void ServerEventHandler::handle(MessageSent &ev) {}
+void ServerEventHandler::handle(MessageSent &ev) {
+
+}
 
 void ServerEventHandler::handle(PlayerConnection &ev) {
   uint32_t id = ev.getUser();
@@ -109,4 +126,30 @@ void ServerEventHandler::handle(PlayerConnection &ev) {
   // PRUEBA
   world.spawnUnParDeMobs();
 }
+
+  void ServerEventHandler::handleMeditation(int playerId) {}
+
+  void ServerEventHandler::handleResurrect(int playerId) {}
+
+  void ServerEventHandler::handleHeal(int playerId) {}
+
+  void ServerEventHandler::handleItemDeposit(int playerId, int slotChoice) {}
+
+  void ServerEventHandler::handleGoldDeposit(int playerId, int slotChoice) {}
+
+  void ServerEventHandler::handleItemSubstraction(int playerId, int itemChoice) {}
+
+  void ServerEventHandler::handleGoldSubstraction(int playerId, int amount) {}
+
+  void ServerEventHandler::handleListItems(int playerId) {}
+
+  void ServerEventHandler::handlePurchase(int playerId, int itemChoice) {}
+
+  void ServerEventHandler::handleSell(int playerId, int slotChoice) {}
+
+  void ServerEventHandler::handleTake(int playerId) {}
+
+  void ServerEventHandler::handleDrop(int playerId, int slotChoice=-1) {}
+
+  void ServerEventHandler::handlePlayerMsg(int playerId, int otherPlayerId=-1) {}
 

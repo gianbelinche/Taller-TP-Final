@@ -11,7 +11,6 @@ ServerProtocol::~ServerProtocol() {}
 
 void ServerProtocol::decode(std::string packedEvent) {
   std::vector<uint32_t> event;
-  std::cout << "Lo recibido: " << packedEvent << std::endl;
   msgpack::object_handle oh =
       msgpack::unpack(packedEvent.data(), packedEvent.size());
   oh.get().convert(event);
