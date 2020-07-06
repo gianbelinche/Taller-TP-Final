@@ -52,6 +52,14 @@ Se asegura que el programa funcionará en sistemas con especificaciones similare
 
 Se provee un archivo de configuración en formato JSON, el cual contiene todas las variables que pueden ser modificadas para cambiar el comportamiento del programa.
 
+Las distintas variables configurables son:
+    - Frames por segundo
+    - Puerto del servidor
+    - Datos iniciales del jugador
+    - Vida, daño y nivel de los enemigos
+    - Distintos factores de las razas y clases
+    - Caracteristicas de los objetos, como daño, defensa o rango
+
 Para la resolución de la ventana, se provee una selección de resoluciones al momento del login.
 
 ## Forma de uso
