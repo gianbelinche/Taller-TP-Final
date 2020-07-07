@@ -114,7 +114,7 @@ Cada una de estas clases se ejecuta en un hilo distinto. EventManager se ejecuta
 
 Estas clases son ejecutadas y finalizadas en una clase llamada `ClientController`.
 
-![Diagrama de ClientController]() AGREGAAAAAAAAAAAAAAAR
+![Diagrama de ClientController](img/diagrama_clientcontroller.png)
 
 ## Protocolo
 
