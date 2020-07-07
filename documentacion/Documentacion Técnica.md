@@ -2,26 +2,30 @@
 
 ## Requerimientos de software
 
-- **OS requerido**: 
-        - Linux
-        - ***MacOS??***
-        - ***Windows??***
+- **OS requerido**:
+
+    - Linux
+    - ***MacOS??***
+    - ***Windows??***
 
 - **Bibliotecas requeridas**:
-        - jsoncpp: https://github.com/open-source-parsers/jsoncpp
-        - msgpack: https://github.com/msgpack/msgpack-c/tree/cpp_master
-        - SDL2: https://www.libsdl.org/
-        - QT: https://www.qt.io/product/framework
-        - ***COMPLETAR***
+
+    - jsoncpp: https://github.com/open-source-parsers/jsoncpp
+    - msgpack: https://github.com/msgpack/msgpack-c/tree/cpp_master
+    - SDL2: https://www.libsdl.org/
+    - QT: https://www.qt.io/product/framework
+    - ***COMPLETAR***
 
 - **Herramientas para la instalación del programa**:
-        - ***CMake??***
-        - ***Makefile?***
+
+    - ***CMake??***
+    - ***Makefile?***
 
 - **Herramientas para compilación, desarrollo, prueba y depuración del programa**:
-        - Algún compilador de C++, por ejemplo, g++.
-        - Algún editor de texto o IDE, por ejemplo, Visual Studio Code.
-        - ***COMPLETAR, CORREGIR***
+
+    - Algún compilador de C++, por ejemplo, g++.
+    - Algún editor de texto o IDE, por ejemplo, Visual Studio Code.
+    - ***COMPLETAR, CORREGIR***
 
 ## Descripción general
 
