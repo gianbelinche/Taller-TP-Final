@@ -27,6 +27,8 @@
 
 El programa consiste de dos aplicaciones, un servidor, y un cliente, cada uno de estos posee diversos modulos que interactuan entre si, a continuación se desarrollaran cada uno de estos modulos.
 
+## Cliente:
+
 ### Módulo WRAP_SDL
 
 Este módulo se encarga de wrappear las funcionalidades de SDL, para ser capaz de utilizarlo sin preocuparse de su funcionamiento interno, las clases que componen este módulo son
@@ -116,6 +118,41 @@ Cada una de estas clases se ejecuta en un hilo distinto. EventManager se ejecuta
 Estas clases son ejecutadas y finalizadas en una clase llamada `ClientController`.
 
 ![Diagrama de ClientController](img/diagrama_clientcontroller.png)
+
+
+
+## Servidor:
+
+### Flujo principal del servidor:
+
+El servidor a muy alto nivel consiste basicamente en un programa que toma input de una cola(cola de eventos entrantes), que lo parsea y procesa y realiza los chequeos necesarios y hace las modifiaciones necesarias en el estado del juego, a medida que se va modificando el estado del juego, se van depositando actualizacion del estado en las colas de cada cliente que este conectado, en otro hilo a parte se toman cosas de la cola y se procede a enviarsela al cliente asociado, se muestra un diagrama con las clases mas importantes para esto:
+
+![](img/diagrama-estructura-server.png)
+
+### Inicializacion del servidor:
+
+Cuando arranca el server, este crea todas las clases que van a hacer falta para poder correr el loop de juego y aceptar/procesar clientes que se quieren conectar.
+
+El proceso que se realiza es:
+
+1. Cargar el archivo de configuración
+2. Cargar el mapa que se va a enviar a los usuarios
+3. Crear el eventHandler y eventListener
+4. Crear el mundo del juego e incializarlo
+5. Lanzar el loop del juego(en otro hilo)
+6. Esperar clientes
+
+
+
+Cuando se crear el mundo(GameState) del juego se inicializan a su vez los NPCs, cierta cantidad de mobs que habitan el mundo.
+
+### Entidades
+
+-
+
+### Items
+
+-
 
 ## Protocolo
 
