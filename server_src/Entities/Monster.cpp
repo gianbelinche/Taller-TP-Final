@@ -57,7 +57,8 @@ void Monster::update() {
             direction = 2;
           }
         }
-        if (world.isValidPosition(new_x, new_y)) {
+        if (world.isValidPosition(new_x, new_y) && 
+            !world.isCityPosition(new_x, new_y)) {
           moveTo(new_x, new_y, direction);
         }
       }
@@ -79,7 +80,8 @@ void Monster::update() {
         new_y += STEP;
         direction = 1;
       }
-      if (world.isValidPosition(new_x, new_y)) {
+      if (world.isValidPosition(new_x, new_y) &&
+          !world.isCityPosition(new_x, new_y)) {
         moveTo(new_x, new_y, direction);
       }
     }
