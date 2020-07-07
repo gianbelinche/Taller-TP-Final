@@ -332,6 +332,12 @@ void ServerEventHandler::handleEquip(int playerId) {
   }
   Inventory& inventory = player->getInventory();
   Item* item = inventory.getItem(slot);
-  item->beEquiped(player);
+  int itemStatus = item->beEquiped(player);
+  if (itemStatus < 0) { // El objeto se elimina del inventario
+    listener.inventoryRemoveItem(player->getId());
+    inventory.removeItemAt(slot);
+    return;
+  }
+  listener.inventoryEquipItem(player->getId(), slot);
 }
 
