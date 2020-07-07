@@ -1,5 +1,7 @@
 #include "../headers/Inventory.h"
 
+#include <iostream>
+
 Inventory::Inventory() {}
 
 Inventory::~Inventory() {

@@ -5,6 +5,7 @@
 #include "../headers/MasterFactory.h"
 #include "../headers/PlayerNet.h"
 
+
 Banker::Banker(int id, int x, int y, ServerEventListener& eventListener,
                MasterFactory& factory, Bank& bank)
     : NPC(id, x, y, eventListener, factory), bank(bank) {
