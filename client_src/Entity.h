@@ -1,7 +1,7 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__ 
 
-enum View {UP, DOWN, LEFT, RIGHT};
+enum View {DOWN, UP, LEFT, RIGHT};
 
 enum MovementType {MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, STOP};
 
