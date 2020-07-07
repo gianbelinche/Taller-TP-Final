@@ -4,11 +4,12 @@
 #include "../headers/PlayerNet.h"
 
 Weapon::Weapon(int itemID, int itemType, int minDMG, int maxDMG, int rang,
-               std::string itemName, int buyPrice, int sellPrice)
+               int manaReq, std::string itemName, int buyPrice, int sellPrice)
     : Item(itemID, itemType, itemName, buyPrice, sellPrice),
       minDmg(minDMG),
       maxDmg(maxDMG),
-      range(rang) {}
+      range(rang),
+      manaRequired(manaReq) {}
 
 Weapon::~Weapon() {}
 
@@ -22,6 +23,8 @@ int Weapon::getMinDmg() { return minDmg; }
 int Weapon::getMaxDmg() { return maxDmg; }
 
 int Weapon::getAttackRange() { return range; }
+
+int Weapon::getManaReq() { return manaRequired; }
 
 int Weapon::beEquiped(PlayerNet* player) {
   player->equipWeapon(static_cast<Weapon*>(this));

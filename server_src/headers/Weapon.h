@@ -9,10 +9,11 @@ class Weapon : public Item {
   int minDmg;
   int maxDmg;
   int range;
+  int manaRequired;
 
  public:
   Weapon(int itemID, int itemType, int minDMG, int maxDMG, int rang,
-         std::string itemName, int buyPrice, int sellPrice);
+         int manaReq, std::string itemName, int buyPrice, int sellPrice);
 
   ~Weapon();
 
@@ -23,6 +24,8 @@ class Weapon : public Item {
   int getMinDmg();
 
   int getMaxDmg();
+
+  int getManaReq();
 
   int beEquiped(PlayerNet* player) override;
 

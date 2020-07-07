@@ -147,9 +147,9 @@ Weapon* MasterFactory::createWeapon(int itemType) {
   std::unordered_map<std::string, float>& weaponStats =
       config.getValuesByItemType(itemType);
   return new Weapon(idGenerator++, itemType, weaponStats["minDmg"],
-                    weaponStats["maxDmg"], weaponStats["range"],
-                    config.getItemName(itemType), weaponStats["buyPrice"],
-                    weaponStats["sellPrice"]);
+                    weaponStats["maxDmg"], weaponStats["range"], 
+                    weaponStats["manaRequired"], config.getItemName(itemType), 
+                    weaponStats["buyPrice"], weaponStats["sellPrice"]);
 }
 
 Armor* MasterFactory::createArmor(int itemType) {
