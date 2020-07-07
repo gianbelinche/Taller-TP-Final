@@ -5,22 +5,25 @@
 #include <iostream>
 #include <random>
 
-#include "../headers/Equations.h"
 #include "../headers/Condition.h"
+#include "../headers/Equations.h"
 #include "../headers/IsAlive.h"
 #include "../headers/MonsterType.h"
 #include "../headers/PlayerNet.h"
 
-#define MIN_DIST 200  // Esto debe ser configurable no se como
-#define ATK_DIST 20
-#define STEP 3
-
-Monster::Monster(MonsterType &type, int id, int x, int y, int level,
-                 GameState &world, ServerEventListener& eventListener)
+Monster::Monster(MonsterType& type, int id, int x, int y, int level,
+                 int velocity, int atkRange, int pursuitDistance,
+                 GameState& world, ServerEventListener& eventListener)
     : Entity(x, y, id, type.getHp(), level),
       kind(type),
+
       world(world),
-      listener(eventListener) {}
+      listener(eventListener),
+      velocity(velocity),
+      atkRange(atkRange),
+      pursuitDistance(pursuitDistance) {
+        std::cout << "La dist: " << pursuitDistance << " range: " << atkRange << " velocidad" << velocity << std::endl;
+      }
 
 Monster::~Monster() {}
 
@@ -28,13 +31,12 @@ void Monster::update() {
   currentFrame++;
   if (currentFrame == 5) {  // TODO: Hacer configurable el valor
     currentFrame = 0;
-    PlayerNet *player = world.getNearestPlayer(this, &Condition::isAlive);
+    PlayerNet* player = world.getNearestPlayer(this, &Condition::isAlive);
     int new_x = x;
     int new_y = y;
     int direction;
-    if (player != nullptr &&
-        world.entitiesDistance(this, player) < MIN_DIST) {
-      if (world.entitiesDistance(this, player) <= ATK_DIST) {
+    if (player != nullptr && world.entitiesDistance(this, player) < pursuitDistance) {
+      if (world.entitiesDistance(this, player) <= atkRange) {
         attack(player);
       } else {
         float x_dist = abs(x - player->getX());
@@ -42,22 +44,22 @@ void Monster::update() {
 
         if (x_dist < y_dist) {  // Me muevo en el eje en que haya mas distancia
           if (y < player->getY()) {
-            new_y = y + STEP;
+            new_y = y + velocity;
             direction = 1;
           } else {
-            new_y = y - STEP;
+            new_y = y - velocity;
             direction = 0;
           }
         } else {
           if (x < player->getX()) {
-            new_x = x + STEP;
+            new_x = x + velocity;
             direction = 3;
           } else {
-            new_x = x - STEP;
+            new_x = x - velocity;
             direction = 2;
           }
         }
-        if (world.isValidPosition(new_x, new_y) && 
+        if (world.isValidPosition(new_x, new_y) &&
             !world.isCityPosition(new_x, new_y)) {
           moveTo(new_x, new_y, direction);
         }
@@ -68,16 +70,16 @@ void Monster::update() {
       std::uniform_real_distribution<> distr(0, 1);
       float rand_val = distr(gen);  // Valor random
       if (rand_val < 0.25) {
-        new_x -= STEP;
+        new_x -= velocity;
         direction = 2;
       } else if (rand_val >= 0.25 && rand_val < 0.5) {
-        new_y -= STEP;
+        new_y -= velocity;
         direction = 0;
       } else if (rand_val >= 0.5 && rand_val < 0.75) {
         direction = 3;
-        new_x += STEP;
+        new_x += velocity;
       } else {
-        new_y += STEP;
+        new_y += velocity;
         direction = 1;
       }
       if (world.isValidPosition(new_x, new_y) &&
@@ -114,14 +116,12 @@ int Monster::getHitExp(int AttackerLevel, int damage) {
   return equation::monsterHitExp(level, damage);
 }
 
-bool Monster::canBeAttackedBy(Entity* ent) {
-  return true;
-}
+bool Monster::canBeAttackedBy(Entity* ent) { return true; }
 
 void Monster::moveTo(int new_x, int new_y, int direction) {
   x = new_x;
   y = new_y;
-  //for (int i = 0; i < STEP; i++) {
+  // for (int i = 0; i < velocity; i++) {
   listener.entityMoved(id, direction);
   //}
   animFrame++;
@@ -140,7 +140,4 @@ std::vector<uint32_t> Monster::getSendable() {
   return monsterInfo;
 }
 
-int Monster::getNpcType() {
-  return kind.getNpcType();
-}
-
+int Monster::getNpcType() { return kind.getNpcType(); }

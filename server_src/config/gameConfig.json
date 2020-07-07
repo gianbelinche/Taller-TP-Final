@@ -4,8 +4,8 @@
     "port": 8080
   },
   "Player": {
-    "initialX": 4050,
-    "initialY": 2550,
+    "initialX": 4100,
+    "initialY": 2600,
     "initialLevel": 20,
     "initialExp": 0,
     "initialGold": 98,
@@ -18,22 +18,34 @@
   "goblin": {
     "hp": 30,
     "damage": 7,
-    "level": 3
+    "level": 3,
+    "velocity": 7,
+    "attackRange":15,
+    "pursuitDistance": 100
   },
   "spider": {
     "hp": 15,
     "damage": 15,
-    "level": 5
+    "level": 5,
+    "velocity": 6,
+    "attackRange": 25,
+    "pursuitDistance": 200
   },
   "skeleton": {
     "hp": 30,
     "damage": 10,
-    "level": 4
+    "level": 4,
+    "velocity": 4,
+    "attackRange": 20,
+    "pursuitDistance": 200
   },
   "zombie": {
     "hp": 40,
     "damage": 30,
-    "level": 9
+    "level": 9,
+    "velocity": 3,
+    "attackRange": 20,
+    "pursuitDistance": 200
   },
   "human": {
     "hpFactor": 2,
@@ -234,15 +246,15 @@
     "sellPrice": 10
   },
   "npcsCiudad1": {
-    "bankerX": 5216,
+    "bankerX": 5207,
     "bankerY": 3136,
-    "merchantX": 6000,
+    "merchantX": 5972,
     "merchantY": 2080,
-    "priestX": 5184,
+    "priestX": 5206,
     "priestY": 2304
   },
   "npcsCiudad2": {
-    "bankerX": 2560,
+    "bankerX": 2573,
     "bankerY": 5952,
     "merchantX": 1872,
     "merchantY": 5824,

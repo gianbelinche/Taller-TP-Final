@@ -50,6 +50,9 @@ int ChatMessageParser::parse(std::string& str_command) {
     if (str_command.substr(1) == "curar") {
       return CURAR;
     }
+    if (str_command.substr(1) == "equipar") {
+      return EQUIPAR;
+    }
     if (str_command.substr(1,str_command.find(" ") - 1) == "depositar") {
       return DEPOSITAR;
     }

@@ -12,8 +12,13 @@ class MonsterType {
   int damage;
   int level;
   int npcType;
+  int velocity;
+  int atkRange;
+  int pursuitDistance;
+
  public:
-  MonsterType(int hp, int damage, int level, int npcType);
+  MonsterType(int hp, int damage, int level, int npcType, int velocity,
+              int atkRange, int pursuitDistance);
 
   ~MonsterType();
 

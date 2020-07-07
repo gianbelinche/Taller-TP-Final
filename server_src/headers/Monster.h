@@ -16,9 +16,13 @@ class Monster : public Entity {
   GameState& world;
   ServerEventListener& listener;
   int animFrame = 0;
+  int velocity;
+  int atkRange;
+  int pursuitDistance;
 
  public:
-  Monster(MonsterType& type, int id, int x, int y, int level, GameState& world,
+  Monster(MonsterType& type, int id, int x, int y, int level, int velocity,
+          int atkRange, int pursuitDistance, GameState& world,
           ServerEventListener& eventListener);
 
   ~Monster();
@@ -41,7 +45,6 @@ class Monster : public Entity {
   std::vector<uint32_t> getSendable() override;
 
   int getNpcType();
-
 };
 
 #endif  // MONSTER_H
