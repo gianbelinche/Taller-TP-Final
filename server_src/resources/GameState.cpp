@@ -10,9 +10,9 @@
 
 #define FRAMES_PER_SECOND 30
 
-GameState::GameState(std::vector<std::vector<bool>>& collisions, 
+GameState::GameState(std::vector<std::vector<bool>>& collisions,
                      std::vector<std::vector<bool>>& cities, int fps,
-                     ServerEventListener& eventListener, MasterFactory& fac, 
+                     ServerEventListener& eventListener, MasterFactory& fac,
                      Configuration& configuration)
     : config(configuration),
       colisionMap(collisions),
@@ -46,7 +46,7 @@ bool GameState::isCityPosition(int x, int y) {
   if (citiesMap[y / TILE_SIZE][x / TILE_SIZE] == 0) {
     return false;
   }
-  
+
   return true;
 }
 
@@ -155,9 +155,9 @@ void GameState::rmEntity(int id) {
   entities.erase(id);
 }
 
-bool GameState::isNpc(int id) {
-  return npcs.find(id) != npcs.end();
-}
+bool GameState::isNpc(int id) { return npcs.find(id) != npcs.end(); }
+
+bool GameState::isPlayer(int id) { return players.find(id) != players.end(); }
 
 NPC* GameState::getNpc(int id) {
   if (npcs.find(id) != npcs.end()) {
@@ -204,34 +204,49 @@ void GameState::rmIdUsr(int id) {
 
 void GameState::init() {
   initNPCs();
+  initMobs();
 }
 
 void GameState::initNPCs() {
-  std::unordered_map<std::string, float> city1 = config.getValues("npcsCiudad1");
-  Merchant* mer1 = factory.createMerchant(city1["merchantX"], city1["merchantY"]);
+  std::unordered_map<std::string, float> city1 =
+      config.getValues("npcsCiudad1");
+  Merchant* mer1 =
+      factory.createMerchant(city1["merchantX"], city1["merchantY"]);
   Priest* pri1 = factory.createPriest(city1["priestX"], city1["priestY"]);
   Banker* bank1 = factory.createBanker(city1["bankerX"], city1["bankerY"]);
   npcs[mer1->getId()] = mer1;
   npcs[pri1->getId()] = pri1;
   npcs[bank1->getId()] = bank1;
 
-  std::unordered_map<std::string, float> city2 = config.getValues("npcsCiudad2");
-  Merchant* mer2 = factory.createMerchant(city2["merchantX"], city2["merchantY"]);
+  std::unordered_map<std::string, float> city2 =
+      config.getValues("npcsCiudad2");
+  Merchant* mer2 =
+      factory.createMerchant(city2["merchantX"], city2["merchantY"]);
   Priest* pri2 = factory.createPriest(city2["priestX"], city2["priestY"]);
   Banker* bank2 = factory.createBanker(city2["bankerX"], city2["bankerY"]);
   npcs[mer2->getId()] = mer2;
   npcs[pri2->getId()] = pri2;
   npcs[bank2->getId()] = bank2;
 
-  std::unordered_map<std::string, float> city3 = config.getValues("npcsCiudad3");
-  Merchant* mer3 = factory.createMerchant(city3["merchantX"], city3["merchantY"]);
+  std::unordered_map<std::string, float> city3 =
+      config.getValues("npcsCiudad3");
+  Merchant* mer3 =
+      factory.createMerchant(city3["merchantX"], city3["merchantY"]);
   Priest* pri3 = factory.createPriest(city3["priestX"], city3["priestY"]);
   Banker* bank3 = factory.createBanker(city3["bankerX"], city3["bankerY"]);
   npcs[mer3->getId()] = mer3;
   npcs[pri3->getId()] = pri3;
   npcs[bank3->getId()] = bank3;
-
 }
+
+void GameState::initMobs() {
+  for (int i = 0; i < MAX_AMOUNT_NPC; i++) {
+    std::pair<int, int> position = generateNewMonsterPosition();
+    Monster* monster = generateRandomMonster(position.first, position.second);
+    entities[monster->getId()] = monster;
+  }
+}
+
 
 void GameState::dropItem(Item* item, int x, int y) {
   droppedItems[item->getId()] = item;
@@ -241,30 +256,78 @@ void GameState::dropItem(Item* item, int x, int y) {
 
 Item* GameState::getCloseItem(int x, int y, int range) {
   for (auto& it : itemsPositions) {
-      int dist_x = abs(x - it.second.first);
-      int dist_y = abs(y - it.second.second);
-      int distance = sqrt(pow(dist_x, 2) + pow(dist_y, 2));
+    int dist_x = abs(x - it.second.first);
+    int dist_y = abs(y - it.second.second);
+    int distance = sqrt(pow(dist_x, 2) + pow(dist_y, 2));
 
-      if (distance <= range) {
-        return droppedItems[it.first];
-      }
+    if (distance <= range) {
+      return droppedItems[it.first];
+    }
   }
   return nullptr;
 }
 
 void GameState::rmItem(int id) {
-  droppedItems.erase(id); // No fallan si no existe
+  droppedItems.erase(id);  // No fallan si no existe
   itemsPositions.erase(id);
 }
 
 void GameState::generateDrop(int x, int y) {
   std::random_device rd;
   std::mt19937 gen(rd());
-  std::uniform_int_distribution<> distr(1, 17);
-  int rand_val = distr(gen);  // Valor random
+  std::uniform_int_distribution<> distr(1,
+                                        19);  // MEter en algun lado los valores
+  int rand_val = distr(gen);                  // Valor random
 
   Item* item = factory.createItem(rand_val);
   droppedItems[item->getId()] = item;
   itemsPositions[item->getId()] = std::make_pair(x, y);
   listener.dropSpawn(item->getId(), item->getItemType(), x, y);
+}
+
+std::pair<int, int> GameState::generateNewMonsterPosition() {
+  int randX;
+  int randY;
+  bool validPosition = false;
+  while (!validPosition) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> posX(1, 9900);
+
+    std::random_device rd2;
+    std::mt19937 gen2(rd2());
+    std::uniform_int_distribution<> posY(1, 7100);
+    randX = posX(gen);
+    randY = posY(gen2);
+
+    validPosition =
+        isValidPosition(randX, randY) && !isCityPosition(randX, randY);
+  }
+  return std::make_pair(randX, randY);
+}
+
+Monster* GameState::generateRandomMonster(int x, int y) {
+  Monster* monst;
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> distr(1, 4);
+  int rand_val = distr(gen);
+  switch (rand_val) {
+    case 1:
+      monst = factory.newGoblin(x, y, *this);
+      break;
+
+    case 2:
+      monst = factory.newSkeleton(x, y, *this);
+      break;
+
+    case 3:
+      monst = factory.newSpider(x, y, *this);
+      break;
+
+    case 4:
+      monst = factory.newZombie(x, y, *this);
+      break;
+  }
+  return monst;
 }

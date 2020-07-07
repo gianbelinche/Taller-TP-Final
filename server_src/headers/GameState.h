@@ -10,15 +10,17 @@
 #include "Condition.h"
 #include "Configuration.h"
 #include "Entity.h"
-#include "NPC.h"
 #include "Item.h"
+#include "NPC.h"
 #include "NormalState.h"
 #include "PlayerNet.h"
 #include "PlayerState.h"
 
 #define TILE_SIZE 32
+#define MAX_AMOUNT_NPC 500
 
 class MasterFactory;
+class Monster;
 
 class GameState {
  private:
@@ -38,9 +40,10 @@ class GameState {
   std::mutex entitiesMapMutex;
   std::mutex usrIdMutex;
   std::mutex idUsrMutex;
+  int maxAmountNPC;
 
  public:
-  GameState(std::vector<std::vector<bool>>& collisions, 
+  GameState(std::vector<std::vector<bool>>& collisions,
             std::vector<std::vector<bool>>& cities, int fps,
             ServerEventListener& eventListener, MasterFactory& fac,
             Configuration& configuration);
@@ -95,6 +98,8 @@ class GameState {
 
   bool isNpc(int id);
 
+  bool isPlayer(int id);
+
   void spawnUnParDeMobs();
 
   void dropItem(Item* item, int x, int y);
@@ -104,9 +109,15 @@ class GameState {
   void rmItem(int id);
 
   void generateDrop(int x, int y);
-  
+
+  std::pair<int, int> generateNewMonsterPosition();
+
+  Monster* generateRandomMonster(int x, int y);
+
  private:
   void initNPCs();
+
+  void initMobs();
 };
 
 #endif  // GAMESTATE_H
