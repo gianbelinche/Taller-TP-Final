@@ -51,12 +51,18 @@ void ServerEventHandler::handle(UserMoved& ev) {
       break;
   }
 
+  bool positionIsValid = true;
 
-  if (!world.isValidPosition(x, y)) {
-    return;
+  for (size_t i = 0; i < 25; i+=6) {
+    for (size_t j = 0; j < 45; j+=6) {
+      positionIsValid = positionIsValid && world.isValidPosition(x + i, y + j);
+    }
   }
-  player->move(x, y);
-  listener.entityMoved(ev.getUser(), direction);
+
+  if (positionIsValid) {
+    player->move(x, y);
+    listener.entityMoved(ev.getUser(), direction);
+  }
 }
 
 void ServerEventHandler::handleUserAttack(EntityClick& ev) {
