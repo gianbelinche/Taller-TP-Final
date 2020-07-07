@@ -34,7 +34,7 @@ Estas situaciones sucedieron de forma similar en todas las partes, pero no son c
 
 En la semana 4 se terminó la mayor parte del cliente, incluida la pantalla de login, y se empezó a combinar las partes 2 y 3 orientadas al cliente.
 
-### Semanas 5
+### Semana 5
 
 En la semana 5 se cambió la pantalla de login, escrita en SDL, por otra escrita en qt, para poder hacerla más amigable al usuario.
 
