@@ -92,6 +92,7 @@ int Monster::takeDamage(int dmgToTake) {
   std::cout << "Le hizo: " << dmgToTake << " daño al motro\n";
   if (hp == 0) {
     std::cout << "Se murio el mostro\n";
+    world.rmEntity(id);
     listener.entityDisappear(id);
   }
   return oldHp - hp;

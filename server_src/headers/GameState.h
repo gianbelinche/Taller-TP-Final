@@ -61,6 +61,8 @@ class GameState {
 
   void rmPlayer(int id);
 
+  void rmEntity(int id);
+
   Entity* getEntity(int id);
 
   int getFPS();

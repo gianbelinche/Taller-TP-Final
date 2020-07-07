@@ -137,6 +137,11 @@ void GameState::rmPlayer(int id) {
   players.erase(id);
 }
 
+void GameState::rmEntity(int id) {
+  std::unique_lock<std::mutex> l(entitiesMapMutex);
+  entities.erase(id);
+}
+
 bool GameState::isNpc(int id) {
   return npcs.find(id) != npcs.end();
 }
