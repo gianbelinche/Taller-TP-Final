@@ -14,8 +14,9 @@
 
 - **Herramientas para la instalación del programa**:
 
-    - ***CMake??***
-    - ***Makefile?***
+    - g++
+    - Makefile
+    - CMake
 
 - **Herramientas para compilación, desarrollo, prueba y depuración del programa**:
 

@@ -39,7 +39,7 @@ El programa fue probado con las siguientes tres especificaciones de hardware:
     - 16 GB de RAM
     - Placa de Video GTX 1080Ti
 
-2. Tercera computadora:
+3. Tercera computadora:
 
     - ***COMPLETAR***
     - ***COMPLETAR***
