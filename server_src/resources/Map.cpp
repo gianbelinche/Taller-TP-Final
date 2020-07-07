@@ -63,6 +63,16 @@ Map::Map(const char* mapPath) {
     // jsonerror);
   }
 
+  const Json::Value& layer3 = layers[3]["data"];   // Array de enteros de capa 2
+  const Json::Value& width3 = layers[3]["width"];  // Ancho de la capa 2
+  const Json::Value& height3 = layers[3]["height"];  // Alto de la capa 2
+
+  if (!(layer2 && height2 && width2)) {
+    /* Buscar cómo obtener el error que genera jsoncpp */
+    // throw JsonError("Error: no se encontró data de capa 1. JsonError: %s",
+    // jsonerror);
+  }
+
   /*
    * Creo las matrices que tienen la data de las capas.
    * Estas matrices se deben guardar para enviar a los clientes
@@ -107,6 +117,18 @@ Map::Map(const char* mapPath) {
     collisions.emplace_back(row);
   }
 
+  /* Matriz de capa de ciudades */
+
+  cont = 0;
+  for (Json::Value::UInt i = 0; i < height3.asUInt(); i++) {
+    std::vector<bool> row;
+    for (Json::Value::UInt j = 0; j < width3.asUInt(); j++) {
+      row.emplace_back(layer3[cont].asUInt());
+      cont++;
+    }
+    cities.emplace_back(row);
+  }
+
   /*
    * Creo el hash que contiene como:
    *  -clave: al numero asignado al tileset.
@@ -135,6 +157,8 @@ Map::Map(const char* mapPath) {
 }
 
 Map::~Map() {}
+
+std::vector<std::vector<bool>>& Map::getCitiesMap() { return cities; }
 
 std::vector<std::vector<bool>>& Map::getCollisionMap() { return collisions; }
 
