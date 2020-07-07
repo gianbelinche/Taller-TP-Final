@@ -72,7 +72,7 @@ En caso de que ningun server se encuentre abierto, se debe iniciar un server. Pa
 Luego, se debe ejecutar el servidor de la siguiente manera:
 
 ~~~
-/server config/gameConfig.json
+/server server_src/config/gameConfig.json
 ~~~
 
 Para la conexión del cliente se debe iniciar el programa ejecutando el comando `./client` en la terminal, y en la pantalla que aparece ingresar el host y puerto para conectarse a un servidor. En caso de que el servidor ingresado no exista o halla algún otro tipo de error, se mostrará por pantalla y deberá volver a intentarse conectar.
