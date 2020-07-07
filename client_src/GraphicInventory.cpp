@@ -44,8 +44,8 @@ enum items{
     TURTLE_SHIELD,
     IRON_SHIELD,
     MAGIC_HAT,
-    LIFE_POTION,
-    MANA_POTION
+    MANA_POTION,
+    LIFE_POTION
 };
 
 
