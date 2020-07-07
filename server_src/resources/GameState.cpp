@@ -41,6 +41,14 @@ bool GameState::isValidPosition(int x, int y) {
   }
 }
 
+bool GameState::isCityPosition(int x, int y) {
+  if (citiesMap[y / TILE_SIZE][x / TILE_SIZE] == 0) {
+    return false;
+  }
+  
+  return true;
+}
+
 float GameState::entitiesDistance(Entity* ent1, Entity* ent2) {
   int dist_x = abs(ent1->getX() - ent2->getX());
   int dist_y = abs(ent1->getY() - ent2->getY());

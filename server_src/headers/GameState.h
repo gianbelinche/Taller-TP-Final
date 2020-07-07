@@ -77,6 +77,8 @@ class GameState {
 
   bool isValidPosition(int x, int y);
 
+  bool isCityPosition(int x, int y);
+
   float entitiesDistance(Entity* ent1, Entity* ent2);
 
   bool playerCanAttack(PlayerNet* player, Entity* ent);
