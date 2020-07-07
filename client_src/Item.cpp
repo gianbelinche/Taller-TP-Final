@@ -74,6 +74,14 @@ Item::Item(SDL_Renderer *renderer, uint32_t anID, uint16_t aPosX,
             image.loadFromFile(SOMBRERO_MAGICO_PATH);
             break;
 
+        case POCION_MANA:
+            image.loadFromFile(POCION_MANA_PATH);
+            break;
+
+        case POCION_VIDA:
+            image.loadFromFile(POCION_VIDA_PATH);
+            break;
+
         default:
             throw OSError("Error Item Constructor: ItemType invalido.");
             break;
