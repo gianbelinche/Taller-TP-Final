@@ -12,7 +12,6 @@
 
 - **Bibliotecas requeridas**:
 
-    - jsoncpp: https://github.com/open-source-parsers/jsoncpp
     - msgpack: https://github.com/msgpack/msgpack-c/tree/cpp_master
     - SDL2: https://www.libsdl.org/
     - QT: https://www.qt.io/product/framework
@@ -20,8 +19,9 @@
 
 - **Herramientas para la instalación del programa**:
 
-    - ***CMake??***
-    - ***Makefile?***
+    - g++
+    - Makefile
+    - CMake
 
 ### Requerimientos de Hardware
 
