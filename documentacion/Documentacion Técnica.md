@@ -103,7 +103,7 @@ También existe una clase `Equippable` utilizada por `Player` para equiparse. No
 
 ## Protocolo
 
-El protocolo para la comunicación entre el servidor y el cliente, es en formato binario, y consta del largo del mensaje, y un vector de uint32 codificado usando msgpack, se explica en el README del repositorio.
+El protocolo para la comunicación entre el servidor y el cliente, es en formato binario, y consta del largo del mensaje, y un vector de uint32 codificado usando msgpack, se explica en el archivo protocolo del repositorio.
 
 ## Programas intermedios y de prueba
 
