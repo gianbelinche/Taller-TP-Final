@@ -250,4 +250,6 @@ void PlayerNet::selectSlot(int slot) {
   selectedSlot = slot;
 }
 
-
+int PlayerNet::getEquippedItem(){
+  return weapon->getItemType();
+}

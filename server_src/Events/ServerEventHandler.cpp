@@ -86,6 +86,7 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
   }
   std::cout << "La experiencia ganada es de: " << expGain << "\n";
   player->receiveExp(expGain);
+  listener.npcAttack(player->getId(),player->getEquippedItem());
 }
 
 void ServerEventHandler::handle(EntityClick &ev) {

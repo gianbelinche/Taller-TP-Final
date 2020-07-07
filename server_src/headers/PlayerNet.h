@@ -92,6 +92,8 @@ class PlayerNet : public Entity {
 
   int getInventorySize();
 
+  int getEquippedItem();
+
   Inventory& getInventory();
 
   std::vector<uint32_t> getSendable() override;
