@@ -11,7 +11,7 @@
 #include "ClientHandler.h"
 #include "Thread.h"
 
-#define MAP_PATH "map.json"
+#define MAP_PATH "json/map.json"
 
 class Server : public Thread {
  private:
