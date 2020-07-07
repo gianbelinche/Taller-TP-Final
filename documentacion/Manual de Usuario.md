@@ -41,9 +41,9 @@ El programa fue probado con las siguientes tres especificaciones de hardware:
 
 3. Tercera computadora:
 
-    - ***COMPLETAR***
-    - ***COMPLETAR***
-    - ***COMPLETAR***
+    - Procesador Intel i5 6200U
+    - 4 GB de RAM
+    - Placa de video Intel HD520
 
 Se asegura que el programa funcionará en sistemas con especificaciones similares o superiores.
 
