@@ -145,7 +145,7 @@ En cada uno de los tres pueblo, el personaje estará seguro de todo ataque, ya q
 
 Más adelante se hablará sobre cómo interactuar con cada uno de estos.
 
-El personaje creado tiene una cantidad de vida y mana iniciales dependiendo de la raza y clase elegida. También cuenta con experiencia y niveles, los cuales irán aumentando a medida que vaya matando mounstros o mobs. Además, deberá encontrar equipamiento a través de los drops de los mobs, o juntando oro y comprando a los correspondientes NPC's.
+El personaje creado tiene una cantidad de vida y mana iniciales dependiendo de la raza y clase elegida. También cuenta con experiencia y niveles, los cuales irán aumentando a medida que vaya matando mounstros o mobs. Además, deberá encontrar equipamiento a través de los drops de los mobs, o juntando oro y comprando a los correspondientes NPC's. El personaje podrá tener únicamente equipado un arma, una armadura, un casco y un escudo.
 
 El personaje puede moverse con las teclas `WASD`. También se puede observar un `Layout`, en el que se muestra la cantidad de oro, vida, mana y nivel actuales, junto con una barra que representa la experiencia y se ira llenando a medida que se obtiene. Además, se puede observar unos slots que corresponden al inventario, y a medida que consigan objetos se iran llenando. El inventario puede ser clickeado para seleccionar un objeto, también hay 4 slots especiales en donde figuraran los objetos equipados actualmente. Por último se encuentra una ventana de chat, en la que apretando `ENTER` podrá empezar a escribir, y apretando `ENTER` nuevamente, enviará el mensaje ingresado.
 
@@ -164,7 +164,19 @@ Estos mensajes se deberán escribir en forma de distintos comandos:
 - **/equipar**: Equipa el objeto del inventario seleccionado. El mensaje debe ser escrito luego de hacer click en slot del inventario.
 - **@\<nick> \<msj>**: Le envía un mensaje privado a otro jugador.
 
-[//]: # (Deberíamos hablar de los distintos tipos de mobs y armas del juego)
+En cuanto al mundo, este se divide en 4 zonas, desierto, bosque, cueva y pueblos, de estos últimos hay 3. A lo largo del desierto, bosque y cueva, se pueden encontrar distintos mobs. Estos mobs son: goblins, zombies, esqueletos y arañas. Cada uno tiene una respectiva cantidad de vida, ataque y velocidad de movimiento. Al matar un mob existe una posibilidad de que dropee un elemento que puede ser un casco, armadura, escudo, arma o poción. Además, se conseguirá experiencia con la cual el jugador podrá subir de nivel. En los pueblos no puede haber mobs ya que son zona protegida.
+
+También se puede pelear contra otros jugadores, siempre y cuando estén ambos fuera de zona protegida y se cumpla la regla de fair play: un jugador con un nivel 12 o menor es considerado `newbie`. Los newbies no pueden atacar ni ser atacados por otros jugadores. Además, un jugador no podrá atacar ni ser atacado por otro jugador si la diferencia de niveles entre ellos es superior a 10.
+
+Existen distintas armaduras, cascos, escudos y armas en el juego. Cada una brinda distintas estadísticas a los jugadores.
+
+Con respecto a las armas, existen tres tipos distintos: armas melee, armas mágicas y armas a distancia. 
+
+- De las armas melee existen tres tipos: espada, hacha y martillo. 
+- De las armas mágicas existen cuatro tipos: vara de fresno, flauta élfica, báculo nudoso y báculo engarzado.
+- De las armas a distancia existen dos tipos: arco simple y arco compuesto.
+
+Las armas mágicas consumen mana, mientras que el resto no. Además, los arcos tienen munición infinita.
 
 ## Apéndice de errores
 
