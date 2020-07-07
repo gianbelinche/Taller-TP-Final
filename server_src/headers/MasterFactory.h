@@ -102,7 +102,7 @@ class MasterFactory {
   Bank bank;
 
   // Unordered sets para busqueda O(1)
-  std::unordered_set<int> armors = {ARMADURACUERO_TYPE, ARMADURAPLACAS_TYPE};
+  std::unordered_set<int> armors = {ARMADURACUERO_TYPE, ARMADURAPLACAS_TYPE, TUNICAAZUL_TYPE};
   std::unordered_set<int> shields = {ESCUDOHIERRO_TYPE, ESCUDOTORTUGA_TYPE};
   std::unordered_set<int> helmets = {CASCOHIERRO_TYPE, CAPUCHA_TYPE,
                                      SOMBREROMAGICO_TYPE};
