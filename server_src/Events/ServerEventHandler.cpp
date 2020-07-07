@@ -109,7 +109,7 @@ void ServerEventHandler::handle(EntityClick &ev) {
 
   if (world.isNpc(destintyId)) {
     player->selectNpc(destintyId);
-  } else {
+  } else if (world.isPlayer(destintyId)) {
     handleUserAttack(ev);
   }
 }
@@ -143,8 +143,6 @@ void ServerEventHandler::handle(PlayerConnection &ev) {
   for (int i = 0; i < player->getInventory().getSize() - player->getInventory().getSpaceLeft();i++){
     listener.inventoryAddItem(id,player->getInventory().getItem(i)->getItemType());
   }
-  // PRUEBA
-  world.spawnUnParDeMobs();
 }
 
 void ServerEventHandler::handle(MessageSent &ev) {
