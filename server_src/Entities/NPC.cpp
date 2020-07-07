@@ -25,7 +25,8 @@ void NPC::listItems(PlayerNet* player) {
 std::string NPC::getPrettyPrint(Item* item) {
   std::string message;
   message.append(std::to_string(item->getItemType()) + ": " +
-                  item->getItemName());
+                  item->getItemName() + " $ " +
+                  std::to_string(item->getBuyPrice()));
   return message;
 }
 
