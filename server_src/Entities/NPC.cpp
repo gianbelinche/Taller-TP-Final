@@ -16,17 +16,16 @@ NPC::NPC(int id, int x, int y, ServerEventListener& eventListener,
 NPC::~NPC() {}
 
 void NPC::listItems(PlayerNet* player) {
-  std::string msg = std::move(getPrettyPrint(itemsAvailable));
-  listener.playerSendMessageToChat(player->getId(), std::move(msg));
+  for (auto& item : itemsAvailable){
+    std::string msg = std::move(getPrettyPrint(item));
+    listener.playerSendMessageToChat(player->getId(), std::move(msg));
+  }
 }
 
-std::string NPC::getPrettyPrint(std::vector<Item*> items) {
+std::string NPC::getPrettyPrint(Item* item) {
   std::string message;
-  for (auto& item : items) {
-    message.append(std::to_string(item->getItemType()) + ": " +
-                   item->getItemName());
-    message.append("\n");
-  }
+  message.append(std::to_string(item->getItemType()) + ": " +
+                  item->getItemName());
   return message;
 }
 

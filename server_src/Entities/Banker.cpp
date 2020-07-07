@@ -14,8 +14,10 @@ Banker::Banker(int id, int x, int y, ServerEventListener& eventListener,
 Banker::~Banker() {}
 
 void Banker::listItems(PlayerNet* player) {
-  std::string msg = getPrettyPrint(bank.getUserItems(player->getId()));
-  listener.playerSendMessageToChat(player->getId(), msg);
+  for (auto& item : bank.getUserItems(player->getId())){
+    std::string msg = getPrettyPrint(item);
+    listener.playerSendMessageToChat(player->getId(), msg);
+  }
 }
 
 void Banker::goldDeposit(PlayerNet* player, int amount) {
