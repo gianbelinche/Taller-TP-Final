@@ -63,7 +63,7 @@ En la pestaña Projects del repositorio de Github se encuentra una lista con las
 
 ## Herramientas
 
-- **Librerías externas:** Las librerías utilizadas para realizar el proyecto fueron: SDL, QT, msgpack, jsoncpp, ***SHA256???***
+- **Librerías externas:** Las librerías utilizadas para realizar el proyecto fueron: SDL, QT, msgpack, jsoncpp, SHA256
 
 - **Sistema de Control de Versiones**: El sistema de control de versiones usado fue git a través de GitHub.
 
