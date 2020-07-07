@@ -44,7 +44,8 @@ enum items{
     TURTLE_SHIELD,
     IRON_SHIELD,
     MAGIC_HAT,
-    POTION
+    MANA_POTION,
+    LIFE_POTION
 };
 
 
@@ -74,7 +75,8 @@ mainRenderer(mainRenderer), itemBoxes(NULL) {
     this->insert(TURTLE_SHIELD,"Layout_graphics/Inventory/escudo de tortuga.png",SELECTED_TYPE_2);
     this->insert(IRON_SHIELD,"Layout_graphics/Inventory/escudo de hierro.png",SELECTED_TYPE_2);
     this->insert(MAGIC_HAT,"Layout_graphics/Inventory/sombrero magico.png",SELECTED_TYPE_3);
-    this->insert(POTION,"Layout_graphics/Inventory/potion.png",NO_TYPE);
+    this->insert(LIFE_POTION,"Layout_graphics/Inventory/life_potion.png",NO_TYPE);
+    this->insert(MANA_POTION,"Layout_graphics/Inventory/mana_potion.png",NO_TYPE);
 }
 
 void GraphicInventory::insert(int key,std::string path,int position){
