@@ -120,7 +120,6 @@ add_library(server_lib
   server_src/resources/GameState.cpp 
   server_src/resources/IsAlive.cpp 
   server_src/jsoncpp.cpp 
-  server_src/resources/JsonError.cpp 
   server_src/resources/Map.cpp 
   server_src/resources/MasterFactory.cpp
   server_src/resources/Persistor.cpp 
