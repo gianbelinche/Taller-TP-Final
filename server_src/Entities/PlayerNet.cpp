@@ -140,6 +140,7 @@ void PlayerNet::receiveExp(int amount) {
     std::cout << "subio de nivel\n";
   } else {
     listener.playerExpGain(id, amount);
+    listener.expUpdate(id,amount,this->getMaxExp());
   }
   std::cout << "El jugador gano: " << amount << " de exp y ahora tiene: " << exp
             << " de experiencia\n";
@@ -176,6 +177,7 @@ void PlayerNet::levelUp() {
   hp = maxHp;
   mana = maxMana;
   listener.playerLeveledUp(id);
+  listener.levelUpdate(id,level);
 }
 
 bool PlayerNet::canBeAttackedBy(Entity* ent) {
