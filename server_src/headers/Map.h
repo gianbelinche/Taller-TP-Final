@@ -12,11 +12,14 @@ class Map {
   std::vector<std::vector<uint32_t>> terrain;
   std::vector<std::vector<uint32_t>> structures;
   std::vector<std::vector<bool>> collisions;
+  std::vector<std::vector<bool>> cities;
 
  public:
   explicit Map(const char* mapPath);
 
   ~Map();
+
+  std::vector<std::vector<bool>>& getCitiesMap();
 
   std::vector<std::vector<bool>>& getCollisionMap();
 
