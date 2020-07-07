@@ -59,6 +59,8 @@ Otro error encontrado, fue que si habia varios clientes conectados, solo se visu
 
 ## Analisis de puntos pendientes
 
+En la pestaña Projects del repositorio de Github se encuentra una lista con las tareas pendientes, las tares en proceso, y las completadas.
+
 ## Herramientas
 
 - **Librerías externas:** Las librerías utilizadas para realizar el proyecto fueron: SDL, QT, msgpack, jsoncpp, ***SHA256???***
