@@ -61,8 +61,18 @@ void EntityManager::addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX,
                                 aWeapon, anArmor, aShield, aHelmet);
 }
 
+
+
+#include <iostream>
+
+
+
 void EntityManager::destroyEntity(uint32_t ID) {
     std::unique_lock<std::mutex> lk(mux);
+    if (entities.find(ID) == entities.end()) {
+        std::cout << "SE MANDO UN ID ERRONEO destroyEntity: " << ID << '\n'; //SACAR
+        return;
+    }
     delete(entities[ID]);
     entities.erase(ID);
 }
@@ -70,24 +80,40 @@ void EntityManager::destroyEntity(uint32_t ID) {
 void EntityManager::changeEntityState(uint32_t ID, uint8_t state) {
     std::unique_lock<std::mutex> lk(mux);
     if (ID == playerID) player.changeState(state);
+    else if (entities.find(ID) == entities.end()) {
+        std::cout << "SE MANDO UN ID ERRONEO changeEntityState: " << ID << '\n'; //SACAR
+        return;
+    }
     else entities[ID]->changeState(state);
 }
 
 void EntityManager::changeEntityEquipment(uint32_t ID, EquipType equipType, uint8_t what) {
     std::unique_lock<std::mutex> lk(mux);
     if (ID == playerID) player.changeEquipment(equipType, what);
+    else if (entities.find(ID) == entities.end()) {
+        std::cout << "SE MANDO UN ID ERRONEO changeEntityEquipment: " << ID << '\n'; //SACAR
+        return;
+    }
     else entities[ID]->changeEquipment(equipType, what);
 }
 
 void EntityManager::moveEntity(uint32_t ID, MovementType moveType) {
     std::unique_lock<std::mutex> lk(mux);
     if (ID == playerID) player.refreshPosition(moveType);
+    else if (entities.find(ID) == entities.end()) {
+        std::cout << "SE MANDO UN ID ERRONEO moveEntity: " << ID << '\n'; //SACAR
+        return;
+    }
     else entities[ID]->refreshPosition(moveType);
 }
 
 void EntityManager::teleportEntity(uint32_t ID, uint16_t posX, uint16_t posY) {
     std::unique_lock<std::mutex> lk(mux);
     if (ID == playerID) player.teleportTo(posX, posY);
+    else if (entities.find(ID) == entities.end()) {
+        std::cout << "SE MANDO UN ID ERRONEO teleportEntity: " << ID << '\n'; //SACAR
+        return;
+    }
     else entities[ID]->teleportTo(posX, posY);
 }
 
