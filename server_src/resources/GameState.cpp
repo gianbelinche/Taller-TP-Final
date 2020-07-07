@@ -1,15 +1,18 @@
 #include "../headers/GameState.h"
 
 #include <cmath>
+#include <iostream>
 #include <limits>
 
+#include "../headers/MasterFactory.h"
 #include "../headers/Monster.h"
 
 #define FRAMES_PER_SECOND 30
 
 GameState::GameState(std::vector<std::vector<bool>>& collisions, int fps,
-                     ServerEventListener& eventListener, MasterFactory& fac)
-    : colisionMap(collisions),
+                     ServerEventListener& eventListener, MasterFactory& fac, Configuration& configuration)
+    : config(configuration),
+      colisionMap(collisions),
       framesPerSecond(fps),
       listener(eventListener),
       factory(fac) {}
@@ -111,6 +114,10 @@ void GameState::sendState(int id) {
       listener.updateUserWorldState(id, sendable);
     }
   }
+  for (auto& npc : npcs) {
+    sendable = (npc.second)->getSendable();
+    listener.updateUserWorldState(id, sendable);
+  }
 }
 
 void GameState::spawnUnParDeMobs() {
@@ -175,4 +182,35 @@ std::string GameState::getUsernameById(int id) {
 void GameState::rmIdUsr(int id) {
   std::unique_lock<std::mutex> l(idUsrMutex);
   idToUsr.erase(id);
+}
+
+void GameState::init() {
+  initNPCs();
+}
+
+void GameState::initNPCs() {
+  std::unordered_map<std::string, float> city1 = config.getValues("npcsCiudad1");
+  Merchant* mer1 = factory.createMerchant(city1["merchantX"], city1["merchantY"]);
+  Priest* pri1 = factory.createPriest(city1["priestX"], city1["priestY"]);
+  Banker* bank1 = factory.createBanker(city1["bankerX"], city1["bankerY"]);
+  npcs[mer1->getId()] = mer1;
+  npcs[pri1->getId()] = pri1;
+  npcs[bank1->getId()] = bank1;
+
+  std::unordered_map<std::string, float> city2 = config.getValues("npcsCiudad2");
+  Merchant* mer2 = factory.createMerchant(city2["merchantX"], city2["merchantY"]);
+  Priest* pri2 = factory.createPriest(city2["priestX"], city2["priestY"]);
+  Banker* bank2 = factory.createBanker(city2["bankerX"], city2["bankerY"]);
+  npcs[mer2->getId()] = mer2;
+  npcs[pri2->getId()] = pri2;
+  npcs[bank2->getId()] = bank2;
+
+  std::unordered_map<std::string, float> city3 = config.getValues("npcsCiudad3");
+  Merchant* mer3 = factory.createMerchant(city3["merchantX"], city3["merchantY"]);
+  Priest* pri3 = factory.createPriest(city3["priestX"], city3["priestY"]);
+  Banker* bank3 = factory.createBanker(city3["bankerX"], city3["bankerY"]);
+  npcs[mer3->getId()] = mer3;
+  npcs[pri3->getId()] = pri3;
+  npcs[bank3->getId()] = bank3;
+
 }

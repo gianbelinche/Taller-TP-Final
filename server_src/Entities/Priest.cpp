@@ -1,6 +1,8 @@
 #include "../headers/Priest.h"
 #include "../headers/PlayerState.h"
 #include "../headers/ImmobilizedState.h"
+#include "../headers/MasterFactory.h"
+
 //#include "../headers/"
 
 Priest::Priest(int id, int x, int y, ServerEventListener& eventListener,
@@ -11,6 +13,7 @@ Priest::Priest(int id, int x, int y, ServerEventListener& eventListener,
                     factory.createItem(BACULOENGARZADO_TYPE),
                     factory.createItem(BACULONUDOSO_TYPE),
                     factory.createItem(SOMBREROMAGICO_TYPE)};
+  npcType = PRIEST_TYPE;
 }
 
 Priest::~Priest() {

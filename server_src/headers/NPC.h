@@ -6,13 +6,17 @@
 
 #include "Entity.h"
 #include "Item.h"
-#include "MasterFactory.h"
 #include "ServerEventListener.h"
 
 // Don't touch this
 #define NPCMAXHP 999999
 #define NPCLEVEL 999
 
+#define BANKER_TYPE 4
+#define MERCHANT_TYPE 5
+#define PRIEST_TYPE 6
+
+class MasterFactory;
 class PlayerNet;
 
 class NPC : public Entity {
@@ -20,6 +24,7 @@ class NPC : public Entity {
   std::vector<Item*> itemsAvailable;
   ServerEventListener& listener;
   MasterFactory& factory;
+  int npcType;
 
  public:
   NPC(int id, int x, int y, ServerEventListener& eventListener,
@@ -46,6 +51,13 @@ class NPC : public Entity {
   virtual void heal(PlayerNet* player);
 
   virtual void resurrect(PlayerNet* player);
+
+  bool canBeAttackedBy(Entity* ent) override;
+
+  int takeDamage(int dmgToTake) override;
+
+  std::vector<uint32_t> getSendable() override;
+
 };
 
 #endif  // NPC_H

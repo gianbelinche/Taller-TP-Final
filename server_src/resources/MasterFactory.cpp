@@ -188,3 +188,16 @@ HpPotion* MasterFactory::createHpPotion(int itemType) {
                       potionStats["buyPrice"], potionStats["sellPrice"],
                       potionStats["recovery"]);
 }
+
+Merchant* MasterFactory::createMerchant(int x, int y) {
+  return new Merchant(idGenerator++, x, y, listener, *this);
+}
+
+Priest* MasterFactory::createPriest(int x, int y) {
+  return new Priest(idGenerator++, x, y, listener, *this);
+}
+
+Banker* MasterFactory::createBanker(int x, int y) {
+  return new Banker(idGenerator++, x, y, listener, *this, bank);
+}
+

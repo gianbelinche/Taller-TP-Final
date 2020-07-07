@@ -4,9 +4,9 @@
     "port": 8080
   },
   "Player": {
-    "initialX": 3900,
+    "initialX": 4050,
     "initialY": 2550,
-    "initialLevel": 1,
+    "initialLevel": 20,
     "initialExp": 0,
     "initialGold": 98,
     "initialState": 0,
@@ -32,12 +32,12 @@
   },
   "zombie": {
     "hp": 40,
-    "damage": 4,
+    "damage": 30,
     "level": 9
   },
   "human": {
     "hpFactor": 2,
-    "recoveryFactor": 3,
+    "recoveryFactor": 1,
     "manaFactor": 1,
     "constitution": 6,
     "strength": 5,
@@ -122,7 +122,7 @@
   "Hacha": {
     "minDmg": 10,
     "maxDmg": 18,
-    "range": 12,
+    "range": 50,
     "buyPrice": 40,
     "sellPrice": 25
   },
@@ -232,5 +232,29 @@
     "recovery": 50,
     "buyPrice": 20,
     "sellPrice": 10
+  },
+  "npcsCiudad1": {
+    "bankerX": 5216,
+    "bankerY": 3136,
+    "merchantX": 6000,
+    "merchantY": 2080,
+    "priestX": 5184,
+    "priestY": 2304
+  },
+  "npcsCiudad2": {
+    "bankerX": 2560,
+    "bankerY": 5952,
+    "merchantX": 1872,
+    "merchantY": 5824,
+    "priestX": 2464,
+    "priestY": 6272
+  },
+  "npcsCiudad3": {
+    "bankerX": 8544,
+    "bankerY": 6272,
+    "merchantX": 7952,
+    "merchantY": 6528,
+    "priestX": 8384,
+    "priestY": 6656
   }
 }

@@ -7,6 +7,8 @@
 #include <vector>
 
 #include "Armor.h"
+#include "Bank.h"
+#include "Banker.h"
 #include "Class.h"
 #include "Configuration.h"
 #include "GhostState.h"
@@ -14,10 +16,12 @@
 #include "HpPotion.h"
 #include "Item.h"
 #include "ManaPotion.h"
+#include "Merchant.h"
 #include "MonsterType.h"
 #include "NormalState.h"
 #include "PlayerNet.h"
 #include "PlayerState.h"
+#include "Priest.h"
 #include "Race.h"
 #include "ServerEventListener.h"
 #include "Shield.h"
@@ -95,6 +99,7 @@ class MasterFactory {
   Class paladin;
   std::unordered_map<uint32_t, Race*> races;
   std::unordered_map<uint32_t, Class*> classes;
+  Bank bank;
 
   // Unordered sets para busqueda O(1)
   std::unordered_set<int> armors = {ARMADURACUERO_TYPE, ARMADURAPLACAS_TYPE};
@@ -136,6 +141,12 @@ class MasterFactory {
   ManaPotion* createManaPotion(int itemType);
 
   HpPotion* createHpPotion(int itemType);
+
+  Merchant* createMerchant(int x, int y);
+
+  Priest* createPriest(int x, int y);
+
+  Banker* createBanker(int x, int y);
 };
 
 #endif  // MASTERFACTORY_H

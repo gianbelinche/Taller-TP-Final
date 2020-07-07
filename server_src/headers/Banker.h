@@ -6,6 +6,7 @@
 #include "NPC.h"
 #include "ServerEventListener.h"
 
+class MasterFactory;
 class Banker : public NPC {
  private:
   Bank& bank;

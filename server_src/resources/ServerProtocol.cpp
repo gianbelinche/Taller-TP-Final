@@ -45,6 +45,7 @@ void ServerProtocol::playerMovement(std::vector<uint32_t> event) {
 }
 
 void ServerProtocol::entityClick(std::vector<uint32_t> event) {
+  std::cout << event[1] << " " << event[2] << std::endl;
   uint32_t originId = event[1];
   uint32_t destinyId = event[2];
   EntityClick ev(originId, destinyId);

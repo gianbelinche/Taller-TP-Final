@@ -7,17 +7,20 @@
 #include <vector>
 
 #include "Condition.h"
+#include "Configuration.h"
 #include "Entity.h"
-#include "NormalState.h"
 #include "NPC.h"
+#include "NormalState.h"
 #include "PlayerNet.h"
 #include "PlayerState.h"
-#include "MasterFactory.h"
 
 #define TILE_SIZE 32
 
+class MasterFactory;
+
 class GameState {
  private:
+  Configuration& config;
   std::vector<std::vector<bool>> colisionMap;
   std::unordered_map<int, PlayerNet*> players;
   std::unordered_map<std::string, int> usrToId;
@@ -33,9 +36,12 @@ class GameState {
 
  public:
   GameState(std::vector<std::vector<bool>>& collisions, int fps,
-            ServerEventListener& eventListener, MasterFactory& fac);
+            ServerEventListener& eventListener, MasterFactory& fac,
+            Configuration& configuration);
 
   ~GameState();
+
+  void init();
 
   void addEntity(Entity* ent);
 
@@ -80,8 +86,9 @@ class GameState {
   bool isNpc(int id);
 
   void spawnUnParDeMobs();
-
   
+ private:
+  void initNPCs();
 };
 
 #endif  // GAMESTATE_H

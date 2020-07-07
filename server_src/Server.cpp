@@ -2,25 +2,23 @@
 
 #include <fstream>
 #include <iostream>
+#include <string>
 #include <unordered_map>
 #include <utility>
-#include <string>
 
-#include "headers/MessageDispatcher.h"
-#include "headers/ProtectedQueue.h"
-#include "headers/ServerEventHandler.h"
-#include "headers/ServerEventListener.h"
 #include "headers/Game.h"
 #include "headers/GameState.h"
 #include "headers/Map.h"
-#include "headers/Persistor.h"
-#include "headers/ServerProtocol.h"
 #include "headers/MasterFactory.h"
+#include "headers/MessageDispatcher.h"
+#include "headers/Persistor.h"
+#include "headers/ProtectedQueue.h"
+#include "headers/ServerEventHandler.h"
+#include "headers/ServerEventListener.h"
+#include "headers/ServerProtocol.h"
 
 Server::Server(const char* port, Configuration& configuration)
-    : clientAcceptor(port),
-      config(configuration),
-      keepAccepting(true) {}
+    : clientAcceptor(port), config(configuration), keepAccepting(true) {}
 
 Server::~Server() {}
 
@@ -31,7 +29,8 @@ void Server::run() {
   MessageDispatcher dispatcher;
   ServerEventListener listener(dispatcher);
   MasterFactory factory(idAssigner, config, listener);
-  GameState world(map.getCollisionMap(), config.getFPS(), listener, factory);
+  GameState world(map.getCollisionMap(), config.getFPS(), listener, factory,
+                  config);
   ServerEventHandler handler(world, listener);
   ServerProtocol protocol(handler);
 
@@ -39,14 +38,14 @@ void Server::run() {
   Game game(world, idAssigner, incomingMessages, protocol);
   Persistor persistor;
 
-  // game.init()  // quizas hay que hacer algo asi
+  world.init();
   game.start();  // Lanza el hilo principal del juego
 
   while (keepAccepting) {
     Socket peer = std::move(clientAcceptor.accept());
-    ClientHandler* cli =
-        new ClientHandler(std::move(peer), persistor, map, idAssigner,
-                          incomingMessages, dispatcher, world, listener, config);
+    ClientHandler* cli = new ClientHandler(std::move(peer), persistor, map,
+                                           idAssigner, incomingMessages,
+                                           dispatcher, world, listener, config);
 
     clients.push_back(cli);
     cli->start();

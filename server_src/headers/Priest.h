@@ -3,6 +3,7 @@
 
 #include "NPC.h"
 
+class MasterFactory;
 class Priest : public NPC {
  private:
  public:

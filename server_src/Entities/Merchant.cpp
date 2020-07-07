@@ -1,5 +1,7 @@
 #include "../headers/Merchant.h"
 
+#include "../headers/MasterFactory.h"
+
 Merchant::Merchant(int id, int x, int y, ServerEventListener& eventListener,
                    MasterFactory& factory)
     : NPC(id, x, y, eventListener, factory) {
@@ -15,6 +17,7 @@ Merchant::Merchant(int id, int x, int y, ServerEventListener& eventListener,
                     factory.createItem(CASCOHIERRO_TYPE),
                     factory.createItem(ESCUDOTORTUGA_TYPE),
                     factory.createItem(ESCUDOHIERRO_TYPE)};
+  npcType = MERCHANT_TYPE;
 }
 
 Merchant::~Merchant() {
