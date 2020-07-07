@@ -53,10 +53,10 @@ mainRenderer(mainRenderer), itemBoxes(NULL) {
     Image itemBoxes(mainRenderer);
     itemBoxes.loadFromFile("Layout_graphics/Inventory/ItemBoxes.png");
     this->itemBoxes = std::move(itemBoxes);
-    equiped.push_back(-1);
-    equiped.push_back(-1);
-    equiped.push_back(-1);
-    equiped.push_back(-1);
+    equiped.push_back(EMPTY);
+    equiped.push_back(EMPTY);
+    equiped.push_back(EMPTY);
+    equiped.push_back(EMPTY);
     this->insert(SWORD,"Layout_graphics/Inventory/espada.png",SELECTED_TYPE_0);
     this->insert(AXE,"Layout_graphics/Inventory/hacha.png",SELECTED_TYPE_0);
     this->insert(HAMMER,"Layout_graphics/Inventory/martillo.png",SELECTED_TYPE_0);
@@ -126,7 +126,7 @@ void GraphicInventory::renderEquiped(int screen_w,int screen_h){
     int x = SELECTED_EXT_BOX_X;
     int y = SELECTED_EXT_BOX_Y;
     for (int i = 0; i < MAX_NUMBER_OF_SELECTED_ITEMS; i++){
-        if (equiped[i] != -1){
+        if (equiped[i] != EMPTY){
             images.at(equiped[i]).render(x,y,&clip,&rQuad);
         }
         y += SELECTED_EXT_BOX_H;
@@ -137,6 +137,9 @@ void GraphicInventory::equip(int key){
     equiped[image_positions.at(key)] = key;
 }
 
+void GraphicInventory::unequip(int position){
+    equiped[position] = EMPTY;
+}
 
 int GraphicInventory::select(int x,int y,const Camera& camera){
     int screen_w = camera.getWidth();

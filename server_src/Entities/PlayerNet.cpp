@@ -266,6 +266,22 @@ void PlayerNet::equipShield(Shield* aShield) {
   shield = aShield;
 }
 
-int PlayerNet::getEquippedItem(){
+int PlayerNet::getWeaponType(){
+  if (weapon == nullptr) return 0;
   return weapon->getItemType();
+}
+
+int PlayerNet::getArmorType(){
+  if (armor == nullptr) return 0;
+  return armor->getItemType();
+}
+
+int PlayerNet::getShieldType(){
+  if (shield == nullptr) return 0;
+  return shield->getItemType();
+}
+
+int PlayerNet::getHemletType(){
+  if (helmet == nullptr) return 0;
+  return helmet->getItemType();
 }

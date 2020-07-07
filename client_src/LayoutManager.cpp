@@ -13,6 +13,9 @@ void LayoutManager::decodeInventoryMessage(const std::vector<uint32_t> message){
     if (message[1] == 2){
         inventory.equip(message[2]);
     }
+    if (message[1] == 3){
+        inventory.unequip(message[2]);
+    }
 }
 
 void LayoutManager::decodeStateMessage(const std::vector<uint32_t> message){

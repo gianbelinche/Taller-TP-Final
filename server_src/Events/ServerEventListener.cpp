@@ -126,6 +126,14 @@ void ServerEventListener::inventoryEquipItem(int id,int item){
   dispatcher.sendMessage(id,event);
 }
 
+void ServerEventListener::inventoryUnequipItem(int id,int pos){
+  std::vector<uint32_t> event;
+  event.push_back(INVENTORY_COMMAND);
+  event.push_back(INV_UNEQUIP_ITEM);
+  event.push_back(pos);
+  dispatcher.sendMessage(id,event);
+}
+
 
 void ServerEventListener::playerDied(int id) {
   std::vector<uint32_t> event;

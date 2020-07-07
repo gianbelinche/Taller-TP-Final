@@ -40,6 +40,7 @@
 #define ADD_ITEM 0
 #define REMOVE_ITEM 1
 #define INV_EQUIP_ITEM 2
+#define INV_UNEQUIP_ITEM 3
 
 #define REVIVED 0
 #define DEAD 1
@@ -97,6 +98,8 @@ class ServerEventListener {
   void inventoryRemoveItem(int id,int slot); //8
 
   void inventoryEquipItem(int id,int item); //8
+
+  void inventoryUnequipItem(int id,int pos);
   
 
   void goldUpdate(uint32_t id, uint32_t amount); //9

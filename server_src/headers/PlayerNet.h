@@ -92,7 +92,13 @@ class PlayerNet : public Entity {
 
   int getInventorySize();
 
-  int getEquippedItem();
+  int getWeaponType();
+
+  int getArmorType();
+
+  int getShieldType();
+
+  int getHemletType();
 
   Inventory& getInventory();
 

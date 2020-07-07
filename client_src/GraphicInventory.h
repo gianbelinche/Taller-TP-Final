@@ -35,6 +35,8 @@ public:
     void removeImage(int pos);
     //Equipa un objeto
     void equip(int key);
+    //Desequipa el objeto equipado en position
+    void unequip(int position);
     //Devuelve que slot fue clickeado, o -1 si no se clickeo ningun slot
     int select(int x,int y,const Camera& camera);
     void render(const Camera& camera);

@@ -94,7 +94,7 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
   }
   std::cout << "La experiencia ganada es de: " << expGain << "\n";
   player->receiveExp(expGain);
-  listener.npcAttack(player->getId(),player->getEquippedItem());
+  listener.npcAttack(player->getId(),player->getWeaponType());
 }
 
 void ServerEventHandler::handle(EntityClick &ev) {
@@ -337,11 +337,10 @@ void ServerEventHandler::handleSell(int playerId, NPC* npc, int slotChoice) {
     return;
   }
   Item* item = inventory.getItem(slotChoice);
-  inventory.removeItemAt(slotChoice);
   int profit = npc->sellItem(item);
   player->addGold(profit);
   listener.goldUpdate(player->getId(),player->getGold());
-  listener.inventoryRemoveItem(playerId, slotChoice);
+  handleRemoveInventoryItem(playerId,slotChoice);
 }
 
 void ServerEventHandler::handleTake(int playerId) {}
@@ -367,18 +366,31 @@ void ServerEventHandler::handleEquip(int playerId) {
   Item* item = inventory.getItem(slot);
   int itemStatus = item->beEquiped(player);
   if (itemStatus < 0) { // El objeto se elimina del inventario
-    listener.inventoryRemoveItem(player->getId(), slot);
-    inventory.removeItemAt(slot);
+    handleRemoveInventoryItem(playerId,slot);
     return;
   }
   listener.inventoryEquipItem(player->getId(), item->getItemType());
   if (item->getItemType() == POTION){
     //usar pocion
-    inventory.removeItemAt(slot);
-    listener.inventoryRemoveItem(player->getId(), slot);
+    handleRemoveInventoryItem(playerId,slot);
   }
   if (item->getEquippedPosition() != -1){
     listener.playerEquipedItem(player->getId(),item->getEquippedPosition(),item->getItemType());
   }
 }
 
+void ServerEventHandler::handleRemoveInventoryItem(int playerId,int slot){
+  PlayerNet* player = world.getPlayer(playerId);
+  Inventory& inventory = player->getInventory();
+  Item* item = inventory.getItem(slot);
+  int item_type = item->getItemType();
+  if (player->getWeaponType() == item_type || 
+      player->getHemletType() == item_type ||
+      player->getArmorType() == item_type || 
+      player->getShieldType() == item_type){
+        listener.inventoryUnequipItem(player->getId(),item->getEquippedPosition());
+        listener.playerEquipedItem(player->getId(),item->getEquippedPosition(),0);
+      }
+  listener.inventoryRemoveItem(player->getId(), slot);
+  inventory.removeItemAt(slot);
+}

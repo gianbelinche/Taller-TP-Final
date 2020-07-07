@@ -71,6 +71,8 @@ class ServerEventHandler {
   void handlePlayerMsg(int playerId, std::string msg, int otherPlayerId=-1);
 
   void handleEquip(int playerId);
+
+  void handleRemoveInventoryItem(int playerId,int slot);
 };
 
 #endif  // SERVEREVENTHANDLER_H

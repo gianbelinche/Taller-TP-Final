@@ -365,7 +365,7 @@ A través de msgpack, se forma de la siguiente manera:
 
 8. **Comandos de inventario** (08):
 
-    `08 + ID comando + SLOT/OBJ`
+    `08 + ID comando + SLOT/OBJ/POS`
 
     Ejemplo:
 
@@ -373,10 +373,21 @@ A través de msgpack, se forma de la siguiente manera:
 
     `{08, 01, 02}` <- sacar objeto en slot 2 del inventario
 
+    `{08, 02, 03}` <- equipar espada
+
+    `{08, 03, 01}` <- desequipar objeto de la posicion 1
+
+    Posiciones:
+      - 00 -> Arma
+      - 01 -> Armadura
+      - 02 -> Escudo
+      - 03 -> Casco
+
     IDs:
       - 00 <- poner objeto
       - 01 <- quitar objeto de slot
       - 02 <- equipar objeto
+      - 03 <- desequipar
 
     OBJs:
       - 01 -> Espada
