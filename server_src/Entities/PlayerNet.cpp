@@ -285,3 +285,33 @@ int PlayerNet::getHemletType(){
   if (helmet == nullptr) return 0;
   return helmet->getItemType();
 }
+
+std::vector<uint32_t> PlayerNet::getData(){
+  std::vector<uint32_t> data;
+  data.push_back(getId());
+  data.push_back(getX());
+  data.push_back(getY());
+  data.push_back(getLevel());
+  data.push_back(getExp());
+  data.push_back(playerRace->getRaceT());
+  data.push_back(playerClass->getClassT());
+  data.push_back(getGold());
+  if (hp == 0) {
+    data.push_back(1);
+  } else {
+    data.push_back(0);
+  }
+  data.push_back(weapon->getItemType());
+  data.push_back(helmet->getItemType());
+  data.push_back(armor->getItemType());
+  data.push_back(shield->getItemType());
+
+  for (int i = 0; i < INVENTORY_SIZE; i++) {
+    if (inventory.getItem(i) == nullptr){
+      data.push_back(0);
+    } else {
+      data.push_back(inventory.getItem(i)->getItemType());
+    }
+  }
+  return data;
+}

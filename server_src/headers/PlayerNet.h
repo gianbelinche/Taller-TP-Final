@@ -104,6 +104,8 @@ class PlayerNet : public Entity {
 
   std::vector<uint32_t> getSendable() override;
 
+  std::vector<uint32_t> getData();
+
   /* ---------- Acciones ---------- */
 
   int attack(Entity* ent);

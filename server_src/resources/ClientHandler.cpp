@@ -7,6 +7,7 @@
 #include <iostream>
 #include <msgpack.hpp>
 #include <sstream>
+#include "../headers/PlayerNet.h"
 
 #define INVENTORY_SIZE 20
 
@@ -50,6 +51,9 @@ void ClientHandler::run() {
   sender.join();
   receiver.stop();
   receiver.join();
+
+  PlayerNet* player = world.getPlayer(playerInfo[0]);
+  persistor.persistPlayer(std::move(player->getData()),world.getUsernameById(player->getId()));
 
   world.rmPlayer(playerInfo[0]);  // Id
   world.rmIdUsr(playerInfo[0]);
