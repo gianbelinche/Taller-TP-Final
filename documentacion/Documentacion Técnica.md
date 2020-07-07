@@ -101,6 +101,21 @@ De parte del cliente, los NPC's y los Mobs no son tan distintos. La única difer
 
 También existe una clase `Equippable` utilizada por `Player` para equiparse. No se utiliza `Item` ya que no es una entidad y, además, se necesita de un `sprite` más completo, con cada tile para ser renderizado a la par del movimento del jugador.
 
+### Módulo ClientController
+
+En este módulo se encuentran las clases que se ejecutan una vez cargado el cliente y son aquellas que se ejecutarán a lo largo del programa mientras se encuentre estable el servidor. Estas clases son:
+
+- **Renderer**: clase hija de `Thread` encargada de renderizar el módelo en cada loop. Además, contiene también un `ModelController`, encargado de actualizar el modelo a través de eventos que obtiene a través de una cola de eventos conectada a `Receiver`, que se ejecuta en cada loop antes de renderizar.
+- **Receiver**: clase hija de `Thread` encargada de recibir mensajes del servidor, desempaquetarlos y pushearlos a una cola de eventos conectada al `ModelController`.
+- **EventManager**: clase encargada de tomar los eventos del usuario y, a través del la codificación del evento con `ClientProtocol`, pushear a una cola de eventos conectada a `Sender`.
+- **Sender**: clase hija de `Thread` encargada de tomar los eventos de una cola de eventos conectada a `EventManager`, empaquetarlos y enviarlos al servidor.
+
+Cada una de estas clases se ejecuta en un hilo distinto. EventManager se ejecuta en el hilo principal ya que la función `SDL_WaitEvent()` debe ser llamada en el mismo hilo en el que se inicializo la pantalla del juego.
+
+Estas clases son ejecutadas y finalizadas en una clase llamada `ClientController`.
+
+![Diagrama de ClientController]() AGREGAAAAAAAAAAAAAAAR
+
 ## Protocolo
 
 El protocolo para la comunicación entre el servidor y el cliente, es en formato binario, y consta del largo del mensaje, y un vector de uint32 codificado usando msgpack, se explica en el archivo Protocolo.md.
