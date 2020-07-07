@@ -9,10 +9,13 @@
 
 #define FRAMES_PER_SECOND 30
 
-GameState::GameState(std::vector<std::vector<bool>>& collisions, int fps,
-                     ServerEventListener& eventListener, MasterFactory& fac, Configuration& configuration)
+GameState::GameState(std::vector<std::vector<bool>>& collisions, 
+                     std::vector<std::vector<bool>>& cities, int fps,
+                     ServerEventListener& eventListener, MasterFactory& fac, 
+                     Configuration& configuration)
     : config(configuration),
       colisionMap(collisions),
+      citiesMap(cities),
       framesPerSecond(fps),
       listener(eventListener),
       factory(fac) {}

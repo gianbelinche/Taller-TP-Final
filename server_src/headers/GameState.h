@@ -21,7 +21,8 @@ class MasterFactory;
 class GameState {
  private:
   Configuration& config;
-  std::vector<std::vector<bool>> colisionMap;
+  std::vector<std::vector<bool>>& colisionMap;
+  std::vector<std::vector<bool>>& citiesMap;
   std::unordered_map<int, PlayerNet*> players;
   std::unordered_map<std::string, int> usrToId;
   std::unordered_map<int, std::string> idToUsr;
@@ -35,7 +36,8 @@ class GameState {
   std::mutex idUsrMutex;
 
  public:
-  GameState(std::vector<std::vector<bool>>& collisions, int fps,
+  GameState(std::vector<std::vector<bool>>& collisions, 
+            std::vector<std::vector<bool>>& cities, int fps,
             ServerEventListener& eventListener, MasterFactory& fac,
             Configuration& configuration);
 

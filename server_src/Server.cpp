@@ -29,8 +29,8 @@ void Server::run() {
   MessageDispatcher dispatcher;
   ServerEventListener listener(dispatcher);
   MasterFactory factory(idAssigner, config, listener);
-  GameState world(map.getCollisionMap(), config.getFPS(), listener, factory,
-                  config);
+  GameState world(map.getCollisionMap(), map.getCitiesMap(), config.getFPS(), 
+                  listener, factory, config);
   ServerEventHandler handler(world, listener);
   ServerProtocol protocol(handler);
 
