@@ -12,6 +12,7 @@ class ClientConnector;
 #include "ProtMsgQueue.h"
 #include "ClientProtocol.h"
 #include <vector>
+#include "GraphicInventory.h"
 
 class ClientConnector {
     private:
@@ -30,7 +31,7 @@ class ClientConnector {
         void connect(const char *host, const char *service);
         void closeSocket();
 
-        Player getPlayer(SDL_Renderer *renderer);
+        Player getPlayer(SDL_Renderer *renderer,GraphicInventory& inventory);
         MainMap getMainMap(SDL_Renderer *renderer);
         Sender getSender(BlockingMsgQueue &queue);
         Receiver getReceiver(ProtMsgQueue &queue);

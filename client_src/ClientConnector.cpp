@@ -48,7 +48,7 @@ std::string ClientConnector::receiveMsg(uint32_t len) {
     return msgStr;
 }
 
-Player ClientConnector::getPlayer(SDL_Renderer *renderer) {
+Player ClientConnector::getPlayer(SDL_Renderer *renderer,GraphicInventory& inventory) {
     uint32_t len = receiveLen();
     std::string msgStr = std::move(receiveMsg(len));
 
@@ -59,6 +59,11 @@ Player ClientConnector::getPlayer(SDL_Renderer *renderer) {
     Player player(renderer, (PlayerRace)msg[2], msg[1], msg[3], msg[4], msg[5],
                   (EquipType)msg[6], (EquipType)msg[7], (EquipType)msg[8], 
                   (EquipType)msg[9]);
+
+    inventory.equip(msg[6]); 
+    inventory.equip(msg[7]); 
+    inventory.equip(msg[8]); 
+    inventory.equip(msg[9]);              
 
     return player;
 }

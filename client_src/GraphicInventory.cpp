@@ -134,6 +134,7 @@ void GraphicInventory::renderEquiped(int screen_w,int screen_h){
 }
 
 void GraphicInventory::equip(int key){
+    if (key == EMPTY) return;
     equiped[image_positions.at(key)] = key;
 }
 

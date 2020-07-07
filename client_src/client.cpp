@@ -39,14 +39,14 @@ int main(int argc, char* argv[]) {
         BlockingMsgQueue senderQueue;
         ProtMsgQueue receiverQueue;
 
-        Player player = std::move(clientConnector.getPlayer(mainRenderer));
+        GraphicInventory gInventory(mainRenderer);
+        Player player = std::move(clientConnector.getPlayer(mainRenderer,gInventory));
         MainMap mainMap = std::move(clientConnector.getMainMap(mainRenderer));
         clientConnector.sendReceivedSignal(clientProtocol, player.getID());
         Sender sender = std::move(clientConnector.getSender(senderQueue));
         Receiver receiver = std::move(clientConnector.getReceiver(receiverQueue));
 
         Layout layout(mainRenderer);
-        GraphicInventory gInventory(mainRenderer);
         MiniChat miniChat(mainRenderer);
         ExpBar expBar(mainRenderer);
 
