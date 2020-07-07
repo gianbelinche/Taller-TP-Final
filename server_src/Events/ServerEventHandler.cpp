@@ -175,6 +175,7 @@ void ServerEventHandler::handle(MessageSent &ev) {
     handlePlayerMsg(id, joinedMsg, destinyPlayerId);
     return;
   } else if (messageCode == TOMAR) {
+    handleTake(id);
     return;
   } else if (messageCode == TIRAR) {
     return;
@@ -346,7 +347,22 @@ void ServerEventHandler::handleSell(int playerId, NPC* npc, int slotChoice) {
   handleRemoveInventoryItem(playerId,slotChoice);
 }
 
-void ServerEventHandler::handleTake(int playerId) {}
+void ServerEventHandler::handleTake(int playerId) {
+  PlayerNet* player = world.getPlayer(playerId);
+  if (player == nullptr) {
+    std::cerr << "No se encontro el usuario\n";
+    return;
+  }
+  Inventory& inv = player->getInventory();
+  if (inv.isFull()) {return;}
+  Item* item = world.getCloseItem(player->getX(), player->getY(), player->getAttackRange());
+  if (item == nullptr) {return;}
+
+  inv.addItem(item);
+  listener.inventoryAddItem(playerId, item->getItemType());
+  world.rmItem(item->getId());
+  listener.entityDisappear(item->getId());
+}
 
 void ServerEventHandler::handleDrop(int playerId, int slotChoice) {}
 
