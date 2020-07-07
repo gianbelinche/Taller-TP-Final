@@ -128,11 +128,19 @@ PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData,
   } else {
     state = &PlayerState::dead;
   }
-
-  return new PlayerNet(
+  
+  PlayerNet* player = new PlayerNet(
       x, y, id, world, 6, exp, level, gold, createWeapon(playerData[9]),
       createArmor(playerData[11]), createHelmet(playerData[10]),
       createShield(playerData[12]), state, playerClass, playerRace, listener);
+
+  for (int i = 0; i < player->getInventory().getSize();i++){
+    if (playerData[13+i] != 0){
+      Item* item = createItem(playerData[13+i]);
+      player->getInventory().addItem(item);
+    }
+  }    
+  return player;
 }
 
 Weapon* MasterFactory::createWeapon(int itemType) {

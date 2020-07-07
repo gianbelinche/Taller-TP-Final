@@ -222,12 +222,35 @@ void ClientHandler::handleNewPlayer(std::string user) {
   playerInfo.push_back(choices[2]);                                   // Clase
   playerInfo.push_back(config.getValues("Player")["initialGold"]);    // Oro
   playerInfo.push_back(config.getValues("Player")["initialState"]);   // Estado
-  playerInfo.push_back(config.getValues("Player")["initialWeapon"]);  // Arma
-  playerInfo.push_back(config.getValues("Player")["initialHelmet"]);  // Casco
-  playerInfo.push_back(config.getValues("Player")["initialArmor"]);  // Armadura
-  playerInfo.push_back(config.getValues("Player")["initialShield"]);  // Escudo
+  int initial_weapon = config.getValues("Player")["initialWeapon"];
+  int initial_helmet = config.getValues("Player")["initialHelmet"];
+  int initial_armor = config.getValues("Player")["initialArmor"];
+  int initial_shield = config.getValues("Player")["initialShield"];
+  playerInfo.push_back(initial_weapon);  // Arma
+  playerInfo.push_back(initial_helmet);  // Casco
+  playerInfo.push_back(initial_armor);  // Armadura
+  playerInfo.push_back(initial_shield);  // Escudo
 
-  for (int i = 0; i < INVENTORY_SIZE; i++) {
+  int i = 0;
+  
+  if (initial_weapon != 0){
+    playerInfo.push_back(initial_weapon); //Arma en el inventario
+    i++;
+  }
+  if (initial_helmet != 0){
+    playerInfo.push_back(initial_helmet); //Casco en el inventario
+    i++;
+  }
+  if (initial_armor != 0){
+    playerInfo.push_back(initial_armor); //Armadura en el inventario
+    i++;
+  }
+  if (initial_shield != 0){
+    playerInfo.push_back(initial_shield); //Escudo en el inventario
+    i++;
+  }
+
+  for (; i < INVENTORY_SIZE; i++) {
     playerInfo.push_back(0);
   }
 
