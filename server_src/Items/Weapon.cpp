@@ -23,7 +23,8 @@ int Weapon::getMaxDmg() { return maxDmg; }
 
 int Weapon::getAttackRange() { return range; }
 
-void Weapon::beEquiped(PlayerNet* player) {
+int Weapon::beEquiped(PlayerNet* player) {
   player->equipWeapon(static_cast<Weapon*>(this));
+  return 0;
 }
 

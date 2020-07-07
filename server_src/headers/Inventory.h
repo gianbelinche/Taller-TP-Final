@@ -26,7 +26,8 @@ class Inventory {
 
   bool isFull();
 
-  void addItem(Item* item);
+  // Devuelve el numero de slot en el que fue insertado el elemento
+  int addItem(Item* item);
 };
 
 #endif // INVENTORY_H

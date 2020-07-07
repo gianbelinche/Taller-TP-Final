@@ -12,6 +12,8 @@ public:
   InventoryClick(uint32_t originId, uint32_t slot);
 
   ~InventoryClick();
+
+  uint32_t getSlot();
 };
 
 #endif // INVENTORYCLICK_H

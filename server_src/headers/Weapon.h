@@ -24,7 +24,7 @@ class Weapon : public Item {
 
   int getMaxDmg();
 
-  void beEquiped(PlayerNet* player) override;
+  int beEquiped(PlayerNet* player) override;
 
 };
 
