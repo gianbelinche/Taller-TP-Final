@@ -250,4 +250,18 @@ void PlayerNet::selectSlot(int slot) {
   selectedSlot = slot;
 }
 
+void PlayerNet::equipWeapon(Weapon* aWeapon) {
+  weapon = aWeapon;
+}
 
+void PlayerNet::equipArmor(Armor* anArmor) {
+  armor = anArmor;
+}
+
+void PlayerNet::equipHelmet(Helmet* aHelmet) {
+  helmet = aHelmet;
+}
+
+void PlayerNet::equipShield(Shield* aShield) {
+  shield = aShield;
+}

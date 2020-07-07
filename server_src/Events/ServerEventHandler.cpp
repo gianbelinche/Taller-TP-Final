@@ -162,6 +162,8 @@ void ServerEventHandler::handle(MessageSent &ev) {
   } else if (messageCode == RESUCITAR) {
     handleResurrect(id);
     return;
+  } else if (messageCode == EQUIPAR) {
+    
   }
 
   // Si llego aca es porque es un mensaje dirigido a algun NPC
@@ -315,5 +317,20 @@ void ServerEventHandler::handleDrop(int playerId, int slotChoice) {}
 void ServerEventHandler::handlePlayerMsg(int playerId, std::string msg, int otherPlayerId) {
   std::string playerUsername = world.getUsernameById(playerId);
   listener.playerSendMessageToChat(otherPlayerId, playerUsername + ": " + msg);
+}
+
+void ServerEventHandler::handleEquip(int playerId) {
+  PlayerNet* player = world.getPlayer(playerId);
+  if (player == nullptr) {
+    std::cerr << "No se encontro el usuario\n";
+    return;
+  }
+  int slot = player->getSelectedSlot();
+  if (slot < 0) {
+    return;
+  }
+  Inventory& inventory = player->getInventory();
+  Item* item = inventory.getItem(slot);
+  item->beEquiped(player);
 }
 

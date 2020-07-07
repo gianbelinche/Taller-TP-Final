@@ -125,6 +125,14 @@ class PlayerNet : public Entity {
 
   void update() override;
 
+  void equipWeapon(Weapon* weapon);
+
+  void equipArmor(Armor* armor);
+
+  void equipHelmet(Helmet* helmet);
+
+  void equipShield(Shield* shield);
+
  private:
   void levelUp();
 
