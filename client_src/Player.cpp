@@ -257,7 +257,7 @@ void Player::render(Camera &camera) {
 }
 
 bool Player::collision(uint16_t x, uint16_t y) {
-    return (x > posX) && (x < posX + bodyWidth) && (y < posY) && 
+    return (x > posX) && (x < posX + bodyWidth) && (y > posY) && 
            (y < posY + bodyHeight);
 }
 
