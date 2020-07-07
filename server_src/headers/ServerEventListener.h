@@ -96,7 +96,7 @@ class ServerEventListener {
 
   void inventoryRemoveItem(int id,int slot); //8
 
-  void inventoryEquipItem(int id,int slot); //8
+  void inventoryEquipItem(int id,int item); //8
   
 
   void goldUpdate(uint32_t id, uint32_t amount); //9

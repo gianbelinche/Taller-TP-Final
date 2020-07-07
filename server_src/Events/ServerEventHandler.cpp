@@ -369,6 +369,9 @@ void ServerEventHandler::handleEquip(int playerId) {
     inventory.removeItemAt(slot);
     return;
   }
-  listener.inventoryEquipItem(player->getId(), slot);
+  listener.inventoryEquipItem(player->getId(), item->getItemType());
+  if (item->getEquippedPosition() != -1){
+    listener.playerEquipedItem(player->getId(),item->getEquippedPosition(),item->getItemType());
+  }
 }
 

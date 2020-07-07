@@ -69,11 +69,11 @@ mainRenderer(mainRenderer), itemBoxes(NULL) {
     this->insert(LEATHER_ARMOR,"Layout_graphics/Inventory/armadura de cuero.png",SELECTED_TYPE_1);
     this->insert(PLATE_ARMOR,"Layout_graphics/Inventory/armadura de placas.png",SELECTED_TYPE_1);
     this->insert(BLUE_TUNIC,"Layout_graphics/Inventory/tunica azul.png",SELECTED_TYPE_1);
-    this->insert(HOOD,"Layout_graphics/Inventory/capucha.png",SELECTED_TYPE_2);
-    this->insert(IRON_HELMET,"Layout_graphics/Inventory/casco de hierro.png",SELECTED_TYPE_2);
-    this->insert(TURTLE_SHIELD,"Layout_graphics/Inventory/escudo de tortuga.png",SELECTED_TYPE_3);
-    this->insert(IRON_SHIELD,"Layout_graphics/Inventory/escudo de hierro.png",SELECTED_TYPE_3);
-    this->insert(MAGIC_HAT,"Layout_graphics/Inventory/sombrero magico.png",SELECTED_TYPE_2);
+    this->insert(HOOD,"Layout_graphics/Inventory/capucha.png",SELECTED_TYPE_3);
+    this->insert(IRON_HELMET,"Layout_graphics/Inventory/casco de hierro.png",SELECTED_TYPE_3);
+    this->insert(TURTLE_SHIELD,"Layout_graphics/Inventory/escudo de tortuga.png",SELECTED_TYPE_2);
+    this->insert(IRON_SHIELD,"Layout_graphics/Inventory/escudo de hierro.png",SELECTED_TYPE_2);
+    this->insert(MAGIC_HAT,"Layout_graphics/Inventory/sombrero magico.png",SELECTED_TYPE_3);
     this->insert(POTION,"Layout_graphics/Inventory/potion.png",NO_TYPE);
 }
 

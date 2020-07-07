@@ -118,11 +118,11 @@ void ServerEventListener::inventoryRemoveItem(int id,int slot){
   dispatcher.sendMessage(id,event);
 }
 
-void ServerEventListener::inventoryEquipItem(int id,int slot){
+void ServerEventListener::inventoryEquipItem(int id,int item){
   std::vector<uint32_t> event;
   event.push_back(INVENTORY_COMMAND);
   event.push_back(INV_EQUIP_ITEM);
-  event.push_back(slot);
+  event.push_back(item);
   dispatcher.sendMessage(id,event);
 }
 
