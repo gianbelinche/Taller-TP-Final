@@ -72,20 +72,20 @@ En caso de que ningun server se encuentre abierto, se debe iniciar un server. Pa
 Luego, se debe ejecutar el servidor de la siguiente manera:
 
 ~~~
-/server config/gameConfig.json
+/server server_src/config/gameConfig.json
 ~~~
 
 Para la conexión del cliente se debe iniciar el programa ejecutando el comando `./client` en la terminal, y en la pantalla que aparece ingresar el host y puerto para conectarse a un servidor. En caso de que el servidor ingresado no exista o halla algún otro tipo de error, se mostrará por pantalla y deberá volver a intentarse conectar.
 
-![Login Server](loginserver.png)
+![Login Server](img/loginserver.png)
 
 Una vez conectado al servidor, se le pedirá el ingreso de un usuario y contraseña. En caso de que sea la primera vez que ingresa, se creará un nuevo usuario junto a la contraseña ingresada, siempre que no exista un usuario con el mismo nombre, en caso de que no sea la primera vez que se conecta, ingresará su usuario y contraseña y si esta es correcta, podrá iniciar el juego, en caso contrario, se le notificará del error.
 
-![Login Account](loginaccount.png)
+![Login Account](img/loginaccount.png)
 
 Si es la primera vez que entra al juego, aparecera una pantalla de creación de personaje, donde tendrá un menu desplegable desde el que podrá elegir su raza y su clase. 
 
-![Login Race Class](loginrace.png)
+![Login Race Class](img/loginrace.png)
 
 Entre las razas, se encuentran:
 
@@ -104,11 +104,11 @@ De todas las clases, el guerrero es el único que no puede usar la magia, ni med
 
 Una vez iniciado el juego, se podrá observar el personaje en el pueblo principal, observando la siguiente escena:
 
-![Pueblo Principal](puebloprincipal.png)
+![Pueblo Principal](img/puebloprincipal.png)
 
 En cada uno de los tres pueblo, el personaje estará seguro de todo ataque, ya que estos son zona segura. Además, se podrán encontra, en cada pueblo, un `Merchant` o `Mercader`, una `Healer` o `Sanadora` y un `Banker` o `Banquero`. 
 
-| ![Merchant](docmerchant.png) | ![Healer](dochealer.png) | ![Banker](docbanker.png) |
+| ![Merchant](img/docmerchant.png) | ![Healer](img/dochealer.png) | ![Banker](img/docbanker.png) |
 |:-:|:-:|:-:|
 
 Más adelante se hablará sobre cómo interactuar con cada uno de estos.

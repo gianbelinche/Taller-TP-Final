@@ -12,7 +12,9 @@ Priest::Priest(int id, int x, int y, ServerEventListener& eventListener,
                     factory.createItem(FLAUTAELFICA_TYPE),
                     factory.createItem(BACULOENGARZADO_TYPE),
                     factory.createItem(BACULONUDOSO_TYPE),
-                    factory.createItem(SOMBREROMAGICO_TYPE)};
+                    factory.createItem(SOMBREROMAGICO_TYPE),
+                    factory.createItem(POCIONHP_TYPE),
+                    factory.createItem(POCIONMANA_TYPE)};
   npcType = PRIEST_TYPE;
 }
 

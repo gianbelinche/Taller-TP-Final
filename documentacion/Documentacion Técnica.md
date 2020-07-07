@@ -5,16 +5,12 @@
 - **OS requerido**:
 
     - Linux
-    - ***MacOS??***
-    - ***Windows??***
 
 - **Bibliotecas requeridas**:
 
-    - jsoncpp: https://github.com/open-source-parsers/jsoncpp
     - msgpack: https://github.com/msgpack/msgpack-c/tree/cpp_master
     - SDL2: https://www.libsdl.org/
     - QT: https://www.qt.io/product/framework
-    - ***COMPLETAR***
 
 - **Herramientas para la instalación del programa**:
 
@@ -25,7 +21,6 @@
 
     - Algún compilador de C++, por ejemplo, g++.
     - Algún editor de texto o IDE, por ejemplo, Visual Studio Code.
-    - ***COMPLETAR, CORREGIR***
 
 ## Descripción general
 
@@ -108,7 +103,7 @@ También existe una clase `Equippable` utilizada por `Player` para equiparse. No
 
 ## Protocolo
 
-El protocolo para la comunicación entre el servidor y el cliente, es en formato binario, y consta del largo del mensaje, y un vector de uint32 codificado usando msgpack, se explica en el README del repositorio.
+El protocolo para la comunicación entre el servidor y el cliente, es en formato binario, y consta del largo del mensaje, y un vector de uint32 codificado usando msgpack, se explica en el archivo protocolo del repositorio.
 
 ## Programas intermedios y de prueba
 
