@@ -95,6 +95,8 @@ Para la resolución de la ventana, se provee una selección de resoluciones al m
 
 ## Forma de uso
 
+### Servidor
+
 En caso de que ningun server se encuentre abierto, se debe iniciar un server. Para eso, se debe modificar, si se desea, el archivo de configuración gameConfig.json que se encuentra en ~/server_src/config/gameConfig.json.
 
 Luego, se debe ejecutar el servidor de la siguiente manera:
@@ -102,6 +104,8 @@ Luego, se debe ejecutar el servidor de la siguiente manera:
 ~~~
 /server server_src/config/gameConfig.json
 ~~~
+
+### Cliente
 
 Para la conexión del cliente se debe iniciar el programa ejecutando el comando `./client` en la terminal, y en la pantalla que aparece ingresar el host y puerto para conectarse a un servidor. En caso de que el servidor ingresado no exista o halla algún otro tipo de error, se mostrará por pantalla y deberá volver a intentarse conectar.
 
