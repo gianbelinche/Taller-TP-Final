@@ -16,11 +16,11 @@ Para realizar este proyecto se dividieron las tares en tres partes, cada una cor
 
 Estas tres partes se dividen en:
 
-1. Servidor: Manejo de lógica del juego, carga de datos y comunicación con múltiples clientes en simultáneo. Fue realizada por Julian Crespo.
+1. **Servidor**: Manejo de lógica del juego, carga de datos y comunicación con múltiples clientes en simultáneo. Fue realizada por Julian Crespo.
 
-2. Cliente 1: Manejo de la parte gráfica, diseño del mapa, drops, interacción por parte del usuario y comunicación con servidor. Fue realizada por Guido Botta.
+2. **Cliente 1**: Manejo de la parte gráfica, diseño del mapa, drops, interacción por parte del usuario y comunicación con servidor. Fue realizada por Guido Botta.
 
-3. Cliente 2: Manejo del sonido, interfaz gráfica (inventario, chat, barra de vida, etc), pantalla de login, persistencia, configuración, interacción del usuario y comunicación con servidor. Fue realizada por Gianluca Belinche.
+3. **Cliente 2**: Manejo del sonido, interfaz gráfica (inventario, chat, barra de vida, etc), pantalla de login, persistencia, configuración, interacción del usuario y comunicación con servidor. Fue realizada por Gianluca Belinche.
 
 ## Evolución del proyecto
 
