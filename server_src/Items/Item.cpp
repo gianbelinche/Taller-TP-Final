@@ -21,7 +21,8 @@ enum items{
     TURTLE_SHIELD,
     IRON_SHIELD,
     MAGIC_HAT,
-    POTION
+    LIFE_POTION,
+    MANA_POTION
 };
 
 #define NO_EQUIPPED_TYPE -1
@@ -56,7 +57,8 @@ Item::Item(int itemID, int itemType, std::string itemName, int buyPrice,
   equipped[TURTLE_SHIELD] = EQUIPPED_TYPE_2;
   equipped[IRON_SHIELD] = EQUIPPED_TYPE_2;
   equipped[MAGIC_HAT] = EQUIPPED_TYPE_3;
-  equipped[POTION] = NO_EQUIPPED_TYPE;
+  equipped[LIFE_POTION] = NO_EQUIPPED_TYPE;
+  equipped[MANA_POTION] = NO_EQUIPPED_TYPE;
 
   equipped_position = equipped[itemType];
 }
