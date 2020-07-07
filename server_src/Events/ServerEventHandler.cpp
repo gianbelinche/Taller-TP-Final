@@ -172,6 +172,7 @@ void ServerEventHandler::handle(MessageSent &ev) {
     return;
   } else if (messageCode == EQUIPAR) {
     handleEquip(id);
+    return;
   }
 
   // Si llego aca es porque es un mensaje dirigido a algun NPC
