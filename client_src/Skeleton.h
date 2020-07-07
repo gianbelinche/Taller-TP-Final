@@ -9,7 +9,7 @@
 #define SKELETON_WIDTH 25
 #define SKELETON_VERT_SPRITES 4
 #define SKELETON_HOR_SPRITES 5
-#define SKELETON_SPEED 4 //cambiar
+#define SKELETON_SPEED 4
 
 class Skeleton : public NPC {
     public:

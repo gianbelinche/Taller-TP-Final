@@ -9,7 +9,7 @@
 #define ZOMBIE_WIDTH 25
 #define ZOMBIE_VERT_SPRITES 4
 #define ZOMBIE_HOR_SPRITES 5
-#define ZOMBIE_SPEED 3 //cambiar
+#define ZOMBIE_SPEED 3
 
 class Zombie : public NPC {
     public:

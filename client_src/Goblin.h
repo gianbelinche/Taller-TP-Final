@@ -9,7 +9,7 @@
 #define GOBLIN_WIDTH 24
 #define GOBLIN_VERT_SPRITES 4
 #define GOBLIN_HOR_SPRITES 8
-#define GOBLIN_SPEED 8 //cambiar
+#define GOBLIN_SPEED 7
 
 class Goblin : public NPC {
     public:

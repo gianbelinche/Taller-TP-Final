@@ -9,7 +9,7 @@
 #define SPYDER_WIDTH 26
 #define SPYDER_VERT_SPRITES 4
 #define SPYDER_HOR_SPRITES 4
-#define SPYDER_SPEED 6 //cambiar
+#define SPYDER_SPEED 6
 
 class Spyder : public NPC {
     public:
