@@ -301,13 +301,22 @@ void ServerEventHandler::handlePurchase(int playerId, int itemChoice, NPC* npc) 
 void ServerEventHandler::handleSell(int playerId, NPC* npc, int slotChoice) {
   PlayerNet* player = world.getPlayer(playerId);
   Inventory& inventory = player->getInventory();
-  if (slotChoice == -1) {
+  if (slotChoice <= -1) {
     slotChoice = player->getSelectedSlot();
+    if (slotChoice == -1) {
+      listener.playerSendMessageToChat(player->getId(),"Seleccione un slot correcto");
+      return;
+    }
+  }
+  if (slotChoice >= inventory.getSize() - inventory.getSpaceLeft()){
+    listener.playerSendMessageToChat(player->getId(),"Seleccione un slot no vacio");
+    return;
   }
   Item* item = inventory.getItem(slotChoice);
   inventory.removeItemAt(slotChoice);
   int profit = npc->sellItem(item);
   player->addGold(profit);
+  listener.goldUpdate(player->getId(),player->getGold());
   // AVISARLE AL CLIENTE QUE HAY ALGO MENOS EN EL INVENTARIO
 }
 

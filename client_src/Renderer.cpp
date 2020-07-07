@@ -16,7 +16,7 @@ Renderer::Renderer(Camera &aCamera, Player &aPlayer, MainMap &aMainMap,
                                             inventory(anInventory), chat(aChat),
                                             expbar(anExpbar), 
                                             modelController(aModelController),
-                                            musicPlayer(), zone(0) {}
+                                            musicPlayer(), zone(-1) {}
 
 Renderer::~Renderer() {}
 
@@ -33,7 +33,7 @@ void Renderer::run() {
             modelController.run(closed); //chequear
 
             camera.refresh(player.getPosX(), player.getPosY());
-            
+ 
             if (mainMap.getZone(player.getPosX(), player.getPosY()) != zone){
                 zone = mainMap.getZone(player.getPosX(), player.getPosY());
                 musicPlayer.play(zone);

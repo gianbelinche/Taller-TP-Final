@@ -2,7 +2,7 @@
 #include "Text.h"
 #define FONT_SIZE 50
 //10
-#define MESSAGES_MAX_SIZE 20
+#define MESSAGES_MAX_SIZE 19
 #define MAX_LETTERS_IN_A_WORD 21
 #define MESSAGES_X (screen_w * 205 / 300)
 #define MESSAGES_Y (screen_h * 17 / 20)
