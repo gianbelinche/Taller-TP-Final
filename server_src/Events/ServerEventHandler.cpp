@@ -9,6 +9,8 @@
 #include "../headers/Item.h"
 #include "../headers/Inventory.h"
 
+#define POTION 18
+
 ServerEventHandler::ServerEventHandler(GameState& state,
                                        ServerEventListener& eventListener)
     : world(state),
@@ -370,6 +372,11 @@ void ServerEventHandler::handleEquip(int playerId) {
     return;
   }
   listener.inventoryEquipItem(player->getId(), item->getItemType());
+  if (item->getItemType() == POTION){
+    //usar pocion
+    inventory.removeItemAt(slot);
+    listener.inventoryRemoveItem(player->getId(), slot);
+  }
   if (item->getEquippedPosition() != -1){
     listener.playerEquipedItem(player->getId(),item->getEquippedPosition(),item->getItemType());
   }
