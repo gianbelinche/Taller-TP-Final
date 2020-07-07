@@ -4,12 +4,14 @@
 #include <cstdint>
 #include <mutex>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 
 #include "Condition.h"
 #include "Configuration.h"
 #include "Entity.h"
 #include "NPC.h"
+#include "Item.h"
 #include "NormalState.h"
 #include "PlayerNet.h"
 #include "PlayerState.h"
@@ -24,6 +26,8 @@ class GameState {
   std::vector<std::vector<bool>>& colisionMap;
   std::vector<std::vector<bool>>& citiesMap;
   std::unordered_map<int, PlayerNet*> players;
+  std::unordered_map<int, Item*> droppedItems;
+  std::unordered_map<int, std::pair<int, int>> itemsPositions;
   std::unordered_map<std::string, int> usrToId;
   std::unordered_map<int, std::string> idToUsr;
   std::unordered_map<int, Entity*> entities;  // Jugadores y monstruos
@@ -92,6 +96,14 @@ class GameState {
   bool isNpc(int id);
 
   void spawnUnParDeMobs();
+
+  void dropItem(Item* item, int x, int y);
+
+  Item* getCloseItem(int x, int y, int range);
+
+  void rmItem(int id);
+
+  void generateDrop(int x, int y);
   
  private:
   void initNPCs();

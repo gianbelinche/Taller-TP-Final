@@ -16,14 +16,11 @@ Monster::Monster(MonsterType& type, int id, int x, int y, int level,
                  GameState& world, ServerEventListener& eventListener)
     : Entity(x, y, id, type.getHp(), level),
       kind(type),
-
       world(world),
       listener(eventListener),
       velocity(velocity),
       atkRange(atkRange),
-      pursuitDistance(pursuitDistance) {
-        std::cout << "La dist: " << pursuitDistance << " range: " << atkRange << " velocidad" << velocity << std::endl;
-      }
+      pursuitDistance(pursuitDistance) {}
 
 Monster::~Monster() {}
 
@@ -98,6 +95,7 @@ int Monster::takeDamage(int dmgToTake) {
     std::cout << "Se murio el mostro\n";
     world.rmEntity(id);
     listener.entityDisappear(id);
+    world.generateDrop(x, y);
   }
   return oldHp - hp;
 }

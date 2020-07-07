@@ -3,6 +3,7 @@
 #include <cmath>
 #include <iostream>
 #include <limits>
+#include <random>
 
 #include "../headers/MasterFactory.h"
 #include "../headers/Monster.h"
@@ -230,4 +231,40 @@ void GameState::initNPCs() {
   npcs[pri3->getId()] = pri3;
   npcs[bank3->getId()] = bank3;
 
+}
+
+void GameState::dropItem(Item* item, int x, int y) {
+  droppedItems[item->getId()] = item;
+  itemsPositions[item->getId()] = std::make_pair(x, y);
+  listener.dropSpawn(item->getId(), item->getItemType(), x, y);
+}
+
+Item* GameState::getCloseItem(int x, int y, int range) {
+  for (auto& it : itemsPositions) {
+      int dist_x = abs(x - it.second.first);
+      int dist_y = abs(y - it.second.second);
+      int distance = sqrt(pow(dist_x, 2) + pow(dist_y, 2));
+
+      if (distance <= range) {
+        return droppedItems[it.first];
+      }
+  }
+  return nullptr;
+}
+
+void GameState::rmItem(int id) {
+  droppedItems.erase(id); // No fallan si no existe
+  itemsPositions.erase(id);
+}
+
+void GameState::generateDrop(int x, int y) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> distr(1, 17);
+  int rand_val = distr(gen);  // Valor random
+
+  Item* item = factory.createItem(rand_val);
+  droppedItems[item->getId()] = item;
+  itemsPositions[item->getId()] = std::make_pair(x, y);
+  listener.dropSpawn(item->getId(), item->getItemType(), x, y);
 }
