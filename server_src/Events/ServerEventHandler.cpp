@@ -244,7 +244,7 @@ void ServerEventHandler::handleHeal(int playerId, NPC* npc) {
 
 void ServerEventHandler::handleItemDeposit(int playerId, int slotChoice, NPC* npc) {
   PlayerNet* player = world.getPlayer(playerId);
-  if (slotChoice < 0 || slotChoice > player->getInventorySize()) {
+  if (slotChoice < 0 || slotChoice >= player->getInventorySize()) {
     listener.playerSendMessageToChat(player->getId(), "Ingrese un numero correcto de slot");
     return;
   }
