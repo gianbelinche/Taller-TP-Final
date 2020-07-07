@@ -4,8 +4,8 @@
     "port": 8080
   },
   "Player": {
-    "initialX": 4100,
-    "initialY": 2600,
+    "initialX": 5664,
+    "initialY": 2464,
     "initialLevel": 20,
     "initialExp": 0,
     "initialGold": 98,
