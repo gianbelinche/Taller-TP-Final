@@ -18,7 +18,8 @@ enum messages {
   VENDER,
   TOMAR,
   TIRAR,
-  PLAYER_MSG
+  PLAYER_MSG,
+  EQUIPAR
 };
 
 namespace ChatMessageParser {

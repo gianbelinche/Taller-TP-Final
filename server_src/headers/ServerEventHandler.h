@@ -69,6 +69,8 @@ class ServerEventHandler {
   void handleDrop(int playerId, int slotChoice=-1);
 
   void handlePlayerMsg(int playerId, std::string msg, int otherPlayerId=-1);
+
+  void handleEquip(int playerId);
 };
 
 #endif  // SERVEREVENTHANDLER_H

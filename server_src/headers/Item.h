@@ -27,7 +27,7 @@ class Item {
 
   std::string getItemName();
 
-  void virtual beEquiped(PlayerNet &player);
+  virtual int beEquiped(PlayerNet* player);
 
   int getBuyPrice();
 

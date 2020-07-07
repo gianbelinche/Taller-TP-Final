@@ -12,6 +12,8 @@ class HpPotion : public Item {
            int sellPrice, int hpRecovery);
 
   ~HpPotion();
+
+  int beEquiped(PlayerNet* player) override;
 };
 
 #endif  // HPPOTION_H

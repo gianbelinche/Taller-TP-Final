@@ -10,6 +10,8 @@ class Shield : public Wearable {
          int buyPrice, int sellPrice);
 
   ~Shield();
+
+  int beEquiped(PlayerNet* player) override;
 };
 
 #endif  // SHIELD_H

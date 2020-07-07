@@ -2,7 +2,6 @@
 #define MANAPOTION_H
 
 #include "Item.h"
-
 class ManaPotion : public Item {
  private:
   int manaRecovery;
@@ -12,6 +11,8 @@ class ManaPotion : public Item {
              int sellPrice, int manaRecovery);
              
   ~ManaPotion();
+
+  int beEquiped(PlayerNet* player) override;
 };
 
 #endif // MANAPOTION_H

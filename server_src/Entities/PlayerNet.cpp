@@ -265,3 +265,7 @@ void PlayerNet::equipHelmet(Helmet* aHelmet) {
 void PlayerNet::equipShield(Shield* aShield) {
   shield = aShield;
 }
+
+int PlayerNet::getEquippedItem(){
+  return weapon->getItemType();
+}

@@ -10,6 +10,8 @@ class Helmet : public Wearable {
          int buyPrice, int sellPrice);
 
   ~Helmet();
+
+  int beEquiped(PlayerNet* player) override;
 };
 
 #endif  // HELMET_H

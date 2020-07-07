@@ -10,6 +10,8 @@ class Armor : public Wearable {
         int buyPrice, int sellPrice);
 
   ~Armor();
+
+  int beEquiped(PlayerNet* player) override;
 };
 
 #endif  // ARMOR_H

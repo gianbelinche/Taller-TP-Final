@@ -1,6 +1,7 @@
 #include "../headers/Weapon.h"
 
 #include "../headers/Equations.h"
+#include "../headers/PlayerNet.h"
 
 Weapon::Weapon(int itemID, int itemType, int minDMG, int maxDMG, int rang,
                std::string itemName, int buyPrice, int sellPrice)
@@ -21,3 +22,8 @@ int Weapon::getMinDmg() { return minDmg; }
 int Weapon::getMaxDmg() { return maxDmg; }
 
 int Weapon::getAttackRange() { return range; }
+
+void Weapon::beEquiped(PlayerNet* player) {
+  player->equipWeapon(static_cast<Weapon*>(this));
+}
+

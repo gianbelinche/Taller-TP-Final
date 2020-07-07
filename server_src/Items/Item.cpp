@@ -14,7 +14,9 @@ Item::~Item() {}
 
 int Item::getId() { return id; }
 
-void Item::beEquiped(PlayerNet &player) {}
+int Item::beEquiped(PlayerNet* player) {
+  return 0;
+}
 
 int Item::getItemType() { return typeOfItem; }
 
