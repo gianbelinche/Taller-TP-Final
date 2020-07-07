@@ -58,11 +58,14 @@ Item* NPC::buyItem(PlayerNet* player, int choice) {
                                      "El item pedido no se ha encontrado");
     return nullptr;
   }
-  if (itemsAvailable[i]->getBuyPrice() > player->getGold()) {
+  int price = itemsAvailable[i]->getBuyPrice();
+  if (price > player->getGold()) {
     listener.playerSendMessageToChat(
         player->getId(), "No se tiene el oro suficiente para comprar el item");
     return nullptr;
   }
+  player->substractGold(price);
+  listener.goldUpdate(player->getId(),player->getGold());
   return factory.createItem(choice);
 }
 
