@@ -201,6 +201,8 @@ void ServerEventHandler::handle(MessageSent &ev) {
     }
     handleSell(id, npc, std::stoi(msgTokens[1]));
     return;
+  } else if (messageCode == LISTAR) {
+    handleListItems(id, npc);
   }
 }
 
