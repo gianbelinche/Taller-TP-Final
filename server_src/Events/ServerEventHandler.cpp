@@ -140,6 +140,9 @@ void ServerEventHandler::handle(PlayerConnection &ev) {
   listener.manaUpdate(id, player->getMana(), player->getMaxMana());
   listener.levelUpdate(id, player->getLevel());
   listener.expUpdate(id, player->getExp(), player->getMaxExp());
+  for (int i = 0; i < player->getInventory().getSize() - player->getInventory().getSpaceLeft();i++){
+    listener.inventoryAddItem(id,player->getInventory().getItem(i)->getItemType());
+  }
   // PRUEBA
   world.spawnUnParDeMobs();
 }
