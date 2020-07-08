@@ -11,3 +11,5 @@ CMakeFiles
 CMakeCache.txt
 Makefile
 build/
+client
+server
