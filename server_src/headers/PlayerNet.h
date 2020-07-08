@@ -125,6 +125,8 @@ class PlayerNet : public Entity {
 
   int takeDamage(int dmgToTake) override;
 
+  void substractMana(int amount);
+
   void selectNpc(int id);
 
   void selectSlot(int slot);

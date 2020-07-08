@@ -71,7 +71,13 @@ float PlayerNet::getRaceRecovery() { return playerRace->getRecoveryFactor(); }
 
 int PlayerNet::attack(Entity* ent) {
   selectNpc(-1);
-  return state->attack(*this, ent, getDamage());
+  if (mana >= weapon->getManaReq()) {
+    listener.npcAttack(id, weapon->getItemType());
+    substractMana(weapon->getManaReq());
+    return state->attack(*this, ent, getDamage());
+  }
+  listener.playerSendMessageToChat(id, "Mana insuficiente");
+  return 0;
 }
 
 void PlayerNet::changeState(PlayerState* new_state) { state = new_state; }
@@ -90,6 +96,12 @@ void PlayerNet::recoverMana(int mPoints) {
   mana = std::min(mana + mPoints, maxMana);
   listener.manaUpdate(id, mana, maxMana);
 }
+
+void PlayerNet::substractMana(int amount) {
+  mana = std::max(0, mana - amount);
+  listener.manaUpdate(id, mana, maxMana);
+}
+
 
 int PlayerNet::takeDamage(int dmgToTake) {
   int defense = equation::playerDefense(

@@ -331,3 +331,7 @@ Monster* GameState::generateRandomMonster(int x, int y) {
   }
   return monst;
 }
+
+bool GameState::isEntitiy(int id) {
+  return entities.find(id) != entities.end();
+}
