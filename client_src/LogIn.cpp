@@ -152,6 +152,7 @@ void LogIn::setUpSecond() {
     this->label2.move(105, 210);
     this->lineEdit1.clear();
     this->lineEdit2.clear();
+    this->lineEdit2.setEchoMode(QLineEdit::Password);
     this->comboBox3.setObjectName(QStringLiteral("comboBox"));
     this->comboBox3.setGeometry(QRect(380, 293, 180, 25));
     this->comboBox3.show();
