@@ -8,7 +8,7 @@
 #define HACHA_PATH "img/hacha.png"
 #define MARTILLO_PATH "img/martillo.png"
 #define VARA_FRESNO_PATH "img/vara_fresno.png"
-#define FLAUTA_ELFICA_PATH "img/flauta_elfica.png"
+#define FLAUTA_ELFICA_PATH "img/flautaelfica.png"
 #define BACULO_NUDOSO_PATH "img/baculo_nudoso.png"
 #define BACULO_ENGARZADO_PATH "img/baculo_engarzado.png"
 #define ARCO_SIMPLE_PATH "img/arco_simple.png"
