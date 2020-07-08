@@ -21,14 +21,13 @@
 
 class EntityManager {
     private:
-        Player &player;
         uint32_t playerID;
         SDL_Renderer *renderer;
         std::unordered_map<uint32_t, Entity*> entities;
         std::mutex mux;
         
     public:
-        EntityManager(SDL_Renderer *aRenderer, Player &aPlayer, uint32_t aPlayerID);
+        EntityManager(SDL_Renderer *aRenderer, Player *aPlayer, uint32_t aPlayerID);
         ~EntityManager();
 
         void addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY);

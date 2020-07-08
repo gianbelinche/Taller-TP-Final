@@ -13,3 +13,6 @@ Makefile
 build/
 client
 server
+pass.cfg
+players.cfg
+usr.cfg

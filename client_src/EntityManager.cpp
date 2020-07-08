@@ -1,13 +1,14 @@
 #include "EntityManager.h"
 
-EntityManager::EntityManager(SDL_Renderer *aRenderer, Player &aPlayer, uint32_t aPlayerID) : 
-                                                        player(aPlayer), 
+EntityManager::EntityManager(SDL_Renderer *aRenderer, Player *aPlayer, uint32_t aPlayerID) :  
                                                         playerID(aPlayerID),
-                                                        renderer(aRenderer) {}
+                                                        renderer(aRenderer) {
+    entities[playerID] = aPlayer;
+}
 
 EntityManager::~EntityManager() {
     for (auto &entity : entities) {
-        delete(entity.second);
+        if (entity.first != playerID) delete(entity.second);
     }
 }
 
@@ -64,35 +65,31 @@ void EntityManager::addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX,
 void EntityManager::destroyEntity(uint32_t ID) {
     std::unique_lock<std::mutex> lk(mux);
     if (entities.find(ID) == entities.end()) return;
-    delete(entities[ID]);
+    if (ID != playerID) delete(entities[ID]);
     entities.erase(ID);
 }
 
 void EntityManager::changeEntityState(uint32_t ID, uint8_t state) {
     std::unique_lock<std::mutex> lk(mux);
-    if (ID == playerID) player.changeState(state);
-    else if (entities.find(ID) == entities.end()) return;
+    if (entities.find(ID) == entities.end()) return;
     else entities[ID]->changeState(state);
 }
 
 void EntityManager::changeEntityEquipment(uint32_t ID, EquipType equipType, uint8_t what) {
     std::unique_lock<std::mutex> lk(mux);
-    if (ID == playerID) player.changeEquipment(equipType, what);
-    else if (entities.find(ID) == entities.end()) return;
+    if (entities.find(ID) == entities.end()) return;
     else entities[ID]->changeEquipment(equipType, what);
 }
 
 void EntityManager::moveEntity(uint32_t ID, MovementType moveType) {
     std::unique_lock<std::mutex> lk(mux);
-    if (ID == playerID) player.refreshPosition(moveType);
-    else if (entities.find(ID) == entities.end()) return;
+    if (entities.find(ID) == entities.end()) return;
     else entities[ID]->refreshPosition(moveType);
 }
 
 void EntityManager::teleportEntity(uint32_t ID, uint16_t posX, uint16_t posY) {
     std::unique_lock<std::mutex> lk(mux);
-    if (ID == playerID) player.teleportTo(posX, posY);
-    else if (entities.find(ID) == entities.end()) return;
+    if (entities.find(ID) == entities.end()) return;
     else entities[ID]->teleportTo(posX, posY);
 }
 
@@ -108,8 +105,6 @@ void EntityManager::renderEntities(Camera &camera) {
     for (auto& entityRender : entitiesRender) {
         entityRender.second->render(camera);
     }
-
-    player.render(camera);
 }
 
 uint32_t EntityManager::checkClickEntities(Camera &camera, uint16_t x, uint16_t y) {

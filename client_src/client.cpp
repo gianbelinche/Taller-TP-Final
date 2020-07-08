@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
                       player.getWidth(),logInController.getHeigth(),
                       logInController.getWidth());
 
-        EntityManager entityManager(mainRenderer, player, player.getID());
+        EntityManager entityManager(mainRenderer, &player, player.getID());
 
         EventManager eventManager(entityManager, player.getID(), senderQueue, 
                                   camera, clientProtocol,miniChat, gInventory);
