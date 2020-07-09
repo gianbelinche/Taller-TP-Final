@@ -76,6 +76,7 @@ class ServerEventHandler {
   void handleEquip(int playerId);
 
   void handleRemoveInventoryItem(int playerId, int slot);
+
 };
 
 #endif  // SERVEREVENTHANDLER_H

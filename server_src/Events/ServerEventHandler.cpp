@@ -180,6 +180,7 @@ void ServerEventHandler::handle(MessageSent& ev) {
     handleTake(id);
     return;
   } else if (messageCode == TIRAR) {
+    handleDrop(id);
     return;
   } else if (messageCode == RESUCITAR) {
     handleResurrect(id);
@@ -401,7 +402,21 @@ void ServerEventHandler::handleTake(int playerId) {
   listener.entityDisappear(item->getId());
 }
 
-void ServerEventHandler::handleDrop(int playerId, int slotChoice) {}
+void ServerEventHandler::handleDrop(int playerId, int slotChoice) {
+  PlayerNet* player = world.getPlayer(playerId);
+  if (player == nullptr) {
+    std::cerr << "No se encontro el usuario\n";
+    return;
+  }
+  Inventory& inv = player->getInventory();
+  int slot = player->getSelectedSlot();
+  if (slot < 0 || slot >= inv.getSize() - inv.getSpaceLeft()) {
+    return;
+  }
+  Item* item = inv.getItem(slot);
+  listener.dropSpawn(item->getId(),item->getItemType(),player->getX(),player->getY());
+  handleRemoveInventoryItem(playerId, slot);
+}
 
 void ServerEventHandler::handlePlayerMsg(int playerId, std::string msg,
                                          int otherPlayerId) {
