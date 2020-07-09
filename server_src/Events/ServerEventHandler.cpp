@@ -95,6 +95,7 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
   }
   std::cout << "La experiencia ganada es de: " << expGain << "\n";
   player->receiveExp(expGain);
+
 }
 
 void ServerEventHandler::handle(EntityClick& ev) {
@@ -426,10 +427,6 @@ void ServerEventHandler::handleEquip(int playerId) {
     return;
   }
   listener.inventoryEquipItem(player->getId(), item->getItemType());
-  if (item->getItemType() == POTION) {
-    // usar pocion
-    handleRemoveInventoryItem(playerId, slot);
-  }
   if (item->getEquippedPosition() != -1) {
     listener.playerEquipedItem(player->getId(), item->getEquippedPosition(),
                                item->getItemType());
