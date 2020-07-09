@@ -116,6 +116,8 @@ class GameState {
 
   Monster* generateRandomMonster(int x, int y);
 
+  void persist();
+
  private:
   void initNPCs();
 

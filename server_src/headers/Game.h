@@ -20,6 +20,7 @@ class Game : public Thread {
   std::atomic<uint32_t>& idAssigner;
   ProtectedQueue<std::string>& incomingEvents;
   ServerProtocol& protocol;
+  int persist;
 
  public:
   Game(GameState& world, std::atomic<uint32_t>& idGenerator,
@@ -41,6 +42,7 @@ class Game : public Thread {
   void addEntity(Entity* ent);
 
   void addIncoming(std::string s);
+
 
   // TESTING
   ServerEventHandler& getServ();

@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+#define PERSIST_TIME_DELAY 300  //9 segundos aproximadamente
+
 Game::Game(GameState &world, std::atomic<uint32_t> &idGenerator,
            ProtectedQueue<std::string> &incoming,
            ServerProtocol &serverProtocol)
@@ -11,7 +13,8 @@ Game::Game(GameState &world, std::atomic<uint32_t> &idGenerator,
       keep_running(true),
       idAssigner(idGenerator),
       incomingEvents(incoming),
-      protocol(serverProtocol) {}
+      protocol(serverProtocol),
+      persist(0) {}
 
 Game::~Game() {}
 
@@ -21,6 +24,12 @@ void Game::loop() {
   while (keep_running) {
     processInput();  // Decodifica y procesa todos los eventos encolados
     update();
+    persist++;
+    if (persist == PERSIST_TIME_DELAY){
+      std::cout << "Persistiendo todos los jugadores \n";
+      world.persist();
+      persist = 0;
+    }
     usleep(30000);  // Algo mas de 30 fps
   }
 }

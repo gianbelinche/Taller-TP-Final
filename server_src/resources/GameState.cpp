@@ -4,6 +4,7 @@
 #include <iostream>
 #include <limits>
 #include <random>
+#include "../headers/Persistor.h"
 
 #include "../headers/MasterFactory.h"
 #include "../headers/Monster.h"
@@ -334,4 +335,12 @@ Monster* GameState::generateRandomMonster(int x, int y) {
 
 bool GameState::isEntitiy(int id) {
   return entities.find(id) != entities.end();
+}
+
+void GameState::persist(){
+  Persistor persistor;
+  for (auto& player : players){
+    std::string username = this->getUsernameById(player.second->getId());
+    persistor.persistPlayer(player.second->getData(),username);
+  }
 }
