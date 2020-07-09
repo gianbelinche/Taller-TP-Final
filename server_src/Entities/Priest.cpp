@@ -1,6 +1,6 @@
 #include "../headers/Priest.h"
 #include "../headers/PlayerState.h"
-#include "../headers/ImmobilizedState.h"
+#include "../headers/NormalState.h"
 #include "../headers/MasterFactory.h"
 
 //#include "../headers/"
@@ -30,6 +30,7 @@ void Priest::heal(PlayerNet* player) {
 }
 
 void Priest::resurrect(PlayerNet* player) {
-  player->changeState(&PlayerState::immobilized);
-  // COMPLETAR
+  player->changeState(&PlayerState::normal);
+  heal(player);
+  listener.playerRevived(player->getId());
 }

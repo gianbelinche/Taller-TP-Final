@@ -12,7 +12,7 @@
 PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int velocity,
                      int currExp, int currLevel, int currGold, Weapon* wea,
                      Armor* arm, Helmet* helm, Shield* sh, PlayerState* sta,
-                     Class* cla, Race* ra, ServerEventListener& eventListener)
+                     Class* cla, Race* ra, ServerEventListener& eventListener, int framesBetweenUpdate)
     : Entity(x, y, id,
              equation::playerMaxHp(
                  cla->getConstitutionFactor() * ra->getConstitution(),
@@ -24,6 +24,7 @@ PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int velocity,
       velocity(velocity),
       exp(currExp),
       gold(currGold),
+      framesPerUpdate(framesBetweenUpdate),
       world(currState),
       weapon(wea),
       armor(arm),
@@ -129,7 +130,7 @@ int PlayerNet::takeDamage(int dmgToTake) {
 
 void PlayerNet::update() {
   currentFrame++;
-  if (currentFrame == 500) {
+  if (currentFrame == framesPerUpdate) {
     state->update(*this);
     currentFrame = 0;
   }
@@ -326,4 +327,27 @@ std::vector<uint32_t> PlayerNet::getData(){
     }
   }
   return data;
+}
+
+void PlayerNet::setImmobilizedTime(int frames) {
+  immobilizedFramesLeft = frames;
+}
+
+void PlayerNet::decreaseImmobilizedFramesLeft() {
+  if (immobilizedFramesLeft == 0) {
+    NPC* closestPriest = world.getNearestPriest(this);
+    closestPriest->resurrect(this);
+    int priestX = closestPriest->getX();
+    int priestY = closestPriest->getY();
+    x = priestX;
+    y = priestY + 60;
+
+    listener.teleportPlayer(id, x, y);
+    listener.npcAttack(id, 5); // Sonido bonito para teletransportarse
+  }
+  immobilizedFramesLeft--;
+}
+
+bool PlayerNet::canMove() {
+  return state->canMove();
 }

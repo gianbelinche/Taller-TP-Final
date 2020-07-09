@@ -16,6 +16,8 @@ class PlayerState {
 
   virtual ~PlayerState();
 
+  virtual bool canMove();
+
   void virtual update(PlayerNet &player);
 
   void virtual move(PlayerNet &player, int x, int y);

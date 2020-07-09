@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "../headers/ChatMessageParser.h"
+#include "../headers/ImmobilizedState.h"
 #include "../headers/Inventory.h"
 #include "../headers/Item.h"
 #include "../headers/MeditationState.h"
@@ -12,8 +13,9 @@
 #define POTION 18
 
 ServerEventHandler::ServerEventHandler(GameState& state,
-                                       ServerEventListener& eventListener)
-    : world(state), listener(eventListener) {}
+                                       ServerEventListener& eventListener,
+                                       Configuration& configuration)
+    : world(state), listener(eventListener), config(configuration) {}
 
 ServerEventHandler::~ServerEventHandler() {}
 
@@ -60,7 +62,7 @@ void ServerEventHandler::handle(UserMoved& ev) {
     }
   }
 
-  if (positionIsValid) {
+  if (positionIsValid && player->canMove()) {
     player->move(x, y);
     listener.entityMoved(ev.getUser(), direction);
   }
@@ -258,9 +260,27 @@ void ServerEventHandler::handleMeditation(int playerId) {
 }
 
 void ServerEventHandler::handleResurrect(int playerId) {
+  std::cout << "Llego al revivir\n";
   PlayerNet* player = world.getPlayer(playerId);
-  NPC* npc = world.getNpc(player->getSelectedNpc());
-  npc->resurrect(player);
+  if (player->isAlive()) { return; }
+  
+  int selectedNPC = player->getSelectedNpc();
+  if (selectedNPC == -1 ||
+      world.getNpc(selectedNPC)->getNpcType() != PRIEST_TYPE) {
+    NPC* closestPriest = world.getNearestPriest(player);
+    float distance = world.entitiesDistance(player, closestPriest);
+
+    float secondsToWait =
+        (config.getConfigValue("resurrectWaitTimeFactor") * distance) / 1000;
+    int updatesToWait = (secondsToWait * config.getFPS()) /
+                       config.getConfigValue("framesBetweenUpdate");
+
+    player->changeState(&PlayerState::immobilized);
+    player->setImmobilizedTime(updatesToWait);
+  } else {
+    NPC* npc = world.getNpc(selectedNPC);
+    npc->resurrect(player);
+  }
 }
 
 void ServerEventHandler::handleHeal(int playerId, NPC* npc) {

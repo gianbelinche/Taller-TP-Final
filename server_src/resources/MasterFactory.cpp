@@ -33,7 +33,7 @@ MasterFactory::MasterFactory(std::atomic<uint32_t>& idCounter,
             config.getValues(HUMAN)["constitution"],
             config.getValues(HUMAN)["strength"],
             config.getValues(HUMAN)["intelligence"],
-            config.getValues(HUMAN)["agility"]),  
+            config.getValues(HUMAN)["agility"]),
       elf(ELF_ID, config.getValues(ELF)["hpFactor"],
           config.getValues(ELF)["recoveryFactor"],
           config.getValues(ELF)["manaFactor"],
@@ -128,18 +128,19 @@ PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData,
   } else {
     state = &PlayerState::dead;
   }
-  
+
   PlayerNet* player = new PlayerNet(
       x, y, id, world, 6, exp, level, gold, createWeapon(playerData[9]),
       createArmor(playerData[11]), createHelmet(playerData[10]),
-      createShield(playerData[12]), state, playerClass, playerRace, listener);
+      createShield(playerData[12]), state, playerClass, playerRace, listener,
+      config.getConfigValue("framesBetweenUpdate"));
 
-  for (int i = 0; i < player->getInventory().getSize();i++){
-    if (playerData[13+i] != 0){
-      Item* item = createItem(playerData[13+i]);
+  for (int i = 0; i < player->getInventory().getSize(); i++) {
+    if (playerData[13 + i] != 0) {
+      Item* item = createItem(playerData[13 + i]);
       player->getInventory().addItem(item);
     }
-  }    
+  }
   return player;
 }
 
@@ -147,8 +148,8 @@ Weapon* MasterFactory::createWeapon(int itemType) {
   std::unordered_map<std::string, float>& weaponStats =
       config.getValuesByItemType(itemType);
   return new Weapon(idGenerator++, itemType, weaponStats["minDmg"],
-                    weaponStats["maxDmg"], weaponStats["range"], 
-                    weaponStats["manaRequired"], config.getItemName(itemType), 
+                    weaponStats["maxDmg"], weaponStats["range"],
+                    weaponStats["manaRequired"], config.getItemName(itemType),
                     weaponStats["buyPrice"], weaponStats["sellPrice"]);
 }
 

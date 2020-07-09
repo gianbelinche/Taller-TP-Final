@@ -146,8 +146,8 @@ void ServerEventListener::playerDied(int id) {
 void ServerEventListener::playerRevived(int id) {
   std::vector<uint32_t> event;
   event.push_back(PLAYER_STATE_CHANGE);
-  event.push_back(REVIVED);
   event.push_back(id);
+  event.push_back(REVIVED);
   dispatcher.broadcastMessage(event);
 }
 

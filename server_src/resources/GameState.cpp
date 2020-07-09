@@ -4,10 +4,10 @@
 #include <iostream>
 #include <limits>
 #include <random>
-#include "../headers/Persistor.h"
 
 #include "../headers/MasterFactory.h"
 #include "../headers/Monster.h"
+#include "../headers/Persistor.h"
 
 #define FRAMES_PER_SECOND 30
 
@@ -64,6 +64,20 @@ PlayerNet* GameState::getNearestPlayer(Entity* ent, Condition* cond) {
   for (auto& it : players) {
     if ((curr = entitiesDistance(ent, it.second)) < smallestDistance &&
         (cond->evaluate(it.second))) {
+      nearest = it.second;
+      smallestDistance = curr;
+    }
+  }
+  return nearest;
+}
+
+NPC* GameState::getNearestPriest(Entity* ent) {
+  NPC* nearest = nullptr;
+  float curr;
+  float smallestDistance = std::numeric_limits<float>::infinity();
+  for (auto& it : npcs) {
+    if (it.second->getNpcType() == PRIEST_TYPE &&
+        (curr = entitiesDistance(ent, it.second)) < smallestDistance) {
       nearest = it.second;
       smallestDistance = curr;
     }
@@ -248,7 +262,6 @@ void GameState::initMobs() {
   }
 }
 
-
 void GameState::dropItem(Item* item, int x, int y) {
   droppedItems[item->getId()] = item;
   itemsPositions[item->getId()] = std::make_pair(x, y);
@@ -337,10 +350,10 @@ bool GameState::isEntitiy(int id) {
   return entities.find(id) != entities.end();
 }
 
-void GameState::persist(){
+void GameState::persist() {
   Persistor persistor;
-  for (auto& player : players){
+  for (auto& player : players) {
     std::string username = this->getUsernameById(player.second->getId());
-    persistor.persistPlayer(player.second->getData(),username);
+    persistor.persistPlayer(player.second->getData(), username);
   }
 }

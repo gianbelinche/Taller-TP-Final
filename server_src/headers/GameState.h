@@ -78,6 +78,8 @@ class GameState {
 
   PlayerNet* getNearestPlayer(Entity* ent, Condition* cond = nullptr);
 
+  NPC* getNearestPriest(Entity* ent);
+
   PlayerNet* getPlayer(int id);
 
   NPC* getNpc(int id);

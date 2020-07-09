@@ -35,3 +35,7 @@ void PlayerState::manaRecover(PlayerNet &player) {
 
   player.recoverMana(manaGain);
 }
+
+bool PlayerState::canMove() {
+  return true;
+}

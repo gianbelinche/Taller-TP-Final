@@ -26,6 +26,8 @@ class Configuration {
 
   int getFPS();
 
+  float getConfigValue(std::string variable);
+
   std::unordered_map<std::string, float>& getValues(std::string key);
 
   std::unordered_map<std::string, float>& getValuesByItemType(int itemType);

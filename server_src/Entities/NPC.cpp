@@ -30,6 +30,10 @@ std::string NPC::getPrettyPrint(Item* item) {
   return message;
 }
 
+int NPC::getNpcType() {
+  return npcType;
+}
+
 void NPC::goldDeposit(PlayerNet* player, int amount) {}
 
 void NPC::goldExtraction(PlayerNet* player, int amount) {}

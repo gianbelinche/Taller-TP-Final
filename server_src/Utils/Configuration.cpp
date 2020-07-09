@@ -69,6 +69,10 @@ const char* Configuration::getPort() {
 
 int Configuration::getFPS() { return (int)configValues["config"]["FPS"]; }
 
+float Configuration::getConfigValue(std::string variable) {
+  return configValues["config"][variable];
+}
+
 std::unordered_map<std::string, float>& Configuration::getValues(
     std::string key) {
   return configValues[key];

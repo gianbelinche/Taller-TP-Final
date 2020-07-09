@@ -29,6 +29,8 @@ class PlayerNet : public Entity {
   int maxGold;
   int selectedNpc = -1;
   int selectedSlot = -1;
+  int immobilizedFramesLeft = 0;
+  int framesPerUpdate;
   GameState& world;
   Weapon* weapon;
   Armor* armor;
@@ -40,7 +42,7 @@ class PlayerNet : public Entity {
   PlayerNet(int x, int y, int id, GameState& currState, int velocity,
             int currExp, int currLevel, int currGold, Weapon* wea, Armor* arm,
             Helmet* helm, Shield* sh, PlayerState* sta, Class* cla, Race* ra,
-            ServerEventListener& eventListener);
+            ServerEventListener& eventListener, int framesBetweenUpdate);
 
   ~PlayerNet();
 
@@ -100,6 +102,10 @@ class PlayerNet : public Entity {
 
   int getHemletType();
 
+  bool canMove();
+
+  void decreaseImmobilizedFramesLeft();
+
   Inventory& getInventory();
 
   std::vector<uint32_t> getSendable() override;
@@ -144,6 +150,8 @@ class PlayerNet : public Entity {
   void equipHelmet(Helmet* helmet);
 
   void equipShield(Shield* shield);
+
+  void setImmobilizedTime(int frames);
 
  private:
   void levelUp();

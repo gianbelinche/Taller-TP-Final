@@ -31,7 +31,7 @@ void Server::run() {
   MasterFactory factory(idAssigner, config, listener);
   GameState world(map.getCollisionMap(), map.getCitiesMap(), config.getFPS(), 
                   listener, factory, config);
-  ServerEventHandler handler(world, listener);
+  ServerEventHandler handler(world, listener, config);
   ServerProtocol protocol(handler);
 
   ProtectedQueue<std::string> incomingMessages;

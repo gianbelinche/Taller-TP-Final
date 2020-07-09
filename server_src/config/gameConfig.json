@@ -1,7 +1,9 @@
 {
   "config": {
     "FPS": 30,
-    "port": 8080
+    "port": 8080,
+    "resurrectWaitTimeFactor": 3,
+    "framesBetweenUpdate": 100
   },
   "Player": {
     "initialX": 5664,

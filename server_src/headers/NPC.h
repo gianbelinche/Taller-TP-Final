@@ -32,6 +32,8 @@ class NPC : public Entity {
 
   virtual ~NPC();
 
+  int getNpcType();
+
   virtual void listItems(PlayerNet* player);
 
   std::string getPrettyPrint(Item* item);
