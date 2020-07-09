@@ -14,6 +14,8 @@ namespace equation {
 
   int maxGold(int level);
 
+  int dropGold(int maxHpNPC);
+
   int playerHitExp(int attackerLevel, int attackedLevel, int damage);
 
   int playerDeathExp(int maxHp, int attackedLevel, int attackerLevel);
