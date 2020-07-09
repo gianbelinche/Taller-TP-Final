@@ -12,9 +12,9 @@
 #define NPCMAXHP 999999
 #define NPCLEVEL 999
 
-#define BANKER_TYPE 4
-#define MERCHANT_TYPE 5
-#define PRIEST_TYPE 6
+#define BANKER_TYPE 0
+#define MERCHANT_TYPE 1
+#define PRIEST_TYPE 2
 
 class MasterFactory;
 class PlayerNet;
