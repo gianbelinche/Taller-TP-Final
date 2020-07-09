@@ -32,9 +32,9 @@ class Entity {
         virtual void changeEquipment(EquipType equipType, uint8_t what) = 0;
         virtual void teleportTo(uint16_t posX, uint16_t posY) = 0;
 
-        uint32_t getID();
-        uint16_t getPosX();
-        uint16_t getPosY();
+        uint32_t getID() const;
+        uint16_t getPosX() const;
+        uint16_t getPosY() const;
 };
 
 #endif

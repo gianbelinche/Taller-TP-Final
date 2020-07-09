@@ -22,14 +22,14 @@ Entity& Entity::operator=(Entity&& other) {
     return *this;
 }
 
-uint32_t Entity::getID() {
+uint32_t Entity::getID() const {
     return ID;
 }
 
-uint16_t Entity::getPosX() {
+uint16_t Entity::getPosX() const {
     return posX;
 }
 
-uint16_t Entity::getPosY() {
+uint16_t Entity::getPosY() const {
     return posY;
 }

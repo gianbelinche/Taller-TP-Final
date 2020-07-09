@@ -1,4 +1,5 @@
 #include "EntityManager.h"
+#include <algorithm>
 
 EntityManager::EntityManager(SDL_Renderer *aRenderer, Player *aPlayer, uint32_t aPlayerID) :  
                                                         playerID(aPlayerID),
@@ -67,17 +68,24 @@ void EntityManager::teleportEntity(uint32_t ID, uint16_t posX, uint16_t posY) {
     else entities[ID]->teleportTo(posX, posY);
 }
 
+bool EntityManager::entityComp (Entity* ent1, Entity* ent2) { 
+    return (ent1->getPosY() < ent2->getPosY());
+}
+
 void EntityManager::renderEntities(Camera &camera) {
     std::unique_lock<std::mutex> lk(mux);
 
-    std::map<uint32_t, Entity*> entitiesRender;
+    std::vector<Entity*> entitiesRender;
 
     for (auto& entity : entities) {
-        entitiesRender[entity.second->getPosY()] = entity.second;
+        entitiesRender.push_back(entity.second);
     }
 
+    std::sort(entitiesRender.begin(), entitiesRender.end(), 
+              EntityManager::entityComp);
+
     for (auto& entityRender : entitiesRender) {
-        entityRender.second->render(camera);
+        entityRender->render(camera);
     }
 }
 

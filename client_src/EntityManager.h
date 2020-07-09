@@ -41,6 +41,7 @@ class EntityManager {
         void renderEntities(Camera &camera);
 
         uint32_t checkClickEntities(Camera &camera, uint16_t x, uint16_t y);
+        static bool entityComp(Entity* ent1, Entity* ent2);
 };
 
 #endif 
