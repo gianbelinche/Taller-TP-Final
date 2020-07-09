@@ -13,8 +13,8 @@
 #define NPCLEVEL 999
 
 #define BANKER_TYPE 0
-#define MERCHANT_TYPE 1
-#define PRIEST_TYPE 2
+#define PRIEST_TYPE 1
+#define MERCHANT_TYPE 2
 
 class MasterFactory;
 class PlayerNet;
