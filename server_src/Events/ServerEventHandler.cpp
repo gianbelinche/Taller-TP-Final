@@ -108,10 +108,12 @@ void ServerEventHandler::handle(EntityClick& ev) {
     return;
   }
 
-  if (world.isNpc(destintyId)) {
-    player->selectNpc(destintyId);
-  } else if (world.isEntitiy(destintyId)) {
-    handleUserAttack(ev);
+  if (player->isAlive()) {
+    if (world.isNpc(destintyId)) {
+      player->selectNpc(destintyId);
+    } else if (world.isEntitiy(destintyId)) {
+      handleUserAttack(ev);
+    }
   }
 }
 

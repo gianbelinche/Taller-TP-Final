@@ -41,6 +41,13 @@ int equation::maxGold(int level) {
   return 100 * pow(level, 1.1);
 }
 
+int equation::dropGold(int maxHpNPC) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution<> r(0.01, 0.2);
+  return r(gen) * maxHpNPC;
+}
+
 int equation::playerHitExp(int attackerLevel, int attackedLevel, int damage) {
   return damage * std::max(attackedLevel - attackerLevel + 10, 0);
 }

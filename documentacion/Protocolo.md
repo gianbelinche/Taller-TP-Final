@@ -222,6 +222,7 @@ A través de msgpack, se forma de la siguiente manera:
       - 17 -> Sombrero Magico
       - 18 -> Pocion de mana
       - 19 -> Pocion de vida
+      - 20 -> Oro
 
 4. **Eliminación de una entidad** (04):
 

@@ -23,11 +23,12 @@
 #define SOMBRERO_MAGICO_PATH "img/sombrero_magico.png"
 #define POCION_MANA_PATH "img/pocion_mana.png"
 #define POCION_VIDA_PATH "img/pocion_vida.png"
+#define ORO_PATH "img/oro.png"
 
 enum ItemType {ESPADA = 1, HACHA, MARTILLO, VARA_FRESNO, FLAUTA_ELFICA, BACULO_NUDOSO,
                BACULO_ENGARZADO, ARCO_SIMPLE, ARCO_COMPUESTO, ARMADURA_CUERO, 
                ARMADURA_PLACAS, TUNICA_AZUL, CAPUCHA, CASCO_HIERRO, ESCUDO_TORTUGA, 
-               ESCUDO_HIERRO, SOMBRERO_MAGICO, POCION_MANA, POCION_VIDA};
+               ESCUDO_HIERRO, SOMBRERO_MAGICO, POCION_MANA, POCION_VIDA, ORO};
 
 class Item : public Entity {
     protected:
