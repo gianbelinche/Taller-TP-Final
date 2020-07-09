@@ -2,9 +2,9 @@
 #include "SpriteClipCreator.h"
 #include "OSError.h"
 
-Item::Item(SDL_Renderer *renderer, uint32_t anID, uint16_t aPosX, 
-           uint16_t aPosY, ItemType type) : Entity(anID, aPosX, aPosY), 
-                                            image(renderer, 0, 0, 0) {
+Item::Item(SDL_Renderer *renderer, ItemType type, uint32_t anID, uint16_t aPosX, 
+           uint16_t aPosY) : Entity(anID, aPosX, aPosY), 
+                             image(renderer, 0, 0, 0) {
     switch (type) {
         case ESPADA:
             image.loadFromFile(ESPADA_PATH);

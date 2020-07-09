@@ -50,8 +50,13 @@ void ModelController::handle(std::vector<uint32_t> &event) {
             break;
 
         case CREATE_NPC:
-            entityManager.addNPC((NPCType)event[2], event[1], event[3], 
-                                 event[4]);
+            if (event[2] == 0) {
+                entityManager.addNPC((NPCType)event[3], event[1], event[4], 
+                                     event[5]);
+            } else if (event[2] == 1) {
+                entityManager.addMob((MobType)event[3], event[1], event[4], 
+                                     event[5]);
+            }
             break;
 
         case CREATE_PLAYER:

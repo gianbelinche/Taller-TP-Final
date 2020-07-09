@@ -34,8 +34,8 @@ class Item : public Entity {
         FilteredImage image;
 
     public:
-        Item(SDL_Renderer *renderer, uint32_t anID, uint16_t aPosX, 
-             uint16_t aPosY, ItemType type);
+        Item(SDL_Renderer *renderer, ItemType type, uint32_t anID, 
+             uint16_t aPosX, uint16_t aPosY);
         ~Item();
 
         Item(const Item &copy) = delete;

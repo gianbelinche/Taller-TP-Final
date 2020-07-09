@@ -26,18 +26,12 @@ add_library(clientLib
   client_src/ProtMsgQueue.cpp
   client_src/ClientConnector.cpp
   client_src/Socket.cpp
-  client_src/Banker.cpp
   client_src/Entity.cpp
   client_src/EntityManager.cpp
-  client_src/Goblin.cpp
-  client_src/Healer.cpp
   client_src/Item.cpp
-  client_src/Merchant.cpp
   client_src/NPC.cpp
+  client_src/Mob.cpp
   client_src/Player.cpp
-  client_src/Skeleton.cpp
-  client_src/Spyder.cpp
-  client_src/Zombie.cpp
   client_src/FilteredImage.cpp
   client_src/Image.cpp
   client_src/MapImage.cpp

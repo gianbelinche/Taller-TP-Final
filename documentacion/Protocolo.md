@@ -131,20 +131,26 @@ A través de msgpack, se forma de la siguiente manera:
 
     - **Servidor a Cliente**:
 
-       `01 + ID + tipo de NPC/Mob + posX + posY` *<- decidir si los npc los manda el servidor o el cliente sabe de antemano la info de estos*
+       `01 + ID + es NPC o Mob + tipo de NPC/Mob + posX + posY`
 
         Ejemplo:
 
-        `{01, 98765, 00, 1523, 1968}` -> `Crear entidad` de ID `98765` de tipo `Araña` en pos (`1523`,`1968`)
+        `{01, 98765, 01, 00, 1523, 1968}` -> `Crear entidad` de ID `98765`, `Mob` de tipo `Araña` en pos (`1523`,`1968`)
 
-    - **Tipos de NPC/Mobs**: 
-      - 00 -> Araña
+    - **Es NPC o Mob**:
+      - 00 -> NPC
+      - 01 -> Mob
+
+    - **Tipos de NPC**:
+      - 00 -> Banquero
+      - 01 -> Sanadora
+      - 02 -> Mercader
+
+    - **Tipos de Mobs**: 
+      - 00 -> Goblin
       - 01 -> Esqueleto
-      - 02 -> Goblin
+      - 02 -> Araña
       - 03 -> Zombie
-      - 04 -> Banquero
-      - 05 -> Mercader
-      - 06 -> Sanadora
 
 2. **Creacion de nuevo Jugador** (02):
 

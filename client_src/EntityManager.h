@@ -8,13 +8,7 @@
 #include "Entity.h"
 #include "Player.h"
 #include "NPC.h"
-#include "Spyder.h"
-#include "Skeleton.h"
-#include "Goblin.h"
-#include "Zombie.h"
-#include "Merchant.h"
-#include "Banker.h"
-#include "Healer.h"
+#include "Mob.h"
 #include "Camera.h"
 #include "Item.h"
 #include "Equippable.h"
@@ -31,6 +25,7 @@ class EntityManager {
         ~EntityManager();
 
         void addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY);
+        void addMob(MobType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY);
         void addDrop(ItemType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY);
         void addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX, 
                        uint16_t aPosY, uint8_t aState, EquipType aWeapon,

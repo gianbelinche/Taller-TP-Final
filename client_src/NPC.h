@@ -1,29 +1,32 @@
 #ifndef __NPC_H__
 #define __NPC_H__ 
 
-#include <vector>
-
 #include "FilteredImage.h"
 #include "Camera.h"
 #include "Entity.h"
 
-enum NPCType {SPYDER, SKELETON, GOBLIN, ZOMBIE, BANKER, MERCHANT, HEALER};
+#define BANKER_PATH "img/banker.png"
+#define BANKER_HEIGHT 59
+#define BANKER_WIDTH 25
+#define HEALER_PATH "img/healer.png"
+#define HEALER_HEIGHT 45
+#define HEALER_WIDTH 25
+#define MERCHANT_PATH "img/merchant.png"
+#define MERCHANT_HEIGHT 46
+#define MERCHANT_WIDTH 25
+
+enum NPCType {BANKER, HEALER, MERCHANT};
 
 class NPC : public Entity {
     protected:
         FilteredImage image;
         uint16_t height;
         uint16_t width;
-        uint8_t speed;
-        View view;
-        uint16_t frame;
-        uint16_t vertClips;
-        uint16_t horClips;
-        std::vector<SDL_Rect> clips;
+        SDL_Rect clip;
         SDL_Rect quad;
 
     public:
-        NPC(SDL_Renderer *renderer, uint32_t anID, uint16_t aPosX,
+        NPC(SDL_Renderer *renderer, NPCType type, uint32_t anID, uint16_t aPosX,
             uint16_t aPosY);
         ~NPC();
 

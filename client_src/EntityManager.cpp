@@ -14,43 +14,17 @@ EntityManager::~EntityManager() {
 
 void EntityManager::addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY) {
     std::unique_lock<std::mutex> lk(mux);
-    switch (type) {
-        case SPYDER:
-            entities[anID] = new Spyder(renderer, anID, aPosX, aPosY);
-            break;
-        
-        case SKELETON:
-            entities[anID] = new Skeleton(renderer, anID, aPosX, aPosY);
-            break;
+    entities[anID] = new NPC(renderer, type, anID, aPosX, aPosY);
+}
 
-        case GOBLIN:
-            entities[anID] = new Goblin(renderer, anID, aPosX, aPosY);
-            break;
-
-        case ZOMBIE:
-            entities[anID] = new Zombie(renderer, anID, aPosX, aPosY);
-            break;
-
-        case BANKER:
-            entities[anID] = new Banker(renderer, anID, aPosX, aPosY);
-            break;
-
-        case MERCHANT:
-            entities[anID] = new Merchant(renderer, anID, aPosX, aPosY);
-            break;
-
-        case HEALER:
-            entities[anID] = new Healer(renderer, anID, aPosX, aPosY);
-            break;
-
-        default:
-            break;
-    }
+void EntityManager::addMob(MobType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY) {
+    std::unique_lock<std::mutex> lk(mux);
+    entities[anID] = new Mob(renderer, type, anID, aPosX, aPosY);
 }
 
 void EntityManager::addDrop(ItemType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY) {
     std::unique_lock<std::mutex> lk(mux);
-    entities[anID] = new Item(renderer, anID, aPosX, aPosY, type);
+    entities[anID] = new Item(renderer, type, anID, aPosX, aPosY);
 }
 
 void EntityManager::addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX, 
