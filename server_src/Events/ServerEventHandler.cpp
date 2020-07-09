@@ -293,18 +293,18 @@ void ServerEventHandler::handleHeal(int playerId, NPC* npc) {
 void ServerEventHandler::handleItemDeposit(int playerId, int slotChoice,
                                            NPC* npc) {
   PlayerNet* player = world.getPlayer(playerId);
-  if (slotChoice < 0 || slotChoice >= player->getInventorySize()) {
+  Inventory& inventory = player->getInventory();
+  if (slotChoice < 0 || slotChoice >= inventory.getSize() - inventory.getSpaceLeft()) {
     listener.playerSendMessageToChat(player->getId(),
                                      "Ingrese un numero correcto de slot");
     return;
   }
-  Inventory& inventory = player->getInventory();
   Item* item = inventory.getItem(slotChoice);
   if (item == nullptr) {
     return;
   }
   npc->depositItem(item, playerId);
-  inventory.removeItemAt(slotChoice);
+  handleRemoveInventoryItem(playerId,slotChoice);
 }
 
 void ServerEventHandler::handleGoldDeposit(int playerId, int amount, NPC* npc) {
@@ -328,8 +328,10 @@ void ServerEventHandler::handleItemSubstraction(int playerId, int itemChoice,
     listener.playerSendMessageToChat(player->getId(),
                                      "El inventario esta lleno");
     return;
+  } else {
+    listener.inventoryAddItem(playerId, item->getItemType());
   }
-  listener.inventoryAddItem(playerId, item->getItemType());
+  
 }
 
 void ServerEventHandler::handleGoldSubstraction(int playerId, int amount,
