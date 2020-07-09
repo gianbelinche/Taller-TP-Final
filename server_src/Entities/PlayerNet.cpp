@@ -36,6 +36,9 @@ PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int velocity,
   mana = maxMana;
   maxExp = equation::playerMaxExp(level);
   maxGold = equation::maxGold(level);
+  if (!isAlive()){
+    hp = 0;
+  }
 }
 
 PlayerNet::~PlayerNet() {}
@@ -352,4 +355,8 @@ void PlayerNet::decreaseImmobilizedFramesLeft() {
 
 bool PlayerNet::canMove() {
   return state->canMove();
+}
+
+bool PlayerNet::isAlive(){
+  return state->isAlive();
 }

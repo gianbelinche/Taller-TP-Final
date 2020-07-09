@@ -153,6 +153,8 @@ class PlayerNet : public Entity {
 
   void setImmobilizedTime(int frames);
 
+  bool isAlive() override;
+
  private:
   void levelUp();
 

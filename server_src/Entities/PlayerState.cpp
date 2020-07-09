@@ -39,3 +39,7 @@ void PlayerState::manaRecover(PlayerNet &player) {
 bool PlayerState::canMove() {
   return true;
 }
+
+bool  PlayerState::isAlive(){
+  return true;
+}

@@ -12,5 +12,7 @@ class GhostState : public PlayerState {
   ~GhostState();
 
   void update(PlayerNet &player) override;
+
+  bool isAlive() override;
 };
 #endif  // GHOSTSTATE_H

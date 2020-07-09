@@ -43,7 +43,7 @@ class Entity {
 
   virtual void update();
 
-  bool isAlive();
+  bool virtual isAlive();
 
   bool virtual canBeAttackedBy(Entity* ent) = 0;
 

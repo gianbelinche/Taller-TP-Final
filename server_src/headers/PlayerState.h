@@ -28,6 +28,8 @@ class PlayerState {
 
   void virtual manaRecover(PlayerNet &player);
 
+  bool virtual isAlive();
+
  public:
   static NormalState normal;
   static MeditationState meditating;
