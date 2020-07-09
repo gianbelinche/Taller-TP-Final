@@ -152,8 +152,10 @@ void PlayerNet::receiveExp(int amount) {
     levelUp();
     std::cout << "subio de nivel\n";
   } else {
-    listener.playerExpGain(id, amount);
-    listener.expUpdate(id,exp,this->getMaxExp());
+    if (amount > 0){
+      listener.playerExpGain(id, amount);
+      listener.expUpdate(id,exp,this->getMaxExp());
+    }
   }
   std::cout << "El jugador gano: " << amount << " de exp y ahora tiene: " << exp
             << " de experiencia\n";

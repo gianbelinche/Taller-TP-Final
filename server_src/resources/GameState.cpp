@@ -96,16 +96,17 @@ Entity* GameState::getEntity(int id) {
 }
 
 bool GameState::playerCanAttack(PlayerNet* player, Entity* ent) {
+  if (player->getId() == ent->getId() && player->isAlive()){
+    if (player->getDamage() >= 0) { //Se puede curar,pero no dañarse a si mismo
+      return false;
+    }
+    return true;
+  }
   if (!player->isAlive() || !ent->isAlive() || !ent->canBeAttackedBy(player) ||
       isCityPosition(player->getX(), player->getY())) {
     return false;
   } else if (player->getAttackRange() < entitiesDistance(player, ent)) {
     return false;
-  } else if (player->getId() == ent->getId()) {
-    if (player->getDamage() >=
-        0) {  // Se puede curar, pero no dañarse a si mismo
-      return false;
-    }
   }
   return true;
 }

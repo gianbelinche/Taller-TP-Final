@@ -81,13 +81,17 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
               << std::endl;
     return;
   }
+  
   if (!world.playerCanAttack(player, entity)) {
     std::cout << "No lo dejo atacar\n";
     return;
   }
-
+  
   int damageDealt = player->attack(entity);
-  listener.playerDealtDamage(player->getId(), damageDealt);
+  if (damageDealt > 0){
+    listener.playerDealtDamage(player->getId(), damageDealt);
+  }
+  
 
   int expGain = entity->getHitExp(player->getLevel(), damageDealt);
   if (!entity->isAlive()) {
