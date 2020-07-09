@@ -19,7 +19,9 @@ enum messages {
   TOMAR,
   TIRAR,
   PLAYER_MSG,
-  EQUIPAR
+  EQUIPAR,
+  ORO,
+  NO_ORO
 };
 
 namespace ChatMessageParser {
@@ -32,6 +34,10 @@ std::vector<std::string> parseTokens(std::string& message);
 std::string makeMsgFromTokens(std::vector<std::string> tokens);
 
 bool isANumber(std::string s);
+
+int parseGold(std::string& str_command);
 } // namespace ChatMessageParser
+
+
 
 #endif

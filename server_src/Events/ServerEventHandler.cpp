@@ -203,19 +203,45 @@ void ServerEventHandler::handle(MessageSent& ev) {
     return;
   } else if (messageCode == DEPOSITAR) {
     // if (msgTokens.size())
-    if (msgTokens.size() < 2 || !ChatMessageParser::isANumber(msgTokens[1])) {
-      listener.playerSendMessageToChat(id, "Ingrese el numero de slot");
+    
+    if (msgTokens.size() < 2) {
+      listener.playerSendMessageToChat(id, "Ingrese correctamente el comando");
       return;  // FALTA MANEJAR EL DEPOSITO DE ORO
     }
-    handleItemDeposit(id, std::stoi(msgTokens[1]), npc);
+    if (ChatMessageParser::parseGold(msgTokens[1]) == ORO){
+      if (msgTokens.size() < 3 || !ChatMessageParser::isANumber(msgTokens[2])){
+        listener.playerSendMessageToChat(id,"Ingrese correctamente el comando");
+        return;
+      }
+      handleGoldDeposit(id,std::stoi(msgTokens[2]),npc);
+    } else {
+      if (!ChatMessageParser::isANumber(msgTokens[1])){
+        listener.playerSendMessageToChat(id,"Ingrese el numero de slot");
+        return;
+      }
+      handleItemDeposit(id, std::stoi(msgTokens[1]), npc);
+    }
     return;
   } else if (messageCode == RETIRAR) {
-    if (msgTokens.size() < 2 || !ChatMessageParser::isANumber(msgTokens[1])) {
+    if (msgTokens.size() < 2) {
       listener.playerSendMessageToChat(
-          id, "Ingrese el numero de item correctamente");
+          id, "Ingrese el comando correctamente");
       return;  // FALTA MANEJAR LA EXTRACCION DE ORO
     }
-    handleItemSubstraction(id, std::stoi(msgTokens[1]), npc);
+    if (ChatMessageParser::parseGold(msgTokens[1]) == ORO){
+      if (msgTokens.size() < 3 || !ChatMessageParser::isANumber(msgTokens[2])){
+        listener.playerSendMessageToChat(id,"Ingrese correctamente el comando");
+        return;
+      }
+      handleGoldSubstraction(id,std::stoi(msgTokens[2]),npc);
+    } else {
+      if (!ChatMessageParser::isANumber(msgTokens[1])){
+        listener.playerSendMessageToChat(
+          id, "Ingrese el numero de item correctamente");
+        return;
+      }
+      handleItemSubstraction(id, std::stoi(msgTokens[1]), npc);
+    }  
     return;
   } else if (messageCode == COMPRAR) {
     if (msgTokens.size() < 2 || !ChatMessageParser::isANumber(msgTokens[1])) {
@@ -311,6 +337,7 @@ void ServerEventHandler::handleItemDeposit(int playerId, int slotChoice,
 
 void ServerEventHandler::handleGoldDeposit(int playerId, int amount, NPC* npc) {
   npc->goldDeposit(world.getPlayer(playerId), amount);
+  listener.goldUpdate(playerId,world.getPlayer(playerId)->getGold());
 }
 
 void ServerEventHandler::handleItemSubstraction(int playerId, int itemChoice,
@@ -339,6 +366,7 @@ void ServerEventHandler::handleItemSubstraction(int playerId, int itemChoice,
 void ServerEventHandler::handleGoldSubstraction(int playerId, int amount,
                                                 NPC* npc) {
   npc->goldExtraction(world.getPlayer(playerId), amount);
+  listener.goldUpdate(playerId,world.getPlayer(playerId)->getGold());
 }
 
 void ServerEventHandler::handleListItems(int playerId, NPC* npc) {
