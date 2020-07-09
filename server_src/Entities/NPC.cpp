@@ -85,6 +85,7 @@ int NPC::takeDamage(int dmgToTake) { return 0; }
 std::vector<uint32_t> NPC::getSendable() {
   std::vector<uint32_t> npcInfo = {1};
   npcInfo.push_back(id);
+  npcInfo.push_back(NPC_TYPE);
   npcInfo.push_back(npcType);
   npcInfo.push_back(x);
   npcInfo.push_back(y);

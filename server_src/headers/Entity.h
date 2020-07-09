@@ -4,6 +4,10 @@
 #include <vector>
 #include <cstdint>
 
+#define NPC_TYPE 0
+#define MOB_TYPE 1
+#define PLAYER_TYPE 2
+
 class Entity {
  protected:
 

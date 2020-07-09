@@ -132,6 +132,7 @@ void Monster::moveTo(int new_x, int new_y, int direction) {
 std::vector<uint32_t> Monster::getSendable() {
   std::vector<uint32_t> monsterInfo = {1};
   monsterInfo.push_back(id);
+  monsterInfo.push_back(MOB_TYPE);
   monsterInfo.push_back(kind.getNpcType());
   monsterInfo.push_back(x);
   monsterInfo.push_back(y);
