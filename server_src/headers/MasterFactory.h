@@ -12,6 +12,7 @@
 #include "Class.h"
 #include "Configuration.h"
 #include "GhostState.h"
+#include "GoldDrop.h"
 #include "Helmet.h"
 #include "HpPotion.h"
 #include "Item.h"
@@ -73,7 +74,8 @@ enum itemsType {
   ESCUDOHIERRO_TYPE,
   SOMBREROMAGICO_TYPE,
   POCIONMANA_TYPE,
-  POCIONHP_TYPE
+  POCIONHP_TYPE,
+  GOLDDROP_TYPE
 };
 
 // Avoid circular dependencies
@@ -102,7 +104,8 @@ class MasterFactory {
   Bank bank;
 
   // Unordered sets para busqueda O(1)
-  std::unordered_set<int> armors = {ARMADURACUERO_TYPE, ARMADURAPLACAS_TYPE, TUNICAAZUL_TYPE};
+  std::unordered_set<int> armors = {ARMADURACUERO_TYPE, ARMADURAPLACAS_TYPE,
+                                    TUNICAAZUL_TYPE};
   std::unordered_set<int> shields = {ESCUDOHIERRO_TYPE, ESCUDOTORTUGA_TYPE};
   std::unordered_set<int> helmets = {CASCOHIERRO_TYPE, CAPUCHA_TYPE,
                                      SOMBREROMAGICO_TYPE};
@@ -137,6 +140,8 @@ class MasterFactory {
   Shield* createShield(int itemType);
 
   Item* createItem(int itemType);
+
+  GoldDrop* createDroppableGold(int goldAmount);
 
   ManaPotion* createManaPotion(int itemType);
 

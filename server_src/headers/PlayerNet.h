@@ -155,6 +155,10 @@ class PlayerNet : public Entity {
 
   bool isAlive() override;
 
+  void dropItem(int slot);
+
+  void removeItemFromInventory(int slot);
+
  private:
   void levelUp();
 

@@ -9,6 +9,7 @@
 
 #include "Condition.h"
 #include "Configuration.h"
+#include "GoldDrop.h"
 #include "Entity.h"
 #include "Item.h"
 #include "NPC.h"
@@ -113,6 +114,8 @@ class GameState {
   void rmItem(int id);
 
   void generateDrop(int x, int y);
+
+  GoldDrop* generateDroppableGold(int goldAmount);
 
   std::pair<int, int> generateNewMonsterPosition();
 

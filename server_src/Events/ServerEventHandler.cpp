@@ -325,6 +325,7 @@ void ServerEventHandler::handleHeal(int playerId, NPC* npc) {
 void ServerEventHandler::handleItemDeposit(int playerId, int slotChoice,
                                            NPC* npc) {
   PlayerNet* player = world.getPlayer(playerId);
+
   Inventory& inventory = player->getInventory();
   if (slotChoice < 0 || slotChoice >= inventory.getSize() - inventory.getSpaceLeft()) {
     listener.playerSendMessageToChat(player->getId(),
@@ -444,14 +445,8 @@ void ServerEventHandler::handleDrop(int playerId, int slotChoice) {
     std::cerr << "No se encontro el usuario\n";
     return;
   }
-  Inventory& inv = player->getInventory();
   int slot = player->getSelectedSlot();
-  if (slot < 0 || slot >= inv.getSize() - inv.getSpaceLeft()) {
-    return;
-  }
-  Item* item = inv.getItem(slot);
-  listener.dropSpawn(item->getId(),item->getItemType(),player->getX(),player->getY());
-  handleRemoveInventoryItem(playerId, slot);
+  player->dropItem(slot);
 }
 
 void ServerEventHandler::handlePlayerMsg(int playerId, std::string msg,
@@ -486,16 +481,5 @@ void ServerEventHandler::handleEquip(int playerId) {
 
 void ServerEventHandler::handleRemoveInventoryItem(int playerId, int slot) {
   PlayerNet* player = world.getPlayer(playerId);
-  Inventory& inventory = player->getInventory();
-  Item* item = inventory.getItem(slot);
-  int item_type = item->getItemType();
-  if (player->getWeaponType() == item_type ||
-      player->getHemletType() == item_type ||
-      player->getArmorType() == item_type ||
-      player->getShieldType() == item_type) {
-    listener.inventoryUnequipItem(player->getId(), item->getEquippedPosition());
-    listener.playerEquipedItem(player->getId(), item->getEquippedPosition(), 0);
-  }
-  listener.inventoryRemoveItem(player->getId(), slot);
-  inventory.removeItemAt(slot);
+  player->removeItemFromInventory(slot);
 }
