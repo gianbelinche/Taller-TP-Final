@@ -270,14 +270,22 @@ void GameState::dropItem(Item* item, int x, int y) {
 }
 
 Item* GameState::getCloseItem(int x, int y, int range) {
+  Item* nearest = nullptr;
+  float distance;
+  float curr;
+  float smallestDistance = std::numeric_limits<float>::infinity();
   for (auto& it : itemsPositions) {
     int dist_x = abs(x - it.second.first);
     int dist_y = abs(y - it.second.second);
-    int distance = sqrt(pow(dist_x, 2) + pow(dist_y, 2));
+    distance = sqrt(pow(dist_x, 2) + pow(dist_y, 2));
 
-    if (distance <= range) {
-      return droppedItems[it.first];
+    if (distance < smallestDistance) {
+      nearest = droppedItems[it.first];
+      smallestDistance = distance;
     }
+  }
+  if (distance < range) {
+    return nearest;
   }
   return nullptr;
 }
