@@ -467,6 +467,7 @@ void ServerEventHandler::handleEquip(int playerId) {
   }
   Inventory& inventory = player->getInventory();
   Item* item = inventory.getItem(slot);
+  if (item == nullptr) { return; } // Se clickeo un slot vacio
   int itemStatus = item->beEquiped(player);
   if (itemStatus < 0) {  // El objeto se elimina del inventario
     handleRemoveInventoryItem(playerId, slot);
