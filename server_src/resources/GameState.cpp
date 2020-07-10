@@ -374,3 +374,8 @@ void GameState::persist() {
     persistor.persistPlayer(player.second->getData(), username);
   }
 }
+
+bool GameState::isPlayerConnected(std::string username){
+  std::unique_lock<std::mutex> l(idUsrMutex);
+  return usrToId.find(username) != usrToId.end();
+}

@@ -123,6 +123,8 @@ class GameState {
 
   void persist();
 
+  bool isPlayerConnected(std::string username);
+
  private:
   void initNPCs();
 

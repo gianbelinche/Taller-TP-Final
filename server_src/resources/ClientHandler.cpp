@@ -101,6 +101,13 @@ std::pair<std::string, std::vector<uint32_t>> ClientHandler::getCredentials() {
     std::cout << "User:" << user_s << std::endl;
     std::cout << "Pass:" << pass_s << std::endl;
 
+    if (world.isPlayerConnected(user_s)){
+      sendFailedLogin();
+      user_s.clear();
+      pass_s.clear();
+      continue;
+    }
+
     if (passwords.find(user_s) != passwords.end()) {
       if (passwords[user_s] == pass_s) {  // Aplicar SHA
         sendSuccesfulLogin();
