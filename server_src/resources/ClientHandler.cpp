@@ -31,37 +31,39 @@ ClientHandler::ClientHandler(Socket p, Persistor& persist, Map& worldMap,
 ClientHandler::~ClientHandler() {}
 
 void ClientHandler::run() {
-  std::pair<std::string, std::vector<uint32_t>> playerDat =
+  try {
+    std::pair<std::string, std::vector<uint32_t>> playerDat =
       std::move(getCredentials());
-  std::vector<uint32_t> playerInfo = playerDat.second;
+    std::vector<uint32_t> playerInfo = playerDat.second;
   
-  sendMap();
+    sendMap();
 
-  ServerSender sender(peer, outgoingMessages);
-  ServerReceiver receiver(peer, incomingMessages);
-  outgoingMessages.disable();
-  dispatcher.addPlayerQueue(playerInfo[0], &outgoingMessages);
-  world.addPlayerFromData(playerInfo);
-  world.addUsernameId(playerDat.first, playerInfo[0]);
-  world.addIdUsername(playerInfo[0], playerDat.first);
+    ServerSender sender(peer, outgoingMessages);
+    ServerReceiver receiver(peer, incomingMessages);
+    outgoingMessages.disable();
+    dispatcher.addPlayerQueue(playerInfo[0], &outgoingMessages);
+    world.addPlayerFromData(playerInfo);
+    world.addUsernameId(playerDat.first, playerInfo[0]);
+    world.addIdUsername(playerInfo[0], playerDat.first);
 
-  sender.start();
-  receiver.start();
+    sender.start();
+    receiver.start();
 
-  sender.join();
-  receiver.stop();
-  receiver.join();
+    sender.join();
+    receiver.stop();
+    receiver.join();
 
-  PlayerNet* player = world.getPlayer(playerInfo[0]);
-  persistor.persistPlayer(std::move(player->getData()),world.getUsernameById(player->getId()));
+    PlayerNet* player = world.getPlayer(playerInfo[0]);
+    persistor.persistPlayer(std::move(player->getData()),world.getUsernameById(player->getId()));
 
-  world.rmPlayer(playerInfo[0]);  // Id
-  world.rmIdUsr(playerInfo[0]);
-  world.rmUsrId(playerDat.first);
+    world.rmPlayer(playerInfo[0]);  // Id
+    world.rmIdUsr(playerInfo[0]);
+    world.rmUsrId(playerDat.first);
 
-  outgoingMessages.close();
-  listener.entityDisappear(playerInfo[0]);
-  online = false;
+    outgoingMessages.close();
+    listener.entityDisappear(playerInfo[0]);
+    online = false;  
+  }catch(SocketException& e){}
 }
 
 bool ClientHandler::finished() { return !online; }
@@ -78,6 +80,10 @@ std::pair<std::string, std::vector<uint32_t>> ClientHandler::getCredentials() {
     std::string len_s = receiveMsg(sizeof(uint32_t));
     uint32_t len = *((uint32_t*)len_s.data());
     len = ntohl(len);
+
+    if(len == 0){
+      throw SocketException("Error al recibir");
+    }
 
     std::string packedCred = receiveMsg(len);
 
@@ -216,6 +222,10 @@ void ClientHandler::handleNewPlayer(std::string user) {
   std::string len_s = receiveMsg(sizeof(uint32_t));
   uint32_t len = *((uint32_t*)len_s.data());
   len = ntohl(len);
+
+  if (len == 0){
+    throw SocketException("Error al recibir");
+  }
 
   std::string packInfo = receiveMsg(len);
   std::vector<uint32_t> choices;
