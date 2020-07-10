@@ -84,6 +84,7 @@ Item::Item(SDL_Renderer *renderer, ItemType type, uint32_t anID, uint16_t aPosX,
         
         case ORO:
             image.loadFromFile(ORO_PATH);
+            break;
 
         default:
             throw OSError("Error Item Constructor: ItemType invalido.");
