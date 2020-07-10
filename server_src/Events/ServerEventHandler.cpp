@@ -297,7 +297,7 @@ void ServerEventHandler::handleResurrect(int playerId) {
   std::cout << "Llego al revivir\n";
   PlayerNet* player = world.getPlayer(playerId);
   if (player->isAlive()) { return; }
-  
+  std::cout << "Paso el if is alive\n";
   int selectedNPC = player->getSelectedNpc();
   if (selectedNPC == -1 ||
       world.getNpc(selectedNPC)->getNpcType() != PRIEST_TYPE) {
@@ -351,6 +351,8 @@ void ServerEventHandler::handleItemSubstraction(int playerId, int itemChoice,
   Inventory& inventory = player->getInventory();
 
   if (inventory.isFull()) {
+    listener.playerSendMessageToChat(player->getId(),
+                                     "El inventario esta lleno");
     return;
   }
 
@@ -358,12 +360,9 @@ void ServerEventHandler::handleItemSubstraction(int playerId, int itemChoice,
   if (item == nullptr) {
     listener.playerSendMessageToChat(player->getId(),
                                      "Id de item no reconocido");
-  } else if (inventory.isFull()) {
-    listener.playerSendMessageToChat(player->getId(),
-                                     "El inventario esta lleno");
     return;
   } else {
-    listener.inventoryAddItem(playerId, item->getItemType());
+    player->addItemToInventory(item);
   }
   
 }
@@ -390,8 +389,7 @@ void ServerEventHandler::handlePurchase(int playerId, int itemChoice,
   if (item == nullptr) {
     return;
   }
-  player->getInventory().addItem(item);
-  listener.inventoryAddItem(playerId, item->getItemType());
+  player->addItemToInventory(item);
 }
 
 void ServerEventHandler::handleSell(int playerId, NPC* npc, int slotChoice) {
@@ -432,11 +430,13 @@ void ServerEventHandler::handleTake(int playerId) {
   if (item == nullptr) {
     return;
   }
-
-  inv.addItem(item);
-  listener.inventoryAddItem(playerId, item->getItemType());
-  world.rmItem(item->getId());
-  listener.entityDisappear(item->getId());
+  
+  int mustBeErased = item->beTaken(player);
+  if (mustBeErased == 0) { // Se debe eliminar el item del mundo
+    // TODO: Creo que el oro va a generar leaks, no se libera en ningun lado
+    world.rmItem(item->getId());
+    listener.entityDisappear(item->getId());
+  }
 }
 
 void ServerEventHandler::handleDrop(int playerId, int slotChoice) {

@@ -37,7 +37,8 @@ PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int velocity,
                                     ra->getManaFactor(), level);
   mana = maxMana;
   maxExp = equation::playerMaxExp(level);
-  maxGold = equation::maxGold(level);
+  excessGold = equation::maxGold(level);
+  maxGold = excessGold * 1.5;
   if (!isAlive()){
     hp = 0;
   }
@@ -126,14 +127,15 @@ int PlayerNet::takeDamage(int dmgToTake) {
   if (hp == 0) {
     changeState(&PlayerState::dead);
     listener.playerDied(id);
-    for (size_t i = 0; i < inventory.getSize(); i++) {
+    for (int i = 0; i < inventory.getSize(); i++) {
       dropItem(0);
       removeItemFromInventory(0);
     }
-    if (gold > maxGold) {
-      GoldDrop* droppedGold = world.generateDroppableGold(maxGold - gold);
+    if (gold > excessGold) {
+      GoldDrop* droppedGold = world.generateDroppableGold(gold - excessGold);
       world.dropItem(droppedGold, x, y);
       listener.dropSpawn(droppedGold->getId(), droppedGold->getItemType(), x, y);
+      substractGold(gold - excessGold);
     }
   }
   return oldHp - hp;  // Daño efectivo
@@ -189,7 +191,7 @@ int PlayerNet::getConstitution() {
   return playerClass->getConstitutionFactor() * playerRace->getConstitution();
 }
 
-void PlayerNet::updateMaxGold() { maxGold = equation::maxGold(level); }
+void PlayerNet::updateMaxGold() { excessGold = equation::maxGold(level); }
 
 void PlayerNet::updateMaxExp() { maxExp = equation::playerMaxExp(level); }
 
@@ -211,6 +213,9 @@ bool PlayerNet::canBeAttackedBy(Entity* ent) {
 }
 
 int PlayerNet::getGold() { return gold; }
+
+int PlayerNet::getMaxGold() { return maxGold; }
+
 
 int PlayerNet::getHp() { return hp; }
 
@@ -348,6 +353,7 @@ void PlayerNet::setImmobilizedTime(int frames) {
 
 void PlayerNet::decreaseImmobilizedFramesLeft() {
   if (immobilizedFramesLeft == 0) {
+    std::cout << "Llego a 0 las frames inmobilizadas\n";
     NPC* closestPriest = world.getNearestPriest(this);
     closestPriest->resurrect(this);
     int priestX = closestPriest->getX();
@@ -365,8 +371,9 @@ bool PlayerNet::canMove() {
   return state->canMove();
 }
 
-bool PlayerNet::isAlive(){
+bool PlayerNet::isAlive() {
   return state->isAlive();
+}
 
 void PlayerNet::dropItem(int slot) {
   if (slot < 0 || slot >= inventory.getSize() - inventory.getSpaceLeft()) {
@@ -374,11 +381,13 @@ void PlayerNet::dropItem(int slot) {
   }
   Item* item = inventory.getItem(slot);
   world.dropItem(item, x, y);
-  listener.dropSpawn(item->getId(), item->getItemType(), x, y);
 }
 
 void PlayerNet::removeItemFromInventory(int slot) {
   Item* item = inventory.getItem(slot);
+  if (item == nullptr) { // No hay nada en ese slot
+    return;
+  }
   int item_type = item->getItemType();
   if (getWeaponType() == item_type ||
       getHemletType() == item_type ||
@@ -390,3 +399,9 @@ void PlayerNet::removeItemFromInventory(int slot) {
   listener.inventoryRemoveItem(id, slot);
   inventory.removeItemAt(slot);
 }
+
+void PlayerNet::addItemToInventory(Item* item) {
+  inventory.addItem(item);
+  listener.inventoryAddItem(id, item->getItemType());
+}
+

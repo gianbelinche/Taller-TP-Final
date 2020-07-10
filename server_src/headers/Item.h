@@ -30,6 +30,8 @@ class Item {
 
   virtual int beEquiped(PlayerNet* player);
 
+  virtual int beTaken(PlayerNet* player);
+
   int getBuyPrice();
 
   int getSellPrice();

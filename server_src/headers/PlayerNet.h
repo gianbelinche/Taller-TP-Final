@@ -26,6 +26,7 @@ class PlayerNet : public Entity {
   int maxExp;
   int exp;
   int gold;
+  int excessGold;
   int maxGold;
   int selectedNpc = -1;
   int selectedSlot = -1;
@@ -75,6 +76,8 @@ class PlayerNet : public Entity {
   int getVelocity();
 
   int getGold();
+
+  int getMaxGold();
 
   int getHp();
 
@@ -158,6 +161,8 @@ class PlayerNet : public Entity {
   void dropItem(int slot);
 
   void removeItemFromInventory(int slot);
+
+  void addItemToInventory(Item* item);
 
  private:
   void levelUp();

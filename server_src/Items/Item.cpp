@@ -71,6 +71,11 @@ int Item::beEquiped(PlayerNet* player) {
   return 0;
 }
 
+int Item::beTaken(PlayerNet* player) {
+  player->addItemToInventory(this);
+  return 0;
+}
+
 int Item::getItemType() { return typeOfItem; }
 
 std::string Item::getItemName() { return name; }

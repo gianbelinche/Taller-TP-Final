@@ -40,6 +40,6 @@ bool PlayerState::canMove() {
   return true;
 }
 
-bool  PlayerState::isAlive(){
+bool PlayerState::isAlive(){
   return true;
 }
