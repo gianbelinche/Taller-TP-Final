@@ -283,7 +283,7 @@ Item* GameState::getCloseItem(int x, int y, int range) {
       smallestDistance = distance;
     }
   }
-  if (distance < range) {
+  if (smallestDistance < range) {
     return nearest;
   }
   return nullptr;
