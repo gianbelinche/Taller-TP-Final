@@ -14,6 +14,7 @@ class Persistor {
   std::unordered_map<std::string, std::string> passwords;
   std::mutex usersMutex;
   std::mutex passMutex;
+  std::mutex bankMutex;
 
  public:
   Persistor();
@@ -35,6 +36,13 @@ class Persistor {
   void addPassword(std::string user, std::string pass);
 
   void persistUsrMap();
+
+  void persistBank(std::string file_name,
+                  std::unordered_map<uint32_t,
+                  std::vector<uint32_t>> map);
+
+  std::unordered_map<uint32_t,std::vector<uint32_t>> 
+  obtainBank(std::string file_name);                
 
   ~Persistor();
 };

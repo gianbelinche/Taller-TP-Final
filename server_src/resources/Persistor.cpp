@@ -9,6 +9,7 @@
 #define PLAYERS_MAP "players.cfg"
 #define PLAYERS_DATA "usr.cfg"
 #define PASSWORDS_FILE "pass.cfg"
+#define BANKER_MAP "banker.cfg"
 
 Persistor::Persistor() {
   file.open(PLAYERS_MAP);
@@ -130,5 +131,40 @@ void Persistor::persistUsrMap() {
 void Persistor::addPassword(std::string user, std::string pass) {
   std::unique_lock<std::mutex> l(passMutex);
   passwords[user] = pass;
+}
+
+void Persistor::persistBank(std::string file_name,
+                  std::unordered_map<uint32_t,std::vector<uint32_t>> map){
+  std::unique_lock<std::mutex> l(bankMutex);
+  file.open(BANKER_MAP, std::fstream::out | std::fstream::trunc);
+  std::stringstream buff;
+  msgpack::pack(buff, map);
+  buff.seekg(0);
+
+  file.write(&buff.str()[0], buff.str().size());
+  file.close();
+}
+
+std::unordered_map<uint32_t,std::vector<uint32_t>> 
+Persistor::obtainBank(std::string file_name){
+  std::unique_lock<std::mutex> l(bankMutex);
+  file.open(file_name);
+  std::unordered_map<uint32_t, std::vector<uint32_t>> bank;
+  file.seekg(0, std::ios::end);
+  int size = file.tellg();
+  if (size <= 0) {
+    file.close();
+    return bank;
+  }
+  char* str = (char*)malloc(size);
+  file.seekg(0);
+  file.read(str, size);
+  std::string string(str, size);
+  msgpack::object_handle oh = msgpack::unpack(string.data(), size);
+  msgpack::object deserialized = oh.get();
+  deserialized.convert(bank);
+  free(str);
+  file.close();
+  return bank;
 }
 
