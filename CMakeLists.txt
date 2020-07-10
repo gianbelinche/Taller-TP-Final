@@ -108,6 +108,7 @@ add_library(server_lib
   server_src/Items/Inventory.cpp 
   server_src/Items/HpPotion.cpp 
   server_src/Items/ManaPotion.cpp 
+  server_src/Items/GoldDrop.cpp
   server_src/resources/Acceptor.cpp 
   server_src/resources/ClientHandler.cpp 
   server_src/resources/Condition.cpp 
