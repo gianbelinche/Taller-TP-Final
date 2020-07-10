@@ -194,6 +194,11 @@ Item* MasterFactory::createItem(int itemType) {
   return nullptr;
 }
 
+GoldDrop* MasterFactory::createDroppableGold(int goldAmount) {
+  return new GoldDrop(idGenerator++, GOLDDROP_TYPE,
+                      config.getItemName(GOLDDROP_TYPE), goldAmount);
+}
+
 ManaPotion* MasterFactory::createManaPotion(int itemType) {
   std::unordered_map<std::string, float>& potionStats =
       config.getValuesByItemType(itemType);

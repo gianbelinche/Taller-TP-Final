@@ -304,6 +304,11 @@ void GameState::generateDrop(int x, int y) {
   }                                      
 }
 
+GoldDrop* GameState::generateDroppableGold(int goldAmount) {
+  return factory.createDroppableGold(goldAmount);
+}
+
+
 std::pair<int, int> GameState::generateNewMonsterPosition() {
   int randX;
   int randY;

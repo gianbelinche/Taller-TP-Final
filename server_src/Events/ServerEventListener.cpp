@@ -219,6 +219,7 @@ void ServerEventListener::expUpdate(uint32_t id, uint32_t exp,
                                     uint32_t maxExp) {
   std::vector<uint32_t> event = {STAT_CHANGE, EXP_UPDATE, exp, maxExp};
   dispatcher.sendMessage(id, event);
+  
 }
 
 void ServerEventListener::updateUserWorldState(int id, std::vector<uint32_t> entInfo) {

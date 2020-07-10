@@ -7,6 +7,8 @@
 #include "../headers/Equations.h"
 #include "../headers/GameState.h"
 #include "../headers/GhostState.h"
+#include "../headers/Item.h"
+#include "../headers/GoldDrop.h"
 #include "../headers/PlayerState.h"
 
 PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int velocity,
@@ -124,9 +126,15 @@ int PlayerNet::takeDamage(int dmgToTake) {
   if (hp == 0) {
     changeState(&PlayerState::dead);
     listener.playerDied(id);
-    std::cout << "Se murió el jugador" << std::endl;
-
-    // Dropear los items
+    for (size_t i = 0; i < inventory.getSize(); i++) {
+      dropItem(0);
+      removeItemFromInventory(0);
+    }
+    if (gold > maxGold) {
+      GoldDrop* droppedGold = world.generateDroppableGold(maxGold - gold);
+      world.dropItem(droppedGold, x, y);
+      listener.dropSpawn(droppedGold->getId(), droppedGold->getItemType(), x, y);
+    }
   }
   return oldHp - hp;  // Daño efectivo
 }
@@ -359,4 +367,26 @@ bool PlayerNet::canMove() {
 
 bool PlayerNet::isAlive(){
   return state->isAlive();
+
+void PlayerNet::dropItem(int slot) {
+  if (slot < 0 || slot >= inventory.getSize() - inventory.getSpaceLeft()) {
+    return;
+  }
+  Item* item = inventory.getItem(slot);
+  world.dropItem(item, x, y);
+  listener.dropSpawn(item->getId(), item->getItemType(), x, y);
+}
+
+void PlayerNet::removeItemFromInventory(int slot) {
+  Item* item = inventory.getItem(slot);
+  int item_type = item->getItemType();
+  if (getWeaponType() == item_type ||
+      getHemletType() == item_type ||
+      getArmorType() == item_type ||
+      getShieldType() == item_type) {
+    listener.inventoryUnequipItem(id, item->getEquippedPosition());
+    listener.playerEquipedItem(id, item->getEquippedPosition(), 0);
+  }
+  listener.inventoryRemoveItem(id, slot);
+  inventory.removeItemAt(slot);
 }
