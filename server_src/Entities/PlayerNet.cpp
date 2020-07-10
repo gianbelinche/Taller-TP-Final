@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <random>
 
 #include "../headers/Equations.h"
 #include "../headers/GameState.h"
@@ -109,7 +110,6 @@ void PlayerNet::substractMana(int amount) {
   listener.manaUpdate(id, mana, maxMana);
 }
 
-
 int PlayerNet::takeDamage(int dmgToTake) {
   int defense = equation::playerDefense(
       armor->getMinDef(), armor->getMaxDef(), shield->getMinDef(),
@@ -127,8 +127,14 @@ int PlayerNet::takeDamage(int dmgToTake) {
   if (hp == 0) {
     changeState(&PlayerState::dead);
     listener.playerDied(id);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> desp(-15, 15);
+    // Los items se dispersan una distancia random del personaje que murio
     for (int i = 0; i < inventory.getSize(); i++) {
-      dropItem(0);
+      int despX = desp(gen);
+      int despY = desp(gen);
+      dropItem(0, x + despX, y + despY);
       removeItemFromInventory(0);
     }
     if (gold > excessGold) {
@@ -375,7 +381,7 @@ bool PlayerNet::isAlive() {
   return state->isAlive();
 }
 
-void PlayerNet::dropItem(int slot) {
+void PlayerNet::dropItem(int slot, int x, int y) {
   if (slot < 0 || slot >= inventory.getSize() - inventory.getSpaceLeft()) {
     return;
   }

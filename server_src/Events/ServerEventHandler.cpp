@@ -446,7 +446,7 @@ void ServerEventHandler::handleDrop(int playerId, int slotChoice) {
     return;
   }
   int slot = player->getSelectedSlot();
-  player->dropItem(slot);
+  player->dropItem(slot, player->getX(), player->getY());
 }
 
 void ServerEventHandler::handlePlayerMsg(int playerId, std::string msg,
