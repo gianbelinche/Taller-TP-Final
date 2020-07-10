@@ -272,7 +272,6 @@ void GameState::dropItem(Item* item, int x, int y) {
 Item* GameState::getCloseItem(int x, int y, int range) {
   Item* nearest = nullptr;
   float distance;
-  float curr;
   float smallestDistance = std::numeric_limits<float>::infinity();
   for (auto& it : itemsPositions) {
     int dist_x = abs(x - it.second.first);
