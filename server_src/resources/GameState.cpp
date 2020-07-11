@@ -295,21 +295,26 @@ void GameState::rmItem(int id) {
   itemsPositions.erase(id);
 }
 
-void GameState::generateDrop(int x, int y) {
+void GameState::generateDrop(int x, int y, int goldAmount) {
   std::random_device rd;
   std::mt19937 gen(rd());
-  std::uniform_int_distribution<> distr(1,
-                                        19);  // MEter en algun lado los valores
 
   std::uniform_int_distribution<> drop(1,10);
   int is_drop = drop(gen);
+
   if (is_drop <= 3){ //30%
+    std::uniform_int_distribution<> distr(1,19);
     int rand_val = distr(gen);                  // Valor random
     Item* item = factory.createItem(rand_val);
     droppedItems[item->getId()] = item;
     itemsPositions[item->getId()] = std::make_pair(x, y);
     listener.dropSpawn(item->getId(), item->getItemType(), x, y);
-  }                                      
+  } else if (is_drop > 3 && is_drop <= 8){ //50%
+    GoldDrop* gold = factory.createDroppableGold(goldAmount);
+    droppedItems[gold->getId()] = gold;
+    itemsPositions[gold->getId()] = std::make_pair(x, y);
+    listener.dropSpawn(gold->getId(), gold->getItemType(), x, y);
+  }
 }
 
 GoldDrop* GameState::generateDroppableGold(int goldAmount) {

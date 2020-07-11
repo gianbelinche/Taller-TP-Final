@@ -95,7 +95,7 @@ int Monster::takeDamage(int dmgToTake) {
     std::cout << "Se murio el mostro\n";
     world.rmEntity(id);
     listener.entityDisappear(id);
-    world.generateDrop(x, y);
+    world.generateDrop(x, y, equation::dropGold(maxHp));
   }
   return oldHp - hp;
 }
