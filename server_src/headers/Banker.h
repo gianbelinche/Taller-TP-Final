@@ -30,6 +30,8 @@ class Banker : public NPC {
   int sellItem(Item* item) override;
 
   Item* buyItem(PlayerNet* player, int choice) override;
+
+  std::unordered_map<uint32_t,std::vector<uint32_t>> getData();
 };
 
 #endif // BANKER_H

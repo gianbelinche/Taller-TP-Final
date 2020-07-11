@@ -372,6 +372,12 @@ void GameState::persist() {
   for (auto& player : players) {
     std::string username = this->getUsernameById(player.second->getId());
     persistor.persistPlayer(player.second->getData(), username);
+    for (auto& npc : npcs){
+      if ((npc.second)->getNpcType() == BANKER_TYPE){
+        Banker* banker = (Banker*)(npc.second);
+        persistor.persistBank(std::move(banker->getData()));
+      }
+    }
   }
 }
 

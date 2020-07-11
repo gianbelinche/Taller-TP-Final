@@ -133,7 +133,7 @@ void Persistor::addPassword(std::string user, std::string pass) {
   passwords[user] = pass;
 }
 
-void Persistor::persistBank(std::string file_name,
+void Persistor::persistBank(
                   std::unordered_map<uint32_t,std::vector<uint32_t>> map){
   std::unique_lock<std::mutex> l(bankMutex);
   file.open(BANKER_MAP, std::fstream::out | std::fstream::trunc);
@@ -146,9 +146,9 @@ void Persistor::persistBank(std::string file_name,
 }
 
 std::unordered_map<uint32_t,std::vector<uint32_t>> 
-Persistor::obtainBank(std::string file_name){
+Persistor::obtainBank(){
   std::unique_lock<std::mutex> l(bankMutex);
-  file.open(file_name);
+  file.open(BANKER_MAP);
   std::unordered_map<uint32_t, std::vector<uint32_t>> bank;
   file.seekg(0, std::ios::end);
   int size = file.tellg();

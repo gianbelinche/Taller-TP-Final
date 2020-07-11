@@ -25,6 +25,8 @@ public:
   void addItemToUser(int id, Item* item);
 
   Item* substractItem(int choice, int id);
+
+  std::unordered_map<uint32_t,std::vector<uint32_t>> getData();
 };
 
 #endif // BANK_H

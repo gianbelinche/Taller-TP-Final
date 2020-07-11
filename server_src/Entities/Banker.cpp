@@ -57,3 +57,7 @@ int Banker::sellItem(Item* item) {
 Item* Banker::buyItem(PlayerNet* player, int choice) {
   return nullptr;
 }
+
+std::unordered_map<uint32_t,std::vector<uint32_t>> Banker::getData(){;
+  return bank.getData();
+}

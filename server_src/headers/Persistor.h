@@ -37,12 +37,11 @@ class Persistor {
 
   void persistUsrMap();
 
-  void persistBank(std::string file_name,
-                  std::unordered_map<uint32_t,
+  void persistBank(std::unordered_map<uint32_t,
                   std::vector<uint32_t>> map);
 
   std::unordered_map<uint32_t,std::vector<uint32_t>> 
-  obtainBank(std::string file_name);                
+  obtainBank();                
 
   ~Persistor();
 };

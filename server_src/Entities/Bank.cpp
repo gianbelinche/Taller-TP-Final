@@ -29,3 +29,15 @@ Item* Bank::substractItem(int choice, int id) {
   return lockers[id].getItem(choice);
 }
 
+std::unordered_map<uint32_t,std::vector<uint32_t>> Bank::getData(){
+  std::unordered_map<uint32_t,std::vector<uint32_t>> data;
+  for (auto& player: lockers){
+    std::vector<uint32_t> internal_data;
+    internal_data.emplace_back(player.second.getGold());
+    for (auto& item :  player.second.getItems()){
+      internal_data.emplace_back(item->getItemType());
+    }
+    data[player.first] = std::move(internal_data);
+  }
+  return data;
+}
