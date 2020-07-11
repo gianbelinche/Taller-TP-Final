@@ -171,7 +171,7 @@ void ServerEventHandler::handle(MessageSent& ev) {
   }
 
   if (messageCode == NO_COMMAND) {
-    // O MANDAR EL MENSAJE AL CHAT GLOBAL
+    listener.playerSendMessageToChat(id,"Comando incorrecto");
     return;
   } else if (messageCode == MEDITAR) {
     handleMeditation(id);
@@ -291,12 +291,14 @@ void ServerEventHandler::handleMeditation(int playerId) {
     return;
   }
   player->changeState(&PlayerState::meditating);
+  listener.playerSendMessageToChat(player->getId(),"Meditando");
 }
 
 void ServerEventHandler::handleResurrect(int playerId) {
   std::cout << "Llego al revivir\n";
   PlayerNet* player = world.getPlayer(playerId);
   if (player->isAlive()) { return; }
+  listener.playerSendMessageToChat(player->getId(),"Resucitando");
   std::cout << "Paso el if is alive\n";
   int selectedNPC = player->getSelectedNpc();
   if (selectedNPC == -1 ||
