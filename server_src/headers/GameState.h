@@ -113,7 +113,7 @@ class GameState {
 
   void rmItem(int id);
 
-  void generateDrop(int x, int y);
+  void generateDrop(int x, int y, int goldAmount);
 
   GoldDrop* generateDroppableGold(int goldAmount);
 
