@@ -16,3 +16,8 @@ void ImmobilizedState::move(PlayerNet &player, int x, int y) {}
 bool ImmobilizedState::canMove() {
   return false;
 }
+
+bool ImmobilizedState::isAlive() {
+  return false;
+}
+

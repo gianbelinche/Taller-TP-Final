@@ -16,6 +16,8 @@ public:
   void virtual update(PlayerNet &player);
 
   bool canMove() override;
+
+  bool isAlive() override;
 };
 
 #endif // IMMOBILIZEDSTATE_H

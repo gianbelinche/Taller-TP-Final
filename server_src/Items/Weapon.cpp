@@ -13,11 +13,6 @@ Weapon::Weapon(int itemID, int itemType, int minDMG, int maxDMG, int rang,
 
 Weapon::~Weapon() {}
 
-int Weapon::attack(Entity* entity, int strength) {
-  int hitDamage = equation::causedDamage(strength, minDmg, maxDmg);
-  return entity->takeDamage(hitDamage);
-}
-
 int Weapon::getMinDmg() { return minDmg; }
 
 int Weapon::getMaxDmg() { return maxDmg; }

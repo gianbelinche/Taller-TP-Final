@@ -22,7 +22,7 @@ class PlayerState {
 
   void virtual move(PlayerNet &player, int x, int y);
 
-  int virtual attack(PlayerNet &player, Entity *ent, int damage);
+  int virtual attack(PlayerNet &player, Entity *ent, int damage, bool canDodge);
 
   void virtual lifeRecover(PlayerNet &player);
 

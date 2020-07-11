@@ -17,8 +17,6 @@ class Weapon : public Item {
 
   ~Weapon();
 
-  int attack(Entity* entity, int strength);
-
   int getAttackRange();
 
   int getMinDmg();

@@ -47,7 +47,7 @@ class Entity {
 
   bool virtual canBeAttackedBy(Entity* ent) = 0;
 
-  int virtual takeDamage(int dmgToTake) = 0;
+  int virtual takeDamage(int dmgToTake, bool canDodge) = 0;
 
   std::vector<uint32_t> virtual getSendable();
 };

@@ -30,6 +30,10 @@ namespace equation {
                     int manaRaceFac, int level);
 
   int playerMaxExp(int level);
+
+  bool isCritical();
+
+  bool dodgeAttack(int agility);
 } // namespace equation
 
 #endif // EQUATIONS_H

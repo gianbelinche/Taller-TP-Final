@@ -87,7 +87,7 @@ void Monster::update() {
   }
 }
 
-int Monster::takeDamage(int dmgToTake) {
+int Monster::takeDamage(int dmgToTake, bool canDodge) {
   int oldHp = hp;
   hp = std::max(0, hp - dmgToTake);
   std::cout << "Le hizo: " << dmgToTake << " daño al motro\n";
@@ -101,7 +101,7 @@ int Monster::takeDamage(int dmgToTake) {
 }
 
 int Monster::attack(PlayerNet* player) {
-  int damageDealt = player->takeDamage(kind.getDamage());
+  int damageDealt = player->takeDamage(kind.getDamage(), true);
 
   return damageDealt;
 }
