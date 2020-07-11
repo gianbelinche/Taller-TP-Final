@@ -1,4 +1,5 @@
 #include "../headers/MasterFactory.h"
+#include "../headers/Persistor.h"
 
 MasterFactory::MasterFactory(std::atomic<uint32_t>& idCounter,
                              Configuration& configuration,
@@ -92,6 +93,18 @@ MasterFactory::MasterFactory(std::atomic<uint32_t>& idCounter,
   classes[WIZARD_ID] = &wizard;
   classes[CLERIC_ID] = &cleric;
   classes[PALADIN_ID] = &paladin;
+
+  Persistor persistor;
+  std::unordered_map<uint32_t,std::vector<uint32_t>> data = 
+  persistor.obtainBank();
+  for (auto& player : data){
+    if (player.second.size() > 0){
+      bank.addGoldTo(player.first,(player.second)[0]);
+      for (unsigned int i = 1; i < player.second.size();i++){
+        bank.addItemToUser(player.first,this->createItem((player.second)[i]));
+      }
+    }
+  }
 }
 
 MasterFactory::~MasterFactory() {}
