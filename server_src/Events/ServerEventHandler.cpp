@@ -90,8 +90,9 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
   int damageDealt = player->attack(entity);
   if (damageDealt > 0){
     listener.playerDealtDamage(player->getId(), damageDealt);
+  } else if(damageDealt < 0) { // Se esquivo el ataque
+    listener.entityEvadedAttack(player->getId(), entity->getId());
   }
-  
 
   int expGain = entity->getHitExp(player->getLevel(), damageDealt);
   if (!entity->isAlive()) {

@@ -7,10 +7,11 @@
 
 #include "../headers/Equations.h"
 #include "../headers/GameState.h"
-#include "../headers/GhostState.h"
-#include "../headers/Item.h"
 #include "../headers/GoldDrop.h"
+#include "../headers/Item.h"
 #include "../headers/PlayerState.h"
+#include "../headers/GhostState.h"
+
 
 PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int velocity,
                      int currExp, int currLevel, int currGold, Weapon* wea,
@@ -71,6 +72,10 @@ float PlayerNet::getStrength() {
   return playerRace->getStrength() * playerClass->getStrengthFactor();
 }
 
+float PlayerNet::getAgility() {
+  return playerRace->getAgility() * playerClass->getAgilityFactor();
+}
+
 float PlayerNet::getMeditationFactor() {
   return playerClass->getmeditationFactor();
 }
@@ -82,7 +87,14 @@ int PlayerNet::attack(Entity* ent) {
   if (mana >= weapon->getManaReq()) {
     listener.npcAttack(id, weapon->getItemType());
     substractMana(weapon->getManaReq());
-    return state->attack(*this, ent, getDamage());
+
+    int playerDamage = getDamage();
+    bool enemyCanDodge = true;
+    if (equation::isCritical()) {
+      playerDamage *= 2;
+      enemyCanDodge = false;
+    }
+    return state->attack(*this, ent, playerDamage, enemyCanDodge);
   }
   listener.playerSendMessageToChat(id, "Mana insuficiente");
   return 0;
@@ -110,7 +122,12 @@ void PlayerNet::substractMana(int amount) {
   listener.manaUpdate(id, mana, maxMana);
 }
 
-int PlayerNet::takeDamage(int dmgToTake) {
+int PlayerNet::takeDamage(int dmgToTake, bool canDodge) {
+  if (canDodge && equation::dodgeAttack(getAgility())) {
+    listener.playerEvadedAttack(id);
+    return -1;
+  }
+
   int defense = equation::playerDefense(
       armor->getMinDef(), armor->getMaxDef(), shield->getMinDef(),
       shield->getMaxDef(), helmet->getMinDef(), helmet->getMaxDef());

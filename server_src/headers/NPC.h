@@ -56,7 +56,7 @@ class NPC : public Entity {
 
   bool canBeAttackedBy(Entity* ent) override;
 
-  int takeDamage(int dmgToTake) override;
+  int takeDamage(int dmgToTake, bool canDodge) override;
 
   std::vector<uint32_t> getSendable() override;
 

@@ -9,7 +9,7 @@ PlayerState::PlayerState() {}
 
 PlayerState::~PlayerState() {}
 
-int PlayerState::attack(PlayerNet &player, Entity *ent, int damage) {
+int PlayerState::attack(PlayerNet &player, Entity *ent, int damage, bool canDodge) {
   return 0;
 }
 

@@ -80,7 +80,7 @@ void NPC::resurrect(PlayerNet* player) {}
 
 bool NPC::canBeAttackedBy(Entity* ent) { return false; }
 
-int NPC::takeDamage(int dmgToTake) { return 0; }
+int NPC::takeDamage(int dmgToTake, bool canDodge) { return 0; }
 
 std::vector<uint32_t> NPC::getSendable() {
   std::vector<uint32_t> npcInfo = {1};

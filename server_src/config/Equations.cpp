@@ -84,3 +84,17 @@ int equation::playerMaxMana(int intelligence, int manaClassFac,
                             int manaRaceFac, int level) {
   return intelligence * manaClassFac * manaRaceFac * level;
 }
+
+bool equation::isCritical() {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution<> r(0, 1);
+  return r(gen) < 0.05; // 5% de proba
+}
+
+bool equation::dodgeAttack(int agility) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution<> r(0, 1);
+  return pow(r(gen), agility) < 0.001;
+}

@@ -10,7 +10,7 @@ class NormalState : public PlayerState {
 
   ~NormalState();
 
-  int attack(PlayerNet& player, Entity* ent, int damage) override;
+  int attack(PlayerNet& player, Entity* ent, int damage, bool canDodge) override;
 };
 
 #endif  // NORMALSTATE_H

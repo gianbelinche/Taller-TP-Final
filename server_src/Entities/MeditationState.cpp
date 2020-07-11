@@ -24,7 +24,7 @@ void MeditationState::manaRecover(PlayerNet &player) {
   player.recoverMana(manaGain);
 }
 
-int MeditationState::attack(PlayerNet &player, Entity *ent, int damage) {
+int MeditationState::attack(PlayerNet &player, Entity *ent, int damage, bool canDodge) {
   player.changeState(&PlayerState::normal);
-  return PlayerState::normal.attack(player, ent, damage);
+  return PlayerState::normal.attack(player, ent, damage, canDodge);
 }

@@ -73,6 +73,8 @@ class PlayerNet : public Entity {
 
   float getStrength();
 
+  float getAgility();
+
   int getVelocity();
 
   int getGold();
@@ -132,7 +134,7 @@ class PlayerNet : public Entity {
 
   void recoverMana(int mPoints);
 
-  int takeDamage(int dmgToTake) override;
+  int takeDamage(int dmgToTake, bool canDodge) override;
 
   void substractMana(int amount);
 

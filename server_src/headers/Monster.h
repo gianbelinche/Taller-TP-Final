@@ -36,7 +36,7 @@ class Monster : public Entity {
 
   int getHitExp(int AttackerLevel, int damage) override;
 
-  int takeDamage(int dmgToTake) override;
+  int takeDamage(int dmgToTake, bool canDodge) override;
 
   void update() override;
 
