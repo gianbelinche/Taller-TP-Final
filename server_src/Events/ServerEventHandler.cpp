@@ -425,8 +425,7 @@ void ServerEventHandler::handleTake(int playerId) {
   if (inv.isFull()) {
     return;
   }
-  Item* item = world.getCloseItem(player->getX(), player->getY(),
-                                  player->getAttackRange());
+  Item* item = world.getCloseItem(player->getX(), player->getY());
   if (item == nullptr) {
     return;
   }

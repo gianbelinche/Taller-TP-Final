@@ -10,6 +10,7 @@
 #include "../headers/Persistor.h"
 
 #define FRAMES_PER_SECOND 30
+#define TAKE_RANGE 30
 
 GameState::GameState(std::vector<std::vector<bool>>& collisions,
                      std::vector<std::vector<bool>>& cities, int fps,
@@ -269,7 +270,7 @@ void GameState::dropItem(Item* item, int x, int y) {
   listener.dropSpawn(item->getId(), item->getItemType(), x, y);
 }
 
-Item* GameState::getCloseItem(int x, int y, int range) {
+Item* GameState::getCloseItem(int x, int y) {
   Item* nearest = nullptr;
   float distance;
   float smallestDistance = std::numeric_limits<float>::infinity();
@@ -283,7 +284,7 @@ Item* GameState::getCloseItem(int x, int y, int range) {
       smallestDistance = distance;
     }
   }
-  if (smallestDistance < range) {
+  if (smallestDistance < TAKE_RANGE) {
     return nearest;
   }
   return nullptr;

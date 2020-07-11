@@ -109,7 +109,7 @@ class GameState {
 
   void dropItem(Item* item, int x, int y);
 
-  Item* getCloseItem(int x, int y, int range);
+  Item* getCloseItem(int x, int y);
 
   void rmItem(int id);
 

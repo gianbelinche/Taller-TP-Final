@@ -124,12 +124,12 @@
   "Sin equipamiento": {
     "minDmg": 2,
     "maxDmg": 4,
-    "range": 10
+    "range": 20
   },
   "Espada": {
     "minDmg": 8,
     "maxDmg": 15,
-    "range": 15,
+    "range": 25,
     "manaRequired": 0,
     "buyPrice": 30,
     "sellPrice": 20
@@ -145,7 +145,7 @@
   "Martillo": {
     "minDmg": 6,
     "maxDmg": 8,
-    "range": 11,
+    "range": 25,
     "manaRequired": 0,
     "buyPrice": 20,
     "sellPrice": 10
