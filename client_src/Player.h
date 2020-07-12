@@ -25,22 +25,31 @@ class Player;
 
 #define GHOST_PATH      "img/ghost.png"
 
+#define MEDITATE_PATH   "img/meditate.png"
+
 /* MEDIDAS DEL JUGADOR */
-#define PLAYER_BODY_WIDTH 25
+#define PLAYER_BODY_WIDTH  25
 #define PLAYER_BODY_HEIGHT 45
-#define PLAYER_HEAD_WIDTH 17
+#define PLAYER_HEAD_WIDTH  17
 #define PLAYER_HEAD_HEIGHT 17
 
-#define GHOST_WIDTH 29
+#define GHOST_WIDTH  29
 #define GHOST_HEIGHT 32
+
+#define MEDITATE_HEIGHT 113
+#define MEDITATE_WIDTH  113
 
 /* CANTIDAD DE CUADROS POR ANIMACIÓN */
 #define BODY_ANIMATION_FRAMES 5
 #define BODY_ANIMATION_STATES 4
 #define HEAD_ANIMATION_FRAMES 4
 #define HEAD_ANIMATION_STATES 1
+
 #define GHOST_ANIMATION_FRAMES 3
 #define GHOST_ANIMATION_STATES 4
+
+#define MEDITATE_ANIMATION_FRAMES 5
+#define MEDITATE_ANIMATION_STATES 4
 
 enum PlayerRace {HUMAN, ELF, DWARF, GNOME};
 
@@ -53,15 +62,19 @@ class Player : public Entity {
         uint16_t headHeight;
         uint16_t ghostWidth;
         uint16_t ghostHeight;
+        uint16_t meditateWidth;
+        uint16_t meditateHeight;
         uint8_t bodyFrameX;
         uint8_t bodyFrameY;
         uint8_t headFrameX;
         uint8_t ghostFrameX;
         uint8_t ghostFrameY;
+        uint8_t meditateFrame;
         uint8_t state;
         FilteredImage bodyImage;
         FilteredImage headImage;
         FilteredImage ghostImage;
+        FilteredImage meditateImage;
         Equippable weapon;
         Equippable armor;
         Equippable shield;
@@ -69,9 +82,11 @@ class Player : public Entity {
         std::vector <SDL_Rect> bodyClips;
         std::vector <SDL_Rect> headClips;
         std::vector <SDL_Rect> ghostClips;
+        std::vector <SDL_Rect> meditateClips;
         
         void renderGhost(Camera &camera);
         void renderPlayer(Camera &camera);
+        void renderMeditate(Camera &camera);
         void refreshAlivePosition(MovementType move);
         void refreshDeadPosition(MovementType move);
 

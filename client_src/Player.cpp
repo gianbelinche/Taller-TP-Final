@@ -1,13 +1,15 @@
 #include "Player.h"
 
 #define B 0
+
 #define WEAPON  0
 #define ARMOR   1
 #define SHIELD  2
 #define HELMET  3
 
-#define ALIVE 0
-#define DEAD 1
+#define ALIVE    0
+#define DEAD     1
+#define MEDITATE 2
 
 Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID, 
                uint16_t aPosX, uint16_t aPosY, uint8_t aState, 
@@ -17,6 +19,7 @@ Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID,
                                     bodyImage(aRenderer, B, B, B),
                                     headImage(aRenderer, B, B, B),
                                     ghostImage(aRenderer, B, B, B),
+                                    meditateImage(aRenderer, B, B, B),
                                     weapon(aRenderer, aWeapon),
                                     armor(aRenderer, anArmor),
                                     shield(aRenderer, aShield),
@@ -28,11 +31,14 @@ Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID,
     this->headHeight = PLAYER_HEAD_HEIGHT;
     this->ghostWidth = GHOST_WIDTH;
     this->ghostHeight = GHOST_HEIGHT;
+    this->meditateWidth = MEDITATE_WIDTH;
+    this->meditateHeight = MEDITATE_HEIGHT;
     this->bodyFrameX = 0;
     this->bodyFrameY = 0;
     this->headFrameX = 0;
     this->ghostFrameX = 0;
     this->ghostFrameY = 0;
+    this->meditateFrame = 0;
 
     switch (aRace) {
         case HUMAN:
@@ -60,6 +66,7 @@ Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID,
     }
 
     this->ghostImage.loadFromFile(GHOST_PATH);
+    this->meditateImage.loadFromFile(MEDITATE_PATH);
     
     SpriteClipCreator(bodyHeight * BODY_ANIMATION_STATES, bodyWidth * 
                       BODY_ANIMATION_FRAMES, bodyHeight, bodyWidth, bodyClips);
@@ -70,6 +77,10 @@ Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID,
     SpriteClipCreator(ghostHeight * GHOST_ANIMATION_STATES, ghostWidth * 
                       GHOST_ANIMATION_FRAMES, ghostHeight, ghostWidth, 
                       ghostClips);
+
+    SpriteClipCreator(meditateHeight * MEDITATE_ANIMATION_STATES, 
+                      meditateWidth * MEDITATE_ANIMATION_FRAMES, 
+                      meditateHeight, meditateWidth, meditateClips);
 }
 
 Player::Player(Player&& other) : Entity(std::move(other)), 
@@ -80,22 +91,28 @@ Player::Player(Player&& other) : Entity(std::move(other)),
                                  headHeight(other.headHeight),
                                  ghostWidth(other.ghostWidth),
                                  ghostHeight(other.ghostHeight),
+                                 meditateWidth(other.meditateWidth),
+                                 meditateHeight(other.meditateHeight),
                                  bodyFrameX(other.bodyFrameX),
                                  bodyFrameY(other.bodyFrameY), 
                                  headFrameX(other.headFrameX),
                                  ghostFrameX(other.ghostFrameX),
                                  ghostFrameY(other.ghostFrameY),
+                                 meditateFrame(other.meditateFrame),
                                  state(other.state),
                                  bodyImage(std::move(other.bodyImage)),
                                  headImage(std::move(other.headImage)),
                                  ghostImage(std::move(other.ghostImage)),
+                                 meditateImage(std::move(other.meditateImage)),
                                  weapon(std::move(other.weapon)),
                                  armor(std::move(other.armor)),
                                  shield(std::move(other.shield)),
                                  helmet(std::move(other.helmet)),
                                  bodyClips(std::move(other.bodyClips)), 
                                  headClips(std::move(other.headClips)),
-                                 ghostClips(std::move(other.ghostClips)) {}
+                                 ghostClips(std::move(other.ghostClips)),
+                                 meditateClips(std::move(other.meditateClips)) 
+                                 {}
 
 Player& Player::operator=(Player&& other) {
     if (this == &other) {
@@ -110,15 +127,19 @@ Player& Player::operator=(Player&& other) {
     this->headHeight = other.headHeight;
     this->ghostWidth = other.ghostWidth;
     this->ghostHeight = other.ghostHeight;
+    this->meditateWidth = other.meditateWidth;
+    this->meditateHeight = other.meditateHeight;
     this->bodyFrameX = other.bodyFrameX;
     this->bodyFrameY = other.bodyFrameY;
     this->headFrameX = other.headFrameX;
     this->ghostFrameX = other.ghostFrameX;
     this->ghostFrameY = other.ghostFrameY;
+    this->meditateFrame = other.meditateFrame;
     this->state = other.state;
     this->bodyImage = std::move(other.bodyImage);
     this->headImage = std::move(other.headImage);
     this->ghostImage = std::move(other.ghostImage);
+    this->meditateImage = std::move(other.meditateImage);
     this->weapon = std::move(other.weapon);
     this->armor = std::move(other.armor);
     this->shield = std::move(other.shield);
@@ -126,6 +147,7 @@ Player& Player::operator=(Player&& other) {
     this->bodyClips = std::move(other.bodyClips);
     this->headClips = std::move(other.headClips);
     this->ghostClips = std::move(other.ghostClips);
+    this->meditateClips = std::move(other.meditateClips);
 
     return *this;
 }
@@ -236,10 +258,14 @@ void Player::renderGhost(Camera &camera) {
 }
 
 void Player::renderPlayer(Camera &camera) {
-    SDL_Rect *currentBodyClip = &(this->bodyClips[bodyFrameX + bodyFrameY * BODY_ANIMATION_FRAMES]);
+    SDL_Rect *currentBodyClip = &(this->bodyClips[bodyFrameX + bodyFrameY * 
+                                                  BODY_ANIMATION_FRAMES]);
     SDL_Rect *currentHeadClip = &(this->headClips[headFrameX]);
-    SDL_Rect bodyQuad = {this->posX - camera.getX(), this->posY - camera.getY(), bodyWidth, bodyHeight};
-    SDL_Rect headQuad = {this->posX - camera.getX() + headWidth / 4, this->posY - camera.getY() - headHeight / 2 + 1, headWidth, headHeight};
+    SDL_Rect bodyQuad = {this->posX - camera.getX(), this->posY - camera.getY(),
+                         bodyWidth, bodyHeight};
+    SDL_Rect headQuad = {this->posX - camera.getX() + headWidth / 4, 
+                         this->posY - camera.getY() - headHeight / 2 + 1, 
+                         headWidth, headHeight};
     this->bodyImage.render(bodyQuad.x, bodyQuad.y, currentBodyClip, &bodyQuad);
     this->headImage.render(headQuad.x, headQuad.y, currentHeadClip, &headQuad);
     this->weapon.render(bodyQuad.x, bodyQuad.y);
@@ -248,11 +274,27 @@ void Player::renderPlayer(Camera &camera) {
     this->helmet.render(headQuad.x, headQuad.y);
 }
 
+void Player::renderMeditate(Camera &camera) {
+    this->renderPlayer(camera);
+    SDL_Rect *currentMedClip = &(this->meditateClips[meditateFrame]);
+    SDL_Rect medQuad = {this->posX - camera.getX() - bodyWidth * 5 / 4, 
+                        this->posY - camera.getY() - bodyHeight * 4 / 3, 
+                        meditateWidth * 4 / 5, meditateHeight};
+    this->meditateImage.render(medQuad.x, medQuad.y, currentMedClip, &medQuad);
+    this->meditateFrame++;
+    if (this->meditateFrame >= (MEDITATE_ANIMATION_STATES *
+                                MEDITATE_ANIMATION_FRAMES)) {
+        this->meditateFrame = 0;
+    }
+}
+
 void Player::render(Camera &camera) {
     if (state == ALIVE) {
         this->renderPlayer(camera);
     } else if (state == DEAD) {
         this->renderGhost(camera);
+    } else if (state == MEDITATE) {
+        this->renderMeditate(camera);
     }
 }
 
@@ -263,6 +305,7 @@ bool Player::collision(uint16_t x, uint16_t y) {
 
 void Player::changeState(uint8_t aState) {
     state = aState;
+    meditateFrame = 0;
 }
 
 void Player::changeEquipment(EquipType equipType, uint8_t what) {
