@@ -294,7 +294,7 @@ void ServerEventHandler::handleMeditation(int playerId) {
   if (player->isAlive()) {
     listener.playerMeditating(player->getId());
     player->changeState(&PlayerState::meditating);
-    listener.playerSendMessageToChat(player->getId(),"Meditando");
+    listener.playerSendMessageToChat(player->getId(),"Meditando...");
   }
 
 }
@@ -303,7 +303,7 @@ void ServerEventHandler::handleResurrect(int playerId) {
   std::cout << "Llego al revivir\n";
   PlayerNet* player = world.getPlayer(playerId);
   if (player->isAlive()) { return; }
-  listener.playerSendMessageToChat(player->getId(),"Resucitando");
+  listener.playerSendMessageToChat(player->getId(),"Resucitando...");
   std::cout << "Paso el if is alive\n";
   int selectedNPC = player->getSelectedNpc();
   if (selectedNPC == -1 ||
