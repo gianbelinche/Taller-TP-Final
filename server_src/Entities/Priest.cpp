@@ -32,5 +32,4 @@ void Priest::heal(PlayerNet* player) {
 void Priest::resurrect(PlayerNet* player) {
   player->changeState(&PlayerState::normal);
   heal(player);
-  listener.playerRevived(player->getId());
 }

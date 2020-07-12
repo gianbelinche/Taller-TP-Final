@@ -100,7 +100,12 @@ int PlayerNet::attack(Entity* ent) {
   return 0;
 }
 
-void PlayerNet::changeState(PlayerState* new_state) { state = new_state; }
+void PlayerNet::changeState(PlayerState* new_state) {
+  if (new_state == &PlayerState::normal) {
+    listener.playerRevived(id);
+  }
+  state = new_state;
+}
 
 void PlayerNet::heal(int points) {
   hp = std::min(hp + points, maxHp);
@@ -143,7 +148,9 @@ int PlayerNet::takeDamage(int dmgToTake, bool canDodge) {
   listener.lifeUpdate(id, hp, maxHp);
   if (hp == 0) {
     changeState(&PlayerState::dead);
+    mana = 0;
     listener.playerDied(id);
+    listener.manaUpdate(id, mana, maxMana);
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> desp(-15, 15);

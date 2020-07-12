@@ -1,6 +1,7 @@
 #include "../headers/MeditationState.h"
 
 #include "../headers/Equations.h"
+#include "../headers/ServerEventListener.h"
 
 MeditationState PlayerState::meditating{};
 
@@ -14,6 +15,7 @@ MeditationState::~MeditationState() {
 
 void MeditationState::move(PlayerNet &player, int x, int y) {
   player.changeState(&PlayerState::normal);
+  
   PlayerState::normal.move(player, x, y);
 }
 

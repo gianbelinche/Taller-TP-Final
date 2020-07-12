@@ -151,6 +151,15 @@ void ServerEventListener::playerRevived(int id) {
   dispatcher.broadcastMessage(event);
 }
 
+void ServerEventListener::playerMeditating(int id) {
+  std::vector<uint32_t> event;
+  event.push_back(PLAYER_STATE_CHANGE);
+  event.push_back(id);
+  event.push_back(MEDITATING);
+  dispatcher.broadcastMessage(event);
+}
+
+
 void ServerEventListener::playerEquipedItem(int id,int eq_type,int object){
   std::vector<uint32_t> event;
   event.push_back(EQUIP_ITEM);
@@ -219,7 +228,6 @@ void ServerEventListener::expUpdate(uint32_t id, uint32_t exp,
                                     uint32_t maxExp) {
   std::vector<uint32_t> event = {STAT_CHANGE, EXP_UPDATE, exp, maxExp};
   dispatcher.sendMessage(id, event);
-  
 }
 
 void ServerEventListener::updateUserWorldState(int id, std::vector<uint32_t> entInfo) {

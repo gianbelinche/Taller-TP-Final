@@ -291,8 +291,12 @@ void ServerEventHandler::handleMeditation(int playerId) {
     std::cerr << "No se encontro el usuario\n";
     return;
   }
-  player->changeState(&PlayerState::meditating);
-  listener.playerSendMessageToChat(player->getId(),"Meditando");
+  if (player->isAlive()) {
+    listener.playerMeditating(player->getId());
+    player->changeState(&PlayerState::meditating);
+    listener.playerSendMessageToChat(player->getId(),"Meditando");
+  }
+
 }
 
 void ServerEventHandler::handleResurrect(int playerId) {

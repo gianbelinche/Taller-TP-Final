@@ -44,6 +44,7 @@
 
 #define REVIVED 0
 #define DEAD 1
+#define MEDITATING 2
 
 class ServerEventListener {
  private:
@@ -72,6 +73,8 @@ class ServerEventListener {
   void playerDied(int id); //5
 
   void playerRevived(int id); //5
+
+  void playerMeditating(int id);
 
   void playerEquipedItem(int id,int eq_type,int object); //6
 
