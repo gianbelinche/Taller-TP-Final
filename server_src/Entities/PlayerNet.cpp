@@ -11,6 +11,7 @@
 #include "../headers/Item.h"
 #include "../headers/PlayerState.h"
 #include "../headers/GhostState.h"
+#include "../headers/MeditationState.h"
 
 
 PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int velocity,
@@ -264,10 +265,12 @@ std::vector<uint32_t> PlayerNet::getSendable() {
   playerInfo.push_back(playerRace->getRaceT());
   playerInfo.push_back(x);
   playerInfo.push_back(y);
-  if (hp == 0) {
-    playerInfo.push_back(1);
-  } else {
+  if (state == &PlayerState::normal) {
     playerInfo.push_back(0);
+  } else if (state == &PlayerState::dead) {
+    playerInfo.push_back(1);
+  } else if (state == &PlayerState::meditating) {
+    playerInfo.push_back(2);
   }
   playerInfo.push_back(weapon->getItemType());
   playerInfo.push_back(armor->getItemType());
