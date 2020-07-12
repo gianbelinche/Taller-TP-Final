@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 #include <iostream>
+#include <chrono>
 
 #define PERSIST_TIME_DELAY 300  //9 segundos aproximadamente
 
@@ -22,6 +23,7 @@ void Game::run() { loop(); }
 
 void Game::loop() {
   while (keep_running) {
+    auto start = std::chrono::steady_clock::now();
     processInput();  // Decodifica y procesa todos los eventos encolados
     update();
     persist++;
@@ -30,7 +32,9 @@ void Game::loop() {
       world.persist();
       persist = 0;
     }
-    usleep(30000);  // Algo mas de 30 fps
+    auto end = std::chrono::steady_clock::now();
+    int time = std::chrono::duration<double, std::micro>(end-start).count();
+    if (time < 30000) usleep(30000 - time);  // Algo mas de 30 fps
   }
 }
 
