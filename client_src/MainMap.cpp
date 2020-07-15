@@ -1,4 +1,4 @@
-#include "MainMap.h"
+#include "headers/MainMap.h"
 
 #define CITY_1 (x >= 4800 && x < 6528 && y >= 1376 && y < 3744)
 #define CITY_2 (x >= 1568 && x < 3264 && y >= 5376 && y < 6656)

@@ -22,46 +22,46 @@ include_directories(.)
 add_library(clientLib
   client_src/ClientController.cpp
   client_src/ClientProtocol.cpp
-  client_src/BlockingMsgQueue.cpp
-  client_src/ProtMsgQueue.cpp
+  client_src/assets/BlockingMsgQueue.cpp
+  client_src/assets/ProtMsgQueue.cpp
   client_src/ClientConnector.cpp
-  client_src/Socket.cpp
-  client_src/Entity.cpp
-  client_src/EntityManager.cpp
-  client_src/Item.cpp
-  client_src/NPC.cpp
+  client_src/assets/Socket.cpp
+  client_src/entity/Entity.cpp
+  client_src/entity/EntityManager.cpp
+  client_src/entity/Item.cpp
+  client_src/entity/NPC.cpp
   client_src/Mob.cpp
-  client_src/Player.cpp
-  client_src/FilteredImage.cpp
-  client_src/Image.cpp
+  client_src/entity/Player.cpp
+  client_src/wrap_sdl/FilteredImage.cpp
+  client_src/wrap_sdl/Image.cpp
   client_src/MapImage.cpp
-  client_src/Text.cpp
-  client_src/Texture.cpp
+  client_src/wrap_sdl/Text.cpp
+  client_src/wrap_sdl/Texture.cpp
   client_src/Camera.cpp
   client_src/MainMap.cpp
   client_src/MainWindow.cpp
   client_src/SpriteClipCreator.cpp
-  client_src/ExpBar.cpp
-  client_src/GraphicInventory.cpp
-  client_src/Layout.cpp
-  client_src/MiniChat.cpp
-  client_src/QueueClosedException.cpp
-  client_src/OSError.cpp
-  client_src/QuitException.cpp
-  client_src/SDLError.cpp
-  client_src/SocketException.cpp
-  client_src/EventManager.cpp
+  client_src/layout/ExpBar.cpp
+  client_src/layout/GraphicInventory.cpp
+  client_src/layout/Layout.cpp
+  client_src/layout/MiniChat.cpp
+  client_src/errors/QueueClosedException.cpp
+  client_src/errors/OSError.cpp
+  client_src/errors/QuitException.cpp
+  client_src/errors/SDLError.cpp
+  client_src/errors/SocketException.cpp
+  client_src/client_controller/EventManager.cpp
   client_src/ModelController.cpp
-  client_src/Receiver.cpp
-  client_src/Renderer.cpp
-  client_src/Sender.cpp
-  client_src/Thread.cpp
+  client_src/client_controller/Receiver.cpp
+  client_src/client_controller/Renderer.cpp
+  client_src/client_controller/Sender.cpp
+  client_src/assets/Thread.cpp
   client_src/Equippable.cpp
-  client_src/LayoutManager.cpp
-  client_src/Music.cpp
-  client_src/MusicPlayer.cpp
-  client_src/SoundEffect.cpp
-  client_src/SoundEffectPlayer.cpp
+  client_src/layout/LayoutManager.cpp
+  client_src/wrap_sdl/Music.cpp
+  client_src/wrap_sdl/MusicPlayer.cpp
+  client_src/wrap_sdl/SoundEffect.cpp
+  client_src/wrap_sdl/SoundEffectPlayer.cpp
 )
 
 add_library(server_lib
@@ -131,8 +131,8 @@ include_directories(${PROJECT_BINARY_DIR})
 include_directories(headers json)
 
 add_executable (client
-  client_src/LogIn.cpp
-  client_src/LogInController.cpp
+  client_src/login/LogIn.cpp
+  client_src/login/LogInController.cpp
   client_src/client.cpp
 )
 

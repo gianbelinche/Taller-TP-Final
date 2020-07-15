@@ -1,4 +1,4 @@
-#include "MapImage.h"
+#include "headers/MapImage.h"
 
 MapImage::MapImage(SDL_Renderer *aRenderer, std::string path, 
                    uint16_t tileHeight, uint16_t tileWidth) : Image(aRenderer, 

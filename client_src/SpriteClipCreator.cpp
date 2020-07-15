@@ -1,4 +1,4 @@
-#include "SpriteClipCreator.h"
+#include "headers/SpriteClipCreator.h"
 
 SpriteClipCreator::SpriteClipCreator(uint16_t imgHeight, uint16_t imgWidth, 
                                      uint16_t tileHeight, uint16_t tileWidth, 

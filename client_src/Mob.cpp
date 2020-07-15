@@ -1,5 +1,5 @@
-#include "Mob.h"
-#include "SpriteClipCreator.h"
+#include "headers/Mob.h"
+#include "headers/SpriteClipCreator.h"
 
 Mob::Mob(SDL_Renderer *renderer, MobType type, uint32_t anID, uint16_t aPosX, 
          uint16_t aPosY) : Entity(anID, aPosX, aPosY), image(renderer, 0, 0, 0),

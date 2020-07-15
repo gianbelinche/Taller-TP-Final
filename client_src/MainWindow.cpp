@@ -1,7 +1,7 @@
 #include <unistd.h>
 
-#include "MainWindow.h"
-#include "SDLError.h"
+#include "headers/MainWindow.h"
+#include "headers/SDLError.h"
 #include <iostream>
 
 /* NOMBRE DE LA PANTALLA */

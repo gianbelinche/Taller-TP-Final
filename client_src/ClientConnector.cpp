@@ -1,5 +1,5 @@
-#include "ClientConnector.h"
-#include "SocketException.h"
+#include "headers/ClientConnector.h"
+#include "headers/SocketException.h"
 #include <arpa/inet.h>
 
 #include <map>

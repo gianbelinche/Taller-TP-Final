@@ -1,4 +1,4 @@
-#include "Camera.h"
+#include "headers/Camera.h"
 
 Camera::Camera(uint16_t posX, uint16_t posY, uint16_t aPlayerHeight,
         uint16_t aPlayerWidth, uint16_t height, uint16_t width) : 

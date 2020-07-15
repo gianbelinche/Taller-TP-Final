@@ -1,4 +1,4 @@
-#include "ClientProtocol.h"
+#include "headers/ClientProtocol.h"
 #define MOVE 0
 #define CLICK_ENTITY 1
 #define CLICK_INVENTORY 2

@@ -1,5 +1,5 @@
-#include "Equippable.h"
-#include "SpriteClipCreator.h"
+#include "headers/Equippable.h"
+#include "headers/SpriteClipCreator.h"
 
 Equippable::Equippable(SDL_Renderer *renderer, EquipType equipType) : 
                                                     image(renderer, 0, 0, 0),
