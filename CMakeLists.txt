@@ -133,6 +133,7 @@ include_directories(headers json)
 add_executable (client
   client_src/login/LogIn.cpp
   client_src/login/LogInController.cpp
+  client_src/ClientInitializer.cpp
   client_src/client.cpp
 )
 
