@@ -1,5 +1,6 @@
 #include "../headers/MiniChat.h"
 #include "../headers/Text.h"
+#include "../headers/paths.h"
 #define FONT_SIZE 50
 //10
 #define MESSAGES_MAX_SIZE 19
@@ -17,7 +18,7 @@
 
 
 MiniChat::MiniChat(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer){
-    this->gFont = TTF_OpenFont("Fonts/Candycane.ttf", FONT_SIZE);
+    this->gFont = TTF_OpenFont(CANDYCANE_FONT_PATH, FONT_SIZE);
 }
 
 MiniChat::~MiniChat(){

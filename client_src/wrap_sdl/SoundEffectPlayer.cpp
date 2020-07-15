@@ -1,4 +1,5 @@
 #include "../headers/SoundEffectPlayer.h"
+#include "../headers/paths.h"
 
 enum sounds{
     POTION,
@@ -14,16 +15,16 @@ enum sounds{
 };
 
 SoundEffectPlayer::SoundEffectPlayer() : sounds() {
-    this->add(SWORD,"sound_effects/sword.wav");
-    this->add(HAMMER,"sound_effects/hammer.wav");
-    this->add(POTION,"sound_effects/potion.wav");
-    this->add(AXE,"sound_effects/axe.wav");
-    this->add(FRESNO_BAR,"sound_effects/fresno bar.wav");
-    this->add(ELFIC_FLUTE,"sound_effects/flauta elfica.wav");
-    this->add(BACULO_NUDOSO,"sound_effects/baculo nudoso.wav");
-    this->add(BACULO_ENGARZADO,"sound_effects/baculo engarzado.wav");
-    this->add(SIMPLE_BOW,"sound_effects/simple bow.wav");
-    this->add(COMPOSED_BOW,"sound_effects/composed bow.wav");
+    this->add(SWORD,SWORD_SOUND_EFFECT_PATH);
+    this->add(HAMMER,HAMMER_SOUND_EFFECT_PATH);
+    this->add(POTION,POTION_SOUND_EFFECT_PATH);
+    this->add(AXE,AXE_SOUND_EFFECT_PATH);
+    this->add(FRESNO_BAR,FRESNO_BAR_SOUND_EFFECT_PATH);
+    this->add(ELFIC_FLUTE,ELFIC_FLUTE_SOUND_EFFECT_PATH);
+    this->add(BACULO_NUDOSO,BACULO_NUDOSO_SOUND_EFFECT_PATH);
+    this->add(BACULO_ENGARZADO,BACULO_ENGARZADO_SOUND_EFFECT_PATH);
+    this->add(SIMPLE_BOW,SIMPLE_BOW_SOUND_EFFECT_PATH);
+    this->add(COMPOSED_BOW,COMPOSED_BOW_SOUND_EFFECT_PATH);
 }
 
 void SoundEffectPlayer::add(const int id,std::string sound){

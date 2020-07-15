@@ -1,4 +1,5 @@
 #include "../headers/MusicPlayer.h"
+#include "../headers/paths.h"
 
 enum SONGS{
     CITY,
@@ -8,10 +9,10 @@ enum SONGS{
 };
 
 MusicPlayer::MusicPlayer() : songs(){
-    this->add(CAVE,"music/cave.wav");
-    this->add(CITY,"music/city.wav");
-    this->add(FOREST,"music/forest.wav");
-    this->add(DESERT,"music/desert.wav");
+    this->add(CAVE,CAVE_MUSIC_PATH);
+    this->add(CITY,CITY_MUSIC_PATH);
+    this->add(FOREST,FOREST_MUSIC_PATH);
+    this->add(DESERT,DESERT_MUSIC_PATH);
 }
 
 void MusicPlayer::add(const int id,std::string song){

@@ -1,4 +1,5 @@
 #include "../headers/Layout.h"
+#include "../headers/paths.h"
 #include <sstream>
 #include <string>
 #include <iostream>
@@ -17,8 +18,8 @@
 Layout::Layout(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer), 
 layout(NULL), gold(NULL), life(NULL), mana(NULL), level(NULL) {
     Image layout(mainRenderer);
-    layout.loadFromFile("Layout_graphics/layout_prototype_r.png");
-    this->gFont = TTF_OpenFont("Fonts/OpenSans.ttf", FONT_SIZE);
+    layout.loadFromFile(LAYOUT_PATH);
+    this->gFont = TTF_OpenFont(OPEN_SANS_FONT_PATH, FONT_SIZE);
     this->layout = std::move(layout);
 
     Text gold(mainRenderer);

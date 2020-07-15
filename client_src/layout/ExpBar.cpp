@@ -1,4 +1,5 @@
 #include "../headers/ExpBar.h"
+#include "../headers/paths.h"
 #include <iostream>
 
 #define BAR_X (screen_w * 3 / 5)
@@ -9,10 +10,10 @@
 ExpBar::ExpBar(SDL_Renderer* mainRenderer) : mainRenderer(mainRenderer),
 emptyBar(NULL), expBar(NULL), exp(0), max_exp(100) {
     Image emptyBar(mainRenderer);
-    emptyBar.loadFromFile("Layout_graphics/emptyBar.png");
+    emptyBar.loadFromFile(EMPTY_BAR_PATH);
     this->emptyBar = std::move(emptyBar);
     Image expBar(mainRenderer);
-    expBar.loadFromFile("Layout_graphics/expBar.png");
+    expBar.loadFromFile(EXP_BAR_PATH);
     this->expBar = std::move(expBar);
 }
 

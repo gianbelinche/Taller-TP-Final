@@ -1,5 +1,6 @@
 #include "../headers/GraphicInventory.h"
 #include "../headers/SDLError.h"
+#include "../headers/paths.h"
 #define MAX_NUMBER_OF_ITEMS 20
 #define NUMBER_OF_COLUMNS 5
 #define MAX_NUMBER_OF_SELECTED_ITEMS 4
@@ -52,31 +53,31 @@ enum items{
 GraphicInventory::GraphicInventory(SDL_Renderer* mainRenderer) : 
 mainRenderer(mainRenderer), itemBoxes(NULL) {
     Image itemBoxes(mainRenderer);
-    itemBoxes.loadFromFile("Layout_graphics/Inventory/ItemBoxes.png");
+    itemBoxes.loadFromFile(INV_ITEM_BOXES_PATH);
     this->itemBoxes = std::move(itemBoxes);
     equiped.push_back(EMPTY);
     equiped.push_back(EMPTY);
     equiped.push_back(EMPTY);
     equiped.push_back(EMPTY);
-    this->insert(SWORD,"Layout_graphics/Inventory/espada.png",SELECTED_TYPE_0);
-    this->insert(AXE,"Layout_graphics/Inventory/hacha.png",SELECTED_TYPE_0);
-    this->insert(HAMMER,"Layout_graphics/Inventory/martillo.png",SELECTED_TYPE_0);
-    this->insert(FRESNO_ROD,"Layout_graphics/Inventory/vara de fresno.png",SELECTED_TYPE_0);
-    this->insert(ELFIC_FLUTE,"Layout_graphics/Inventory/flauta elfica.png",SELECTED_TYPE_0);
-    this->insert(BACULO_NUDOSO,"Layout_graphics/Inventory/baculo nudoso.png",SELECTED_TYPE_0);
-    this->insert(BACULO_ENGARZADO,"Layout_graphics/Inventory/baculo engarzado.png",SELECTED_TYPE_0);
-    this->insert(SIMPLE_BOW,"Layout_graphics/Inventory/arco simple.png",SELECTED_TYPE_0);
-    this->insert(COMPOSED_BOW,"Layout_graphics/Inventory/arco compuesto.png",SELECTED_TYPE_0);
-    this->insert(LEATHER_ARMOR,"Layout_graphics/Inventory/armadura de cuero.png",SELECTED_TYPE_1);
-    this->insert(PLATE_ARMOR,"Layout_graphics/Inventory/armadura de placas.png",SELECTED_TYPE_1);
-    this->insert(BLUE_TUNIC,"Layout_graphics/Inventory/tunica azul.png",SELECTED_TYPE_1);
-    this->insert(HOOD,"Layout_graphics/Inventory/capucha.png",SELECTED_TYPE_3);
-    this->insert(IRON_HELMET,"Layout_graphics/Inventory/casco de hierro.png",SELECTED_TYPE_3);
-    this->insert(TURTLE_SHIELD,"Layout_graphics/Inventory/escudo de tortuga.png",SELECTED_TYPE_2);
-    this->insert(IRON_SHIELD,"Layout_graphics/Inventory/escudo de hierro.png",SELECTED_TYPE_2);
-    this->insert(MAGIC_HAT,"Layout_graphics/Inventory/sombrero magico.png",SELECTED_TYPE_3);
-    this->insert(LIFE_POTION,"Layout_graphics/Inventory/life_potion.png",NO_TYPE);
-    this->insert(MANA_POTION,"Layout_graphics/Inventory/mana_potion.png",NO_TYPE);
+    this->insert(SWORD,INV_SWORD_PATH,SELECTED_TYPE_0);
+    this->insert(AXE,INV_AXE_PATH,SELECTED_TYPE_0);
+    this->insert(HAMMER,INV_HAMMER_PATH,SELECTED_TYPE_0);
+    this->insert(FRESNO_ROD,INV_FRESNO_ROD_PATH,SELECTED_TYPE_0);
+    this->insert(ELFIC_FLUTE,INV_ELFIC_FLUTE_PATH,SELECTED_TYPE_0);
+    this->insert(BACULO_NUDOSO,INV_BACULO_NUDOSO_PATH,SELECTED_TYPE_0);
+    this->insert(BACULO_ENGARZADO,INV_BACULO_ENGARZADO_PATH,SELECTED_TYPE_0);
+    this->insert(SIMPLE_BOW,INV_SIMPLE_BOW_PATH,SELECTED_TYPE_0);
+    this->insert(COMPOSED_BOW,INV_COMPOSED_BOW_PATH,SELECTED_TYPE_0);
+    this->insert(LEATHER_ARMOR,INV_LEATHER_ARMOR_PATH,SELECTED_TYPE_1);
+    this->insert(PLATE_ARMOR,INV_PLATE_ARMOR_PATH,SELECTED_TYPE_1);
+    this->insert(BLUE_TUNIC,INV_BLUE_TUNIC_PATH,SELECTED_TYPE_1);
+    this->insert(HOOD,INV_HOOD_PATH,SELECTED_TYPE_3);
+    this->insert(IRON_HELMET,INV_IRON_HELMET_PATH,SELECTED_TYPE_3);
+    this->insert(TURTLE_SHIELD,INV_TURTLE_SHIELD_PATH,SELECTED_TYPE_2);
+    this->insert(IRON_SHIELD,INV_IRON_SHIELD_PATH,SELECTED_TYPE_2);
+    this->insert(MAGIC_HAT,INV_MAGIC_HAT_PATH,SELECTED_TYPE_3);
+    this->insert(LIFE_POTION,INV_LIFE_POTION_PATH,NO_TYPE);
+    this->insert(MANA_POTION,INV_MANA_POTION_PATH,NO_TYPE);
 }
 
 void GraphicInventory::insert(int key,std::string path,int position){
