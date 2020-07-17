@@ -4,6 +4,7 @@
 #include <map>
 #include <unordered_map>
 #include <mutex>
+#include <list>
 #include <SDL2/SDL.h>
 #include "Entity.h"
 #include "Player.h"
@@ -19,7 +20,7 @@ class EntityManager {
         uint32_t playerID;
         SDL_Renderer *renderer;
         std::unordered_map<uint32_t, Entity*> entities;
-        std::vector<Attack*> attacks;
+        std::list<Attack*> attacks;
         std::mutex mux;
         
     public:

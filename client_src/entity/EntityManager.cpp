@@ -101,12 +101,18 @@ void EntityManager::renderEntities(Camera &camera) {
 void EntityManager::renderAttacks(Camera &camera) {
     std::unique_lock<std::mutex> lk(mux);
 
-    for (auto& attack : attacks) {
+    std::vector<Attack*> toRemove;
+    
+    for (auto attack : attacks) {
         attack->render(camera);
+        if (attack->isEnded()) {
+            toRemove.push_back(attack);
+        }
     }
 
-    for (auto it = attacks.begin(); it != attacks.end(); it++) {
-        if ((*it)->isEnded()) attacks.erase(it);
+    for (auto attack: toRemove) {
+        attacks.remove(attack);
+        delete(attack);
     }
 }
 

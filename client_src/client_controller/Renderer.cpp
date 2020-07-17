@@ -25,8 +25,6 @@ void Renderer::run() {
         Uint32 time1 = 0;
         Uint32 time2 = 0;
 
-        //int cont = 0;
-
         while (!closed) {
             time1 = SDL_GetTicks();
 
@@ -39,19 +37,17 @@ void Renderer::run() {
                 musicPlayer.play(zone);
             }
             
-
             SDL_RenderClear(renderer);
-
-            
+       
             mainMap.renderTerrain(camera);
             entityManager.renderEntities(camera);
+            entityManager.renderAttacks(camera);
             mainMap.renderStructures(camera);
             layout.render(camera);
             inventory.render(camera);
             expbar.render(camera);
             chat.render(camera);
             
-
             SDL_RenderPresent(renderer);
             
             time2 = SDL_GetTicks();
