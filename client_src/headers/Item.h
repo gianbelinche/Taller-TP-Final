@@ -3,27 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include "Entity.h"
-
-#define ESPADA_PATH "img/espada.png"
-#define HACHA_PATH "img/hacha.png"
-#define MARTILLO_PATH "img/martillo.png"
-#define VARA_FRESNO_PATH "img/vara_fresno.png"
-#define FLAUTA_ELFICA_PATH "img/flautaelfica.png"
-#define BACULO_NUDOSO_PATH "img/baculo_nudoso.png"
-#define BACULO_ENGARZADO_PATH "img/baculo_engarzado.png"
-#define ARCO_SIMPLE_PATH "img/arco_simple.png"
-#define ARCO_COMPUESTO_PATH "img/arco_compuesto.png"
-#define ARMADURA_CUERO_PATH "img/armadura_cuero.png"
-#define ARMADURA_PLACAS_PATH "img/armadura_placas.png"
-#define TUNICA_AZUL_PATH "img/tunica_azul.png"
-#define CAPUCHA_PATH "img/capucha.png"
-#define CASCO_HIERRO_PATH "img/casco_hierro.png"
-#define ESCUDO_TORTUGA_PATH "img/escudo_tortuga.png"
-#define ESCUDO_HIERRO_PATH "img/escudo_hierro.png"
-#define SOMBRERO_MAGICO_PATH "img/sombrero_magico.png"
-#define POCION_MANA_PATH "img/pocion_mana.png"
-#define POCION_VIDA_PATH "img/pocion_vida.png"
-#define ORO_PATH "img/oro.png"
+#include "paths.h"
 
 enum ItemType {ESPADA = 1, HACHA, MARTILLO, VARA_FRESNO, FLAUTA_ELFICA, BACULO_NUDOSO,
                BACULO_ENGARZADO, ARCO_SIMPLE, ARCO_COMPUESTO, ARMADURA_CUERO, 

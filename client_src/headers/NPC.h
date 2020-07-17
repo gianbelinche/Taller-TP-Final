@@ -4,14 +4,12 @@
 #include "FilteredImage.h"
 #include "Camera.h"
 #include "Entity.h"
+#include "paths.h"
 
-#define BANKER_PATH "img/banker.png"
 #define BANKER_HEIGHT 59
 #define BANKER_WIDTH 25
-#define HEALER_PATH "img/healer.png"
 #define HEALER_HEIGHT 45
 #define HEALER_WIDTH 25
-#define MERCHANT_PATH "img/merchant.png"
 #define MERCHANT_HEIGHT 46
 #define MERCHANT_WIDTH 25
 

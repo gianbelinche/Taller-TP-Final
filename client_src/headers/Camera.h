@@ -4,6 +4,7 @@
 class Camera;
 
 #include "stdint.h"
+#include "paths.h"
 
 #define LEVEL_WIDTH 9920
 #define LEVEL_HEIGHT 7104

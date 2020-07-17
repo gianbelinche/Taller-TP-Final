@@ -20,21 +20,22 @@ include_directories(.)
 #)
 
 add_library(clientLib
-  client_src/ClientController.cpp
-  client_src/ClientProtocol.cpp
-  client_src/assets/BlockingMsgQueue.cpp
-  client_src/assets/ProtMsgQueue.cpp
-  client_src/ClientConnector.cpp
-  client_src/assets/Socket.cpp
-  client_src/entity/Entity.cpp
-  client_src/entity/EntityManager.cpp
-  client_src/entity/Item.cpp
-  client_src/entity/NPC.cpp
-  client_src/Mob.cpp
-  client_src/entity/Player.cpp
+client_src/ClientController.cpp
+client_src/ClientProtocol.cpp
+client_src/assets/BlockingMsgQueue.cpp
+client_src/assets/ProtMsgQueue.cpp
+client_src/ClientConnector.cpp
+client_src/assets/Socket.cpp
+client_src/entity/Entity.cpp
+client_src/entity/EntityManager.cpp
+client_src/entity/Item.cpp
+client_src/entity/NPC.cpp
+client_src/entity/Mob.cpp
+client_src/entity/Player.cpp
+client_src/entity/Equippable.cpp
   client_src/wrap_sdl/FilteredImage.cpp
   client_src/wrap_sdl/Image.cpp
-  client_src/MapImage.cpp
+  client_src/wrap_sdl/MapImage.cpp
   client_src/wrap_sdl/Text.cpp
   client_src/wrap_sdl/Texture.cpp
   client_src/Camera.cpp
@@ -56,7 +57,6 @@ add_library(clientLib
   client_src/client_controller/Renderer.cpp
   client_src/client_controller/Sender.cpp
   client_src/assets/Thread.cpp
-  client_src/Equippable.cpp
   client_src/layout/LayoutManager.cpp
   client_src/wrap_sdl/Music.cpp
   client_src/wrap_sdl/MusicPlayer.cpp

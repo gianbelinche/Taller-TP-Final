@@ -14,6 +14,7 @@
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QWidget>
 #include "ClientConnector.h"
+#include "paths.h"
 
 class LogIn : public QMainWindow {
     private:

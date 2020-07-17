@@ -5,26 +5,23 @@
 #include "FilteredImage.h"
 #include "Camera.h"
 #include "Entity.h"
+#include "paths.h"
 
-#define GOBLIN_PATH "img/goblin.png"
 #define GOBLIN_HEIGHT 32
 #define GOBLIN_WIDTH 24
 #define GOBLIN_VERT_SPRITES 4
 #define GOBLIN_HOR_SPRITES 8
 #define GOBLIN_SPEED 7
-#define SKELETON_PATH "img/skeleton.png"
 #define SKELETON_HEIGHT 52
 #define SKELETON_WIDTH 25
 #define SKELETON_VERT_SPRITES 4
 #define SKELETON_HOR_SPRITES 5
 #define SKELETON_SPEED 4
-#define SPYDER_PATH "img/spyder.png"
 #define SPYDER_HEIGHT 20
 #define SPYDER_WIDTH 26
 #define SPYDER_VERT_SPRITES 4
 #define SPYDER_HOR_SPRITES 4
 #define SPYDER_SPEED 6
-#define ZOMBIE_PATH "img/zombie.png"
 #define ZOMBIE_HEIGHT 45
 #define ZOMBIE_WIDTH 25
 #define ZOMBIE_VERT_SPRITES 4

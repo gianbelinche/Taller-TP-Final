@@ -1,6 +1,8 @@
 #ifndef __PATHS_H__
 #define __PATHS_H__
 
+#define LOG_IN_PATH "background-image: url(media/img/background.png)"
+
 #define EMPTY_BAR_PATH "media/Layout_graphics/emptyBar.png"
 #define EXP_BAR_PATH "media/Layout_graphics/expBar.png"
 
@@ -44,5 +46,64 @@
 #define BACULO_ENGARZADO_SOUND_EFFECT_PATH "media/sound_effects/baculo engarzado.wav"
 #define SIMPLE_BOW_SOUND_EFFECT_PATH "media/sound_effects/simple bow.wav"
 #define COMPOSED_BOW_SOUND_EFFECT_PATH "media/sound_effects/composed bow.wav"
+
+#define ESPADA_PATH "media/img/espada.png"
+#define HACHA_PATH "media/img/hacha.png"
+#define MARTILLO_PATH "media/img/martillo.png"
+#define VARA_FRESNO_PATH "media/img/vara_fresno.png"
+#define FLAUTA_ELFICA_PATH "media/img/flautaelfica.png"
+#define BACULO_NUDOSO_PATH "media/img/baculo_nudoso.png"
+#define BACULO_ENGARZADO_PATH "media/img/baculo_engarzado.png"
+#define ARCO_SIMPLE_PATH "media/img/arco_simple.png"
+#define ARCO_COMPUESTO_PATH "media/img/arco_compuesto.png"
+#define ARMADURA_CUERO_PATH "media/img/armadura_cuero.png"
+#define ARMADURA_PLACAS_PATH "media/img/armadura_placas.png"
+#define TUNICA_AZUL_PATH "media/img/tunica_azul.png"
+#define CAPUCHA_PATH "media/img/capucha.png"
+#define CASCO_HIERRO_PATH "media/img/casco_hierro.png"
+#define ESCUDO_TORTUGA_PATH "media/img/escudo_tortuga.png"
+#define ESCUDO_HIERRO_PATH "media/img/escudo_hierro.png"
+#define SOMBRERO_MAGICO_PATH "media/img/sombrero_magico.png"
+#define POCION_MANA_PATH "media/img/pocion_mana.png"
+#define POCION_VIDA_PATH "media/img/pocion_vida.png"
+#define ORO_PATH "media/img/oro.png"
+
+#define GIF_ESPADA_PATH "media/img/espadagif.png"
+#define GIF_HACHA_PATH "media/img/hachagif.png"
+#define GIF_MARTILLO_PATH "media/img/martillogif.png"
+#define GIF_VARA_FRESNO_PATH "media/img/varafresnogif.png"
+#define GIF_FLAUTA_ELFICA_PATH "media/img/flautaelficagif.png"
+#define GIF_BACULO_NUDOSO_PATH "media/img/baculonudosogif.png"
+#define GIF_BACULO_ENGARZADO_PATH "media/img/baculoengarzadogif.png"
+#define GIF_ARCO_SIMPLE_PATH "media/img/arcosimplegif.png"
+#define GIF_ARCO_COMPUESTO_PATH "media/img/arcocompuestogif.png"
+#define GIF_ARMADURA_CUERO_PATH "media/img/armaduracuerogif.png"
+#define GIF_ARMADURA_PLACAS_PATH "media/img/armaduraplacasgif.png"
+#define GIF_TUNICA_AZUL_PATH "media/img/tunicaazulgif.png"
+#define GIF_CAPUCHA_PATH "media/img/capuchagif.png"
+#define GIF_CASCO_HIERRO_PATH "media/img/cascohierrogif.png"
+#define GIF_ESCUDO_TORTUGA_PATH "media/img/escudotortugagif.png"
+#define GIF_ESCUDO_HIERRO_PATH "media/img/escudohierrogif.png"
+#define GIF_SOMBRERO_MAGICO_PATH "media/img/sombreromagicogif.png"
+
+#define GOBLIN_PATH "media/img/goblin.png"
+#define SKELETON_PATH "media/img/skeleton.png"
+#define SPYDER_PATH "media/img/spyder.png"
+#define ZOMBIE_PATH "media/img/zombie.png"
+
+#define BANKER_PATH "media/img/banker.png"
+#define HEALER_PATH "media/img/healer.png"
+#define MERCHANT_PATH "media/img/merchant.png"
+
+#define HUMAN_BODY_PATH "media/img/humanbody.png"
+#define HUMAN_HEAD_PATH "media/img/humanhead.png"
+#define ELF_BODY_PATH   "media/img/elfbody.png"
+#define ELF_HEAD_PATH   "media/img/elfhead.png"
+#define DWARF_BODY_PATH "media/img/dwarfbody.png"
+#define DWARF_HEAD_PATH "media/img/dwarfhead.png"
+#define GNOME_BODY_PATH "media/img/gnomebody.png"
+#define GNOME_HEAD_PATH "media/img/gnomehead.png"
+#define GHOST_PATH      "media/img/ghost.png"
+#define MEDITATE_PATH   "media/img/meditate.png"
 
 #endif

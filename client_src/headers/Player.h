@@ -9,23 +9,10 @@ class Player;
 #include "SpriteClipCreator.h"
 #include "Camera.h"
 #include "Entity.h"
+#include "paths.h"
 
 /* VELOCIDAD DEL JUGADOR */
 #define PLAYER_SPEED 6
-
-/* RUTA A LA IMAGEN DEL JUGADOR */
-#define HUMAN_BODY_PATH "img/humanbody.png"
-#define HUMAN_HEAD_PATH "img/humanhead.png"
-#define ELF_BODY_PATH   "img/elfbody.png"
-#define ELF_HEAD_PATH   "img/elfhead.png"
-#define DWARF_BODY_PATH "img/dwarfbody.png"
-#define DWARF_HEAD_PATH "img/dwarfhead.png"
-#define GNOME_BODY_PATH "img/gnomebody.png"
-#define GNOME_HEAD_PATH "img/gnomehead.png"
-
-#define GHOST_PATH      "img/ghost.png"
-
-#define MEDITATE_PATH   "img/meditate.png"
 
 /* MEDIDAS DEL JUGADOR */
 #define PLAYER_BODY_WIDTH  25
