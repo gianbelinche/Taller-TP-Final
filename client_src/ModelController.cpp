@@ -14,9 +14,10 @@ enum state {
     INVENTORY,
     LAYOUT_STATE,
     LOGIN,
-    ATTACK,
+    SOUND_ATTACK,
     DRINK_POTION,
-    TELEPORT
+    TELEPORT,
+    ATTACK
 };
 
 ModelController::ModelController(EntityManager &anEntityManager, 
@@ -99,7 +100,7 @@ void ModelController::handle(std::vector<uint32_t> &event) {
         case LOGIN:
             break;   
 
-        case ATTACK:
+        case SOUND_ATTACK:
             soundEffectPlayer.play(event[1]);
             break;
 
@@ -109,6 +110,9 @@ void ModelController::handle(std::vector<uint32_t> &event) {
 
         case TELEPORT:
             entityManager.teleportEntity(event[1], event[2], event[3]);
+
+        case ATTACK:
+            entityManager.addAttack((AttackType)event[1], event[2], event[3]);
         
         default:
             break;

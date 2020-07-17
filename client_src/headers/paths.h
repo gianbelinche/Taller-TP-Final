@@ -106,4 +106,14 @@
 #define GHOST_PATH      "media/img/ghost.png"
 #define MEDITATE_PATH   "media/img/meditate.png"
 
+#define SWORD_ATTACK_PATH "media/img/sword_attack.png"
+#define AXE_ATTACK_PATH "media/img/axe_attack.png"
+#define HAMMER_ATTACK_PATH "media/img/hammer_attack.png"
+#define FRESNO_BAR_ATTACK_PATH "media/img/fresno_bar_attack.png"
+#define ELFIC_FLUTE_ATTACK_PATH "media/img/elfic_flute_attack.png"
+#define BACULO_NUDOSO_ATTACK_PATH "media/img/baculo_nudoso_attack.png"
+#define BACULO_ENGARZADO_ATTACK_PATH "media/img/baculo_engarzado_attack.png"
+#define SIMPLE_BOW_ATTACK_PATH "media/img/bow_attack.png"
+#define COMPOSED_BOW_ATTACK_PATH "media/img/bow_attack.png"
+
 #endif

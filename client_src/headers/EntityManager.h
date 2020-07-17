@@ -12,12 +12,14 @@
 #include "Camera.h"
 #include "Item.h"
 #include "Equippable.h"
+#include "Attack.h"
 
 class EntityManager {
     private:
         uint32_t playerID;
         SDL_Renderer *renderer;
         std::unordered_map<uint32_t, Entity*> entities;
+        std::vector<Attack*> attacks;
         std::mutex mux;
         
     public:
@@ -31,6 +33,7 @@ class EntityManager {
                        uint16_t aPosY, uint8_t aState, EquipType aWeapon,
                        EquipType anArmor, EquipType aShield, 
                        EquipType aHelmet);
+        void addAttack(AttackType type, uint16_t aPosX, uint16_t aPosY);
         
         void destroyEntity(uint32_t ID);
         void changeEntityState(uint32_t ID, uint8_t state);
@@ -39,6 +42,7 @@ class EntityManager {
         void moveEntity(uint32_t ID, MovementType moveType);
         void teleportEntity(uint32_t ID, uint16_t posX, uint16_t posY);
         void renderEntities(Camera &camera);
+        void renderAttacks(Camera &camera);
 
         uint32_t checkClickEntities(Camera &camera, uint16_t x, uint16_t y);
         static bool entityComp(Entity* ent1, Entity* ent2);

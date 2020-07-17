@@ -11,6 +11,10 @@ EntityManager::~EntityManager() {
     for (auto &entity : entities) {
         if (entity.first != playerID) delete(entity.second);
     }
+
+    for (auto &attack : attacks) {
+        delete(attack);
+    }
 }
 
 void EntityManager::addNPC(NPCType type, uint32_t anID, uint16_t aPosX, uint16_t aPosY) {
@@ -35,6 +39,11 @@ void EntityManager::addPlayer(PlayerRace aRace, uint32_t anID, uint16_t aPosX,
     std::unique_lock<std::mutex> lk(mux);
     entities[anID] = new Player(renderer, aRace, anID, aPosX, aPosY, aState, 
                                 aWeapon, anArmor, aShield, aHelmet);
+}
+
+void EntityManager::addAttack(AttackType type, uint16_t aPosX, uint16_t aPosY) {
+    std::unique_lock<std::mutex> lk(mux);
+    attacks.push_back(new Attack(renderer, type, aPosX, aPosY));
 }
 
 void EntityManager::destroyEntity(uint32_t ID) {
@@ -86,6 +95,18 @@ void EntityManager::renderEntities(Camera &camera) {
 
     for (auto& entityRender : entitiesRender) {
         entityRender->render(camera);
+    }
+}
+
+void EntityManager::renderAttacks(Camera &camera) {
+    std::unique_lock<std::mutex> lk(mux);
+
+    for (auto& attack : attacks) {
+        attack->render(camera);
+    }
+
+    for (auto it = attacks.begin(); it != attacks.end(); it++) {
+        if ((*it)->isEnded()) attacks.erase(it);
     }
 }
 
