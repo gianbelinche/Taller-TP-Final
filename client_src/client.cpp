@@ -1,3 +1,4 @@
+#include "headers/ClientConnector.h"
 #include "headers/ClientInitializer.h"
 
 #define ERROR 1
@@ -7,8 +8,15 @@
 
 int main(int argc, char* argv[]) {
     try {
-        ClientInitializer initializer;
-        initializer.run(argc,argv);
+        ClientConnector clientConnector;
+
+        LogInController logInController(argc, argv, clientConnector);
+        if (logInController.run() == -1){
+            return ERROR;
+        }
+
+        ClientInitializer initializer;        
+        initializer.run(logInController, clientConnector);
     } catch (const std::exception& e) {
         std::cerr << e.what() << '\n';
         return ERROR;

@@ -19,14 +19,9 @@
 #include <arpa/inet.h>
 #include <msgpack.hpp>
 
-void ClientInitializer::run(int argc,char* argv[]){
+void ClientInitializer::run(LogInController &logInController, 
+                            ClientConnector &clientConnector){
     ClientProtocol clientProtocol;
-    ClientConnector clientConnector;
-    LogInController logInController(argc, argv, clientConnector);
-    if (logInController.run() == -1){
-        return;
-    }
-
     MainWindow mainWindow(logInController.getHeigth(),
                         logInController.getWidth());
     

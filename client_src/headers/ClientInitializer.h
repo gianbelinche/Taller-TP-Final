@@ -6,7 +6,7 @@
 
 class ClientInitializer{
 public:
-    void run(int argc,char* argv[]);
+    void run(LogInController &logInController, ClientConnector &clientConnector);
 };
 
 #endif
