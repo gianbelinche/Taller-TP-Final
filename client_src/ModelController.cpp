@@ -110,9 +110,11 @@ void ModelController::handle(std::vector<uint32_t> &event) {
 
         case TELEPORT:
             entityManager.teleportEntity(event[1], event[2], event[3]);
+            break;
 
         case ATTACK:
             entityManager.addAttack((AttackType)event[1], event[2], event[3]);
+            break;
         
         default:
             break;
