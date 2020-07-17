@@ -7,17 +7,20 @@
 
 #include "../headers/Equations.h"
 #include "../headers/GameState.h"
+#include "../headers/GhostState.h"
 #include "../headers/GoldDrop.h"
 #include "../headers/Item.h"
-#include "../headers/PlayerState.h"
-#include "../headers/GhostState.h"
+#include "../headers/MasterFactory.h"
 #include "../headers/MeditationState.h"
-
+#include "../headers/PlayerState.h"
 
 PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int velocity,
                      int currExp, int currLevel, int currGold, Weapon* wea,
                      Armor* arm, Helmet* helm, Shield* sh, PlayerState* sta,
-                     Class* cla, Race* ra, ServerEventListener& eventListener, int framesBetweenUpdate)
+                     Class* cla, Race* ra, ServerEventListener& eventListener,
+                     int framesBetweenUpdate, Weapon* defaultWeap,
+                     Armor* defaultArm, Helmet* defaultHelm,
+                     Shield* defaultShiel)
     : Entity(x, y, id,
              equation::playerMaxHp(
                  cla->getConstitutionFactor() * ra->getConstitution(),
@@ -35,14 +38,18 @@ PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int velocity,
       armor(arm),
       helmet(helm),
       shield(sh),
-      listener(eventListener) {
+      listener(eventListener),
+      defaultWeapon(defaultWeap),
+      defaultArmor(defaultArm),
+      defaultHelmet(defaultHelm),
+      defaultShield(defaultShiel) {
   maxMana = equation::playerMaxMana(getIntelligence(), cla->getManaFactor(),
                                     ra->getManaFactor(), level);
   mana = maxMana;
   maxExp = equation::playerMaxExp(level);
   excessGold = equation::maxGold(level);
   maxGold = excessGold * 1.5;
-  if (!isAlive()){
+  if (!isAlive()) {
     hp = 0;
   }
 }
@@ -165,7 +172,8 @@ int PlayerNet::takeDamage(int dmgToTake, bool canDodge) {
     if (gold > excessGold) {
       GoldDrop* droppedGold = world.generateDroppableGold(gold - excessGold);
       world.dropItem(droppedGold, x, y);
-      listener.dropSpawn(droppedGold->getId(), droppedGold->getItemType(), x, y);
+      listener.dropSpawn(droppedGold->getId(), droppedGold->getItemType(), x,
+                         y);
       substractGold(gold - excessGold);
     }
   }
@@ -196,9 +204,9 @@ void PlayerNet::receiveExp(int amount) {
     levelUp();
     std::cout << "subio de nivel\n";
   } else {
-    if (amount > 0){
+    if (amount > 0) {
       listener.playerExpGain(id, amount);
-      listener.expUpdate(id,exp,this->getMaxExp());
+      listener.expUpdate(id, exp, this->getMaxExp());
     }
   }
   std::cout << "El jugador gano: " << amount << " de exp y ahora tiene: " << exp
@@ -236,7 +244,7 @@ void PlayerNet::levelUp() {
   hp = maxHp;
   mana = maxMana;
   listener.playerLeveledUp(id);
-  listener.levelUpdate(id,level);
+  listener.levelUpdate(id, level);
 }
 
 bool PlayerNet::canBeAttackedBy(Entity* ent) {
@@ -246,7 +254,6 @@ bool PlayerNet::canBeAttackedBy(Entity* ent) {
 int PlayerNet::getGold() { return gold; }
 
 int PlayerNet::getMaxGold() { return maxGold; }
-
 
 int PlayerNet::getHp() { return hp; }
 
@@ -290,67 +297,47 @@ void PlayerNet::addGold(int amount) {
   listener.goldUpdate(id, gold);
 }
 
-void PlayerNet::selectNpc(int id) {
-  selectedNpc = id;
-}
+void PlayerNet::selectNpc(int id) { selectedNpc = id; }
 
-int PlayerNet::getSelectedNpc() {
-  return selectedNpc;
-}
+int PlayerNet::getSelectedNpc() { return selectedNpc; }
 
-int PlayerNet::getInventorySize() {
-  return inventory.getSize();
-}
+int PlayerNet::getInventorySize() { return inventory.getSize(); }
 
-Inventory& PlayerNet::getInventory() {
-  return inventory;
-}
+Inventory& PlayerNet::getInventory() { return inventory; }
 
-int PlayerNet::getSelectedSlot() {
-  return selectedSlot;
-}
+int PlayerNet::getSelectedSlot() { return selectedSlot; }
 
-void PlayerNet::selectSlot(int slot) {
-  selectedSlot = slot;
-}
+void PlayerNet::selectSlot(int slot) { selectedSlot = slot; }
 
-void PlayerNet::equipWeapon(Weapon* aWeapon) {
-  weapon = aWeapon;
-}
+void PlayerNet::equipWeapon(Weapon* aWeapon) { weapon = aWeapon; }
 
-void PlayerNet::equipArmor(Armor* anArmor) {
-  armor = anArmor;
-}
+void PlayerNet::equipArmor(Armor* anArmor) { armor = anArmor; }
 
-void PlayerNet::equipHelmet(Helmet* aHelmet) {
-  helmet = aHelmet;
-}
+void PlayerNet::equipHelmet(Helmet* aHelmet) { helmet = aHelmet; }
 
-void PlayerNet::equipShield(Shield* aShield) {
-  shield = aShield;
-}
+void PlayerNet::equipShield(Shield* aShield) { shield = aShield; }
 
-int PlayerNet::getWeaponType(){
+int PlayerNet::getWeaponType() {
   if (weapon == nullptr) return 0;
   return weapon->getItemType();
 }
 
-int PlayerNet::getArmorType(){
+int PlayerNet::getArmorType() {
   if (armor == nullptr) return 0;
   return armor->getItemType();
 }
 
-int PlayerNet::getShieldType(){
+int PlayerNet::getShieldType() {
   if (shield == nullptr) return 0;
   return shield->getItemType();
 }
 
-int PlayerNet::getHemletType(){
+int PlayerNet::getHemletType() {
   if (helmet == nullptr) return 0;
   return helmet->getItemType();
 }
 
-std::vector<uint32_t> PlayerNet::getData(){
+std::vector<uint32_t> PlayerNet::getData() {
   std::vector<uint32_t> data;
   data.push_back(getId());
   data.push_back(getX());
@@ -371,7 +358,7 @@ std::vector<uint32_t> PlayerNet::getData(){
   data.push_back(shield->getItemType());
 
   for (int i = 0; i < INVENTORY_SIZE; i++) {
-    if (inventory.getItem(i) == nullptr){
+    if (inventory.getItem(i) == nullptr) {
       data.push_back(0);
     } else {
       data.push_back(inventory.getItem(i)->getItemType());
@@ -395,18 +382,14 @@ void PlayerNet::decreaseImmobilizedFramesLeft() {
     y = priestY + 60;
 
     listener.teleportPlayer(id, x, y);
-    listener.npcAttack(id, 5); // Sonido bonito para teletransportarse
+    listener.npcAttack(id, 5);  // Sonido bonito para teletransportarse
   }
   immobilizedFramesLeft--;
 }
 
-bool PlayerNet::canMove() {
-  return state->canMove();
-}
+bool PlayerNet::canMove() { return state->canMove(); }
 
-bool PlayerNet::isAlive() {
-  return state->isAlive();
-}
+bool PlayerNet::isAlive() { return state->isAlive(); }
 
 void PlayerNet::dropItem(int slot, int x, int y) {
   if (slot < 0 || slot >= inventory.getSize() - inventory.getSpaceLeft()) {
@@ -418,16 +401,25 @@ void PlayerNet::dropItem(int slot, int x, int y) {
 
 void PlayerNet::removeItemFromInventory(int slot) {
   Item* item = inventory.getItem(slot);
-  if (item == nullptr) { // No hay nada en ese slot
+  if (item == nullptr) {  // No hay nada en ese slot
     return;
   }
   int item_type = item->getItemType();
-  if (getWeaponType() == item_type ||
-      getHemletType() == item_type ||
-      getArmorType() == item_type ||
-      getShieldType() == item_type) {
+
+  if (getWeaponType() == item_type || getHemletType() == item_type ||
+      getArmorType() == item_type || getShieldType() == item_type) {
     listener.inventoryUnequipItem(id, item->getEquippedPosition());
     listener.playerEquipedItem(id, item->getEquippedPosition(), 0);
+
+    if (getWeaponType() == item_type) {
+      weapon = defaultWeapon;
+    } else if (getHemletType() == item_type) {
+      helmet = defaultHelmet;
+    } else if (getArmorType() == item_type) {
+      armor = defaultArmor;
+    } else if (getShieldType() == item_type) {
+      shield = defaultShield;
+    }
   }
   listener.inventoryRemoveItem(id, slot);
   inventory.removeItemAt(slot);
@@ -437,4 +429,3 @@ void PlayerNet::addItemToInventory(Item* item) {
   inventory.addItem(item);
   listener.inventoryAddItem(id, item->getItemType());
 }
-

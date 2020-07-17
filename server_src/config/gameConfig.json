@@ -6,10 +6,10 @@
     "framesBetweenUpdate": 100
   },
   "Player": {
-    "initialX": 5664,
-    "initialY": 2464,
+    "initialX": 5656,
+    "initialY": 2453,
     "initialLevel": 20,
-    "initialExp": 0,
+    "initialExp": 1000,
     "initialGold": 98,
     "initialState": 0,
     "initialWeapon": 2,
@@ -22,7 +22,7 @@
     "damage": 7,
     "level": 3,
     "velocity": 7,
-    "attackRange":15,
+    "attackRange": 15,
     "pursuitDistance": 100
   },
   "spider": {
@@ -122,9 +122,14 @@
     "agilityFactor": 1
   },
   "Sin equipamiento": {
-    "minDmg": 2,
-    "maxDmg": 4,
-    "range": 20
+    "minDef": 0,
+    "maxDef": 1,
+    "minDmg": 3,
+    "maxDmg": 5,
+    "range": 20,
+    "manaRequired": 0,
+    "buyPrice": 0,
+    "sellPrice": 0
   },
   "Espada": {
     "minDmg": 8,

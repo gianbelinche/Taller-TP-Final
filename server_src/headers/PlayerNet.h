@@ -38,12 +38,18 @@ class PlayerNet : public Entity {
   Helmet* helmet;
   Shield* shield;
   ServerEventListener& listener;
+  Weapon* defaultWeapon;
+  Armor* defaultArmor;
+  Helmet* defaultHelmet;
+  Shield* defaultShield;
 
  public:
   PlayerNet(int x, int y, int id, GameState& currState, int velocity,
             int currExp, int currLevel, int currGold, Weapon* wea, Armor* arm,
             Helmet* helm, Shield* sh, PlayerState* sta, Class* cla, Race* ra,
-            ServerEventListener& eventListener, int framesBetweenUpdate);
+            ServerEventListener& eventListener, int framesBetweenUpdate,
+            Weapon* defaultWeap, Armor* defaultArm, Helmet* defaultHelm, 
+            Shield* defaultShiel);
 
   ~PlayerNet();
 

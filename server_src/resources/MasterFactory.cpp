@@ -1,4 +1,5 @@
 #include "../headers/MasterFactory.h"
+
 #include "../headers/Persistor.h"
 
 MasterFactory::MasterFactory(std::atomic<uint32_t>& idCounter,
@@ -95,13 +96,13 @@ MasterFactory::MasterFactory(std::atomic<uint32_t>& idCounter,
   classes[PALADIN_ID] = &paladin;
 
   Persistor persistor;
-  std::unordered_map<uint32_t,std::vector<uint32_t>> data = 
-  persistor.obtainBank();
-  for (auto& player : data){
-    if (player.second.size() > 0){
-      bank.addGoldTo(player.first,(player.second)[0]);
-      for (unsigned int i = 1; i < player.second.size();i++){
-        bank.addItemToUser(player.first,this->createItem((player.second)[i]));
+  std::unordered_map<uint32_t, std::vector<uint32_t>> data =
+      persistor.obtainBank();
+  for (auto& player : data) {
+    if (player.second.size() > 0) {
+      bank.addGoldTo(player.first, (player.second)[0]);
+      for (unsigned int i = 1; i < player.second.size(); i++) {
+        bank.addItemToUser(player.first, this->createItem((player.second)[i]));
       }
     }
   }
@@ -127,6 +128,18 @@ Monster* MasterFactory::newZombie(int x, int y, GameState& world) {
 
 PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData,
                                        GameState& world) {
+
+  // ACORTAR ESTA FUNCION!!!!!!
+  Weapon* weapon;
+  Armor* armor;
+  Helmet* helmet;
+  Shield* shield;
+
+  Weapon* defaultWeapon = createWeapon(NOTHING_TYPE);
+  Armor* defaultArmor = createArmor(NOTHING_TYPE);
+  Helmet* defaultHelmet = createHelmet(NOTHING_TYPE);
+  Shield* defaultShield = createShield(NOTHING_TYPE);
+
   uint32_t id = playerData[0];
   uint32_t x = playerData[1];
   uint32_t y = playerData[2];
@@ -142,11 +155,36 @@ PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData,
     state = &PlayerState::dead;
   }
 
-  PlayerNet* player = new PlayerNet(
-      x, y, id, world, 6, exp, level, gold, createWeapon(playerData[9]),
-      createArmor(playerData[11]), createHelmet(playerData[10]),
-      createShield(playerData[12]), state, playerClass, playerRace, listener,
-      config.getConfigValue("framesBetweenUpdate"));
+  /* Prevents leaks/double frees later */
+  if (playerData[9] == NOTHING_TYPE) {
+    weapon = defaultWeapon;
+  } else {
+    weapon = createWeapon(playerData[9]);
+  }
+
+  if (playerData[10] == NOTHING_TYPE) {
+    helmet = defaultHelmet;
+  } else {
+    helmet = createHelmet(playerData[10]);
+  }
+
+  if (playerData[11] == NOTHING_TYPE) {
+    armor = defaultArmor;
+  } else {
+    armor = createArmor(playerData[11]);
+  }
+
+  if (playerData[12] == NOTHING_TYPE) {
+    shield = defaultShield;
+  } else {
+    shield = createShield(playerData[12]);
+  }
+
+  PlayerNet* player =
+      new PlayerNet(x, y, id, world, 6, exp, level, gold, weapon, armor, helmet,
+                    shield, state, playerClass, playerRace, listener,
+                    config.getConfigValue("framesBetweenUpdate"), defaultWeapon,
+                    defaultArmor, defaultHelmet, defaultShield);
 
   for (int i = 0; i < player->getInventory().getSize(); i++) {
     if (playerData[13 + i] != 0) {
