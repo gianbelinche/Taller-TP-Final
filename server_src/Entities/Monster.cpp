@@ -90,9 +90,7 @@ void Monster::update() {
 int Monster::takeDamage(int dmgToTake, bool canDodge) {
   int oldHp = hp;
   hp = std::max(0, hp - dmgToTake);
-  std::cout << "Le hizo: " << dmgToTake << " daño al motro\n";
   if (hp == 0) {
-    std::cout << "Se murio el mostro\n";
     world.rmEntity(id);
     listener.entityDisappear(id);
     world.generateDrop(x, y, equation::dropGold(maxHp));

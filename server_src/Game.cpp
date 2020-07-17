@@ -28,7 +28,6 @@ void Game::loop() {
     update();
     persist++;
     if (persist == PERSIST_TIME_DELAY){
-      std::cout << "Persistiendo todos los jugadores \n";
       world.persist();
       persist = 0;
     }

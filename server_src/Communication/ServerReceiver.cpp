@@ -22,9 +22,7 @@ void ServerReceiver::run() {
       std::string msg = std::move(receiveMsg(msgLen));
       incomingEvents.push(std::move(msg));
     }
-  } catch (const SocketException& e) {
-    std::cout << "Atrapo la excepcion" << std::endl;
-  }
+  } catch (const SocketException& e) {}
   
 }
 

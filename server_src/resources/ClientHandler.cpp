@@ -104,9 +104,6 @@ std::pair<std::string, std::vector<uint32_t>> ClientHandler::getCredentials() {
     user_s.append(user.data(), user.size());
     pass_s.append(password.data(), password.size());
 
-    std::cout << "User:" << user_s << std::endl;
-    std::cout << "Pass:" << pass_s << std::endl;
-
     if (world.isPlayerConnected(user_s)){
       sendFailedLogin();
       user_s.clear();
@@ -141,11 +138,6 @@ std::pair<std::string, std::vector<uint32_t>> ClientHandler::getCredentials() {
   std::vector<uint32_t> sendablePlayInfo =
       std::move(getSendablePlayerInfo(playerInfo));
 
-  std::cout << "La info: \n";
-  for (auto& elem : playerInfo) {
-    std::cout << elem << " ";
-  }
-  std::cout << "\n";
   persistor.persistUsrMap();
 
   std::stringstream pInfoBuff;

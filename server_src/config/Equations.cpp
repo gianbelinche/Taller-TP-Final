@@ -32,8 +32,6 @@ int equation::playerDefense(int minArmorDef, int maxArmorDef, int minShieldDef,
   std::uniform_int_distribution<int> shieldDef(minShieldDef, maxShieldDef);
   std::uniform_int_distribution<int> helmetDef(minHelmetDef, maxHelmetDef);
 
-  // std::cout << "armordef: " << armorDef(gen);
-
   return armorDef(gen) + shieldDef(gen) + helmetDef(gen);
 }
 

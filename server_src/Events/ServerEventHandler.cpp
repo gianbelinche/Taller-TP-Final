@@ -83,7 +83,6 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
   }
   
   if (!world.playerCanAttack(player, entity)) {
-    std::cout << "No lo dejo atacar\n";
     return;
   }
   
@@ -98,7 +97,6 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
   if (!entity->isAlive()) {
     expGain += entity->getDeathExp(player->getLevel());
   }
-  std::cout << "La experiencia ganada es de: " << expGain << "\n";
   player->receiveExp(expGain);
 
 }
@@ -300,11 +298,9 @@ void ServerEventHandler::handleMeditation(int playerId) {
 }
 
 void ServerEventHandler::handleResurrect(int playerId) {
-  std::cout << "Llego al revivir\n";
   PlayerNet* player = world.getPlayer(playerId);
   if (player->isAlive()) { return; }
   listener.playerSendMessageToChat(player->getId(),"Resucitando...");
-  std::cout << "Paso el if is alive\n";
   int selectedNPC = player->getSelectedNpc();
   if (selectedNPC == -1 ||
       world.getNpc(selectedNPC)->getNpcType() != PRIEST_TYPE) {

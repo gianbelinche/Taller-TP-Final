@@ -202,15 +202,12 @@ void PlayerNet::receiveExp(int amount) {
   exp += amount;
   if (exp >= maxExp) {
     levelUp();
-    std::cout << "subio de nivel\n";
   } else {
     if (amount > 0) {
       listener.playerExpGain(id, amount);
       listener.expUpdate(id, exp, this->getMaxExp());
     }
   }
-  std::cout << "El jugador gano: " << amount << " de exp y ahora tiene: " << exp
-            << " de experiencia\n";
 }
 
 int PlayerNet::getLevel() { return level; }
@@ -373,7 +370,6 @@ void PlayerNet::setImmobilizedTime(int frames) {
 
 void PlayerNet::decreaseImmobilizedFramesLeft() {
   if (immobilizedFramesLeft == 0) {
-    std::cout << "Llego a 0 las frames inmobilizadas\n";
     NPC* closestPriest = world.getNearestPriest(this);
     closestPriest->resurrect(this);
     int priestX = closestPriest->getX();

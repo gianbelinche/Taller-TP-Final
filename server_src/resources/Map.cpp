@@ -137,8 +137,6 @@ Map::Map(const char* mapPath) {
 
   const Json::Value& tilesets = mapValues["tilesets"];  // Array de tilesets
 
-  std::cout << "Tamaño: " << tiles.size() << std::endl;
-
   for (Json::Value::ArrayIndex i = 0; i < tilesets.size(); i++) {
     std::ifstream ifsl(tilesets[i]["source"].asString());
     Json::Value vall;
