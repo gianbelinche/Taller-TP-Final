@@ -471,7 +471,7 @@ A través de msgpack, se forma de la siguiente manera:
 
     `{10,2}` <- El jugador se logue correctamente, pero el usuario es nuevo y hay que crear el personaje
 
-11. **Ataque a un NPC**:
+11. **Ataque a un NPC para Sonido (solo a usuario atacante)**:
 
     `11 + ARMA EQUIPADA`
 
@@ -505,3 +505,24 @@ A través de msgpack, se forma de la siguiente manera:
   Ejemplo:
 
   `{13, 20, 1200, 1350}` <- El jugador 20 se teletransporto a la posicion (1200,1350)
+
+14. **Ataque a un NPC para animación (a todos los usuarios)**:
+
+    - **Servidor a Cliente**:
+
+      `14 + objeto equipado + posX + posY`
+
+      Ejemplo:
+
+      `{14, 03, 2500, 3000}` -> `Hubo un ataque` con arma `Martillo` en la posición `(2500, 300)`
+
+    - **Armas**:
+      - 01 -> Espada
+      - 02 -> Hacha
+      - 03 -> Martillo
+      - 04 -> Vara de Fresno
+      - 05 -> Flauta Elfica
+      - 06 -> Baculo Nudoso
+      - 07 -> Baculo Engarzado
+      - 08 -> Arco Simple
+      - 09 -> Arco Compuesto
