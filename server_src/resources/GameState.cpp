@@ -140,12 +140,20 @@ void GameState::sendState(int id) {
   std::vector<uint32_t> sendable;
   for (auto& ent : entities) {
     if ((ent.second)->getId() != id) {
-      sendable = (ent.second)->getSendable();
+      sendable = std::move((ent.second)->getSendable());
       listener.updateUserWorldState(id, sendable);
     }
   }
   for (auto& npc : npcs) {
-    sendable = (npc.second)->getSendable();
+    sendable = std::move((npc.second)->getSendable());
+    listener.updateUserWorldState(id, sendable);
+  }
+
+  for (auto& item: droppedItems) {
+    sendable = std::move((item.second)->getSendable());
+    std::pair<int, int> position = itemsPositions[item.second->getId()];
+    sendable.push_back(position.first);
+    sendable.push_back(position.second);
     listener.updateUserWorldState(id, sendable);
   }
 }

@@ -2,6 +2,7 @@
 #define ITEM_H
 
 #include <string>
+#include <vector>
 
 #include "Configuration.h"
 
@@ -37,6 +38,9 @@ class Item {
   int getSellPrice();
 
   int getEquippedPosition();
+
+  std::vector<uint32_t> getSendable();
+
 };
 
 #endif  // ITEM_H

@@ -85,3 +85,10 @@ int Item::getBuyPrice() { return buyPrice; }
 int Item::getSellPrice() { return sellPrice; }
 
 int Item::getEquippedPosition(){ return equipped_position; }
+
+std::vector<uint32_t> Item::getSendable() {
+  std::vector<uint32_t> itemInfo = {3};
+  itemInfo.push_back(id);
+  itemInfo.push_back(typeOfItem);
+  return itemInfo;
+}
