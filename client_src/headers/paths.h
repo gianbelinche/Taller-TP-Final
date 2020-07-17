@@ -106,6 +106,7 @@
 #define GHOST_PATH      "media/img/ghost.png"
 #define MEDITATE_PATH   "media/img/meditate.png"
 
+#define FIST_ATTACK_PATH "media/img/hammer_attack.png"
 #define SWORD_ATTACK_PATH "media/img/sword_attack.png"
 #define AXE_ATTACK_PATH "media/img/axe_attack.png"
 #define HAMMER_ATTACK_PATH "media/img/hammer_attack.png"

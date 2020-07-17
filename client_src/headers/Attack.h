@@ -6,6 +6,10 @@
 #include <vector>
 #include "paths.h"
 
+#define FIST_ATTACK_HEIGHT 100 
+#define FIST_ATTACK_WIDTH 64  
+#define FIST_ATTACK_VERT_SPRITES 1 
+#define FIST_ATTACK_HOR_SPRITES 8 
 #define SWORD_ATTACK_HEIGHT 100
 #define SWORD_ATTACK_WIDTH 64
 #define SWORD_ATTACK_VERT_SPRITES 1
@@ -44,7 +48,8 @@
 #define COMPOSED_BOW_ATTACK_HOR_SPRITES 8
 
 enum AttackType { 
-                SWORD_ATTACK = 1, 
+                FIST_ATTACK,
+                SWORD_ATTACK, 
                 AXE_ATTACK, 
                 HAMMER_ATTACK, 
                 FRESNO_BAR_ATTACK,

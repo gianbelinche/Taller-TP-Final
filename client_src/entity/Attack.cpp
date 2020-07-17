@@ -5,6 +5,15 @@ Attack::Attack(SDL_Renderer *renderer, AttackType type, uint16_t aPosX,
                uint16_t aPosY) : frame(0), image(renderer, 0, 0, 0), 
                                  ended(false) {
     switch (type) {
+        case FIST_ATTACK:
+            height = FIST_ATTACK_HEIGHT;
+            width = FIST_ATTACK_WIDTH;
+            vertClips = FIST_ATTACK_VERT_SPRITES;
+            horClips = FIST_ATTACK_HOR_SPRITES;
+            maxFrame = vertClips * horClips;
+            image.loadFromFile(FIST_ATTACK_PATH);
+            break;
+
         case SWORD_ATTACK:
             height = SWORD_ATTACK_HEIGHT;
             width = SWORD_ATTACK_WIDTH;
