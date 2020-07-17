@@ -249,5 +249,5 @@ void ServerEventListener::npcAttackAnimation(int id, int equippedItem, int x,
   event.push_back(equippedItem);
   event.push_back(x);
   event.push_back(y);
-  dispatcher.sendMessage(id, event);
+  dispatcher.broadcastMessage(event);
 }
