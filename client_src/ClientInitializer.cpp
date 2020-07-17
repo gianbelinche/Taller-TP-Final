@@ -1,4 +1,4 @@
-#include "headers/clientInitializer.h"
+#include "headers/ClientInitializer.h"
 #include "headers/MainWindow.h"
 #include "headers/BlockingMsgQueue.h"
 #include "headers/ProtMsgQueue.h"
