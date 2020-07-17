@@ -26,6 +26,7 @@ client_src/assets/BlockingMsgQueue.cpp
 client_src/assets/ProtMsgQueue.cpp
 client_src/ClientConnector.cpp
 client_src/assets/Socket.cpp
+client_src/entity/Attack.cpp
 client_src/entity/Entity.cpp
 client_src/entity/EntityManager.cpp
 client_src/entity/Item.cpp

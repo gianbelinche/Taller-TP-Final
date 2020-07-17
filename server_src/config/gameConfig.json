@@ -9,7 +9,7 @@
     "initialX": 5656,
     "initialY": 2453,
     "initialLevel": 20,
-    "initialExp": 1000,
+    "initialExp": 5000,
     "initialGold": 98,
     "initialState": 0,
     "initialWeapon": 2,
@@ -158,7 +158,7 @@
   "Vara de Fresno": {
     "minDmg": 10,
     "maxDmg": 14,
-    "range": 60,
+    "range": 100,
     "manaRequired": 5,
     "buyPrice": 35,
     "sellPrice": 20
@@ -174,7 +174,7 @@
   "Baculo Nudoso": {
     "minDmg": 12,
     "maxDmg": 17,
-    "range": 65,
+    "range": 115,
     "manaRequired": 15,
     "buyPrice": 50,
     "sellPrice": 20
@@ -182,7 +182,7 @@
   "Baculo Engarzado": {
     "minDmg": 15,
     "maxDmg": 30,
-    "range": 70,
+    "range": 130,
     "manaRequired": 30,
     "buyPrice": 70,
     "sellPrice": 40
@@ -190,7 +190,7 @@
   "Arco Simple": {
     "minDmg": 10,
     "maxDmg": 15,
-    "range": 50,
+    "range": 100,
     "manaRequired": 0,
     "buyPrice": 30,
     "sellPrice": 15
@@ -198,7 +198,7 @@
   "Arco Compuesto": {
     "minDmg": 15,
     "maxDmg": 20,
-    "range": 60,
+    "range": 140,
     "manaRequired": 0,
     "buyPrice": 50,
     "sellPrice": 25

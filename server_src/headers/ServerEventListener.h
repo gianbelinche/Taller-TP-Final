@@ -21,6 +21,7 @@
 #define NPC_ATTACK 11
 #define POTION_TAKEN 12
 #define TELEPORT 13
+#define ATTACK_ANIMATION 14
 
 #define GOLD_UPDATE 0
 #define LIFE_UPDATE 1
@@ -94,8 +95,6 @@ class ServerEventListener {
 
   void playerEvadedAttack(int id); //7
 
-
-
   void inventoryAddItem(int id,int item); //8
 
   void inventoryRemoveItem(int id,int slot); //8
@@ -103,7 +102,6 @@ class ServerEventListener {
   void inventoryEquipItem(int id,int item); //8
 
   void inventoryUnequipItem(int id,int pos);
-  
 
   void goldUpdate(uint32_t id, uint32_t amount); //9
 
@@ -121,7 +119,9 @@ class ServerEventListener {
 
   void updateUserWorldState(int id, std::vector<uint32_t> entInfo);
 
-  void teleportPlayer(uint32_t id,uint16_t posX,uint16_t posY);
+  void teleportPlayer(uint32_t id,uint16_t posX,uint16_t posY); //13
+
+  void npcAttackAnimation(int id, int equippedItem, int x, int y); //14
 };
 
 #endif // SERVEREVENTLISTENER_H

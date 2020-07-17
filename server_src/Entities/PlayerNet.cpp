@@ -56,12 +56,7 @@ PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int velocity,
 
 PlayerNet::~PlayerNet() {}
 
-int PlayerNet::getAttackRange() {
-  if (weapon == nullptr) {
-    return -1;  // Es lo que hay por ahora
-  }
-  return weapon->getAttackRange();
-}
+int PlayerNet::getAttackRange() { return weapon->getAttackRange(); }
 
 int PlayerNet::getDamage() {
   return equation::causedDamage(getStrength(), weapon->getMinDmg(),
@@ -94,6 +89,8 @@ int PlayerNet::attack(Entity* ent) {
   selectNpc(-1);
   if (mana >= weapon->getManaReq()) {
     listener.npcAttack(id, weapon->getItemType());
+    listener.npcAttackAnimation(id, weapon->getItemType(), ent->getX(),
+                                ent->getY());
     substractMana(weapon->getManaReq());
 
     int playerDamage = getDamage();
