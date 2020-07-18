@@ -9,7 +9,7 @@ void BlockingMsgQueue::push(std::vector<uint32_t> &msg) {
     std::unique_lock<std::mutex> lk(mux);
 
     if (this->isClosed) {
-        throw OSError("Error: se cerró inesperadamente la cola."); //chequear
+        throw OSError("Error: se cerró inesperadamente la cola.");
     }
 
     this->queue.emplace(std::move(msg));

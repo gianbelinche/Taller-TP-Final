@@ -1,6 +1,6 @@
 #include "headers/MainMap.h"
 
-#include "../headers/OSError.h"
+#include "headers/OSError.h"
 
 #include <iostream>
 
