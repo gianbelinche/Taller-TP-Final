@@ -1,6 +1,7 @@
 #include "../headers/Banker.h"
 
 #include <string>
+#include <utility>
 
 #include "../headers/MasterFactory.h"
 #include "../headers/PlayerNet.h"
@@ -17,10 +18,10 @@ Banker::~Banker() {}
 void Banker::listItems(PlayerNet* player) {
   std::string msg = "Oro: " + 
   std::to_string(bank.getUserGold(player->getId()));
-  listener.playerSendMessageToChat(player->getId(),msg);
+  listener.playerSendMessageToChat(player->getId(),std::move(msg));
   for (auto& item : bank.getUserItems(player->getId())){
-    msg = getPrettyPrint(item);
-    listener.playerSendMessageToChat(player->getId(), msg);
+    msg = std::move(getPrettyPrint(item));
+    listener.playerSendMessageToChat(player->getId(), std::move(msg));
   }
 }
 
