@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.12)
 
 project(argentum)
 
@@ -7,33 +7,23 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -pedantic -g -
 # Find the QtWidgets library
 find_package(Qt5Widgets)
 
-include_directories(.)
-
-# Esta macro toma cada uno los parámetros y ejecuta *uic* sobre ellos
-# La aplicacion uic genera headers con la definición de los widgets
-# a partir de un archivo .ui
-# Los nombres de los headers generados se guardan en la variable pasada
-# como primer parámetro.
-# No, no los genera con la carpeta como prefijo.
-#qt5_wrap_ui(UIS_HEADERS
-#        login.ui
-#)
-
-add_library(clientLib
-client_src/ClientController.cpp
-client_src/ClientProtocol.cpp
-client_src/assets/BlockingMsgQueue.cpp
-client_src/assets/ProtMsgQueue.cpp
-client_src/ClientConnector.cpp
-client_src/assets/Socket.cpp
-client_src/entity/Attack.cpp
-client_src/entity/Entity.cpp
-client_src/entity/EntityManager.cpp
-client_src/entity/Item.cpp
-client_src/entity/NPC.cpp
-client_src/entity/Mob.cpp
-client_src/entity/Player.cpp
-client_src/entity/Equippable.cpp
+add_library(client_lib
+  common/Socket.cpp
+  common/SocketException.cpp
+  common/Thread.cpp
+  client_src/ClientController.cpp
+  client_src/ClientProtocol.cpp
+  client_src/assets/BlockingMsgQueue.cpp
+  client_src/assets/ProtMsgQueue.cpp
+  client_src/ClientConnector.cpp
+  client_src/entity/Attack.cpp
+  client_src/entity/Entity.cpp
+  client_src/entity/EntityManager.cpp
+  client_src/entity/Item.cpp
+  client_src/entity/NPC.cpp
+  client_src/entity/Mob.cpp
+  client_src/entity/Player.cpp
+  client_src/entity/Equippable.cpp
   client_src/wrap_sdl/FilteredImage.cpp
   client_src/wrap_sdl/Image.cpp
   client_src/wrap_sdl/MapImage.cpp
@@ -51,13 +41,11 @@ client_src/entity/Equippable.cpp
   client_src/errors/OSError.cpp
   client_src/errors/QuitException.cpp
   client_src/errors/SDLError.cpp
-  client_src/errors/SocketException.cpp
   client_src/client_controller/EventManager.cpp
   client_src/ModelController.cpp
   client_src/client_controller/Receiver.cpp
   client_src/client_controller/Renderer.cpp
   client_src/client_controller/Sender.cpp
-  client_src/assets/Thread.cpp
   client_src/layout/LayoutManager.cpp
   client_src/wrap_sdl/Music.cpp
   client_src/wrap_sdl/MusicPlayer.cpp
@@ -66,14 +54,15 @@ client_src/entity/Equippable.cpp
 )
 
 add_library(server_lib
+  common/Socket.cpp
+  common/SocketException.cpp
+  common/Thread.cpp
   server_src/Server.cpp
   server_src/Game.cpp
   server_src/Communication/ClosedQueueException.cpp
   server_src/Communication/MessageDispatcher.cpp
   server_src/Communication/ServerReceiver.cpp
   server_src/Communication/ServerSender.cpp
-  server_src/Communication/Socket.cpp
-  server_src/Communication/SocketException.cpp
   server_src/config/Equations.cpp
   server_src/Entities/Bank.cpp
   server_src/Entities/Banker.cpp
@@ -120,16 +109,19 @@ add_library(server_lib
   server_src/resources/MasterFactory.cpp
   server_src/resources/Persistor.cpp 
   server_src/resources/ServerProtocol.cpp 
-  server_src/resources/Thread.cpp
   server_src/Utils/sha256.cpp
   server_src/Utils/Configuration.cpp
   server_src/Utils/ChatMessageParser.cpp
   )
 
 # Agrego la carpeta con los headers autogenerados a los includes
-message("Agregando '${PROJECT_BINARY_DIR}' como directorio de includes")
-include_directories(${PROJECT_BINARY_DIR})
-include_directories(headers json)
+#message("Agregando '${PROJECT_BINARY_DIR}' como directorio de includes")
+#include_directories(${PROJECT_BINARY_DIR})
+
+target_include_directories(client_lib PRIVATE client_src/headers/*)
+target_include_directories(client_lib PRIVATE common/headers/*)
+target_include_directories(server_lib PRIVATE server_src/headers/*)
+target_include_directories(server_lib PRIVATE common/headers/*)
 
 add_executable (client
   client_src/login/LogIn.cpp
@@ -140,7 +132,5 @@ add_executable (client
 
 add_executable(server server_src/server_main.cpp)
 
-#target_link_libraries(testgian errors sounds textures layout SDL2 SDL2_image SDL2_mixer SDL2_ttf)
-#target_link_libraries(prueba controllers connection entities textures images layout errors threads SDL2 SDL2_image SDL2_mixer SDL2_ttf pthread)
-target_link_libraries(client clientLib SDL2 SDL2_image SDL2_mixer SDL2_ttf pthread Qt5::Widgets)
+target_link_libraries(client client_lib SDL2 SDL2_image SDL2_mixer SDL2_ttf pthread Qt5::Widgets)
 target_link_libraries(server server_lib pthread)
