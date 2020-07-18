@@ -60,7 +60,7 @@ class ClientHandler : public Thread {
 
   std::string receiveMsg(uint32_t len);
 
-  void sendMsg(std::string msg);
+  void sendMsg(std::string& msg);
 
   void sendState();
 
@@ -76,7 +76,7 @@ class ClientHandler : public Thread {
 
   void sendPlayerCreationNeeded();
 
-  void handleNewPlayer(std::string user);
+  void handleNewPlayer(std::string& user);
 
   std::vector<uint32_t> getSendablePlayerInfo(std::vector<uint32_t>& playerData);
 };
