@@ -40,22 +40,27 @@ En la semana 5 se cambió la pantalla de login, escrita en SDL, por otra escrita
 
 Además, se empezaron a probar servidor y clientes juntos para, al terminar la semana, poder tener el juego completo.
 
+### Semanas 6 y 7
+
+En estas últimas semanas se completaron ciertas funcionalidades que faltaban y se realizaron las correcciones realizadas por los correctores. Además, se agregaron algunas funcionalidades extras como animaciones en los ataques, la posibilidad de recoger y equipar items con doble click, entre otras.
+
 ## Inconvenientes encontrados
 
-Un inconveniente que se encontró fue, una vez creado el modelo del cliente, se intentó agregar la etapa de login a este, pero por la forma en que se habia diseñado, no encajaba correctamente, generando dependencias circulares dificiles de solucionar, ya que para poder tomar eventos de sdl para el login, por la forma en que se codeo, primero habia que conectarse al servidor, pero no nos podiamos conectar al servidor hasta que el usuario no lo ingresara a travéz de la pantalla de login, por lo que no podiamos hacer que funcionase.
-El problema se soluciono haciendo que la pantalla de login se implementara con QT en vez de SDL, de esa manera, se logró independizar la pantalla de login con la conexión al servidor.
+- Un inconveniente que se encontró fue, una vez creado el modelo del cliente, se intentó agregar la etapa de login a este, pero por la forma en que se habia diseñado, no encajaba correctamente, generando dependencias circulares dificiles de solucionar, ya que para poder tomar eventos de sdl para el login, por la forma en que se codeo, primero habia que conectarse al servidor, pero no nos podiamos conectar al servidor hasta que el usuario no lo ingresara a travéz de la pantalla de login, por lo que no podiamos hacer que funcionase. El problema se soluciono haciendo que la pantalla de login se implementara con QT en vez de SDL, de esa manera, se logró independizar la pantalla de login con la conexión al servidor.
 
-Un problema encontrado al intentar realizar el login en QT, es que QT no permite el lanzamiento de excepciones, por lo que no podiamos diferenciar cuando la aplicacion de QT se cerraba porque habia terminado su ejecucion correctamente, o porque el usuario habia presionado la tecla exit o la cruz para salir del programa, el problema principal era la cruz, ya que no era posible redefinir el comportamiento de esta, se decidio usar una variable de estado, inicializada en -1, y en caso de que se saliera correctamente cambiarla a 0, de esta forma, aun no pudiendo redefinir el comportamiento de la cruz, se aseguraba que si esta era presionada, la variable valdria -1 y entonces podriamos verificar que debiamos terminar la ejecucion del programa.
+- Un problema encontrado al intentar realizar el login en QT, es que QT no permite el lanzamiento de excepciones, por lo que no podiamos diferenciar cuando la aplicacion de QT se cerraba porque habia terminado su ejecucion correctamente, o porque el usuario habia presionado la tecla exit o la cruz para salir del programa, el problema principal era la cruz, ya que no era posible redefinir el comportamiento de esta, se decidio usar una variable de estado, inicializada en -1, y en caso de que se saliera correctamente cambiarla a 0, de esta forma, aun no pudiendo redefinir el comportamiento de la cruz, se aseguraba que si esta era presionada, la variable valdria -1 y entonces podriamos verificar que debiamos terminar la ejecucion del programa.
 
-Una vez unidos el servidor y el cliente, se fueron encontrando diversos errores, entre ellos:
+- Una vez unidos el servidor y el cliente, se fueron encontrando diversos errores, entre ellos:
 
-Al principio si un cliente se desconectaba, el servidor se cerraba abruptamente, esto logro solucionarse ...
+  - Al principio si un cliente se desconectaba, el servidor se cerraba abruptamente, esto logro solucionarse ...
 
-Una vez solucionado el error anterior, ocurria que si luego de conectarse varios clientes, todos se desconectaban, si se queria conectar un nuevo cliente, el servidor se cerraba.
+  - Una vez solucionado el error anterior, ocurria que si luego de conectarse varios clientes, todos se desconectaban, si se queria conectar un nuevo cliente, el servidor se cerraba.
 
-Por ultimo, una vez solucionados estos ultimos, tambien llegaba a suceder, en muy contadas ocaciones, que un cliente se desconectara subitamente.
+  - Una vez solucionados estos ultimos, tambien llegaba a suceder, en muy contadas ocaciones, que un cliente se desconectara subitamente.
 
-Otro error encontrado, fue que si habia varios clientes conectados, solo se visualizaban los objetos equipados del jugador, pero no los de los demas, es decir, los otros jugadores se veian "desnudos"
+- Otro error encontrado, fue que si habia varios clientes conectados, solo se visualizaban los objetos equipados del jugador, pero no los de los demas, es decir, los otros jugadores se veian "desnudos"
+
+- Otro de los problemas fue el de renderizar correctamente a cada entidad con respecto a la posición sobre el eje Y. Se necesitaba que se renderice de menor a mayor sobre el eje Y para que no se vieran superpuestos de forma incorrecta. Para esto se planteó primero realizar un `map` ordenado que tuviera de clave a la `posY`, pero el problema era que se pisaban las entidades que compartieran el mismo valor sobre ese eje. Por lo que se decidió armar un `vector` con todas las entidades y ordenarla con un `sort`, pasandole como argumento una función `comp` que indicase qué valor de `posY` de una cierta entidad era el menor.
 
 ## Analisis de puntos pendientes
 
