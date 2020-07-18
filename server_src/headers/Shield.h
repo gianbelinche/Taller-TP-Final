@@ -6,7 +6,7 @@
 class Shield : public Wearable {
  private:
  public:
-  Shield(int id, int itemType, int minDef, int maxDef, std::string itemName,
+  Shield(int id, int itemType, int minDef, int maxDef, std::string& itemName,
          int buyPrice, int sellPrice);
 
   ~Shield();

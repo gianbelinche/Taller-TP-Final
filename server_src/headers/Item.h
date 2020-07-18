@@ -12,13 +12,13 @@ class Item {
  private:
   int id;
   int typeOfItem;
-  std::string name;
+  std::string& name;
   int buyPrice;
   int sellPrice;
   int equipped_position;
 
  public:
-  Item(int itemID, int itemType, std::string itemName, int buyPrice,
+  Item(int itemID, int itemType, std::string& itemName, int buyPrice,
        int sellPrice);
 
   virtual ~Item();

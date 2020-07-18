@@ -2,7 +2,7 @@
 
 #include "../headers/PlayerNet.h"
 
-ManaPotion::ManaPotion(int itemId, int itemType, std::string itemName,
+ManaPotion::ManaPotion(int itemId, int itemType, std::string& itemName,
                        int buyPrice, int sellPrice, int manaRecovery)
     : Item(itemId, itemType, itemName, buyPrice, sellPrice),
       manaRecovery(manaRecovery) {}

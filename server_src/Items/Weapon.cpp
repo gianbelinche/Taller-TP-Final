@@ -4,7 +4,7 @@
 #include "../headers/PlayerNet.h"
 
 Weapon::Weapon(int itemID, int itemType, int minDMG, int maxDMG, int rang,
-               int manaReq, std::string itemName, int buyPrice, int sellPrice)
+               int manaReq, std::string& itemName, int buyPrice, int sellPrice)
     : Item(itemID, itemType, itemName, buyPrice, sellPrice),
       minDmg(minDMG),
       maxDmg(maxDMG),

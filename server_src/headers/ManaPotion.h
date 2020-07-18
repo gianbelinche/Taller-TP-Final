@@ -7,7 +7,7 @@ class ManaPotion : public Item {
   int manaRecovery;
 
  public:
-  ManaPotion(int itemId, int itemType, std::string itemName, int buyPrice,
+  ManaPotion(int itemId, int itemType, std::string& itemName, int buyPrice,
              int sellPrice, int manaRecovery);
              
   ~ManaPotion();

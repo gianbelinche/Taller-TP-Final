@@ -6,7 +6,7 @@
 class Armor : public Wearable {
  private:
  public:
-  Armor(int id, int itemType, int minDef, int maxDef, std::string itemName,
+  Armor(int id, int itemType, int minDef, int maxDef, std::string& itemName,
         int buyPrice, int sellPrice);
 
   ~Armor();

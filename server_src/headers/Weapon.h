@@ -13,7 +13,7 @@ class Weapon : public Item {
 
  public:
   Weapon(int itemID, int itemType, int minDMG, int maxDMG, int rang,
-         int manaReq, std::string itemName, int buyPrice, int sellPrice);
+         int manaReq, std::string& itemName, int buyPrice, int sellPrice);
 
   ~Weapon();
 

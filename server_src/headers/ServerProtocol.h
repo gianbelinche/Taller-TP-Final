@@ -27,7 +27,7 @@ public:
   
   ~ServerProtocol();
 
-  void decode(std::string packedEvent);
+  void decode(std::string& packedEvent);
 
   void playerMovement(std::vector<uint32_t> event);
 

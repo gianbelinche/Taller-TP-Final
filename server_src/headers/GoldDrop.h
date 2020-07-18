@@ -7,7 +7,7 @@ class GoldDrop : public Item {
 private:
   int amount;
 public:
-  GoldDrop(int itemId, int itemType, std::string itemName, int goldAmount);
+  GoldDrop(int itemId, int itemType, std::string& itemName, int goldAmount);
 
   ~GoldDrop();
 

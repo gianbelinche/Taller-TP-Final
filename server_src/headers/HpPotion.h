@@ -8,7 +8,7 @@ class HpPotion : public Item {
   int hpRecovery;
 
  public:
-  HpPotion(int itemID, int itemType, std::string itemName, int buyPrice,
+  HpPotion(int itemID, int itemType, std::string& itemName, int buyPrice,
            int sellPrice, int hpRecovery);
 
   ~HpPotion();

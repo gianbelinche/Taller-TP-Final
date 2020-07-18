@@ -84,7 +84,8 @@ void ServerEventListener::playerEvadedAttack(int id) {
   dispatcher.sendMessage(id, event);
 }
 
-void ServerEventListener::playerSendMessageToChat(int id, std::string message) {
+void ServerEventListener::playerSendMessageToChat(int id,
+                                                  std::string&& message) {
   std::vector<uint32_t> event;
   event.push_back(PRINT_MSG);
   event.push_back(MSG_SEND_MSG);
@@ -222,7 +223,7 @@ void ServerEventListener::expUpdate(uint32_t id, uint32_t exp,
 
 void ServerEventListener::updateUserWorldState(int id,
                                                std::vector<uint32_t> entInfo) {
-  dispatcher.sendMessage(id, entInfo);
+  dispatcher.sendMessage(id, std::move(entInfo));
 }
 
 void ServerEventListener::teleportPlayer(uint32_t id, uint16_t posX,
