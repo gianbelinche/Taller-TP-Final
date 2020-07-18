@@ -138,7 +138,6 @@ int PlayerNet::takeDamage(int dmgToTake, bool canDodge) {
     return -1;
   }
 
-int PlayerNet::takeDamage(int dmgToTake) {
   int defense = equation::playerDefense(
       armor->getMinDef(), armor->getMaxDef(), shield->getMinDef(),
       shield->getMaxDef(), helmet->getMinDef(), helmet->getMaxDef());

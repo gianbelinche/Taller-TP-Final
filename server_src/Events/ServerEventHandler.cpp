@@ -102,7 +102,7 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
 
 void ServerEventHandler::handle(EntityClick& ev) {
   int id = ev.getUser();
-  int destintyId = ev.getDestinyEntityID();
+  int destinyId = ev.getDestinyEntityID();
 
   PlayerNet* player = world.getPlayer(id);
   if (player == nullptr) {
@@ -110,13 +110,13 @@ void ServerEventHandler::handle(EntityClick& ev) {
     return;
   }
 
-  if (world.isNpc(destintyId)) {
-    player->selectNpc(destintyId);
-  } else if (world.isEntitiy(destintyId)) {
+  if (world.isNpc(destinyId)) {
+    player->selectNpc(destinyId);
+  } else if (world.isEntitiy(destinyId)) {
     handleUserAttack(ev);
   } else if (world.isDroppedItem(destinyId)) {
     if (player->getSelectedItem() == destinyId) {
-      handleTake(destinyId);
+      handleTake(id);
     } else {
       player->selectItem(destinyId);
     }
@@ -177,7 +177,7 @@ void ServerEventHandler::handle(MessageSent& ev) {
   }
 
   if (messageCode == NO_COMMAND) {
-    // O MANDAR EL MENSAJE AL CHAT GLOBAL
+    listener.playerSendMessageToChat(id,"Comando incorrecto");
     return;
   } else if (messageCode == MEDITAR) {
     handleMeditation(id);
@@ -192,6 +192,7 @@ void ServerEventHandler::handle(MessageSent& ev) {
     handleTake(id);
     return;
   } else if (messageCode == TIRAR) {
+    handleDrop(id);
     return;
   } else if (messageCode == RESUCITAR) {
     handleResurrect(id);
@@ -341,7 +342,6 @@ void ServerEventHandler::handleItemDeposit(int playerId, int slotChoice,
                                      "Ingrese un numero correcto de slot");
     return;
   }
-  Inventory& inventory = player->getInventory();
   Item* item = inventory.getItem(slotChoice);
   if (item == nullptr) {
     return;
@@ -370,10 +370,6 @@ void ServerEventHandler::handleItemSubstraction(int playerId, int itemChoice,
   if (item == nullptr) {
     listener.playerSendMessageToChat(player->getId(),
                                      "Id de item no reconocido");
-  } else if (inventory.isFull()) {
-    listener.playerSendMessageToChat(player->getId(),
-                                     "El inventario esta lleno");
-    return;
   } else {
     player->addItemToInventory(item);
   }
@@ -462,8 +458,6 @@ void ServerEventHandler::handleDrop(int playerId, int slotChoice) {
   player->removeItemFromInventory(slot);
 }
 
-void ServerEventHandler::handleDrop(int playerId, int slotChoice) {}
-
 void ServerEventHandler::handlePlayerMsg(int playerId, std::string msg,
                                          int otherPlayerId) {
   std::string playerUsername = world.getUsernameById(playerId);
@@ -489,10 +483,6 @@ void ServerEventHandler::handleEquip(int playerId) {
     return;
   }
   listener.inventoryEquipItem(player->getId(), item->getItemType());
-  if (item->getItemType() == POTION) {
-    // usar pocion
-    handleRemoveInventoryItem(playerId, slot);
-  }
   if (item->getEquippedPosition() != -1) {
     listener.playerEquipedItem(player->getId(), item->getEquippedPosition(),
                                item->getItemType());
