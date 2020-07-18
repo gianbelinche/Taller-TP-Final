@@ -397,20 +397,20 @@ void PlayerNet::removeItemFromInventory(int slot) {
   if (item == nullptr) {  // No hay nada en ese slot
     return;
   }
-  int item_type = item->getItemType();
+  int itemId = item->getId();
 
-  if (getWeaponType() == item_type || getHemletType() == item_type ||
-      getArmorType() == item_type || getShieldType() == item_type) {
+  if (itemId == weapon->getId() ||  itemId == armor->getId()||
+      itemId == helmet->getId() || itemId == shield->getId()) {
     listener.inventoryUnequipItem(id, item->getEquippedPosition());
     listener.playerEquipedItem(id, item->getEquippedPosition(), 0);
 
-    if (getWeaponType() == item_type) {
+    if (itemId == weapon->getId()) {
       weapon = defaultWeapon;
-    } else if (getHemletType() == item_type) {
+    } else if (itemId == helmet->getId()) {
       helmet = defaultHelmet;
-    } else if (getArmorType() == item_type) {
+    } else if (itemId == armor->getId()) {
       armor = defaultArmor;
-    } else if (getShieldType() == item_type) {
+    } else if (itemId == shield->getId()) {
       shield = defaultShield;
     }
   }

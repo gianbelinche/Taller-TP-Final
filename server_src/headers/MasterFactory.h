@@ -1,6 +1,7 @@
 #ifndef MASTERFACTORY_H
 #define MASTERFACTORY_H
 
+#include <algorithm>
 #include <atomic>
 #include <unordered_map>
 #include <unordered_set>
@@ -152,6 +153,9 @@ class MasterFactory {
   Priest* createPriest(int x, int y);
 
   Banker* createBanker(int x, int y);
-};
 
+  void rmFirstAppearanceOf(std::vector<uint32_t>& v, uint32_t elem);
+
+  void addEquipmentToInventory(Item* item, PlayerNet* player);
+};
 #endif  // MASTERFACTORY_H
