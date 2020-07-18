@@ -24,6 +24,59 @@ Monster::Monster(MonsterType& type, int id, int x, int y, int level,
 
 Monster::~Monster() {}
 
+void Monster::moveToPlayer(PlayerNet* player, int new_x, int new_y) {
+  float x_dist = abs(x - player->getX());
+  float y_dist = abs(y - player->getY());
+  int direction;
+
+  if (x_dist < y_dist) {  // Me muevo en el eje en que haya mas distancia
+    if (y < player->getY()) {
+      new_y = y + velocity;
+      direction = 1;
+    } else {
+      new_y = y - velocity;
+      direction = 0;
+    }
+  } else {
+    if (x < player->getX()) {
+      new_x = x + velocity;
+      direction = 3;
+    } else {
+      new_x = x - velocity;
+      direction = 2;
+    }
+  }
+  if (world.isValidPosition(new_x, new_y) &&
+      !world.isCityPosition(new_x, new_y)) {
+    moveTo(new_x, new_y, direction);
+  }
+}
+
+void Monster::moveRandom(int new_x, int new_y) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution<> distr(0, 1);
+  float rand_val = distr(gen);  // Valor random
+  int direction;
+  if (rand_val < 0.25) {
+    new_x -= velocity;
+    direction = 2;
+  } else if (rand_val >= 0.25 && rand_val < 0.5) {
+    new_y -= velocity;
+    direction = 0;
+  } else if (rand_val >= 0.5 && rand_val < 0.75) {
+    direction = 3;
+    new_x += velocity;
+  } else {
+    new_y += velocity;
+    direction = 1;
+  }
+  if (world.isValidPosition(new_x, new_y) &&
+      !world.isCityPosition(new_x, new_y)) {
+    moveTo(new_x, new_y, direction);
+  }
+}
+
 void Monster::update() {
   currentFrame++;
   if (currentFrame == 5) {  // TODO: Hacer configurable el valor
@@ -31,58 +84,14 @@ void Monster::update() {
     PlayerNet* player = world.getNearestPlayer(this, &Condition::isAlive);
     int new_x = x;
     int new_y = y;
-    int direction;
     if (player != nullptr && world.entitiesDistance(this, player) < pursuitDistance) {
       if (world.entitiesDistance(this, player) <= atkRange) {
         attack(player);
       } else {
-        float x_dist = abs(x - player->getX());
-        float y_dist = abs(y - player->getY());
-
-        if (x_dist < y_dist) {  // Me muevo en el eje en que haya mas distancia
-          if (y < player->getY()) {
-            new_y = y + velocity;
-            direction = 1;
-          } else {
-            new_y = y - velocity;
-            direction = 0;
-          }
-        } else {
-          if (x < player->getX()) {
-            new_x = x + velocity;
-            direction = 3;
-          } else {
-            new_x = x - velocity;
-            direction = 2;
-          }
-        }
-        if (world.isValidPosition(new_x, new_y) &&
-            !world.isCityPosition(new_x, new_y)) {
-          moveTo(new_x, new_y, direction);
-        }
+        moveToPlayer(player, new_x, new_y);
       }
     } else {  // Si no hay jugador cerca
-      std::random_device rd;
-      std::mt19937 gen(rd());
-      std::uniform_real_distribution<> distr(0, 1);
-      float rand_val = distr(gen);  // Valor random
-      if (rand_val < 0.25) {
-        new_x -= velocity;
-        direction = 2;
-      } else if (rand_val >= 0.25 && rand_val < 0.5) {
-        new_y -= velocity;
-        direction = 0;
-      } else if (rand_val >= 0.5 && rand_val < 0.75) {
-        direction = 3;
-        new_x += velocity;
-      } else {
-        new_y += velocity;
-        direction = 1;
-      }
-      if (world.isValidPosition(new_x, new_y) &&
-          !world.isCityPosition(new_x, new_y)) {
-        moveTo(new_x, new_y, direction);
-      }
+      moveRandom(new_x, new_y);
     }
   }
 }
@@ -117,9 +126,7 @@ bool Monster::canBeAttackedBy(Entity* ent) { return true; }
 void Monster::moveTo(int new_x, int new_y, int direction) {
   x = new_x;
   y = new_y;
-  // for (int i = 0; i < velocity; i++) {
   listener.entityMoved(id, direction);
-  //}
   animFrame++;
   if (animFrame == 4) {
     listener.entityMoved(id, 4);

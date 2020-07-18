@@ -20,6 +20,9 @@ class Monster : public Entity {
   int atkRange;
   int pursuitDistance;
 
+  void moveToPlayer(PlayerNet* player, int new_x, int new_y);
+  void moveRandom(int new_x, int new_y);
+
  public:
   Monster(MonsterType& type, int id, int x, int y, int level, int velocity,
           int atkRange, int pursuitDistance, GameState& world,
