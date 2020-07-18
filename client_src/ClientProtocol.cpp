@@ -1,10 +1,12 @@
 #include "headers/ClientProtocol.h"
+
 #define MOVE 0
 #define CLICK_ENTITY 1
 #define CLICK_INVENTORY 2
 #define SEND_MESSAGE 3
 #define LOGIN 4
 #define CONNECTION 5
+
 ClientProtocol::ClientProtocol() {}
 
 ClientProtocol::~ClientProtocol() {}

@@ -73,7 +73,7 @@ std::unordered_map<std::string, float>& Configuration::getValuesByItemType(
   return configValues[itemToStr[itemType]];
 }
 
-std::string Configuration::getItemName(int itemType) {
+std::string& Configuration::getItemName(int itemType) {
   return itemToStr[itemType];
 }
 

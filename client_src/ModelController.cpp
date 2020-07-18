@@ -1,7 +1,10 @@
 #include "headers/ModelController.h"
+
 #include <exception>
 #include <iostream>
+
 #define POTION 0
+
 enum state {
     MOVE_ENTITY,
     CREATE_NPC,

@@ -9,7 +9,7 @@ ServerProtocol::ServerProtocol(ServerEventHandler& eventHandl)
 
 ServerProtocol::~ServerProtocol() {}
 
-void ServerProtocol::decode(std::string packedEvent) {
+void ServerProtocol::decode(std::string& packedEvent) {
   std::vector<uint32_t> event;
   msgpack::object_handle oh =
       msgpack::unpack(packedEvent.data(), packedEvent.size());

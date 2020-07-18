@@ -1,5 +1,6 @@
 #ifndef CLASS_MUSIC_PLAYER
 #define CLASS_MUSIC_PLAYER
+
 #include <string>
 #include <map>
 #include "Music.h"

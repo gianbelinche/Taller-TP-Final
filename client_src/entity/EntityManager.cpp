@@ -1,6 +1,8 @@
 #include "../headers/EntityManager.h"
 #include <algorithm>
 
+#define NO_ENTITY 0
+
 EntityManager::EntityManager(SDL_Renderer *aRenderer, Player *aPlayer, uint32_t aPlayerID) :  
                                                         playerID(aPlayerID),
                                                         renderer(aRenderer) {
@@ -127,5 +129,5 @@ uint32_t EntityManager::checkClickEntities(Camera &camera, uint16_t x, uint16_t 
         }
     }
 
-    return 0;
+    return NO_ENTITY;
 }

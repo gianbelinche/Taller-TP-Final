@@ -1,5 +1,6 @@
 #ifndef CLASS_MINI_CHAT
 #define CLASS_MINI_CHAT
+
 #include <string>
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"

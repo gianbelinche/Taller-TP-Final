@@ -1,5 +1,7 @@
 #include "headers/MainMap.h"
 
+#include "headers/OSError.h"
+
 #include <iostream>
 
 #define CITY_1 (x >= 4800 && x < 6528 && y >= 1376 && y < 3744)
@@ -93,6 +95,6 @@ uint8_t MainMap::getZone(uint16_t x, uint16_t y) {
     } else if (CAVE) {
         return 3;
     } else {
-        return 0; // Sería un error llegar acá (chequear)
+        throw OSError("Error MainMap::getZone: (x,y) invalido.");
     }
 }

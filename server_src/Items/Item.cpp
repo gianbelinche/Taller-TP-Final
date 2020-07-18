@@ -31,7 +31,7 @@ enum items{
 #define EQUIPPED_TYPE_2 2
 #define EQUIPPED_TYPE_3 3
 
-Item::Item(int itemID, int itemType, std::string itemName, int buyPrice,
+Item::Item(int itemID, int itemType, std::string& itemName, int buyPrice,
            int sellPrice)
     : id(itemID),
       typeOfItem(itemType),

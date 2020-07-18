@@ -1,7 +1,7 @@
-#include <unistd.h>
-
 #include "headers/MainWindow.h"
+
 #include "headers/SDLError.h"
+#include <unistd.h>
 #include <iostream>
 
 /* NOMBRE DE LA PANTALLA */
@@ -11,6 +11,7 @@
 #define FRECUENCY 22050
 #define CHANNELS 2
 #define CHUNKSIZE 2048
+
 MainWindow::MainWindow(uint16_t height,uint16_t width) {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         throw SDLError("Error: SDL no pudo inicializarse. SDL_Error: %s", 

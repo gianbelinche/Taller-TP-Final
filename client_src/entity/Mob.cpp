@@ -1,5 +1,7 @@
 #include "../headers/Mob.h"
+
 #include "../headers/SpriteClipCreator.h"
+#include "../headers/OSError.h"
 
 Mob::Mob(SDL_Renderer *renderer, MobType type, uint32_t anID, uint16_t aPosX, 
          uint16_t aPosY) : Entity(anID, aPosX, aPosY), image(renderer, 0, 0, 0),
@@ -42,6 +44,7 @@ Mob::Mob(SDL_Renderer *renderer, MobType type, uint32_t anID, uint16_t aPosX,
             break;
 
         default:
+            throw OSError("Error Mob Constructor: MobType invalido.");
             break;
     }
 

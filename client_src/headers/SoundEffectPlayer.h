@@ -1,5 +1,6 @@
 #ifndef CLASS_SOUND_EFFECT_PLAYER
 #define CLASS_SOUND_EFFECT_PLAYER
+
 #include <string>
 #include <map>
 #include "SoundEffect.h"

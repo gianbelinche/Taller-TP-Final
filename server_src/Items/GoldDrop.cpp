@@ -1,7 +1,7 @@
 #include "../headers/GoldDrop.h"
 #include "../headers/PlayerNet.h"
 
-GoldDrop::GoldDrop(int itemId, int itemType, std::string itemName,
+GoldDrop::GoldDrop(int itemId, int itemType, std::string& itemName,
                    int goldAmount)
     : Item(itemId, itemType, itemName, 0, 0), amount(goldAmount) {}
 

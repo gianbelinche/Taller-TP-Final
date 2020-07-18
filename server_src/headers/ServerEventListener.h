@@ -60,68 +60,69 @@ class ServerEventListener {
 
   void entitySpawn(std::vector<uint32_t>& entInfo);
 
-  void monsterMoved(int id); //No estoy seguro de que es esto
+  void monsterMoved(int id);  // No estoy seguro de que es esto
 
-  void entityMoved(int id, uint32_t direction);  // Ver  si conviene mergearlos en uno solo 
+  void entityMoved(
+      int id, uint32_t direction);  // Ver si conviene mergearlos en uno solo
 
-  void npcSpawn(int npc_id,int npc_type,int posx,int posy);
-  
-  void dropSpawn(int object_id,int object_type, int posx, int posy); //3
+  void npcSpawn(int npc_id, int npc_type, int posx, int posy);
+
+  void dropSpawn(int object_id, int object_type, int posx, int posy);  // 3
 
   // Jugadores que se desconectan o mobs que mueren
-  void entityDisappear(uint32_t entity_id); //4
+  void entityDisappear(uint32_t entity_id);  // 4
 
-  void playerDied(int id); //5
+  void playerDied(int id);  // 5
 
-  void playerRevived(int id); //5
+  void playerRevived(int id);  // 5
 
   void playerMeditating(int id);
 
-  void playerEquipedItem(int id,int eq_type,int object); //6
+  void playerEquipedItem(int id, int eq_type, int object);  // 6
 
-  void playerSendMessageToChat(int id,std::string message); //7
+  void playerSendMessageToChat(int id, std::string&& message);  // 7
 
-  void playerExpGain(int id, int gain); //7
+  void playerExpGain(int id, int gain);  // 7
 
-  void playerLeveledUp(int id); //7
+  void playerLeveledUp(int id);  // 7
 
-  void playerDealtDamage(int id, int damage); //7
+  void playerDealtDamage(int id, int damage);  // 7
 
-  void playerTookDamage(int id, int damage); //7
+  void playerTookDamage(int id, int damage);  // 7
 
-  void playerHealed(int id, int life); //7
+  void playerHealed(int id, int life);  // 7
 
-  void entityEvadedAttack(int id,int entity_id); //7
+  void entityEvadedAttack(int id, int entity_id);  // 7
 
-  void playerEvadedAttack(int id); //7
+  void playerEvadedAttack(int id);  // 7
 
-  void inventoryAddItem(int id,int item); //8
+  void inventoryAddItem(int id, int item);  // 8
 
-  void inventoryRemoveItem(int id,int slot); //8
+  void inventoryRemoveItem(int id, int slot);  // 8
 
-  void inventoryEquipItem(int id,int item); //8
+  void inventoryEquipItem(int id, int item);  // 8
 
-  void inventoryUnequipItem(int id,int pos);
+  void inventoryUnequipItem(int id, int pos);
 
-  void goldUpdate(uint32_t id, uint32_t amount); //9
+  void goldUpdate(uint32_t id, uint32_t amount);  // 9
 
-  void lifeUpdate(uint32_t id, uint32_t hp, uint32_t maxHp); //9
+  void lifeUpdate(uint32_t id, uint32_t hp, uint32_t maxHp);  // 9
 
-  void manaUpdate(uint32_t id, uint32_t mana, uint32_t maxMana); //9
+  void manaUpdate(uint32_t id, uint32_t mana, uint32_t maxMana);  // 9
 
-  void levelUpdate(uint32_t id, uint32_t level); //9
+  void levelUpdate(uint32_t id, uint32_t level);  // 9
 
-  void expUpdate(uint32_t id, uint32_t exp, uint32_t maxExp); //9
+  void expUpdate(uint32_t id, uint32_t exp, uint32_t maxExp);  // 9
 
-  void npcAttack(int id,int equipped_item); //11
+  void npcAttack(int id, int equipped_item);  // 11
 
-  void potionTaken(int id); //12
+  void potionTaken(int id);  // 12
 
   void updateUserWorldState(int id, std::vector<uint32_t> entInfo);
 
-  void teleportPlayer(uint32_t id,uint16_t posX,uint16_t posY); //13
+  void teleportPlayer(uint32_t id, uint16_t posX, uint16_t posY);  // 13
 
-  void npcAttackAnimation(int id, int equippedItem, int x, int y); //14
+  void npcAttackAnimation(int id, int equippedItem, int x, int y);  // 14
 };
 
-#endif // SERVEREVENTLISTENER_H
+#endif  // SERVEREVENTLISTENER_H
