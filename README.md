@@ -23,7 +23,7 @@ Se crearán dos ejecutables: `client` y `server`
 Para ejecutar el servidor se debe escribir:
 
 ~~~
-./server server_src/config/gameConfig.json
+./server config/gameConfig.json
 ~~~
 
 Y para ejecutar el cliente se debe escribir:

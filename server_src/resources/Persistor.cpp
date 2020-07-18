@@ -6,10 +6,10 @@
 #include <sstream>
 
 #define DATA_SIZE 33
-#define PLAYERS_MAP "players.cfg"
-#define PLAYERS_DATA "usr.cfg"
-#define PASSWORDS_FILE "pass.cfg"
-#define BANKER_MAP "banker.cfg"
+#define PLAYERS_MAP "config/players.cfg"
+#define PLAYERS_DATA "config/usr.cfg"
+#define PASSWORDS_FILE "config/pass.cfg"
+#define BANKER_MAP "config/banker.cfg"
 
 Persistor::Persistor() {
   file.open(PLAYERS_MAP);
