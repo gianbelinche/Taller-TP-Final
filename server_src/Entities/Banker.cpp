@@ -62,3 +62,10 @@ Item* Banker::buyItem(PlayerNet* player, int choice) {
 std::unordered_map<uint32_t,std::vector<uint32_t>> Banker::getData(){;
   return bank.getData();
 }
+
+std::string Banker::getPrettyPrint(Item* item){
+  std::string message;
+  message.append(std::to_string(item->getItemType()) + ": " +
+                  item->getItemName());
+  return message;
+}

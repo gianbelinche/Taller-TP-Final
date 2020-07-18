@@ -66,7 +66,7 @@ std::vector<std::string> ChatMessageParser::parseTokens(std::string& message) {
   return tokens;
 }
 
-std::string ChatMessageParser::makeMsgFromTokens(std::vector<std::string> tokens) {
+std::string ChatMessageParser::makeMsgFromTokens(std::vector<std::string>& tokens) {
   std::string joinedStr;
   for (auto &elem: tokens) {
     joinedStr.append(elem + " ");
@@ -74,7 +74,7 @@ std::string ChatMessageParser::makeMsgFromTokens(std::vector<std::string> tokens
   return joinedStr;
 }
 
-bool ChatMessageParser::isANumber(std::string s) {
+bool ChatMessageParser::isANumber(std::string& s) {
   return !s.empty() && s.find_first_not_of("0123456789") == std::string::npos;
 }
 

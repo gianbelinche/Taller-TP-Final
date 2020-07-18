@@ -20,20 +20,20 @@ class Persistor {
   Persistor();
   // Persiste los datos de player en un archivo binario, manteniendo
   // Una referencia a donde fueron persistidos
-  void persistPlayer(std::vector<uint32_t> data, std::string player);
+  void persistPlayer(std::vector<uint32_t> data, std::string& player);
 
   // Obtiene los datos persistidos de player
-  std::vector<uint32_t> obtainPlayerData(std::string player);
+  std::vector<uint32_t> obtainPlayerData(std::string& player);
 
   // Persiste el mapa de contraseñas de los jugadores
   void persistPasswordMap();
                           
   // Obtiene los datos de las contraseñas de los jugadores
-  std::unordered_map<std::string, std::string> obtainPasswordMap(std::string file_name);
+  std::unordered_map<std::string, std::string> obtainPasswordMap(std::string& file_name);
 
   std::unordered_map<std::string, std::string>& getPasswords();
 
-  void addPassword(std::string user, std::string pass);
+  void addPassword(std::string& user, std::string& pass);
 
   void persistUsrMap();
 

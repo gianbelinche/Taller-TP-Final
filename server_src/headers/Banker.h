@@ -32,6 +32,8 @@ class Banker : public NPC {
   Item* buyItem(PlayerNet* player, int choice) override;
 
   std::unordered_map<uint32_t,std::vector<uint32_t>> getData();
+
+  std::string getPrettyPrint(Item* item) override;
 };
 
 #endif // BANKER_H

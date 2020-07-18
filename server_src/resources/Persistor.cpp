@@ -28,8 +28,8 @@ Persistor::Persistor() {
     free(str);
   }
   file.close();
-
-  passwords = obtainPasswordMap(PASSWORDS_FILE);
+  std::string pass_map_file = PASSWORDS_FILE;
+  passwords = obtainPasswordMap(pass_map_file);
 }
 
 Persistor::~Persistor() {
@@ -54,7 +54,7 @@ void Persistor::persistPasswordMap() {
 }
 
 std::unordered_map<std::string, std::string> Persistor::obtainPasswordMap(
-    std::string file_name) {
+    std::string& file_name) {
   std::unique_lock<std::mutex> l(passMutex);
   file.open(file_name);
   std::unordered_map<std::string, std::string> passwords;
@@ -76,7 +76,7 @@ std::unordered_map<std::string, std::string> Persistor::obtainPasswordMap(
   return passwords;
 }
 
-void Persistor::persistPlayer(std::vector<uint32_t> data, std::string player) {
+void Persistor::persistPlayer(std::vector<uint32_t> data, std::string& player) {
   std::unique_lock<std::mutex> l(usersMutex);
   if (players.find(player) == players.end()) {
     file.open(PLAYERS_DATA, std::fstream::app);
@@ -94,7 +94,7 @@ void Persistor::persistPlayer(std::vector<uint32_t> data, std::string player) {
   file.close();
 }
 
-std::vector<uint32_t> Persistor::obtainPlayerData(std::string player) {
+std::vector<uint32_t> Persistor::obtainPlayerData(std::string& player) {
   std::vector<uint32_t> data;
   std::unique_lock<std::mutex> l(usersMutex);
   if (players.find(player) == players.end()) {
@@ -128,7 +128,7 @@ void Persistor::persistUsrMap() {
   file.close();
 }
 
-void Persistor::addPassword(std::string user, std::string pass) {
+void Persistor::addPassword(std::string& user, std::string& pass) {
   std::unique_lock<std::mutex> l(passMutex);
   passwords[user] = pass;
 }

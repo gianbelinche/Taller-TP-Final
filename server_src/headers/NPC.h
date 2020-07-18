@@ -36,7 +36,7 @@ class NPC : public Entity {
 
   virtual void listItems(PlayerNet* player);
 
-  std::string getPrettyPrint(Item* item);
+  virtual std::string getPrettyPrint(Item* item);
 
   virtual void goldDeposit(PlayerNet* player, int amount);
 
