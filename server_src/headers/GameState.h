@@ -57,13 +57,13 @@ class GameState {
 
   void addPlayer(PlayerNet* player);
 
-  void addUsernameId(std::string user, int id);
+  void addUsernameId(std::string& user, int id);
 
-  void rmUsrId(std::string user);
+  void rmUsrId(std::string& user);
 
-  int getIdByUsername(std::string username);
+  int getIdByUsername(std::string& username);
 
-  void addIdUsername(int id, std::string user);
+  void addIdUsername(int id, std::string& user);
 
   void rmIdUsr(int id);
 
@@ -125,7 +125,7 @@ class GameState {
 
   void persist();
 
-  bool isPlayerConnected(std::string username);
+  bool isPlayerConnected(std::string& username);
 
  private:
   void initNPCs();
