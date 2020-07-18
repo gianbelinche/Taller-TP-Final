@@ -104,11 +104,11 @@ add_library(server_lib
   server_src/resources/Condition.cpp 
   server_src/resources/GameState.cpp 
   server_src/resources/IsAlive.cpp 
-  server_src/jsoncpp.cpp 
   server_src/resources/Map.cpp 
   server_src/resources/MasterFactory.cpp
   server_src/resources/Persistor.cpp 
   server_src/resources/ServerProtocol.cpp 
+  server_src/Utils/jsoncpp.cpp 
   server_src/Utils/sha256.cpp
   server_src/Utils/Configuration.cpp
   server_src/Utils/ChatMessageParser.cpp

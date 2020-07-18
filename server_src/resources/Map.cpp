@@ -6,7 +6,6 @@
 
 #include "../headers/JsonError.h"
 #include "../headers/json.h"
-#include "JsonError.h"
 
 Map::Map(const char* mapPath) {
   std::ifstream mapFile(mapPath);

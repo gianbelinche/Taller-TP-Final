@@ -20,8 +20,6 @@ class Configuration {
   /* Parsea el archivo de configuración */
   void parse(std::string configFile);
 
-  void printConfig();
-
   const char* getPort();
 
   int getFPS();
