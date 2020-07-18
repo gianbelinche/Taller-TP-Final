@@ -31,9 +31,9 @@ std::pair<std::string, std::string> getUserAndMessage(std::string& str_command);
 
 std::vector<std::string> parseTokens(std::string& message);
 
-std::string makeMsgFromTokens(std::vector<std::string> tokens);
+std::string makeMsgFromTokens(std::vector<std::string>& tokens);
 
-bool isANumber(std::string s);
+bool isANumber(std::string& s);
 
 int parseGold(std::string& str_command);
 } // namespace ChatMessageParser
