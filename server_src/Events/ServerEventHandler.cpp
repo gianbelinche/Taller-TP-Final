@@ -313,11 +313,12 @@ void ServerEventHandler::handleResurrect(int playerId) {
       world.getNpc(selectedNPC)->getNpcType() != PRIEST_TYPE) {
     NPC* closestPriest = world.getNearestPriest(player);
     float distance = world.entitiesDistance(player, closestPriest);
-
+    std::string resurectTimeWaitFactor = "resurrectWaitTimeFactor";
     float secondsToWait =
-        (config.getConfigValue("resurrectWaitTimeFactor") * distance) / 1000;
+        (config.getConfigValue(resurectTimeWaitFactor) * distance) / 1000;
+    std::string framesBetweenUpdate = "framesBetweenUpdate";
     int updatesToWait = (secondsToWait * config.getFPS()) /
-                       config.getConfigValue("framesBetweenUpdate");
+                       config.getConfigValue(framesBetweenUpdate);
 
     player->changeState(&PlayerState::immobilized);
     player->setImmobilizedTime(updatesToWait);

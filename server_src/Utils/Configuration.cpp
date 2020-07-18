@@ -32,7 +32,7 @@ Configuration::Configuration(std::string configFile) {
 
 Configuration::~Configuration() {}
 
-void Configuration::parse(std::string configFile) {
+void Configuration::parse(std::string& configFile) {
   file.open(configFile, std::fstream::in);
   Json::Value json_map;
   Json::Reader reader;
@@ -59,7 +59,7 @@ const char* Configuration::getPort() {
 
 int Configuration::getFPS() { return (int)configValues["config"]["FPS"]; }
 
-float Configuration::getConfigValue(std::string variable) {
+float Configuration::getConfigValue(std::string& variable) {
   return configValues["config"][variable];
 }
 

@@ -18,13 +18,13 @@ class Configuration {
   ~Configuration();
 
   /* Parsea el archivo de configuración */
-  void parse(std::string configFile);
+  void parse(std::string& configFile);
 
   const char* getPort();
 
   int getFPS();
 
-  float getConfigValue(std::string variable);
+  float getConfigValue(std::string& variable);
 
   std::unordered_map<std::string, float>& getValues(std::string key);
 
