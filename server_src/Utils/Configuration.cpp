@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "../json/json.h"
+#include "../headers/json.h"
 
 Configuration::Configuration(std::string configFile) {
   parse(configFile);
