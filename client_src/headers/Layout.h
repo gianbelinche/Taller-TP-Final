@@ -1,5 +1,6 @@
 #ifndef CLASS_LAYOUT
 #define CLASS_LAYOUT
+
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "Image.h"

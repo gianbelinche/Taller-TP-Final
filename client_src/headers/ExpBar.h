@@ -1,5 +1,6 @@
 #ifndef CLASS_EXP_BAR
 #define CLASS_EXP_BAR
+
 #include "Image.h"
 #include "Camera.h"
 

@@ -1,5 +1,7 @@
 #include "../headers/Player.h"
 
+#include "../headers/OSError.h"
+
 #define B 0
 
 #define WEAPON  0
@@ -62,6 +64,7 @@ Player::Player(SDL_Renderer *aRenderer, PlayerRace aRace, uint32_t anID,
             break;
 
         default:
+            throw OSError("Error Player Constructor: PlayerRace invalido.");
             break;
     }
 

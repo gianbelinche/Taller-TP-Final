@@ -70,7 +70,7 @@ Se crearán dos ejecutables: `client` y `server`
 Para ejecutar el servidor se debe escribir:
 
 ~~~
-./server server_src/config/gameConfig.json
+./server config/gameConfig.json
 ~~~
 
 Y para ejecutar el cliente se debe escribir:
@@ -97,12 +97,12 @@ Para la resolución de la ventana, se provee una selección de resoluciones al m
 
 ### Servidor
 
-En caso de que ningun server se encuentre abierto, se debe iniciar un server. Para eso, se debe modificar, si se desea, el archivo de configuración gameConfig.json que se encuentra en ~/server_src/config/gameConfig.json.
+En caso de que ningun server se encuentre abierto, se debe iniciar un server. Para eso, se debe modificar, si se desea, el archivo de configuración gameConfig.json que se encuentra en ~config/gameConfig.json.
 
 Luego, se debe ejecutar el servidor de la siguiente manera:
 
 ~~~
-/server server_src/config/gameConfig.json
+/server config/gameConfig.json
 ~~~
 
 ### Cliente

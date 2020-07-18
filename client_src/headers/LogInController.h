@@ -1,5 +1,6 @@
 #ifndef CLASS_LOGIN_CONTROLLER
 #define CLASS_LOGIN_CONTROLLER
+
 #include "LogIn.h"
 #include "ClientConnector.h"
 #include <QtWidgets/QApplication>

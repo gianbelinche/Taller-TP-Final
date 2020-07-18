@@ -143,7 +143,8 @@ std::pair<std::string, std::vector<uint32_t>> ClientHandler::getCredentials() {
 
   std::stringstream pInfoBuff;
   msgpack::pack(pInfoBuff, sendablePlayInfo);
-  sendMsg(pInfoBuff.str());
+  std::string pInfoBuffStr = pInfoBuff.str();
+  sendMsg(pInfoBuffStr);
   return std::make_pair(user_s, playerInfo);
 }
 
@@ -153,7 +154,7 @@ void ClientHandler::sendMap() {
   sendStructures();
 }
 
-void ClientHandler::sendMsg(std::string msg) {
+void ClientHandler::sendMsg(std::string& msg) {
   uint32_t msgLen = msg.size();
   msgLen = htonl(msgLen);
   char* msgLenS = (char*)&msgLen;
@@ -173,45 +174,51 @@ void ClientHandler::sendTiles() {
   std::stringstream mapBuffer;
   std::map<uint32_t, std::vector<std::string>>& tiles = map.getTiles();
   msgpack::pack(mapBuffer, tiles);
-  sendMsg(mapBuffer.str());
+  std::string mapBufferStr = mapBuffer.str();
+  sendMsg(mapBufferStr);
 }
 
 void ClientHandler::sendTerrain() {
   std::stringstream mapBuffer;
   std::vector<std::vector<uint32_t>>& terrain = map.getTerrainMap();
   msgpack::pack(mapBuffer, terrain);
-  sendMsg(mapBuffer.str());
+  std::string mapBufferStr = mapBuffer.str();
+  sendMsg(mapBufferStr);
 }
 
 void ClientHandler::sendStructures() {
   std::stringstream mapBuffer;
   std::vector<std::vector<uint32_t>>& structures = map.getStructuresMap();
   msgpack::pack(mapBuffer, structures);
-  sendMsg(mapBuffer.str());
+  std::string mapBufferStr = mapBuffer.str();
+  sendMsg(mapBufferStr);
 }
 
 void ClientHandler::sendSuccesfulLogin() {
   std::stringstream loginBuffer;
   std::vector<uint32_t> login = {10, 1};
   msgpack::pack(loginBuffer, login);
-  sendMsg(loginBuffer.str());
+  std::string loginBufferStr = loginBuffer.str();
+  sendMsg(loginBufferStr);
 }
 
 void ClientHandler::sendFailedLogin() {
   std::stringstream loginBuffer;
   std::vector<uint32_t> login = {10, 0};
   msgpack::pack(loginBuffer, login);
-  sendMsg(loginBuffer.str());
+  std::string loginBufferStr = loginBuffer.str();
+  sendMsg(loginBufferStr);
 }
 
 void ClientHandler::sendPlayerCreationNeeded() {
   std::stringstream loginBuffer;
   std::vector<uint32_t> login = {10, 2};
   msgpack::pack(loginBuffer, login);
-  sendMsg(loginBuffer.str());
+  std::string loginBufferStr = loginBuffer.str();
+  sendMsg(loginBufferStr);
 }
 
-void ClientHandler::handleNewPlayer(std::string user) {
+void ClientHandler::handleNewPlayer(std::string& user) {
   std::string len_s = receiveMsg(sizeof(uint32_t));
   uint32_t len = *((uint32_t*)len_s.data());
   len = ntohl(len);

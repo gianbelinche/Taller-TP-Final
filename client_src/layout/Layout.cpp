@@ -1,5 +1,7 @@
 #include "../headers/Layout.h"
+
 #include "../headers/paths.h"
+
 #include <sstream>
 #include <string>
 #include <iostream>
@@ -83,6 +85,6 @@ void Layout::render(const Camera& camera){
     level.render(MANA_LEVEL_X,0,&clip,&rq);
 }
 
-bool Layout::isClicked(int x,int screen_width) const{
+bool Layout::isClicked(int x, int screen_width) const{
     return (x > screen_width - LAY_W - ITEM_BOXES_W);
 }

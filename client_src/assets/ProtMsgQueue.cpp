@@ -1,4 +1,5 @@
 #include "../headers/ProtMsgQueue.h"
+
 #include "../headers/QueueClosedException.h"
 #include "../headers/OSError.h"
 
@@ -8,7 +9,7 @@ void ProtMsgQueue::push(std::vector<uint32_t> &msg) {
     std::unique_lock<std::mutex> lk(mux);
 
     if (this->closed) {
-        throw OSError("Error: se cerró inesperadamente la cola."); //chequear
+        throw OSError("Error: se cerró inesperadamente la cola.");
     }
 
     this->queue.emplace(std::move(msg));

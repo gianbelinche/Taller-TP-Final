@@ -1,5 +1,7 @@
 #include "../headers/ExpBar.h"
+
 #include "../headers/paths.h"
+
 #include <iostream>
 
 #define BAR_X (screen_w * 3 / 5)

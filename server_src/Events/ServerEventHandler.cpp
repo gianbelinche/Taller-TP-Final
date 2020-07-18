@@ -179,7 +179,8 @@ void ServerEventHandler::handle(MessageSent& ev) {
     handleMeditation(id);
     return;
   } else if (messageCode == PLAYER_MSG) {
-    int destinyPlayerId = world.getIdByUsername(msgTokens[0].substr(1));
+    std::string msgTokensSubstr = msgTokens[0].substr(1);
+    int destinyPlayerId = world.getIdByUsername(msgTokensSubstr);
     std::vector<std::string> realMsg(msgTokens.cbegin() + 1, msgTokens.cend());
     std::string joinedMsg = ChatMessageParser::makeMsgFromTokens(realMsg);
     handlePlayerMsg(id, joinedMsg, destinyPlayerId);

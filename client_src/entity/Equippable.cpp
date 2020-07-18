@@ -1,5 +1,7 @@
 #include "../headers/Equippable.h"
+
 #include "../headers/SpriteClipCreator.h"
+#include "../headers/OSError.h"
 
 Equippable::Equippable(SDL_Renderer *renderer, EquipType equipType) : 
                                                     image(renderer, 0, 0, 0),
@@ -79,6 +81,7 @@ Equippable::Equippable(SDL_Renderer *renderer, EquipType equipType) :
             break;
         
         default:
+            throw OSError("Error Equippable Constructor: EquipType invalido.");
             break;
     }
 
