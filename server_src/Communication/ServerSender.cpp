@@ -16,11 +16,6 @@ void ServerSender::run() {
   try {
     while (!outgoingMessages.isClosed() || !outgoingMessages.empty()) {
       std::vector<uint32_t> event = outgoingMessages.pop();
-      /*std::cout << "{";
-      for (auto &m : event) {
-          std::cout << m << ", ";
-      }
-      std::cout << "}" << '\n';*/
       std::string encodedEvent = std::move(encodeEvent(event));
       sendEvent(std::move(encodedEvent));
     }

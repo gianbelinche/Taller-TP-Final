@@ -52,6 +52,5 @@ int Inventory::addItem(Item* item) {
       return i;
     }
   }
-  std::cout << "FATAL\n";
   return -1;
 }
