@@ -54,7 +54,8 @@ void ClientHandler::run() {
     receiver.join();
 
     PlayerNet* player = world.getPlayer(playerInfo[0]);
-    persistor.persistPlayer(std::move(player->getData()),world.getUsernameById(player->getId()));
+    std::string username = world.getUsernameById(player->getId());
+    persistor.persistPlayer(std::move(player->getData()),username);
 
     world.rmPlayer(playerInfo[0]);  // Id
     world.rmIdUsr(playerInfo[0]);
