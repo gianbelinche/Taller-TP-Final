@@ -25,10 +25,8 @@ void ServerEventHandler::handle(UserMoved& ev) {
     std::cerr << "Jugador no encontrado: " << ev.getUser() << std::endl;
     return;
   }
-
   uint32_t direction = ev.getDirection();
-
-  if (ev.getDirection() == STOP) {
+  if (direction == STOP) {
     listener.entityMoved(ev.getUser(), direction);
     return;
   }
@@ -55,13 +53,11 @@ void ServerEventHandler::handle(UserMoved& ev) {
   }
 
   bool positionIsValid = true;
-
   for (size_t i = 0; i < 25; i += 6) {
     for (size_t j = 0; j < 45; j += 6) {
       positionIsValid = positionIsValid && world.isValidPosition(x + i, y + j);
     }
   }
-
   if (positionIsValid && player->canMove()) {
     player->move(x, y);
     listener.entityMoved(ev.getUser(), direction);
