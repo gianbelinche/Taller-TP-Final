@@ -370,6 +370,7 @@ void ServerEventHandler::handleItemSubstraction(int playerId, int itemChoice,
   if (item == nullptr) {
     listener.playerSendMessageToChat(player->getId(),
                                      "Id de item no reconocido");
+    return;
   } else {
     player->addItemToInventory(item);
   }
@@ -430,6 +431,9 @@ void ServerEventHandler::handleTake(int playerId) {
     std::cerr << "No se encontro el usuario\n";
     return;
   }
+  if (!player->isAlive()) {
+    return;
+  }
   Inventory& inv = player->getInventory();
   if (inv.isFull()) {
     return;
@@ -440,7 +444,7 @@ void ServerEventHandler::handleTake(int playerId) {
   }
   
   int mustBeErased = item->beTaken(player);
-  if (mustBeErased == 0) { // Se debe eliminar el item del mundo
+  if (mustBeErased == 0) {
     // TODO: Creo que el oro va a generar leaks, no se libera en ningun lado
     world.rmItem(item->getId());
     listener.entityDisappear(item->getId());
