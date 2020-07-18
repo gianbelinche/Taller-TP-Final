@@ -1,5 +1,6 @@
 #ifndef CLASS_LAYOUT_MANAGER
 #define CLASS_LAYOUT_MANAGER
+
 #include "Layout.h"
 #include "GraphicInventory.h"
 #include "MiniChat.h"

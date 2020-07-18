@@ -1,8 +1,9 @@
 #ifndef __QUIT_EXCEPTION_H__
 #define __QUIT_EXCEPTION_H__
 
-#define BUF_LEN 256
 #include <typeinfo>
+
+#define BUF_LEN 256
 
 class QuitException : public std::exception {
 private:

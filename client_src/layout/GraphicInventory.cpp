@@ -1,6 +1,8 @@
 #include "../headers/GraphicInventory.h"
+
 #include "../headers/SDLError.h"
 #include "../headers/paths.h"
+
 #define MAX_NUMBER_OF_ITEMS 20
 #define NUMBER_OF_COLUMNS 5
 #define MAX_NUMBER_OF_SELECTED_ITEMS 4

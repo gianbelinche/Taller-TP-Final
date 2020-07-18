@@ -1,5 +1,7 @@
 #include "../headers/Renderer.h"
+
 #include "../headers/QueueClosedException.h"
+
 #include <unistd.h>
 #include <iostream>
 

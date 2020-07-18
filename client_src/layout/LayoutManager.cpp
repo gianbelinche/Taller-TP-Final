@@ -1,7 +1,11 @@
 #include "../headers/LayoutManager.h"
+
 #include <sstream>
 
-LayoutManager::LayoutManager(Layout& layout,GraphicInventory& inventory,MiniChat& chat,ExpBar& expbar) : layout(layout),inventory(inventory),chat(chat),expbar(expbar) {}
+LayoutManager::LayoutManager(Layout& layout, GraphicInventory& inventory,
+                             MiniChat& chat, ExpBar& expbar) : 
+                                        layout(layout), inventory(inventory),
+                                        chat(chat), expbar(expbar) {}
 
 void LayoutManager::decodeInventoryMessage(const std::vector<uint32_t> message){
     if (message[1] == 0){

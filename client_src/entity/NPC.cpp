@@ -1,5 +1,7 @@
 #include "../headers/NPC.h"
 
+#include "../headers/OSError.h"
+
 #include <iostream>
 
 NPC::NPC(SDL_Renderer *renderer, NPCType type, uint32_t anID, uint16_t aPosX, 
@@ -24,6 +26,7 @@ NPC::NPC(SDL_Renderer *renderer, NPCType type, uint32_t anID, uint16_t aPosX,
             break;
 
         default:
+            throw OSError("Error NPC Constructor: NPCType invalido.");
             break;
     }
     

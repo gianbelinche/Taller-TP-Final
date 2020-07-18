@@ -1,11 +1,12 @@
 #include "../headers/LogIn.h"
 
+#include "../headers/SocketException.h"
+#include "../headers/QuitException.h"
+
 #include <QtWidgets/QDesktopWidget>
 #include <msgpack.hpp>
-#include "../headers/SocketException.h"
 #include <sstream>
 #include <string>
-#include "../headers/QuitException.h"
 
 LogIn::LogIn(ClientConnector& clientConnector,QMainWindow *parent) :
                                     QMainWindow(parent),

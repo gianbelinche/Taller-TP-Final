@@ -1,6 +1,8 @@
 #include "../headers/MiniChat.h"
+
 #include "../headers/Text.h"
 #include "../headers/paths.h"
+
 #define FONT_SIZE 50
 //10
 #define MESSAGES_MAX_SIZE 19

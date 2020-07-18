@@ -1,10 +1,12 @@
 #include "headers/ClientConnector.h"
 #include "headers/ClientInitializer.h"
+#include "headers/OSError.h"
+
+#include <iostream>
+#include <exception>
 
 #define ERROR 1
 #define SUCCESS 0
-#include <iostream>
-#include <exception>
 
 int main(int argc, char* argv[]) {
     try {
@@ -12,7 +14,7 @@ int main(int argc, char* argv[]) {
 
         LogInController logInController(argc, argv, clientConnector);
         if (logInController.run() == -1){
-            return ERROR;
+            throw OSError("Error: falló el LogIn.");
         }
 
         ClientInitializer initializer;        
