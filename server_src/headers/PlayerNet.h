@@ -32,6 +32,7 @@ class PlayerNet : public Entity {
   int selectedSlot = -1;
   int immobilizedFramesLeft = 0;
   int framesPerUpdate;
+  int selectedItem = -1;
   GameState& world;
   Weapon* weapon;
   Armor* armor;
@@ -103,6 +104,8 @@ class PlayerNet : public Entity {
 
   int getSelectedSlot();
 
+  int getSelectedItem();
+
   int getInventorySize();
 
   int getWeaponType();
@@ -148,6 +151,8 @@ class PlayerNet : public Entity {
 
   void selectSlot(int slot);
 
+  void selectItem(int id);
+  
   void substractGold(int amount);
 
   void addGold(int amount);

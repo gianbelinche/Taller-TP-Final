@@ -105,6 +105,8 @@ class GameState {
 
   bool isEntitiy(int id);
 
+  bool isDroppedItem(int id);
+
   void spawnUnParDeMobs();
 
   void dropItem(Item* item, int x, int y);

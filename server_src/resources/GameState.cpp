@@ -184,6 +184,8 @@ bool GameState::isNpc(int id) { return npcs.find(id) != npcs.end(); }
 
 bool GameState::isPlayer(int id) { return players.find(id) != players.end(); }
 
+bool GameState::isDroppedItem(int id) { return droppedItems.find(id) != droppedItems.end(); }
+
 NPC* GameState::getNpc(int id) {
   if (npcs.find(id) != npcs.end()) {
     return npcs[id];

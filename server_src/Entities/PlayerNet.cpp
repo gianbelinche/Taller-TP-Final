@@ -138,6 +138,7 @@ int PlayerNet::takeDamage(int dmgToTake, bool canDodge) {
     return -1;
   }
 
+int PlayerNet::takeDamage(int dmgToTake) {
   int defense = equation::playerDefense(
       armor->getMinDef(), armor->getMaxDef(), shield->getMinDef(),
       shield->getMaxDef(), helmet->getMinDef(), helmet->getMaxDef());
@@ -421,4 +422,12 @@ void PlayerNet::removeItemFromInventory(int slot) {
 void PlayerNet::addItemToInventory(Item* item) {
   inventory.addItem(item);
   listener.inventoryAddItem(id, item->getItemType());
+}
+
+void PlayerNet::selectItem(int id) {
+  selectedItem = id;
+}
+
+int PlayerNet::getSelectedItem() {
+  return selectedItem;
 }
