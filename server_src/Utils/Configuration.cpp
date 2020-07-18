@@ -51,17 +51,6 @@ void Configuration::parse(std::string configFile) {
   }
 }
 
-void Configuration::printConfig() {
-  for (auto& k : configValues) {
-    std::cout << k.first << std::endl;
-    for (auto& kint : k.second) {
-      std::cout << "Clav: " << kint.first << " Valor: " << kint.second
-                << std::endl;
-    }
-    std::cout << "\n";
-  }
-}
-
 const char* Configuration::getPort() {
   int port = configValues["config"]["port"];
   std::string port_s = std::to_string(port);

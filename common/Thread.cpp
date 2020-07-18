@@ -1,4 +1,4 @@
-#include "../headers/Thread.h"
+#include "headers/Thread.h"
 #include <utility>
 
 Thread::Thread() {}
@@ -16,7 +16,6 @@ Thread::~Thread() {}
 Thread::Thread(Thread&& other) {
     this->thread = std::move(other.thread);
 }
-
 
 Thread& Thread::operator=(Thread&& other) {
     if (this == &other) {

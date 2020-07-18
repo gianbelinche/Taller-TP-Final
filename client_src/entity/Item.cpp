@@ -2,6 +2,8 @@
 #include "../headers/SpriteClipCreator.h"
 #include "../headers/OSError.h"
 
+#define ITEM_SIZE 32
+
 Item::Item(SDL_Renderer *renderer, ItemType type, uint32_t anID, uint16_t aPosX, 
            uint16_t aPosY) : Entity(anID, aPosX, aPosY), 
                              image(renderer, 0, 0, 0) {
@@ -101,7 +103,7 @@ void Item::render(Camera &camera) {
 }
 
 bool Item::collision(uint16_t x, uint16_t y) {
-    return false;
+    return (x > posX) && (x < posX + ITEM_SIZE) && (y > posY) && (y < posY + ITEM_SIZE);
 }
 
 void Item::changeState(uint8_t aState) {}
