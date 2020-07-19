@@ -1,15 +1,15 @@
 #include "../headers/Class.h"
 
-Class::Class(int class_type, float hpFac, float manaFac, float meditFac,
-             float strFac, float constFac, float intFac, float agiFac)
-    : class_type(class_type),
-      hpFactor(hpFac),
-      manaFactor(manaFac),
-      meditationFactor(meditFac),
-      strengthFactor(strFac),
-      constitutionFactor(constFac),
-      intelligenceFactor(intFac),
-      agilityFactor(agiFac) {}
+Class::Class(Configuration& config, std::string typeStr, int classType)
+    : 
+      hpFactor(config.getValues(typeStr)["hpFactor"]),
+      manaFactor(config.getValues(typeStr)["manaFactor"]),
+      meditationFactor(config.getValues(typeStr)["meditFac"]),
+      strengthFactor(config.getValues(typeStr)["strengthFactor"]),
+      constitutionFactor(config.getValues(typeStr)["constitutionFactor"]),
+      intelligenceFactor(config.getValues(typeStr)["intelligenceFactor"]),
+      agilityFactor(config.getValues(typeStr)["agilityFactor"]),
+      class_type(classType) {}
 
 Class::~Class() {}
 

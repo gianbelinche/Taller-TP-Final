@@ -1,23 +1,22 @@
 #ifndef CLASS_H
 #define CLASS_H
 
-enum { WIZARD, CLERIC, PALADIN, WARRIOR };  // Esto seria class_type
-// La idea es que haya una instancia de este objeto por cada clase del juego
-// y cada jugador tiene una referencia/puntero a la que le corresponde
+#include "Configuration.h"
+#include <string>
+
 class Class {
  private:
-  int class_type;
   float hpFactor;
-  float manaFactor;        // 0 para el guerrero
-  float meditationFactor;  // idem
+  float manaFactor;
+  float meditationFactor;
   float strengthFactor;
   float constitutionFactor;
   float intelligenceFactor;
   float agilityFactor;
+  int class_type;
 
  public:
-  Class(int class_type, float hpFac, float manaFac, float meditFac,
-        float strFac, float constFac, float intFac, float agiFac);
+  Class(Configuration& config, std::string typeStr, int classType);
 
   ~Class();
 
