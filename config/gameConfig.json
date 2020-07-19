@@ -24,7 +24,7 @@
     "damage": 7,
     "level": 3,
     "velocity": 7,
-    "attackRange": 15,
+    "attackRange": 20,
     "pursuitDistance": 100
   },
   "spider": {
