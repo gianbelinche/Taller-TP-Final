@@ -201,7 +201,7 @@ void Equippable::updateFrame(uint8_t aHorFrame, uint8_t aVerFrame) {
     verFrame = aVerFrame;
 }
 
-void Equippable::render(uint16_t posX, uint16_t posY) {
+void Equippable::render(int posX, int posY) {
     if (type != NONE) {
         quad.x = posX;
         quad.y = posY;
