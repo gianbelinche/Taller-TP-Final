@@ -222,6 +222,53 @@ void ClientHandler::sendPlayerCreationNeeded() {
   sendMsg(loginBufferStr);
 }
 
+void ClientHandler::setInitialState(std::vector<uint32_t>& playerInfo, 
+                                    std::vector<uint32_t>& choices) {
+  playerInfo.push_back(idGenerator++);                                // Id
+  playerInfo.push_back(config.getValues("Player")["initialX"]);       // X
+  playerInfo.push_back(config.getValues("Player")["initialY"]);       // Y
+  playerInfo.push_back(config.getValues("Player")["initialLevel"]);   // Nivel
+  playerInfo.push_back(config.getValues("Player")["initialExp"]);     // Exp
+  playerInfo.push_back(choices[1]);                                   // Raza
+  playerInfo.push_back(choices[2]);                                   // Clase
+  playerInfo.push_back(config.getValues("Player")["initialGold"]);    // Oro
+  playerInfo.push_back(config.getValues("Player")["initialState"]);   // Estado
+}
+
+void ClientHandler::setInitialInventory(std::vector<uint32_t>& playerInfo) {
+  int initial_weapon = config.getValues("Player")["initialWeapon"];
+  int initial_helmet = config.getValues("Player")["initialHelmet"];
+  int initial_armor = config.getValues("Player")["initialArmor"];
+  int initial_shield = config.getValues("Player")["initialShield"];
+  playerInfo.push_back(initial_weapon);  // Arma
+  playerInfo.push_back(initial_helmet);  // Casco
+  playerInfo.push_back(initial_armor);   // Armadura
+  playerInfo.push_back(initial_shield);  // Escudo
+
+  int invItem = 0;
+  
+  if (initial_weapon != 0){
+    playerInfo.push_back(initial_weapon); //Arma en el inventario
+    invItem++;
+  }
+  if (initial_helmet != 0){
+    playerInfo.push_back(initial_helmet); //Casco en el inventario
+    invItem++;
+  }
+  if (initial_armor != 0){
+    playerInfo.push_back(initial_armor);  //Armadura en el inventario
+    invItem++;
+  }
+  if (initial_shield != 0){
+    playerInfo.push_back(initial_shield); //Escudo en el inventario
+    invItem++;
+  }
+
+  for (; invItem < INVENTORY_SIZE; invItem++) {
+    playerInfo.push_back(0);
+  }
+}
+
 void ClientHandler::handleNewPlayer(std::string& user) {
   std::string len_s = receiveMsg(sizeof(uint32_t));
   uint32_t len = *((uint32_t*)len_s.data());
@@ -238,46 +285,8 @@ void ClientHandler::handleNewPlayer(std::string& user) {
 
   std::vector<uint32_t> playerInfo;
 
-  playerInfo.push_back(idGenerator++);                                // Id
-  playerInfo.push_back(config.getValues("Player")["initialX"]);       // X
-  playerInfo.push_back(config.getValues("Player")["initialY"]);       // Y
-  playerInfo.push_back(config.getValues("Player")["initialLevel"]);   // Nivel
-  playerInfo.push_back(config.getValues("Player")["initialExp"]);     // Exp
-  playerInfo.push_back(choices[1]);                                   // Raza
-  playerInfo.push_back(choices[2]);                                   // Clase
-  playerInfo.push_back(config.getValues("Player")["initialGold"]);    // Oro
-  playerInfo.push_back(config.getValues("Player")["initialState"]);   // Estado
-  int initial_weapon = config.getValues("Player")["initialWeapon"];
-  int initial_helmet = config.getValues("Player")["initialHelmet"];
-  int initial_armor = config.getValues("Player")["initialArmor"];
-  int initial_shield = config.getValues("Player")["initialShield"];
-  playerInfo.push_back(initial_weapon);  // Arma
-  playerInfo.push_back(initial_helmet);  // Casco
-  playerInfo.push_back(initial_armor);  // Armadura
-  playerInfo.push_back(initial_shield);  // Escudo
-
-  int i = 0;
-  
-  if (initial_weapon != 0){
-    playerInfo.push_back(initial_weapon); //Arma en el inventario
-    i++;
-  }
-  if (initial_helmet != 0){
-    playerInfo.push_back(initial_helmet); //Casco en el inventario
-    i++;
-  }
-  if (initial_armor != 0){
-    playerInfo.push_back(initial_armor); //Armadura en el inventario
-    i++;
-  }
-  if (initial_shield != 0){
-    playerInfo.push_back(initial_shield); //Escudo en el inventario
-    i++;
-  }
-
-  for (; i < INVENTORY_SIZE; i++) {
-    playerInfo.push_back(0);
-  }
+  setInitialState(playerInfo, choices);
+  setInitialInventory(playerInfo);
 
   persistor.persistPlayer(playerInfo, user);
 }

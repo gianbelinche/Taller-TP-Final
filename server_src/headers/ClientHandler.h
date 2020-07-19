@@ -40,6 +40,10 @@ class ClientHandler : public Thread {
   ServerEventListener& listener;
   Configuration& config;
 
+  void setInitialState(std::vector<uint32_t>& playerInfo, 
+                       std::vector<uint32_t>& choices);
+  void setInitialInventory(std::vector<uint32_t>& playerInfo);
+
  public:
   ClientHandler(Socket p, Persistor& persist, Map& worldMap,
                 std::atomic<uint32_t>& idAssigner,
