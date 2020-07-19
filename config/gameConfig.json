@@ -3,7 +3,8 @@
     "FPS": 30,
     "port": 8080,
     "resurrectWaitTimeFactor": 3,
-    "framesBetweenUpdate": 100
+    "framesBetweenUpdate": 100,
+    "spawnCooloffFrames": 100
   },
   "Player": {
     "initialX": 5656,
@@ -322,5 +323,11 @@
     "forestMiddleY": 2944,
     "forestLowerX": 8064,
     "forestLowerY": 3488
+  },
+  "npcsAmount:": {
+    "0": 50,
+    "1": 50,
+    "2": 50,
+    "3": 50
   }
 }
