@@ -6,6 +6,13 @@
 
 Configuration::Configuration(std::string configFile) {
   parse(configFile);
+  generateItemNames();
+  generateSpawnNames();
+}
+
+Configuration::~Configuration() {}
+
+void Configuration::generateItemNames() {
   // Comienza el hardcodeo cosmico
   itemToStr[0] = "Sin equipamiento";
   itemToStr[1] = "Espada";
@@ -30,7 +37,12 @@ Configuration::Configuration(std::string configFile) {
   itemToStr[20] = "Oro";
 }
 
-Configuration::~Configuration() {}
+void Configuration::generateSpawnNames() {
+  typeToSpawn[0] = "spiderSpawnPositions";
+  typeToSpawn[1] = "skeletonSpawnPositions";
+  typeToSpawn[2] = "goblinSpawnPositions";
+  typeToSpawn[3] = "zombieSpawnPositions";
+}
 
 void Configuration::parse(std::string& configFile) {
   file.open(configFile, std::fstream::in);
@@ -59,12 +71,12 @@ const char* Configuration::getPort() {
 
 int Configuration::getFPS() { return (int)configValues["config"]["FPS"]; }
 
-float Configuration::getConfigValue(std::string& variable) {
+float Configuration::getConfigValue(std::string&& variable) {
   return configValues["config"][variable];
 }
 
 std::unordered_map<std::string, float>& Configuration::getValues(
-    std::string key) {
+    std::string&& key) {
   return configValues[key];
 }
 
@@ -77,3 +89,6 @@ std::string& Configuration::getItemName(int itemType) {
   return itemToStr[itemType];
 }
 
+const char* Configuration::spawnStrByMonsterType(int monsterType) {
+  return typeToSpawn[monsterType];
+}
