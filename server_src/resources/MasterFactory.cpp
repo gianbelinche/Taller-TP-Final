@@ -9,23 +9,23 @@ MasterFactory::MasterFactory(std::atomic<uint32_t>& idCounter,
       config(configuration),
       listener(eventListener),
       goblin(config.getValues(GOBLIN)["hp"], config.getValues(GOBLIN)["damage"],
-             config.getValues(GOBLIN)["level"], 2,
+             config.getValues(GOBLIN)["level"], GOBLIN_TYPE,
              config.getValues(GOBLIN)["velocity"],
              config.getValues(GOBLIN)["attackRange"],
              config.getValues(GOBLIN)["pursuitDistance"]),
       spider(config.getValues(SPIDER)["hp"], config.getValues(SPIDER)["damage"],
-             config.getValues(SPIDER)["level"], 0,
+             config.getValues(SPIDER)["level"], SPIDER_TYPE,
              config.getValues(SPIDER)["velocity"],
              config.getValues(SPIDER)["attackRange"],
              config.getValues(SPIDER)["pursuitDistance"]),
       skeleton(config.getValues(SKELETON)["hp"],
                config.getValues(SKELETON)["damage"],
-               config.getValues(SKELETON)["level"], 1,
+               config.getValues(SKELETON)["level"], SKELETON_TYPE,
                config.getValues(SKELETON)["velocity"],
                config.getValues(SKELETON)["attackRange"],
                config.getValues(SKELETON)["pursuitDistance"]),
       zombie(config.getValues(ZOMBIE)["hp"], config.getValues(ZOMBIE)["damage"],
-             config.getValues(ZOMBIE)["level"], 3,
+             config.getValues(ZOMBIE)["level"], ZOMBIE_TYPE,
              config.getValues(ZOMBIE)["velocity"],
              config.getValues(ZOMBIE)["attackRange"],
              config.getValues(ZOMBIE)["pursuitDistance"]),
@@ -179,11 +179,10 @@ PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData,
   } else {
     shield = createShield(playerData[12]);
   }
-  std::string framesBetweenUpdate = "framesBetweenUpdate";
   PlayerNet* player =
       new PlayerNet(x, y, id, world, 6, exp, level, gold, weapon, armor, helmet,
                     shield, state, playerClass, playerRace, listener,
-                    config.getConfigValue(framesBetweenUpdate), defaultWeapon,
+                    config.getConfigValue("framesBetweenUpdate"), defaultWeapon,
                     defaultArmor, defaultHelmet, defaultShield);
   // Rm duplicates from inventory
   rmFirstAppearanceOf(playerData, weapon->getItemType());
