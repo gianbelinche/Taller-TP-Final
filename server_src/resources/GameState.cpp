@@ -122,13 +122,6 @@ bool GameState::playerCanAttack(PlayerNet* player, Entity* ent) {
 
 void GameState::addEntity(Entity* ent) {
   entities[ent->getId()] = ent;
-  // Aca deberia avisarle a los jugadores que aparecio un bichito
-}
-
-void GameState::addPlayer(PlayerNet* player) {
-  players[player->getId()] = player;
-  entities[player->getId()] = player;
-  // Idem anterior, hay que brodcastear que aparecio
 }
 
 void GameState::addPlayerFromData(std::vector<uint32_t>& playerData) {

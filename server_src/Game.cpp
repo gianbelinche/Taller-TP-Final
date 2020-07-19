@@ -24,7 +24,7 @@ void Game::run() { loop(); }
 void Game::loop() {
   while (keep_running) {
     auto start = std::chrono::steady_clock::now();
-    processInput();  // Decodifica y procesa todos los eventos encolados
+    processInput();
     update();
     persist++;
     if (persist == PERSIST_TIME_DELAY){
