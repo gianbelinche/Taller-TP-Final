@@ -203,9 +203,10 @@ void Equippable::updateFrame(uint8_t aHorFrame, uint8_t aVerFrame) {
 
 void Equippable::render(uint16_t posX, uint16_t posY) {
     if (type != NONE) {
-        this->quad.x = posX;
-        this->quad.y = posY;
+        quad.x = posX;
+        quad.y = posY;
+        if (type == EQUIP_SOMBRERO_MAGICO) quad.y -= 11;
         SDL_Rect *actualClip = &(clips[horFrame + verFrame * EQUIPPABLE_ANIMATION_FRAMES]);
-        image.render(posX, posY, actualClip, &quad);
+        image.render(quad.x, quad.y, actualClip, &quad);
     }
 }
