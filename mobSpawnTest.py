@@ -1,6 +1,6 @@
 from random import randint
 lista = []
-iterations = 50
+iterations = 1
 enemies = 200
 for i in range(enemies):
     print(i)
@@ -21,12 +21,15 @@ for i in range(enemies):
 cant = 0
 lista_copy = lista.copy()
 lista_copy.pop(0)
+lugares_pos = {}
 for elem in lista:
-    for elem2 in lista_copy:
-        if elem == elem2:
-            cant+=1
-            lista_copy.remove(elem2)
-            print("(x,y) = ",elem)
-    if len(lista_copy) != 0:        
-        lista_copy.pop(0)
-print(cant)            
+    if (elem not in lugares_pos):
+        lugares_pos[elem] = 1
+    else:
+        lugares_pos[elem] += 1                     
+print(lugares_pos)
+
+for elem in lugares_pos:
+    if (lugares_pos[elem] >= 3):
+        cant+=1
+print(cant)        
