@@ -4,126 +4,74 @@
 #include <iostream>
 #include <utility>
 
-#include "../headers/JsonError.h"
-#include "../headers/json.h"
-
-Map::Map(const char* mapPath) {
-  std::ifstream mapFile(mapPath);
-  Json::Reader mapReader;
-  Json::Value mapValues;
-  mapReader.parse(mapFile, mapValues);
-
-  /*
-   * Busco el array de capas. El mapa se separa en "capas" que permiten
-   * la superposición de elementos. Nuestro mapa se divide en dos capas
-   * para poder poner edificaciones, arboles, etc.
-   */
+void Map::initLayers(Json::Value& mapValues) {
   const Json::Value& layers = mapValues["layers"];  // Array de capas
 
-  /*
-   * Si algo que se buscó en el .json no se encontró se setea el
-   * const Json::Value& en null.
-   */
   if (!layers) {
     throw Json::Exception("Error: no se encontró layers.");
   }
 
-  /*
-   * Ancho, alto y la data de cada capa.
-  */
-  const Json::Value& layer0 = layers[0]["data"]; // Array de enteros de capa 0
-  const Json::Value& width0 = layers[0]["width"]; // Ancho de la capa 0
-  const Json::Value& height0 = layers[0]["height"]; // Alto de la capa 0
+  for (int lay = 0; lay < 4; lay++) {
+    const Json::Value& layer = layers[lay]["data"]; // Array de enteros de capa i
+    const Json::Value& width = layers[lay]["width"]; // Ancho de la capa i
+    const Json::Value& height = layers[lay]["height"]; // Alto de la capa i
 
-  if (!(layer0 && height0 && width0)) {
-    throw Json::Exception("Error: no se encontró data de capa 0.");
-  }
-
-  const Json::Value& layer1 = layers[1]["data"]; // Array de enteros de capa 1
-  const Json::Value& width1 = layers[1]["width"]; // Ancho de la capa 1
-  const Json::Value& height1 = layers[1]["height"]; // Alto de la capa 1
-
-  if (!(layer1 && height1 && width1)) {
-    throw Json::Exception("Error: no se encontró data de capa 1.");
-  }
-
-  const Json::Value& layer2 = layers[2]["data"]; // Array de enteros de capa 2
-  const Json::Value& width2 = layers[2]["width"]; // Ancho de la capa 2
-  const Json::Value& height2 = layers[2]["height"]; // Alto de la capa 2
-
-  if (!(layer2 && height2 && width2)) {
-    throw Json::Exception("Error: no se encontró data de capa 2");
-  }
-
-  const Json::Value& layer3 = layers[3]["data"]; // Array de enteros de capa 3
-  const Json::Value& width3 = layers[3]["width"]; // Ancho de la capa 3
-  const Json::Value& height3 = layers[3]["height"]; // Alto de la capa 3
-
-  if (!(layer3 && height3 && width3)) {
-    throw Json::Exception("Error: no se encontró data de capa 3");
-  }
-
-  /*
-   * Creo las matrices que tienen la data de las capas.
-   * Estas matrices se deben guardar para enviar a los clientes
-   * Además, se deben guardar los valores:
-   * height0, width0, height1 y width1 (no es necesario creo)
-   */
-
-  uint32_t cont = 0;
-
-  /* Matriz de capa 0 */
-
-  for (Json::Value::UInt i = 0; i < height0.asUInt(); i++) {
-    std::vector<uint32_t> row;
-    for (Json::Value::UInt j = 0; j < width0.asUInt(); j++) {
-      row.emplace_back(layer0[cont].asUInt());
-      cont++;
+    if (!(layer && height && width)) {
+      throw Json::Exception("Error: no se encontró data de capa.");
     }
-    terrain.emplace_back(row);
-  }
 
-  /* Matriz de capa 1 */
+    uint32_t cont = 0;
 
-  cont = 0;
-  for (Json::Value::UInt i = 0; i < height1.asUInt(); i++) {
-    std::vector<uint32_t> row;
-    for (Json::Value::UInt j = 0; j < width1.asUInt(); j++) {
-      row.emplace_back(layer1[cont].asUInt());
-      cont++;
+    if (lay == 0 || lay == 1) {
+      for (Json::Value::UInt r = 0; r < height.asUInt(); r++) {
+        std::vector<uint32_t> row;
+        for (Json::Value::UInt c = 0; c < width.asUInt(); c++) {
+          row.emplace_back(layer[cont].asUInt());
+          cont++;
+        }
+        switch (lay) {
+          case 0:
+            terrain.emplace_back(row);
+            break;
+          
+          case 1:
+            structures.emplace_back(row);
+            break;
+
+          default:
+            break;
+        }
+      }
+    } else {
+      for (Json::Value::UInt r = 0; r < height.asUInt(); r++) {
+        std::vector<bool> row;
+        for (Json::Value::UInt c = 0; c < width.asUInt(); c++) {
+          row.emplace_back(layer[cont].asUInt());
+          cont++;
+        }
+        switch (lay) {
+          case 2:
+            collisions.emplace_back(row);
+            break;
+
+          case 3:
+            cities.emplace_back(row);
+            break;
+
+          default:
+            break;
+        }
+      }
     }
-    structures.emplace_back(row);
   }
+}
 
-  /* Matriz de capa de bloqueo */
-
-  cont = 0;
-  for (Json::Value::UInt i = 0; i < height2.asUInt(); i++) {
-    std::vector<bool> row;
-    for (Json::Value::UInt j = 0; j < width2.asUInt(); j++) {
-      row.emplace_back(layer2[cont].asUInt());
-      cont++;
-    }
-    collisions.emplace_back(row);
-  }
-
-  /* Matriz de capa de ciudades */
-
-  cont = 0;
-  for (Json::Value::UInt i = 0; i < height3.asUInt(); i++) {
-    std::vector<bool> row;
-    for (Json::Value::UInt j = 0; j < width3.asUInt(); j++) {
-      row.emplace_back(layer3[cont].asUInt());
-      cont++;
-    }
-    cities.emplace_back(row);
-  }
-
+void Map::initTiles(Json::Reader& mapReader, Json::Value& mapValues) {
   /*
    * Creo el hash que contiene como:
    *  -clave: al numero asignado al tileset.
    *  -valor: un vector de valores importantes en forma de strings.
-   */
+  */
 
   const Json::Value& tilesets = mapValues["tilesets"];  // Array de tilesets
 
@@ -145,6 +93,16 @@ Map::Map(const char* mapPath) {
 
     tiles[key] = vt;
   }
+}
+
+Map::Map(const char* mapPath) {
+  std::ifstream mapFile(mapPath);
+  Json::Reader mapReader;
+  Json::Value mapValues;
+  mapReader.parse(mapFile, mapValues);
+
+  initLayers(mapValues);
+  initTiles(mapReader, mapValues);
 }
 
 Map::~Map() {}

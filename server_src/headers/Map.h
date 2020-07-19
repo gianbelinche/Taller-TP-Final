@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "../headers/json.h"
 
 class Map {
  private:
@@ -13,6 +14,9 @@ class Map {
   std::vector<std::vector<uint32_t>> structures;
   std::vector<std::vector<bool>> collisions;
   std::vector<std::vector<bool>> cities;
+
+  void initLayers(Json::Value& mapValues);
+  void initTiles(Json::Reader& mapReader, Json::Value& mapValues);
 
  public:
   explicit Map(const char* mapPath);
