@@ -293,19 +293,21 @@
     "desertBridgeX": 4800,
     "desertBridgeY": 5024,
     "desertMiddleX": 2496,
-    "desertMiddleY": 4256
+    "desertMiddleY": 4256,
+    "desertRoadX": 3584,
+    "desertRoadY": 3520,
+    "desertLowerX": 4224,
+    "desertLowerY": 6368
   },
   "skeletonSpawnPositions": {
-    "desertPyramidX": 2816,
-    "desertPyramidY": 2432,
     "desertBridgeX": 4800,
     "desertBridgeY": 5024,
     "desertMiddleX": 2496,
     "desertMiddleY": 4256,
+    "desertLowerX": 4224,
+    "desertLowerY": 6368,
     "caveEntryX": 4832,
     "caveEntryY": 512,
-    "caveLeftX": 4448,
-    "caveLeftY": 544,
     "caveRightX": 5792,
     "caveRightY": 576
   },
@@ -315,7 +317,9 @@
     "caveLeftX": 4448,
     "caveLeftY": 544,
     "caveRightX": 5792,
-    "caveRightY": 576
+    "caveRightY": 576,
+    "caveRightLowerX": 6240,
+    "caveRightLowerY": 736
   },
   "goblinSpawnPositions": {
     "forestUpperX": 8224,
@@ -323,7 +327,9 @@
     "forestMiddleX": 7936,
     "forestMiddleY": 2944,
     "forestLowerX": 8064,
-    "forestLowerY": 3488
+    "forestLowerY": 3488,
+    "forestHiddenX": 6976,
+    "forestHiddenY": 3808
   },
   "npcsAmount": {
     "0": 50,

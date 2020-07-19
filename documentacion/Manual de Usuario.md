@@ -7,15 +7,12 @@
 - **OS requerido**:
 
     - Linux
-    - ***MacOS??***
-    - ***Windows??***
 
 - **Bibliotecas requeridas**:
 
     - msgpack: https://github.com/msgpack/msgpack-c/tree/cpp_master
     - SDL2: https://www.libsdl.org/
     - QT: https://www.qt.io/product/framework
-    - ***COMPLETAR***
 
 - **Herramientas para la instalación del programa**:
 
@@ -123,7 +120,8 @@ Entre las razas, se encuentran:
 
 - ​ Humanos​ : son una raza equilibrada.
 - ​ Elfos​ : son muy inteligentes y ágiles pero de una constitución física frágil
-- ​ Enanos​ : son muy fuertes y resistentes, pero la agilidad no es lo suyo - ​ Gnomos​ : inteligentes y resistentes, pero mucho menos ágiles que los elfos.
+- ​ Enanos​ : son muy fuertes y resistentes, pero la agilidad no es lo suyo 
+- ​ Gnomos​ : inteligentes y resistentes, pero mucho menos ágiles que los elfos.
 
 Y entre las distintas clases, están:
 
