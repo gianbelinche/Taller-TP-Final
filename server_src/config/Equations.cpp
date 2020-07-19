@@ -96,3 +96,7 @@ bool equation::dodgeAttack(int agility) {
   std::uniform_real_distribution<> r(0, 1);
   return pow(r(gen), agility) < 0.001;
 }
+
+int equation::getCurrentLevelStrength(int baseStrength, int level) {
+  return baseStrength * std::pow(level, 0.7);
+}

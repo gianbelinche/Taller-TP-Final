@@ -34,6 +34,8 @@ namespace equation {
   bool isCritical();
 
   bool dodgeAttack(int agility);
+
+  int getCurrentLevelStrength(int baseStrength, int level);
 } // namespace equation
 
 #endif // EQUATIONS_H

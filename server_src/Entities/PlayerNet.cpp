@@ -72,7 +72,8 @@ float PlayerNet::getIntelligence() {
 }
 
 float PlayerNet::getStrength() {
-  return playerRace->getStrength() * playerClass->getStrengthFactor();
+  int baseStrength = playerRace->getStrength() * playerClass->getStrengthFactor();
+  return equation::getCurrentLevelStrength(baseStrength, level);
 }
 
 float PlayerNet::getAgility() {
