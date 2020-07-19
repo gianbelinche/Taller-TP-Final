@@ -20,9 +20,7 @@ class Monster : public Entity {
   int atkRange;
   int pursuitDistance;
 
-  void moveToPlayer(PlayerNet* player, int new_x, int new_y);
-  void moveRandom(int new_x, int new_y);
-
+  void moveToPlayer(PlayerNet* player);
  public:
   Monster(MonsterType& type, int id, int x, int y, int level, int velocity,
           int atkRange, int pursuitDistance, GameState& world,
@@ -48,6 +46,8 @@ class Monster : public Entity {
   std::vector<uint32_t> getSendable() override;
 
   int getNpcType();
+
+  void moveRandom();
 };
 
 #endif  // MONSTER_H

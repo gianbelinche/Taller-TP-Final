@@ -146,6 +146,7 @@ void GameState::update() {
     spawnCooloff = config.getConfigValue("spawnCooloffFrames");
     verifyNPCsAmount();
   }
+  spawnCooloff--;
 }
 
 void GameState::verifyNPCsAmount() {
@@ -342,6 +343,11 @@ void GameState::initMobs() {
   for (auto& mob: maxNPCsAmount) {
     for (int i = 0; i < mob.second; i++) {
       generateMonsterType(std::stoi(mob.first));
+    }
+  }
+  for (auto& mob: entities) {
+    for (int i = 0; i < config.getConfigValue("initialWandering"); i++) {
+      (static_cast<Monster*>(mob.second))->moveRandom();
     }
   }
 }

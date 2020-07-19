@@ -16,8 +16,7 @@ int main(int argc, const char* argv[]) {
     std::cerr << "Cantidad de argumentos incorrecta" << std::endl;
     return ERROR;
   }
-  // Aca se cargaria el archivo de configuracion
-  Configuration config(argv[1]);
+  Configuration config(std::move(argv[1]));
   Server server(config.getPort(), config);
 
   try {

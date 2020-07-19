@@ -4,7 +4,8 @@
     "port": 8080,
     "resurrectWaitTimeFactor": 3,
     "framesBetweenUpdate": 100,
-    "spawnCooloffFrames": 100
+    "spawnCooloffFrames": 100,
+    "initialWandering": 5000
   },
   "Player": {
     "initialX": 5656,
@@ -324,7 +325,7 @@
     "forestLowerX": 8064,
     "forestLowerY": 3488
   },
-  "npcsAmount:": {
+  "npcsAmount": {
     "0": 50,
     "1": 50,
     "2": 50,

@@ -24,7 +24,9 @@ Monster::Monster(MonsterType& type, int id, int x, int y, int level,
 
 Monster::~Monster() {}
 
-void Monster::moveToPlayer(PlayerNet* player, int new_x, int new_y) {
+void Monster::moveToPlayer(PlayerNet* player) {
+  int new_x = x;
+  int new_y = y;
   float x_dist = abs(x - player->getX());
   float y_dist = abs(y - player->getY());
   int direction;
@@ -52,7 +54,9 @@ void Monster::moveToPlayer(PlayerNet* player, int new_x, int new_y) {
   }
 }
 
-void Monster::moveRandom(int new_x, int new_y) {
+void Monster::moveRandom() {
+  int new_x = x;
+  int new_y = y;
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_real_distribution<> distr(0, 1);
@@ -82,16 +86,14 @@ void Monster::update() {
   if (currentFrame == 5) {  // TODO: Hacer configurable el valor
     currentFrame = 0;
     PlayerNet* player = world.getNearestPlayer(this, &Condition::isAlive);
-    int new_x = x;
-    int new_y = y;
     if (player != nullptr && world.entitiesDistance(this, player) < pursuitDistance) {
       if (world.entitiesDistance(this, player) <= atkRange) {
         attack(player);
       } else {
-        moveToPlayer(player, new_x, new_y);
+        moveToPlayer(player);
       }
     } else {  // Si no hay jugador cerca
-      moveRandom(new_x, new_y);
+      moveRandom();
     }
   }
 }
@@ -101,6 +103,7 @@ int Monster::takeDamage(int dmgToTake, bool canDodge) {
   hp = std::max(0, hp - dmgToTake);
   if (hp == 0) {
     world.rmEntity(id);
+    world.decreaseMonsterAmount(kind.getNpcType());
     listener.entityDisappear(id);
     world.generateDrop(x, y, equation::dropGold(maxHp));
   }
