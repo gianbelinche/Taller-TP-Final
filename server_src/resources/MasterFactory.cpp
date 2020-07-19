@@ -2,30 +2,38 @@
 
 #include "../headers/Persistor.h"
 
+#define GOBLIN_TYPE 0
+#define SKELETON_TYPE 1
+#define SPIDER_TYPE 2
+#define ZOMBIE_TYPE 3
+
 MasterFactory::MasterFactory(std::atomic<uint32_t>& idCounter,
                              Configuration& configuration,
                              ServerEventListener& eventListener)
     : idGenerator(idCounter),
       config(configuration),
       listener(eventListener),
-      goblin(config.getValues(GOBLIN)["hp"], config.getValues(GOBLIN)["damage"],
-             config.getValues(GOBLIN)["level"], 2,
+      goblin(config.getValues(GOBLIN)["hp"], 
+             config.getValues(GOBLIN)["damage"],
+             config.getValues(GOBLIN)["level"], GOBLIN_TYPE,
              config.getValues(GOBLIN)["velocity"],
              config.getValues(GOBLIN)["attackRange"],
              config.getValues(GOBLIN)["pursuitDistance"]),
-      spider(config.getValues(SPIDER)["hp"], config.getValues(SPIDER)["damage"],
-             config.getValues(SPIDER)["level"], 0,
+      spider(config.getValues(SPIDER)["hp"], 
+             config.getValues(SPIDER)["damage"],
+             config.getValues(SPIDER)["level"], SPIDER_TYPE,
              config.getValues(SPIDER)["velocity"],
              config.getValues(SPIDER)["attackRange"],
              config.getValues(SPIDER)["pursuitDistance"]),
       skeleton(config.getValues(SKELETON)["hp"],
                config.getValues(SKELETON)["damage"],
-               config.getValues(SKELETON)["level"], 1,
+               config.getValues(SKELETON)["level"], SKELETON_TYPE,
                config.getValues(SKELETON)["velocity"],
                config.getValues(SKELETON)["attackRange"],
                config.getValues(SKELETON)["pursuitDistance"]),
-      zombie(config.getValues(ZOMBIE)["hp"], config.getValues(ZOMBIE)["damage"],
-             config.getValues(ZOMBIE)["level"], 3,
+      zombie(config.getValues(ZOMBIE)["hp"], 
+             config.getValues(ZOMBIE)["damage"],
+             config.getValues(ZOMBIE)["level"], ZOMBIE_TYPE,
              config.getValues(ZOMBIE)["velocity"],
              config.getValues(ZOMBIE)["attackRange"],
              config.getValues(ZOMBIE)["pursuitDistance"]),
