@@ -38,9 +38,9 @@ void Configuration::generateItemNames() {
 }
 
 void Configuration::generateSpawnNames() {
-  typeToSpawn[0] = "spiderSpawnPositions";
+  typeToSpawn[0] = "goblinSpawnPositions";
   typeToSpawn[1] = "skeletonSpawnPositions";
-  typeToSpawn[2] = "goblinSpawnPositions";
+  typeToSpawn[2] = "spiderSpawnPositions";
   typeToSpawn[3] = "zombieSpawnPositions";
 }
 
