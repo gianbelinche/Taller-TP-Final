@@ -15,13 +15,20 @@
 GameState::GameState(std::vector<std::vector<bool>>& collisions,
                      std::vector<std::vector<bool>>& cities, int fps,
                      ServerEventListener& eventListener, MasterFactory& fac,
-                     Configuration& configuration)
+                     Configuration& configuration,
+                     std::unordered_map<std::string, float>& NPCsAmount)
     : config(configuration),
       colisionMap(collisions),
       citiesMap(cities),
       framesPerSecond(fps),
       listener(eventListener),
-      factory(fac) {}
+      factory(fac),
+      maxNPCsAmount(NPCsAmount) {
+  spawnCooloff = config.getConfigValue("spawnCooloffFrames");
+  for (auto& npc: maxNPCsAmount) {
+    currentNPCsAmount[npc.first] = 0;
+  }
+}
 
 GameState::~GameState() {}
 
@@ -97,8 +104,9 @@ Entity* GameState::getEntity(int id) {
 }
 
 bool GameState::playerCanAttack(PlayerNet* player, Entity* ent) {
-  if (player->getId() == ent->getId() && player->isAlive()){
-    if (player->getDamage() >= 0) { //Se puede curar,pero no dañarse a si mismo
+  if (player->getId() == ent->getId() && player->isAlive()) {
+    if (player->getDamage() >= 0) {  // Se puede curar,pero no dañarse a si
+                                     // mismo
       return false;
     }
     return true;
@@ -134,6 +142,69 @@ void GameState::update() {
   for (auto& it : entities) {
     it.second->update();
   }
+  if (spawnCooloff == 0) {
+    spawnCooloff = config.getConfigValue("spawnCooloffFrames");
+    verifyNPCsAmount();
+  }
+}
+
+void GameState::verifyNPCsAmount() {
+  for (auto& npc : currentNPCsAmount) {
+    if (npc.second < maxNPCsAmount[npc.first]) {
+      generateMonsterType(std::stoi(npc.first));
+    }
+  }
+}
+
+void GameState::generateMonsterType(int monsterType) {
+  std::pair<int, int> position = getSpawnPosition(monsterType);
+  int spawnX = position.first;
+  int spawnY = position.second;
+
+  Monster* newMonster;
+  switch (monsterType) {
+    case SPIDER_TYPE:
+      newMonster = factory.newSpider(spawnX, spawnY, *this);
+      break;
+    case SKELETON_TYPE:
+      newMonster = factory.newSkeleton(spawnX, spawnY, *this);
+      break;
+    case GOBLIN_TYPE:
+      newMonster = factory.newGoblin(spawnX, spawnY, *this);
+      break;
+    case ZOMBIE_TYPE:
+      newMonster = factory.newZombie(spawnX, spawnY, *this);
+      break;
+    default:
+      std::cerr << "Tipo de mob invalido\n";
+      return;
+  }
+  listener.entitySpawn(newMonster->getSendable());
+  currentNPCsAmount[std::to_string(monsterType)]++;
+  addEntity(newMonster);
+}
+
+std::pair<int, int> GameState::getSpawnPosition(int monsterType) {
+  std::unordered_map<std::string, float>& unorderSpawnPos =
+      config.getValues(config.spawnStrByMonsterType(monsterType));
+  std::map<std::string, float> spawnPositions(unorderSpawnPos.begin(),
+                                              unorderSpawnPos.end());
+
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> location(0, (spawnPositions.size()/2) - 1);
+  int locationPos = location(gen);
+
+  // El X e Y se dan como dos pares (clave,valor) consecutivos en el map
+  std::map<std::string,float>::iterator it=spawnPositions.begin();
+  for (int i = 0; it!=spawnPositions.end() && i<(locationPos * 2); ++it) {
+    i++;
+  }
+  int spawnX = spawnPositions[it->first];
+  it++;
+  int spawnY = spawnPositions[it->first];
+
+  return std::make_pair(spawnX, spawnY);
 }
 
 void GameState::sendState(int id) {
@@ -148,7 +219,7 @@ void GameState::sendState(int id) {
     sendable = std::move((npc.second)->getSendable());
     listener.updateUserWorldState(id, sendable);
   }
-  for (auto& item: droppedItems) {
+  for (auto& item : droppedItems) {
     sendable = std::move((item.second)->getSendable());
     std::pair<int, int> position = itemsPositions[item.second->getId()];
     sendable.push_back(position.first);
@@ -183,7 +254,9 @@ bool GameState::isNpc(int id) { return npcs.find(id) != npcs.end(); }
 
 bool GameState::isPlayer(int id) { return players.find(id) != players.end(); }
 
-bool GameState::isDroppedItem(int id) { return droppedItems.find(id) != droppedItems.end(); }
+bool GameState::isDroppedItem(int id) {
+  return droppedItems.find(id) != droppedItems.end();
+}
 
 NPC* GameState::getNpc(int id) {
   if (npcs.find(id) != npcs.end()) {
@@ -266,10 +339,10 @@ void GameState::initNPCs() {
 }
 
 void GameState::initMobs() {
-  for (int i = 0; i < MAX_AMOUNT_NPC; i++) {
-    std::pair<int, int> position = generateNewMonsterPosition();
-    Monster* monster = generateRandomMonster(position.first, position.second);
-    entities[monster->getId()] = monster;
+  for (auto& mob: maxNPCsAmount) {
+    for (int i = 0; i < mob.second; i++) {
+      generateMonsterType(std::stoi(mob.first));
+    }
   }
 }
 
@@ -308,17 +381,17 @@ void GameState::generateDrop(int x, int y, int goldAmount) {
   std::random_device rd;
   std::mt19937 gen(rd());
 
-  std::uniform_int_distribution<> drop(1,10);
+  std::uniform_int_distribution<> drop(1, 10);
   int is_drop = drop(gen);
 
-  if (is_drop <= 3){ //30%
-    std::uniform_int_distribution<> distr(1,19);
-    int rand_val = distr(gen);                  // Valor random
+  if (is_drop <= 3) {  // 30%
+    std::uniform_int_distribution<> distr(1, 19);
+    int rand_val = distr(gen);  // Valor random
     Item* item = factory.createItem(rand_val);
     droppedItems[item->getId()] = item;
     itemsPositions[item->getId()] = std::make_pair(x, y);
     listener.dropSpawn(item->getId(), item->getItemType(), x, y);
-  } else if (is_drop > 3 && is_drop <= 8){ //50%
+  } else if (is_drop > 3 && is_drop <= 8) {  // 50%
     GoldDrop* gold = factory.createDroppableGold(goldAmount);
     droppedItems[gold->getId()] = gold;
     itemsPositions[gold->getId()] = std::make_pair(x, y);
@@ -329,7 +402,6 @@ void GameState::generateDrop(int x, int y, int goldAmount) {
 GoldDrop* GameState::generateDroppableGold(int goldAmount) {
   return factory.createDroppableGold(goldAmount);
 }
-
 
 std::pair<int, int> GameState::generateNewMonsterPosition() {
   int randX;
@@ -387,8 +459,8 @@ void GameState::persist() {
   for (auto& player : players) {
     std::string username = this->getUsernameById(player.second->getId());
     persistor.persistPlayer(player.second->getData(), username);
-    for (auto& npc : npcs){
-      if ((npc.second)->getNpcType() == BANKER_TYPE){
+    for (auto& npc : npcs) {
+      if ((npc.second)->getNpcType() == BANKER_TYPE) {
         Banker* banker = (Banker*)(npc.second);
         persistor.persistBank(std::move(banker->getData()));
       }
@@ -396,7 +468,11 @@ void GameState::persist() {
   }
 }
 
-bool GameState::isPlayerConnected(std::string& username){
+bool GameState::isPlayerConnected(std::string& username) {
   std::unique_lock<std::mutex> l(idUsrMutex);
   return usrToId.find(username) != usrToId.end();
+}
+
+void GameState::decreaseMonsterAmount(int type) {
+  currentNPCsAmount[std::to_string(type)]--;
 }

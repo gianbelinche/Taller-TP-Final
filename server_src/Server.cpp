@@ -30,7 +30,7 @@ void Server::run() {
   ServerEventListener listener(dispatcher);
   MasterFactory factory(idAssigner, config, listener);
   GameState world(map.getCollisionMap(), map.getCitiesMap(), config.getFPS(), 
-                  listener, factory, config);
+                  listener, factory, config, config.getValues("npcsAmount"));
   ServerEventHandler handler(world, listener, config);
   ServerProtocol protocol(handler);
 

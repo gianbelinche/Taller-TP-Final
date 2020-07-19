@@ -6,7 +6,7 @@ ServerEventListener::ServerEventListener(MessageDispatcher& msgDispatcher)
     : dispatcher(msgDispatcher) {}
 ServerEventListener::~ServerEventListener() {}
 
-void ServerEventListener::entitySpawn(std::vector<uint32_t>& entInfo) {
+void ServerEventListener::entitySpawn(std::vector<uint32_t>&& entInfo) {
   dispatcher.broadcastMessage(entInfo);
 }
 

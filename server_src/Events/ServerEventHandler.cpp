@@ -1,6 +1,7 @@
 #include "../headers/ServerEventHandler.h"
 
 #include <iostream>
+#include <utility>
 
 #include "../headers/ChatMessageParser.h"
 #include "../headers/ImmobilizedState.h"
@@ -139,8 +140,7 @@ void ServerEventHandler::handle(PlayerConnection& ev) {
     std::cerr << "No se encontro el usuario\n";
     return;
   }
-  std::vector<uint32_t> playerSendable = player->getSendable();
-  listener.entitySpawn(playerSendable);
+  listener.entitySpawn(player->getSendable());
 
   world.sendState(player->getId());
   listener.playerConnected(id);
@@ -310,12 +310,10 @@ void ServerEventHandler::handleResurrect(int playerId) {
       world.getNpc(selectedNPC)->getNpcType() != PRIEST_TYPE) {
     NPC* closestPriest = world.getNearestPriest(player);
     float distance = world.entitiesDistance(player, closestPriest);
-    std::string resurectTimeWaitFactor = "resurrectWaitTimeFactor";
     float secondsToWait =
-        (config.getConfigValue(resurectTimeWaitFactor) * distance) / 1000;
-    std::string framesBetweenUpdate = "framesBetweenUpdate";
+        (config.getConfigValue("resurrectWaitTimeFactor") * distance) / 1000;
     int updatesToWait = (secondsToWait * config.getFPS()) /
-                       config.getConfigValue(framesBetweenUpdate);
+                       config.getConfigValue("framesBetweenUpdate");
 
     player->changeState(&PlayerState::immobilized);
     player->setImmobilizedTime(updatesToWait);

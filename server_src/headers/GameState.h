@@ -2,6 +2,7 @@
 #define GAMESTATE_H
 
 #include <cstdint>
+#include <map>
 #include <mutex>
 #include <unordered_map>
 #include <utility>
@@ -9,8 +10,8 @@
 
 #include "Condition.h"
 #include "Configuration.h"
-#include "GoldDrop.h"
 #include "Entity.h"
+#include "GoldDrop.h"
 #include "Item.h"
 #include "NPC.h"
 #include "NormalState.h"
@@ -36,18 +37,22 @@ class GameState {
   std::unordered_map<int, Entity*> entities;  // Jugadores y monstruos
   std::unordered_map<int, NPC*> npcs;
   int framesPerSecond;
+  int spawnCooloff;
   ServerEventListener& listener;
   MasterFactory& factory;
   std::mutex entitiesMapMutex;
   std::mutex usrIdMutex;
   std::mutex idUsrMutex;
   int maxAmountNPC;
+  std::unordered_map<std::string, float>& maxNPCsAmount;
+  std::unordered_map<std::string, float> currentNPCsAmount;
 
  public:
   GameState(std::vector<std::vector<bool>>& collisions,
             std::vector<std::vector<bool>>& cities, int fps,
             ServerEventListener& eventListener, MasterFactory& fac,
-            Configuration& configuration);
+            Configuration& configuration,
+            std::unordered_map<std::string, float>& NPCsAmount);
 
   ~GameState();
 
@@ -127,10 +132,18 @@ class GameState {
 
   bool isPlayerConnected(std::string& username);
 
+  void decreaseMonsterAmount(int type);
+
  private:
   void initNPCs();
 
   void initMobs();
+
+  void verifyNPCsAmount();
+
+  void generateMonsterType(int monsterType);
+
+  std::pair<int, int> getSpawnPosition(int monsterType);
 };
 
 #endif  // GAMESTATE_H

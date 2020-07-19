@@ -11,6 +11,7 @@ class Configuration {
   std::unordered_map<std::string, std::unordered_map<std::string, float>>
       configValues;
   std::unordered_map<int, std::string> itemToStr;
+  std::unordered_map<int, char const*> typeToSpawn;
 
  public:
   Configuration(std::string configFile);
@@ -24,13 +25,20 @@ class Configuration {
 
   int getFPS();
 
-  float getConfigValue(std::string& variable);
+  float getConfigValue(std::string&& variable);
 
-  std::unordered_map<std::string, float>& getValues(std::string key);
+  std::unordered_map<std::string, float>& getValues(std::string&& key);
 
   std::unordered_map<std::string, float>& getValuesByItemType(int itemType);
 
   std::string& getItemName(int itemType);
+
+  const char* spawnStrByMonsterType(int monsterType);
+
+ private:
+  void generateItemNames();
+  
+  void generateSpawnNames();
 };
 
 #endif

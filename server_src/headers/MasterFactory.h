@@ -45,10 +45,10 @@
 #define CLERIC "cleric"
 #define PALADIN "paladin"
 
-#define GOBLIN_ID 0
-#define SKELETON_ID 1
-#define SPIDER_ID 2
-#define ZOMBIE_ID 3
+#define GOBLIN_TYPE 0
+#define SKELETON_TYPE 1
+#define SPIDER_TYPE 2
+#define ZOMBIE_TYPE 3
 
 #define HUMAN_ID 0
 #define ELF_ID 1

@@ -58,7 +58,7 @@ class ServerEventListener {
 
   void playerConnected(int id);
 
-  void entitySpawn(std::vector<uint32_t>& entInfo);
+  void entitySpawn(std::vector<uint32_t>&& entInfo);
 
   void monsterMoved(int id);  // No estoy seguro de que es esto
 
