@@ -284,5 +284,43 @@
     "merchantY": 6528,
     "priestX": 8384,
     "priestY": 6656
+  },
+  "spiderSpawnPositions": {
+    "desertPyramidX": 2816,
+    "desertPyramidY": 2432,
+    "desertBridgeX": 4800,
+    "desertBridgeY": 5024,
+    "desertMiddleX": 2496,
+    "desertMiddleY": 4256
+  },
+  "skeletonSpawnPositions": {
+    "desertPyramidX": 2816,
+    "desertPyramidY": 2432,
+    "desertBridgeX": 4800,
+    "desertBridgeY": 5024,
+    "desertMiddleX": 2496,
+    "desertMiddleY": 4256,
+    "caveEntryX": 4832,
+    "caveEntryY": 512,
+    "caveLeftX": 4448,
+    "caveLeftY": 544,
+    "caveRightX": 5792,
+    "caveRightY": 576
+  },
+  "zombieSpawnPositions": {
+    "caveEntryX": 4832,
+    "caveEntryY": 512,
+    "caveLeftX": 4448,
+    "caveLeftY": 544,
+    "caveRightX": 5792,
+    "caveRightY": 576
+  },
+  "goblinSpawnPositions": {
+    "forestUpperX": 8224,
+    "forestUpperY": 1824,
+    "forestMiddleX": 7936,
+    "forestMiddleY": 2944,
+    "forestLowerX": 8064,
+    "forestLowerY": 3488
   }
 }

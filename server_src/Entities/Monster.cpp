@@ -56,7 +56,7 @@ void Monster::moveRandom(int new_x, int new_y) {
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_real_distribution<> distr(0, 1);
-  float rand_val = distr(gen);  // Valor random
+  float rand_val = distr(gen);
   int direction;
   if (rand_val < 0.25) {
     new_x -= velocity;
@@ -128,7 +128,7 @@ void Monster::moveTo(int new_x, int new_y, int direction) {
   y = new_y;
   listener.entityMoved(id, direction);
   animFrame++;
-  if (animFrame == 4) {
+  if (animFrame == 8) {
     listener.entityMoved(id, 4);
     animFrame = 0;
   }

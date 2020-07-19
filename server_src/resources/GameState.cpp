@@ -47,9 +47,9 @@ bool GameState::isValidPosition(int x, int y) {
 bool GameState::isCityPosition(int x, int y) {
   if (citiesMap[y / TILE_SIZE][x / TILE_SIZE] == 0) {
     return false;
+  } else {
+    return true;
   }
-
-  return true;
 }
 
 float GameState::entitiesDistance(Entity* ent1, Entity* ent2) {
@@ -148,7 +148,6 @@ void GameState::sendState(int id) {
     sendable = std::move((npc.second)->getSendable());
     listener.updateUserWorldState(id, sendable);
   }
-
   for (auto& item: droppedItems) {
     sendable = std::move((item.second)->getSendable());
     std::pair<int, int> position = itemsPositions[item.second->getId()];

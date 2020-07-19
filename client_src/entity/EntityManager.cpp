@@ -79,7 +79,10 @@ void EntityManager::teleportEntity(uint32_t ID, uint16_t posX, uint16_t posY) {
     else entities[ID]->teleportTo(posX, posY);
 }
 
-bool EntityManager::entityComp (Entity* ent1, Entity* ent2) { 
+bool EntityManager::entityComp (Entity* ent1, Entity* ent2) {
+    if (ent1->getPosY() == ent2->getPosY()) {
+        return ent1->getID() < ent2->getID(); 
+    } // Da un orden deterministico de dibujado para entidades con mismo Y
     return (ent1->getPosY() < ent2->getPosY());
 }
 

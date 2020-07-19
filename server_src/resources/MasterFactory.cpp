@@ -114,11 +114,10 @@ PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData,
   } else {
     shield = createShield(playerData[12]);
   }
-  std::string framesBetweenUpdate = "framesBetweenUpdate";
   PlayerNet* player =
       new PlayerNet(x, y, id, world, 6, exp, level, gold, weapon, armor, helmet,
                     shield, state, playerClass, playerRace, listener,
-                    config.getConfigValue(framesBetweenUpdate), defaultWeapon,
+                    config.getConfigValue("framesBetweenUpdate"), defaultWeapon,
                     defaultArmor, defaultHelmet, defaultShield);
   // Rm duplicates from inventory
   rmFirstAppearanceOf(playerData, weapon->getItemType());
