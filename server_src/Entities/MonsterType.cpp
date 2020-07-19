@@ -2,15 +2,14 @@
 
 #include "../headers/Monster.h"
 
-MonsterType::MonsterType(int hp, int damage, int level, int npcType,
-                         int velocity, int atkRange, int pursuitDistance)
-    : hp(hp),
-      damage(damage),
-      level(level),
-      npcType(npcType),
-      velocity(velocity),
-      atkRange(atkRange),
-      pursuitDistance(pursuitDistance) {}
+MonsterType::MonsterType(Configuration& config, std::string typeStr, int npcType)
+    : hp(config.getValues(typeStr)["hp"]), 
+      damage(config.getValues(typeStr)["damage"]),
+      level(config.getValues(typeStr)["level"]),
+      velocity(config.getValues(typeStr)["velocity"]),
+      atkRange(config.getValues(typeStr)["attackRange"]),
+      pursuitDistance(config.getValues(typeStr)["pursuitDistance"]),
+      npcType(npcType) {}
 
 MonsterType::~MonsterType() {}
 

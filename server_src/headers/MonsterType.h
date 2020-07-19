@@ -2,6 +2,7 @@
 #define MONSTERTYPE_H
 
 #include "ServerEventListener.h"
+#include "Configuration.h"
 
 class Monster;
 
@@ -11,14 +12,13 @@ class MonsterType {
   int hp;
   int damage;
   int level;
-  int npcType;
   int velocity;
   int atkRange;
   int pursuitDistance;
+  int npcType;
 
  public:
-  MonsterType(int hp, int damage, int level, int npcType, int velocity,
-              int atkRange, int pursuitDistance);
+  MonsterType(Configuration& config, std::string typeStr, int npcType);
 
   ~MonsterType();
 
