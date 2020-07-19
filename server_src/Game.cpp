@@ -21,6 +21,10 @@ Game::~Game() {}
 
 void Game::run() { loop(); }
 
+void Game::stop() {
+  keep_running = false;
+}
+
 void Game::loop() {
   while (keep_running) {
     auto start = std::chrono::steady_clock::now();

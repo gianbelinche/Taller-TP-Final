@@ -147,4 +147,5 @@ size_t Socket::recv(char* buffer, size_t length) {
 void Socket::shutdown_close() {
   shutdown(fd, SHUT_RDWR);
   close(fd);
+  fd = -1;
 }

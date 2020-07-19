@@ -14,3 +14,8 @@ Socket Acceptor::accept() {
   Socket peer = sock.accept();
   return peer;
 }
+
+void Acceptor::close() {
+  sock.shutdown_close();
+}
+

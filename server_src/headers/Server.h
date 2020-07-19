@@ -27,6 +27,8 @@ class Server : public Thread {
 
   void run() override;
 
+  void stop();
+
   void loadMap(const char* mapPath);
 
   void releaseDeadClients();

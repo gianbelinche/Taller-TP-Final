@@ -30,6 +30,7 @@ int main(int argc, const char* argv[]) {
   while (usr_input != "q") {
     std::cin >> usr_input;
   }
-  // Parar al Server y cerrar todo
+  server.stop();
+  server.join();
   return 0;
 }

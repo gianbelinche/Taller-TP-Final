@@ -30,7 +30,17 @@ GameState::GameState(std::vector<std::vector<bool>>& collisions,
   }
 }
 
-GameState::~GameState() {}
+GameState::~GameState() {
+  for (auto& ent: entities) {
+    delete ent.second;
+  }
+  for (auto& item: droppedItems) {
+    delete item.second;
+  }
+  for (auto& npc: npcs) {
+    delete npc.second;
+  }
+}
 
 PlayerNet* GameState::getPlayer(int id) {
   if (players.find(id) != players.end()) {

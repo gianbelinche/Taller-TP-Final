@@ -41,17 +41,32 @@ void Server::run() {
   world.init();
   game.start();  // Lanza el hilo principal del juego
 
-  while (keepAccepting) {
-    Socket peer = std::move(clientAcceptor.accept());
-    ClientHandler* cli = new ClientHandler(std::move(peer), persistor, map,
-                                           idAssigner, incomingMessages,
-                                           dispatcher, world, listener, config);
+  try {
+    while (keepAccepting) {
+      Socket peer = std::move(clientAcceptor.accept());
+      ClientHandler* cli = new ClientHandler(std::move(peer), persistor, map,
+                                            idAssigner, incomingMessages,
+                                            dispatcher, world, listener, config);
 
-    clients.push_back(cli);
-    cli->start();
-    releaseDeadClients();
+      clients.push_back(cli);
+      cli->start();
+      releaseDeadClients();
+    }
+  } catch(SocketException &e) {
+    if (keepAccepting) {
+      throw e;
+    }
   }
+  releaseAllClients();
+  game.stop();
+  game.join();
 }
+
+void Server::stop() {
+  keepAccepting = false;
+  clientAcceptor.close();
+}
+
 
 void Server::releaseDeadClients() {
   for (std::list<ClientHandler*>::iterator it = clients.begin();

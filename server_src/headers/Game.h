@@ -36,6 +36,8 @@ class Game : public Thread {
 
   void update();
 
+  void stop();
+
  private:
   void movePlayer(std::string& move);
 };

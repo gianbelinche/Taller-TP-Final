@@ -17,6 +17,8 @@ class Acceptor {
   ~Acceptor();
 
   Socket accept();
+
+  void close();
 };
 
 #endif // ACCEPTOR_H
