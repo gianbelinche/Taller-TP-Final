@@ -46,6 +46,7 @@
 #define BACULO_ENGARZADO_SOUND_EFFECT_PATH "media/sound_effects/baculo engarzado.wav"
 #define SIMPLE_BOW_SOUND_EFFECT_PATH "media/sound_effects/simple bow.wav"
 #define COMPOSED_BOW_SOUND_EFFECT_PATH "media/sound_effects/composed bow.wav"
+#define FIST_SOUND_EFFECT_PATH "media/sound_effects/fist.wav"
 
 #define ESPADA_PATH "media/img/espada.png"
 #define HACHA_PATH "media/img/hacha.png"

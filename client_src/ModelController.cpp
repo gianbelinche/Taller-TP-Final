@@ -3,7 +3,7 @@
 #include <exception>
 #include <iostream>
 
-#define POTION 0
+#define POTION 10
 
 enum state {
     MOVE_ENTITY,

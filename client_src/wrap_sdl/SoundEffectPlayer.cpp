@@ -2,7 +2,7 @@
 #include "../headers/paths.h"
 
 enum sounds{
-    POTION,
+    FIST,
     SWORD,
     AXE,
     HAMMER,
@@ -11,7 +11,8 @@ enum sounds{
     BACULO_NUDOSO,
     BACULO_ENGARZADO,
     SIMPLE_BOW,
-    COMPOSED_BOW
+    COMPOSED_BOW,
+    POTION
 };
 
 SoundEffectPlayer::SoundEffectPlayer() : sounds() {
@@ -25,6 +26,7 @@ SoundEffectPlayer::SoundEffectPlayer() : sounds() {
     this->add(BACULO_ENGARZADO,BACULO_ENGARZADO_SOUND_EFFECT_PATH);
     this->add(SIMPLE_BOW,SIMPLE_BOW_SOUND_EFFECT_PATH);
     this->add(COMPOSED_BOW,COMPOSED_BOW_SOUND_EFFECT_PATH);
+    this->add(FIST,FIST_SOUND_EFFECT_PATH);
 }
 
 void SoundEffectPlayer::add(const int id,std::string sound){
