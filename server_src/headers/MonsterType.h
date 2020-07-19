@@ -18,7 +18,7 @@ class MonsterType {
   int npcType;
 
  public:
-  MonsterType(Configuration& config, std::string typeStr, int npcType);
+  MonsterType(Configuration& config, const char* typeStr, int npcType);
 
   ~MonsterType();
 

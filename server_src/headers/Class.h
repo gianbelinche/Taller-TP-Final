@@ -16,7 +16,7 @@ class Class {
   int class_type;
 
  public:
-  Class(Configuration& config, std::string typeStr, int classType);
+  Class(Configuration& config, const char* typeStr, int classType);
 
   ~Class();
 

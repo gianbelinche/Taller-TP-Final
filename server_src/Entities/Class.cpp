@@ -1,6 +1,6 @@
 #include "../headers/Class.h"
 
-Class::Class(Configuration& config, std::string typeStr, int classType)
+Class::Class(Configuration& config, const char* typeStr, int classType)
     : 
       hpFactor(config.getValues(typeStr)["hpFactor"]),
       manaFactor(config.getValues(typeStr)["manaFactor"]),

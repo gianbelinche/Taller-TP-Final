@@ -2,7 +2,7 @@
 
 #include "../headers/Monster.h"
 
-MonsterType::MonsterType(Configuration& config, std::string typeStr, int npcType)
+MonsterType::MonsterType(Configuration& config, const char* typeStr, int npcType)
     : hp(config.getValues(typeStr)["hp"]), 
       damage(config.getValues(typeStr)["damage"]),
       level(config.getValues(typeStr)["level"]),

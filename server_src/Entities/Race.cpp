@@ -1,6 +1,6 @@
 #include "../headers/Race.h"
 
-Race::Race(Configuration& config, std::string typeStr, int raceType)
+Race::Race(Configuration& config, const char* typeStr, int raceType)
     : hpFactor(config.getValues(typeStr)["hpFactor"]),
       recoveryFactor(config.getValues(typeStr)["recoveryFactor"]),
       manaFactor(config.getValues(typeStr)["manaFactor"]),

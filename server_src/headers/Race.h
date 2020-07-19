@@ -16,7 +16,7 @@ class Race {
   int race_type;
 
  public:
-  Race(Configuration& config, std::string typeStr, int raceType);
+  Race(Configuration& config, const char* typeStr, int raceType);
 
   ~Race();
 
