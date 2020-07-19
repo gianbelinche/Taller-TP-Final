@@ -2,7 +2,11 @@
 
 BankLocker::BankLocker() : gold(0) {}
 
-BankLocker::~BankLocker() {}
+BankLocker::~BankLocker() {
+  for (auto& item: itemsInside) {
+    delete item;
+  }
+}
 
 std::vector<Item*>& BankLocker::getItems() {
   return itemsInside;

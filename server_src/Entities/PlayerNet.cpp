@@ -54,7 +54,12 @@ PlayerNet::PlayerNet(int x, int y, int id, GameState& currState, int velocity,
   }
 }
 
-PlayerNet::~PlayerNet() {}
+PlayerNet::~PlayerNet() {
+  delete defaultWeapon;
+  delete defaultArmor;
+  delete defaultHelmet;
+  delete defaultShield;
+}
 
 int PlayerNet::getAttackRange() { return weapon->getAttackRange(); }
 
@@ -72,7 +77,8 @@ float PlayerNet::getIntelligence() {
 }
 
 float PlayerNet::getStrength() {
-  int baseStrength = playerRace->getStrength() * playerClass->getStrengthFactor();
+  int baseStrength =
+      playerRace->getStrength() * playerClass->getStrengthFactor();
   return equation::getCurrentLevelStrength(baseStrength, level);
 }
 
@@ -400,7 +406,7 @@ void PlayerNet::removeItemFromInventory(int slot) {
   }
   int itemId = item->getId();
 
-  if (itemId == weapon->getId() ||  itemId == armor->getId()||
+  if (itemId == weapon->getId() || itemId == armor->getId() ||
       itemId == helmet->getId() || itemId == shield->getId()) {
     listener.inventoryUnequipItem(id, item->getEquippedPosition());
     listener.playerEquipedItem(id, item->getEquippedPosition(), 0);
@@ -424,10 +430,6 @@ void PlayerNet::addItemToInventory(Item* item) {
   listener.inventoryAddItem(id, item->getItemType());
 }
 
-void PlayerNet::selectItem(int id) {
-  selectedItem = id;
-}
+void PlayerNet::selectItem(int id) { selectedItem = id; }
 
-int PlayerNet::getSelectedItem() {
-  return selectedItem;
-}
+int PlayerNet::getSelectedItem() { return selectedItem; }
