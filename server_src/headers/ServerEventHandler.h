@@ -20,6 +20,9 @@
 #define RIGHT 3
 #define STOP 4
 
+#define MUST_BE_ERASED 0
+#define MUST_BE_DELETED 1
+
 class ServerEventHandler {
  private:
   GameState &world;

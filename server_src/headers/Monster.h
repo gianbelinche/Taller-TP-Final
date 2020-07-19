@@ -48,6 +48,8 @@ class Monster : public Entity {
   int getNpcType();
 
   void moveRandom();
+
+  bool mustBeDeleted() override;
 };
 
 #endif  // MONSTER_H

@@ -31,6 +31,7 @@ ClientHandler::ClientHandler(Socket p, Persistor& persist, Map& worldMap,
 ClientHandler::~ClientHandler() {}
 
 void ClientHandler::run() {
+  PlayerNet* player = nullptr;
   try {
     std::pair<std::string, std::vector<uint32_t>> playerDat =
       std::move(getCredentials());
@@ -53,7 +54,7 @@ void ClientHandler::run() {
     receiver.stop();
     receiver.join();
 
-    PlayerNet* player = world.getPlayer(playerInfo[0]);
+    player = world.getPlayer(playerInfo[0]);
     std::string username = world.getUsernameById(player->getId());
     persistor.persistPlayer(std::move(player->getData()),username);
 
@@ -65,6 +66,9 @@ void ClientHandler::run() {
     listener.entityDisappear(playerInfo[0]);
     online = false;  
   }catch(SocketException& e){}
+  if (player != nullptr) {
+    delete player;
+  }
 }
 
 bool ClientHandler::finished() { return !online; }

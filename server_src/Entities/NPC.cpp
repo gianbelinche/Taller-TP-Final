@@ -44,6 +44,7 @@ Item* NPC::substractItem(int choice, int id) { return nullptr; }
 
 int NPC::sellItem(Item* item) {
   int moneyEarned = item->getSellPrice();
+  delete item;
   return moneyEarned;
 }
 

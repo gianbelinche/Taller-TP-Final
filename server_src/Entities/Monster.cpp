@@ -148,3 +148,7 @@ std::vector<uint32_t> Monster::getSendable() {
 }
 
 int Monster::getNpcType() { return kind.getNpcType(); }
+
+bool Monster::mustBeDeleted() {
+  return !isAlive();
+}

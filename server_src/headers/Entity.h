@@ -23,7 +23,7 @@ class Entity {
  public:
   Entity(int x, int y, int id, int maxHp, int level);
 
-  ~Entity();
+  virtual ~Entity();
 
   int virtual getHitExp(int AttackerLevel, int damage);
 
@@ -50,6 +50,8 @@ class Entity {
   int virtual takeDamage(int dmgToTake, bool canDodge) = 0;
 
   std::vector<uint32_t> virtual getSendable();
+
+  virtual bool mustBeDeleted();
 };
 
 #endif  // ENTITY_H

@@ -11,7 +11,7 @@ int GoldDrop::beTaken(PlayerNet* player) {
   int goldPlayerCanTake = player->getMaxGold() - player->getGold();
   if (goldPlayerCanTake >= amount) {
     player->addGold(amount);
-    return 0;
+    return 1;
   } else { // Si superaria el oro maximo tomando todo, entonces toma una parte
     player->addGold(goldPlayerCanTake);
     amount -= goldPlayerCanTake;

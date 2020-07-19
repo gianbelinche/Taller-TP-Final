@@ -47,3 +47,6 @@ std::vector<uint32_t> Entity::getSendable() {
   return {};
 }
 
+bool Entity::mustBeDeleted() {
+  return false;
+}

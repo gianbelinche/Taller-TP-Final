@@ -10,6 +10,7 @@
 #include "../headers/MeditationState.h"
 #include "../headers/PlayerNet.h"
 #include "../headers/PlayerState.h"
+#include "../headers/MasterFactory.h"
 
 #define POTION 18
 
@@ -95,6 +96,10 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
     expGain += entity->getDeathExp(player->getLevel());
   }
   player->receiveExp(expGain);
+
+  if (entity->mustBeDeleted()) {
+    delete entity;
+  }
 }
 
 void ServerEventHandler::handle(EntityClick& ev) {
@@ -415,10 +420,10 @@ void ServerEventHandler::handleSell(int playerId, NPC* npc, int slotChoice) {
     return;
   }
   Item* item = inventory.getItem(slotChoice);
+  handleRemoveInventoryItem(playerId, slotChoice);
   int profit = npc->sellItem(item);
   player->addGold(profit);
   listener.goldUpdate(player->getId(), player->getGold());
-  handleRemoveInventoryItem(playerId, slotChoice);
 }
 
 void ServerEventHandler::handleTake(int playerId) {
@@ -431,19 +436,21 @@ void ServerEventHandler::handleTake(int playerId) {
     return;
   }
   Inventory& inv = player->getInventory();
-  if (inv.isFull()) {
-    return;
-  }
   Item* item = world.getCloseItem(player->getX(), player->getY());
   if (item == nullptr) {
     return;
   }
+  if (inv.isFull() && item->getItemType() != GOLDDROP_TYPE) {
+    return;
+  }
   
-  int mustBeErased = item->beTaken(player);
-  if (mustBeErased == 0) {
-    // TODO: Creo que el oro va a generar leaks, no se libera en ningun lado
+  int exitCode = item->beTaken(player);
+  if (exitCode == MUST_BE_ERASED || exitCode == MUST_BE_DELETED) {
     world.rmItem(item->getId());
     listener.entityDisappear(item->getId());
+    if (exitCode == MUST_BE_DELETED) {
+      delete item;
+    }
   }
 }
 
@@ -480,6 +487,7 @@ void ServerEventHandler::handleEquip(int playerId) {
   int itemStatus = item->beEquiped(player);
   if (itemStatus < 0) {  // El objeto se elimina del inventario
     handleRemoveInventoryItem(playerId, slot);
+    delete item;
     return;
   }
   listener.inventoryEquipItem(player->getId(), item->getItemType());
