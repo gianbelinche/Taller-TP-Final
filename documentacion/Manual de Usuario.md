@@ -26,7 +26,7 @@ El programa fue probado con las siguientes tres especificaciones de hardware:
 
 1. Primera computadora:
 
-    - Procesador AMD 10-7850K
+    - Procesador AMD A10-7850K
     - 16 GB de RAM
     - Placa de Video Radeon R9 380
 
@@ -176,6 +176,3 @@ Con respecto a las armas, existen tres tipos distintos: armas melee, armas mági
 
 Las armas mágicas consumen mana, mientras que el resto no. Además, los arcos tienen munición infinita.
 
-## Apéndice de errores
-
-***COMPLETAR***
