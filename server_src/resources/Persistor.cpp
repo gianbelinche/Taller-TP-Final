@@ -128,7 +128,7 @@ void Persistor::persistUsrMap() {
   file.close();
 }
 
-void Persistor::addPassword(std::string& user, std::string& pass) {
+void Persistor::addPassword(std::string& user, std::string&& pass) {
   std::unique_lock<std::mutex> l(passMutex);
   passwords[user] = pass;
 }

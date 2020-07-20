@@ -8,6 +8,7 @@
 #include <msgpack.hpp>
 #include <sstream>
 #include "../headers/PlayerNet.h"
+#include "../headers/sha256.h"
 
 #define INVENTORY_SIZE 20
 
@@ -117,7 +118,7 @@ std::pair<std::string, std::vector<uint32_t>> ClientHandler::getCredentials() {
     }
 
     if (passwords.find(user_s) != passwords.end()) {
-      if (passwords[user_s] == pass_s) {  // Aplicar SHA
+      if (passwords[user_s] == sha256(pass_s)) {  // Aplicar SHA
         sendSuccesfulLogin();
         correctCredentials = true;
       } else {
@@ -135,8 +136,7 @@ std::pair<std::string, std::vector<uint32_t>> ClientHandler::getCredentials() {
 
   if (creationNeeded) {
     handleNewPlayer(user_s);
-    persistor.addPassword(user_s, pass_s);
-    // passwords[user_s] = pass_s;  // Aplicar sha
+    persistor.addPassword(user_s, std::move(sha256(pass_s)));
     persistor.persistPasswordMap();
   }
   std::vector<uint32_t> playerInfo = persistor.obtainPlayerData(user_s);

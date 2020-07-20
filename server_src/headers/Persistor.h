@@ -33,7 +33,7 @@ class Persistor {
 
   std::unordered_map<std::string, std::string>& getPasswords();
 
-  void addPassword(std::string& user, std::string& pass);
+  void addPassword(std::string& user, std::string&& pass);
 
   void persistUsrMap();
 
