@@ -37,7 +37,7 @@ class Equippable {
 
         void updateEquipment(EquipType equipType);
         void updateFrame(uint8_t aHorFrame, uint8_t aVerFrame);
-        void render(uint16_t posX, uint16_t posY);
+        void render(int posX, int posY);
 };
 
 #endif
