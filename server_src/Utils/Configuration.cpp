@@ -63,10 +63,8 @@ void Configuration::parse(std::string& configFile) {
   }
 }
 
-const char* Configuration::getPort() {
-  int port = configValues["config"]["port"];
-  std::string port_s = std::to_string(port);
-  return port_s.data();
+int Configuration::getPort() {
+  return configValues["config"]["port"];
 }
 
 int Configuration::getFPS() { return (int)configValues["config"]["FPS"]; }

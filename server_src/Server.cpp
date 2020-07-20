@@ -17,42 +17,38 @@
 #include "headers/ServerEventListener.h"
 #include "headers/ServerProtocol.h"
 
-Server::Server(const char* port, Configuration& configuration)
-    : clientAcceptor(port), config(configuration), keepAccepting(true) {}
+Server::Server(int port, Configuration& configuration)
+    : clientAcceptor(port),
+      config(configuration),
+      keepAccepting(true),
+      idAssigner(1),
+      map(MAP_PATH),
+      listener(dispatcher),
+      factory(idAssigner, config, listener),
+      world(map.getCollisionMap(), map.getCitiesMap(), config.getFPS(),
+            listener, factory, config, config.getValues("npcsAmount")),
+      handler(world, listener, config),
+      protocol(handler),
+      game(world, idAssigner, incomingMessages, protocol) {}
 
 Server::~Server() {}
 
 void Server::run() {
-  std::atomic<uint32_t> idAssigner{1};
-  Map map(MAP_PATH);
-
-  MessageDispatcher dispatcher;
-  ServerEventListener listener(dispatcher);
-  MasterFactory factory(idAssigner, config, listener);
-  GameState world(map.getCollisionMap(), map.getCitiesMap(), config.getFPS(), 
-                  listener, factory, config, config.getValues("npcsAmount"));
-  ServerEventHandler handler(world, listener, config);
-  ServerProtocol protocol(handler);
-
-  ProtectedQueue<std::string> incomingMessages;
-  Game game(world, idAssigner, incomingMessages, protocol);
-  Persistor persistor;
-
   world.init();
   game.start();  // Lanza el hilo principal del juego
 
   try {
     while (keepAccepting) {
       Socket peer = std::move(clientAcceptor.accept());
-      ClientHandler* cli = new ClientHandler(std::move(peer), persistor, map,
-                                            idAssigner, incomingMessages,
-                                            dispatcher, world, listener, config);
+      ClientHandler* cli = new ClientHandler(
+          std::move(peer), persistor, map, idAssigner, incomingMessages,
+          dispatcher, world, listener, config);
 
       clients.push_back(cli);
       cli->start();
       releaseDeadClients();
     }
-  } catch(SocketException &e) {
+  } catch (SocketException& e) {
     if (keepAccepting) {
       throw e;
     }
@@ -66,7 +62,6 @@ void Server::stop() {
   keepAccepting = false;
   clientAcceptor.close();
 }
-
 
 void Server::releaseDeadClients() {
   for (std::list<ClientHandler*>::iterator it = clients.begin();

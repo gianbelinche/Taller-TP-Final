@@ -2,14 +2,17 @@
 
 #include "../headers/Monster.h"
 
-MonsterType::MonsterType(Configuration& config, const char* typeStr, int npcType)
-    : hp(config.getValues(typeStr)["hp"]), 
+MonsterType::MonsterType(Configuration& config, const char* typeStr,
+                         int npcType)
+    : hp(config.getValues(typeStr)["hp"]),
       damage(config.getValues(typeStr)["damage"]),
       level(config.getValues(typeStr)["level"]),
       velocity(config.getValues(typeStr)["velocity"]),
       atkRange(config.getValues(typeStr)["attackRange"]),
       pursuitDistance(config.getValues(typeStr)["pursuitDistance"]),
-      npcType(npcType) {}
+      npcType(npcType),
+      config(config),
+      typeStr(typeStr) {}
 
 MonsterType::~MonsterType() {}
 
@@ -22,5 +25,7 @@ int MonsterType::getNpcType() { return npcType; }
 Monster* MonsterType::newMonster(int id, int x, int y, GameState& world,
                                  ServerEventListener& eventListener) {
   return new Monster(*this, id, x, y, level, velocity, atkRange,
-                     pursuitDistance, world, eventListener);
+                     pursuitDistance, world, eventListener,
+                     config.getValues(typeStr)["attackCooldown"],
+                     config.getValues(typeStr)["maxStepsPerDirection"]);
 }

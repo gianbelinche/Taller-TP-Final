@@ -19,12 +19,17 @@ class Monster : public Entity {
   int velocity;
   int atkRange;
   int pursuitDistance;
+  int attackCooldown;
+  int currentAttackCooldown;
+  int maxStepsToTake;
+  int stepsToTake;
+  int currentDirection;
 
   void moveToPlayer(PlayerNet* player);
  public:
   Monster(MonsterType& type, int id, int x, int y, int level, int velocity,
           int atkRange, int pursuitDistance, GameState& world,
-          ServerEventListener& eventListener);
+          ServerEventListener& eventListener, int attackCooldown, int maxStepsPerdirection);
 
   ~Monster();
 

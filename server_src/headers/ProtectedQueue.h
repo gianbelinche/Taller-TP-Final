@@ -61,8 +61,7 @@ template <class T>
 void ProtectedQueue<T>::push(T s) {
   std::unique_lock<std::mutex> l(m);
   q.push(std::move(s));
-  cv.notify_all();  // O one, no cambia nada en nuestro caso, solo va a haber 1
-                    // en espera
+  cv.notify_all();
 }
 
 template <class T>

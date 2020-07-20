@@ -7,8 +7,14 @@
 #include <unordered_map>
 
 #include "Configuration.h"
+#include "Game.h"
 #include "Acceptor.h"
 #include "ClientHandler.h"
+#include "MasterFactory.h"
+#include "ServerEventHandler.h"
+#include "ServerProtocol.h"
+
+
 #include "Thread.h"
 
 #define MAP_PATH "media/json/map.json"
@@ -19,9 +25,20 @@ class Server : public Thread {
   Configuration& config;
   std::list<ClientHandler*> clients;  // efficient erase
   std::atomic<bool> keepAccepting;
+  std::atomic<uint32_t> idAssigner;
+  Map map;
+  MessageDispatcher dispatcher;
+  ServerEventListener listener;
+  MasterFactory factory;
+  GameState world;
+  ServerEventHandler handler;
+  ServerProtocol protocol;
+  ProtectedQueue<std::string> incomingMessages;
+  Game game;
+  Persistor persistor;
 
  public:
-  Server(const char* port, Configuration& configuration);
+  Server(int port, Configuration& configuration);
 
   ~Server();
 

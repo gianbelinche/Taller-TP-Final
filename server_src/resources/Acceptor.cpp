@@ -1,10 +1,11 @@
 #include "../headers/Acceptor.h"
 
 #include <utility>
+#include <string>
 #include <vector>
 
-Acceptor::Acceptor(const char* serv) {
-  sock.bind(serv);
+Acceptor::Acceptor(int serv) {
+  sock.bind(std::to_string(serv).c_str());
   sock.listen();
 }
 

@@ -12,6 +12,7 @@ class Configuration {
       configValues;
   std::unordered_map<int, std::string> itemToStr;
   std::unordered_map<int, char const*> typeToSpawn;
+  const char* port_s;
 
  public:
   Configuration(std::string configFile);
@@ -21,7 +22,7 @@ class Configuration {
   /* Parsea el archivo de configuración */
   void parse(std::string& configFile);
 
-  const char* getPort();
+  int getPort();
 
   int getFPS();
 

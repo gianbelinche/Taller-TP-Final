@@ -12,7 +12,7 @@ class Acceptor {
   Socket sock;
 
  public:
-  explicit Acceptor(const char* serv);
+  explicit Acceptor(int serv);
 
   ~Acceptor();
 

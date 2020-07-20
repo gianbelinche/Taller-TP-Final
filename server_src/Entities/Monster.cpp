@@ -13,14 +13,20 @@
 
 Monster::Monster(MonsterType& type, int id, int x, int y, int level,
                  int velocity, int atkRange, int pursuitDistance,
-                 GameState& world, ServerEventListener& eventListener)
+                 GameState& world, ServerEventListener& eventListener,
+                 int attackCooldown, int maxStepsPerdirection)
     : Entity(x, y, id, type.getHp(), level),
       kind(type),
       world(world),
       listener(eventListener),
       velocity(velocity),
       atkRange(atkRange),
-      pursuitDistance(pursuitDistance) {}
+      pursuitDistance(pursuitDistance),
+      attackCooldown(attackCooldown),
+      currentAttackCooldown(0),
+      maxStepsToTake(maxStepsPerdirection),
+      stepsToTake(0),
+      currentDirection(0) {}
 
 Monster::~Monster() {}
 
@@ -55,29 +61,37 @@ void Monster::moveToPlayer(PlayerNet* player) {
 }
 
 void Monster::moveRandom() {
+  if (stepsToTake == 0) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> random_direction(0, 4);
+    std::uniform_int_distribution<> randomAmountSteps(1, maxStepsToTake);
+    currentDirection = random_direction(gen);
+    stepsToTake = randomAmountSteps(gen);
+  }
   int new_x = x;
   int new_y = y;
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  std::uniform_real_distribution<> distr(0, 1);
-  float rand_val = distr(gen);
-  int direction;
-  if (rand_val < 0.25) {
-    new_x -= velocity;
-    direction = 2;
-  } else if (rand_val >= 0.25 && rand_val < 0.5) {
+
+  switch (currentDirection) {
+  case 0:
     new_y -= velocity;
-    direction = 0;
-  } else if (rand_val >= 0.5 && rand_val < 0.75) {
-    direction = 3;
-    new_x += velocity;
-  } else {
+    break;
+  case 1:
     new_y += velocity;
-    direction = 1;
+    break;
+  case 2:
+    new_x -= velocity;
+    break;
+  case 3:
+    new_x += velocity;
+    break;
+  default:
+    break;
   }
+  stepsToTake--;
   if (world.isValidPosition(new_x, new_y) &&
       !world.isCityPosition(new_x, new_y)) {
-    moveTo(new_x, new_y, direction);
+    moveTo(new_x, new_y, currentDirection);
   }
 }
 
@@ -86,9 +100,14 @@ void Monster::update() {
   if (currentFrame == 5) {  // TODO: Hacer configurable el valor
     currentFrame = 0;
     PlayerNet* player = world.getNearestPlayer(this, &Condition::isAlive);
-    if (player != nullptr && world.entitiesDistance(this, player) < pursuitDistance) {
+    if (player != nullptr &&
+        world.entitiesDistance(this, player) < pursuitDistance) {
       if (world.entitiesDistance(this, player) <= atkRange) {
-        attack(player);
+        if (currentAttackCooldown == 0) {
+          attack(player);
+          currentAttackCooldown = attackCooldown;
+        }
+        currentAttackCooldown--;
       } else {
         moveToPlayer(player);
       }
@@ -149,6 +168,4 @@ std::vector<uint32_t> Monster::getSendable() {
 
 int Monster::getNpcType() { return kind.getNpcType(); }
 
-bool Monster::mustBeDeleted() {
-  return !isAlive();
-}
+bool Monster::mustBeDeleted() { return !isAlive(); }

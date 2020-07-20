@@ -16,6 +16,8 @@ class MonsterType {
   int atkRange;
   int pursuitDistance;
   int npcType;
+  Configuration& config;
+  const char* typeStr;
 
  public:
   MonsterType(Configuration& config, const char* typeStr, int npcType);
