@@ -42,7 +42,7 @@ add_library(client_lib
   client_src/errors/QuitException.cpp
   client_src/errors/SDLError.cpp
   client_src/client_controller/EventManager.cpp
-  client_src/ModelController.cpp
+  client_src/client_controller/ModelController.cpp
   client_src/client_controller/Receiver.cpp
   client_src/client_controller/Renderer.cpp
   client_src/client_controller/Sender.cpp

@@ -29,6 +29,30 @@ El programa consiste de dos aplicaciones, un servidor, y un cliente, cada uno de
 
 ## Cliente:
 
+### Flujo principal del cliente
+
+Al inicializar el cliente, se inicia la pantalla de LogIn, el cual se divide en tres etapas:
+
+- La primera etapa es la de la conexión al servidor. En esta pantalla se deberá ingresar host y puerto. Si el host y puerto son correctos, `ClientConnector` se encargará de conectarse al servidor solicitado.
+- La segunda etapa es la del ingreso a la cuenta, donde se deberá ingresar usuario y contraseña. En esta etapa se enviarán mensajes al servidor con los datos ingresados hasta que sean correctos o la cuenta sea inexistente, en este caso el servidor se encargará de crearla.
+- La tercera etapa se ejecuta solo en el caso de que la cuenta no existiese. Aquí se elige raza y clase, las cuales serán enviadas al servidor.
+
+Una vez finalizada la etapa de LogIn, se finalizará la ejecución de QT y se procederá a inicializar el cliente a través de `ClientInitializer`. Aquí se inicializará la ventana principal en SDL, se obtendrán los datos del jugador, los datos del mapa principal y se inicializará el resto de componentes necesarios para la ejecución del loop del cliente.
+
+Al finalizar la inicialización, se procede a la ejecución de este. En esta etapa se crearán 3 hilos, por lo que se usarán 4 hilos en total teniendo en cuenta el hilo principal. Estos 4 hilos están divididos en:
+
+- EventManager: donde se procesan los eventos del usuarios y se los guarda en una cola, para luego ser enviados al servidor.
+- Sender: donde se reciben los eventos procesados y se los envía al servidor.
+- Receiver: donde se reciben eventos provenientes del servidor y se los guarda en una cola.
+- Renderer/ModelController: donde se ejecuta el loop principal, actualizando el modelo con eventos provenientes del servidor (que se encuentran en la cola) y renderizando cada componente.
+
+Cada hilo tiene donde dormir para no estar ejecutando innecesariamente.
+
+- EventManager duerme en el `SDL_WaitEvent`, donde no procesa eventos si no los hay.
+- Sender duerme en la cola asociada a EventManager.
+- Receiver duerme en el `receive` del socket siempre que no haya mensajes entrantes.
+- Renderer/ModelController duermen con la espera del ciclo del loop. Al final del ciclo se encuentra un `usleep` que duerme solo si es necesario hasta completar 30ms de ciclo. No se duerme más que eso ya que sino no se tendría un frame rate agradable al usuario.
+
 ### Módulo WRAP_SDL
 
 Este módulo se encarga de wrappear las funcionalidades de SDL, para ser capaz de utilizarlo sin preocuparse de su funcionamiento interno, las clases que componen este módulo son
@@ -49,6 +73,8 @@ Luego, la clase Music y la clase SoundEffect encapsulan la reproducción de musi
 Diagrama de clases
 
 ![Diagrama1](img/diagrama_wrap_sdl.png)
+
+Se agregó luego la clase MapImage, que hereda de Image. Esta clase de utiliza en la creación del mapa ya que cuenta con una funcionalidad extra `renderFromTile` que facilita el renderizado del mapa, ya que éste se guarda en una matriz de índices que indican qué tile debe ser renderizado para una cierta imagen.
 
 ### Módulo Layout
 
@@ -104,11 +130,14 @@ De parte del cliente, los NPC's y los Mobs no son tan distintos. La única difer
 
 También existe una clase `Equippable` utilizada por `Player` para equiparse. No se utiliza `Item` ya que no es una entidad y, además, se necesita de un `sprite` más completo, con cada tile para ser renderizado a la par del movimento del jugador.
 
+Se agregó también una clase `Attack` utilizada para renderizar las animaciones de los ataques. Esta clase es independiente a `Player` y tampoco hereda de `Entity`. Es controlada por `EntityManager` para hacer su creación, renderizado y eliminación.
+
 ### Módulo ClientController
 
 En este módulo se encuentran las clases que se ejecutan una vez cargado el cliente y son aquellas que se ejecutarán a lo largo del programa mientras se encuentre estable el servidor. Estas clases son:
 
-- **Renderer**: clase hija de `Thread` encargada de renderizar el módelo en cada loop. Además, contiene también un `ModelController`, encargado de actualizar el modelo a través de eventos que obtiene a través de una cola de eventos conectada a `Receiver`, que se ejecuta en cada loop antes de renderizar.
+- **Renderer**: clase hija de `Thread` encargada de renderizar el módelo en cada loop. Además, contiene también al `ModelController`, el cual se ejecuta en cada ciclo del loop.
+- **ModelController**: clase encargada de actualizar el modelo a través de eventos que obtiene a través de una cola de eventos conectada a `Receiver`, que se ejecuta en cada loop antes de renderizar.
 - **Receiver**: clase hija de `Thread` encargada de recibir mensajes del servidor, desempaquetarlos y pushearlos a una cola de eventos conectada al `ModelController`.
 - **EventManager**: clase encargada de tomar los eventos del usuario y, a través del la codificación del evento con `ClientProtocol`, pushear a una cola de eventos conectada a `Sender`.
 - **Sender**: clase hija de `Thread` encargada de tomar los eventos de una cola de eventos conectada a `EventManager`, empaquetarlos y enviarlos al servidor.
@@ -118,6 +147,19 @@ Cada una de estas clases se ejecuta en un hilo distinto. EventManager se ejecuta
 Estas clases son ejecutadas y finalizadas en una clase llamada `ClientController`.
 
 ![Diagrama de ClientController](img/diagrama_clientcontroller.png)
+
+### Módulo Principal
+
+En este módulo se encuentran aquellas clases de propósito general.
+
+- **Camera**: Clase encargada de seguir el movimiento del personaje para renderizar en el lugar indicado.
+- **ClientConnector**: Clase encargada de realizar la conexión al servidor y de la comunicación con este mismo.
+- **ClientController**: Clase encargada de inicializar los hilos y de finalizar correctamente al cliente.
+- **ClientInitializer**: Clase encargada de inicializar al cliente y establecer el ciclo principal del juego.
+- **ClientProtocol**: Clase donde se crean los mensajes a ser enviados al servidor según el protocolo establecido.
+- **MainMap**: Clase que contiene el mapa principal del juego.
+- **MainWindow**: Clase encargada de inicializar la ventana de SDL.
+- **SpriteClipCreator**: Functor encargado de crear los `sprite clips` de las imagenes.
 
 
 
