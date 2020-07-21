@@ -52,7 +52,7 @@ En estas últimas semanas se completaron ciertas funcionalidades que faltaban y 
 
 - Una vez unidos el servidor y el cliente, se fueron encontrando diversos errores, entre ellos:
 
-  - Al principio si un cliente se desconectaba, el servidor se cerraba abruptamente, esto logro solucionarse ...
+  - Al principio si un cliente se desconectaba, el servidor se cerraba abruptamente. Esto logro solucionarse al avanzar el servidor.
 
   - Una vez solucionado el error anterior, ocurria que si luego de conectarse varios clientes, todos se desconectaban, si se queria conectar un nuevo cliente, el servidor se cerraba.
 
@@ -64,7 +64,7 @@ En estas últimas semanas se completaron ciertas funcionalidades que faltaban y 
 
 ## Analisis de puntos pendientes
 
-En la pestaña Projects del repositorio de Github se encuentra una lista con las tareas pendientes, las tares en proceso, y las completadas.
+En la pestaña Projects del repositorio de Github se encuentra una lista con las tareas pendientes, las tareas en proceso, y las completadas.
 
 ## Herramientas
 
@@ -75,3 +75,15 @@ En la pestaña Projects del repositorio de Github se encuentra una lista con las
 - **Gráficos y Sonido**: Se utilizaron diversos programas para la creación de los gráficos y la música del juego, entre ellos, Audacity, ZapSplat (biblioteca online de sonidos) y software de corrección de color para darle variedad a los sprites. Además, se utilizó tiled para la creación del mapa y Photoshop para la edición de ciertos sprites. También utilizamos QT Creator para facilitar la creación de la pantalla de login.
 
 ## Conclusiones
+
+Se logró la aplicación de conocimientos obtenidos a lo largo del curso:
+
+- Se realizó la creación de una aplicación cliente y una servidor, utilizando los conocimientos de sockets para conectarlos.
+- En ambas aplicaciones se utilizaron hilos para realizar distintas tareas en simultáneo y para la comunicación de distintos clientes a un mismo servidor.
+- Se utilizó el patrón de diseño RAII en las distintas clases utilizadas.
+- Se utilizaron distintas herramientas de trabajo como Git, Github, CMake, entre otras.
+- Se utilizaron librerías externas como msgpack y jsoncpp para realizar tareas complejas que hubiesen demandado mucho más tiempo.
+
+Además, la aplicación realizada está abierta a incluir distintas funcionalidades extra como añadir la posibilidad de desequiparse objetos o que los objetos dropeados despawneen después de cierto tiempo, y también a incluir fúturas mejoras como la de balancear fácilmente el juego a través de cambiar variables en el `gameConfig.json` o mejorar los sprites cambiando las imagenes.
+
+También se solucionaron los distintos inconvenientes mencionados en la sección de `Inconvenientes encontrados`, aunque toda aplicación requiere siempre de mejoras y solución de bugs.
