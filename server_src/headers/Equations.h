@@ -2,40 +2,41 @@
 #define EQUATIONS_H
 
 namespace equation {
-  int pointsRecovery(float raceRecoveryFac, float seconds);
+int pointsRecovery(float raceRecoveryFac, float seconds);
 
-  int meditationRecovery(float meditationFactor, float intelligence,
-                         float seconds);
+int meditationRecovery(float meditationFactor, float intelligence,
+                       float seconds);
 
-  int causedDamage(float strength, int minDmg, int maxDmg);
+int causedDamage(float strength, int minDmg, int maxDmg);
 
-  int playerDefense(int minArmorDef, int maxArmorDef, int minShieldDef, 
-                    int maxShieldDef, int minHelmetDef, int maxHelmetDef);
+int playerDefense(float minArmorDef, float maxArmorDef, float minShieldDef,
+                  float maxShieldDef, float minHelmetDef, float maxHelmetDef);
 
-  int maxGold(int level);
+int maxGold(int level);
 
-  int dropGold(int maxHpNPC);
+int dropGold(int maxHpNPC);
 
-  int playerHitExp(int attackerLevel, int attackedLevel, int damage);
+int playerHitExp(int attackerLevel, int attackedLevel, int damage);
 
-  int playerDeathExp(int maxHp, int attackedLevel, int attackerLevel);
+int playerDeathExp(int maxHp, int attackedLevel, int attackerLevel);
 
-  int monsterHitExp(int monsterLevel, int damage);
+int monsterHitExp(int monsterLevel, int damage);
 
-  int monsterDeathExp(int monsterLevel, int maxHp);
+int monsterDeathExp(int monsterLevel, int maxHp);
 
-  int playerMaxHp(int constitution, int classHpFac, int raceHpFac, int level);
+int playerMaxHp(float constitution, float classHpFac, float raceHpFac,
+                int level);
 
-  int playerMaxMana(int intelligence, int manaClassFac,
-                    int manaRaceFac, int level);
+int playerMaxMana(float intelligence, float manaClassFac, float manaRaceFac,
+                  int level);
 
-  int playerMaxExp(int level);
+int playerMaxExp(int level);
 
-  bool isCritical();
+bool isCritical();
 
-  bool dodgeAttack(int agility);
+bool dodgeAttack(int agility);
 
-  int getCurrentLevelStrength(int baseStrength, int level);
-} // namespace equation
+int getCurrentLevelStrength(int baseStrength, int level);
+}  // namespace equation
 
-#endif // EQUATIONS_H
+#endif  // EQUATIONS_H

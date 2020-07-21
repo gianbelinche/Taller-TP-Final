@@ -1,13 +1,13 @@
+#include "../headers/Equations.h"
+
 #include <algorithm>
 #include <cmath>
-#include <random>
 #include <iostream>
-
-#include "../headers/Equations.h"
+#include <random>
 
 // Castea el resultado a int para que no moleste
 int equation::pointsRecovery(float raceRecoveryFac, float seconds) {
-  return raceRecoveryFac*seconds;
+  return raceRecoveryFac * seconds;
 }
 
 int equation::meditationRecovery(float meditationFactor, float intelligence,
@@ -22,9 +22,9 @@ int equation::causedDamage(float strength, int minDmg, int maxDmg) {
   return strength * dist(gen);
 }
 
-int equation::playerDefense(int minArmorDef, int maxArmorDef, int minShieldDef,
-                            int maxShieldDef, int minHelmetDef,
-                            int maxHelmetDef) {
+int equation::playerDefense(float minArmorDef, float maxArmorDef,
+                            float minShieldDef, float maxShieldDef,
+                            float minHelmetDef, float maxHelmetDef) {
   std::random_device rd;
   std::mt19937 gen(rd());
 
@@ -35,9 +35,7 @@ int equation::playerDefense(int minArmorDef, int maxArmorDef, int minShieldDef,
   return armorDef(gen) + shieldDef(gen) + helmetDef(gen);
 }
 
-int equation::maxGold(int level) {
-  return 100 * pow(level, 1.1);
-}
+int equation::maxGold(int level) { return 100 * pow(level, 1.1); }
 
 int equation::dropGold(int maxHpNPC) {
   std::random_device rd;
@@ -58,28 +56,25 @@ int equation::playerDeathExp(int maxHp, int attackedLevel, int attackerLevel) {
 }
 
 int equation::monsterHitExp(int monsterLevel, int damage) {
-
-  return damage * monsterLevel; 
+  return damage * monsterLevel;
 }
 
 int equation::monsterDeathExp(int monsterLevel, int maxHp) {
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_real_distribution<> r(0, 0.1);
-  return r(gen) * maxHp * monsterLevel; 
+  return r(gen) * maxHp * monsterLevel;
 }
 
-int equation::playerMaxHp(int constitution, int classHpFac, 
-                          int raceHpFac, int level) {
+int equation::playerMaxHp(float constitution, float classHpFac, float raceHpFac,
+                          int level) {
   return constitution * classHpFac * raceHpFac * level;
 }
 
-int equation::playerMaxExp(int level) {
-  return 1000 * pow(level, 1.8);    
-}
+int equation::playerMaxExp(int level) { return 1000 * pow(level, 1.8); }
 
-int equation::playerMaxMana(int intelligence, int manaClassFac,
-                            int manaRaceFac, int level) {
+int equation::playerMaxMana(float intelligence, float manaClassFac,
+                            float manaRaceFac, int level) {
   return intelligence * manaClassFac * manaRaceFac * level;
 }
 
@@ -87,7 +82,7 @@ bool equation::isCritical() {
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_real_distribution<> r(0, 1);
-  return r(gen) < 0.05; // 5% de proba
+  return r(gen) < 0.05;  // 5% de proba
 }
 
 bool equation::dodgeAttack(int agility) {
