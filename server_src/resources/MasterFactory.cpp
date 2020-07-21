@@ -63,8 +63,6 @@ Monster* MasterFactory::newZombie(int x, int y, GameState& world) {
 
 PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData,
                                        GameState& world) {
-
-  // ACORTAR ESTA FUNCION!!!!!!
   Weapon* weapon;
   Armor* armor;
   Helmet* helmet;
@@ -89,7 +87,24 @@ PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData,
   } else {
     state = &PlayerState::dead;
   }
+  initPlayerEquipment(weapon, armor, helmet, shield, defaultWeapon,
+                      defaultArmor, defaultHelmet, defaultShield, playerData);
 
+  PlayerNet* player =
+      new PlayerNet(x, y, id, world, 6, exp, level, gold, weapon, armor, helmet,
+                    shield, state, playerClass, playerRace, listener,
+                    config.getConfigValue("framesBetweenUpdate"), defaultWeapon,
+                    defaultArmor, defaultHelmet, defaultShield);
+
+  initPlayerInventory(player, playerData, weapon, armor, helmet, shield);
+  
+  return player;
+}
+
+void MasterFactory::initPlayerEquipment(
+    Weapon*& weapon, Armor*& armor, Helmet*& helmet, Shield*& shield,
+    Weapon*& defaultWeapon, Armor*& defaultArmor, Helmet*& defaultHelmet,
+    Shield*& defaultShield, std::vector<uint32_t>& playerData) {
   /* Prevents leaks/double frees later */
   if (playerData[9] == NOTHING_TYPE) {
     weapon = defaultWeapon;
@@ -114,17 +129,17 @@ PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData,
   } else {
     shield = createShield(playerData[12]);
   }
-  PlayerNet* player =
-      new PlayerNet(x, y, id, world, 6, exp, level, gold, weapon, armor, helmet,
-                    shield, state, playerClass, playerRace, listener,
-                    config.getConfigValue("framesBetweenUpdate"), defaultWeapon,
-                    defaultArmor, defaultHelmet, defaultShield);
+}
+
+void MasterFactory::initPlayerInventory(PlayerNet* player, std::vector<uint32_t>& playerData,
+                           Weapon* weapon, Armor* armor, Helmet* helmet,
+                           Shield* shield) {
   // Rm duplicates from inventory
   rmFirstAppearanceOf(playerData, weapon->getItemType());
   rmFirstAppearanceOf(playerData, armor->getItemType());
   rmFirstAppearanceOf(playerData, helmet->getItemType());
   rmFirstAppearanceOf(playerData, shield->getItemType());
- 
+
   addEquipmentToInventory(weapon, player);
   addEquipmentToInventory(armor, player);
   addEquipmentToInventory(helmet, player);
@@ -135,8 +150,6 @@ PlayerNet* MasterFactory::createPlayer(std::vector<uint32_t>& playerData,
       player->getInventory().addItem(item);
     }
   }
-  
-  return player;
 }
 
 Weapon* MasterFactory::createWeapon(int itemType) {
@@ -222,13 +235,13 @@ Banker* MasterFactory::createBanker(int x, int y) {
   return new Banker(idGenerator++, x, y, listener, *this, bank);
 }
 
-void MasterFactory::rmFirstAppearanceOf(std::vector<uint32_t>& v, uint32_t elem) {
+void MasterFactory::rmFirstAppearanceOf(std::vector<uint32_t>& v,
+                                        uint32_t elem) {
   auto it = std::find(v.begin() + 13, v.end(), elem);
-  if(it != v.end()) {
+  if (it != v.end()) {
     v.erase(it);
   }
 }
-
 
 void MasterFactory::addEquipmentToInventory(Item* item, PlayerNet* player) {
   if (item->getItemType() != 0) {

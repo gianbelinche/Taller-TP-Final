@@ -137,6 +137,16 @@ class MasterFactory {
 
   PlayerNet* createPlayer(std::vector<uint32_t>& playerData, GameState& world);
 
+  void initPlayerEquipment(Weapon*& weapon, Armor*& armor, Helmet*& helmet,
+                           Shield*& shield, Weapon*& defaultWeapon,
+                           Armor*& defaultArmor, Helmet*& defaultHelmet,
+                           Shield*& defaultShield,
+                           std::vector<uint32_t>& playerData);
+
+  void initPlayerInventory(PlayerNet* player, std::vector<uint32_t>& playerData,
+                           Weapon* weapon, Armor* armor, Helmet* helmet,
+                           Shield* shield);
+
   Weapon* createWeapon(int itemType);
 
   Armor* createArmor(int itemType);

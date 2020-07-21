@@ -97,7 +97,7 @@ void Monster::moveRandom() {
 
 void Monster::update() {
   currentFrame++;
-  if (currentFrame == 5) {  // TODO: Hacer configurable el valor
+  if (currentFrame == 5) {
     currentFrame = 0;
     PlayerNet* player = world.getNearestPlayer(this, &Condition::isAlive);
     if (player != nullptr &&

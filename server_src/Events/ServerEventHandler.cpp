@@ -7,10 +7,10 @@
 #include "../headers/ImmobilizedState.h"
 #include "../headers/Inventory.h"
 #include "../headers/Item.h"
+#include "../headers/MasterFactory.h"
 #include "../headers/MeditationState.h"
 #include "../headers/PlayerNet.h"
 #include "../headers/PlayerState.h"
-#include "../headers/MasterFactory.h"
 
 #define POTION 18
 
@@ -23,7 +23,7 @@ ServerEventHandler::~ServerEventHandler() {}
 
 void ServerEventHandler::handle(UserMoved& ev) {
   PlayerNet* player = world.getPlayer(ev.getUser());
-  if (player == nullptr) {  // Caso medio raro
+  if (player == nullptr) {
     std::cerr << "Jugador no encontrado: " << ev.getUser() << std::endl;
     return;
   }
@@ -72,22 +72,20 @@ void ServerEventHandler::handleUserAttack(EntityClick& ev) {
     std::cerr << "Jugador no encontrado: " << ev.getUser() << std::endl;
     return;
   }
-
   Entity* entity = world.getEntity(ev.getDestinyEntityID());
   if (entity == nullptr) {
     std::cerr << "Entidad de destino no encontrada" << ev.getDestinyEntityID()
               << std::endl;
     return;
   }
-  
+
   if (!world.playerCanAttack(player, entity)) {
     return;
   }
-  
   int damageDealt = player->attack(entity);
-  if (damageDealt > 0){
+  if (damageDealt > 0) {
     listener.playerDealtDamage(player->getId(), damageDealt);
-  } else if(damageDealt < 0) { // Se esquivo el ataque
+  } else if (damageDealt < 0) {  // Se esquivo el ataque
     listener.entityEvadedAttack(player->getId(), entity->getId());
   }
 
@@ -162,25 +160,9 @@ void ServerEventHandler::handle(PlayerConnection& ev) {
   }
 }
 
-void ServerEventHandler::handle(MessageSent& ev) {
-  std::string& msg = ev.getMsg();
-  PlayerNet* player = world.getPlayer(ev.getUser());
-  if (player == nullptr) {
-    std::cerr << "No se encontro el usuario\n";
-    return;
-  }
-  int id = player->getId();
-
-  std::vector<std::string> msgTokens = ChatMessageParser::parseTokens(msg);
-  int messageCode = NO_COMMAND;
-  if (msgTokens.size() > 0) {
-    messageCode = ChatMessageParser::parse(msgTokens[0]);
-  }
-
-  if (messageCode == NO_COMMAND) {
-    listener.playerSendMessageToChat(id,"Comando incorrecto");
-    return;
-  } else if (messageCode == MEDITAR) {
+void ServerEventHandler::handleUserCommand(
+    int id, int messageCode, std::vector<std::string>& msgTokens) {
+  if (messageCode == MEDITAR) {
     handleMeditation(id);
     return;
   } else if (messageCode == PLAYER_MSG) {
@@ -203,8 +185,56 @@ void ServerEventHandler::handle(MessageSent& ev) {
     handleEquip(id);
     return;
   }
+}
 
-  // Si llego aca es porque es un mensaje dirigido a algun NPC
+void ServerEventHandler::handleDeposit(int id, NPC* npc,
+                                       std::vector<std::string>& msgTokens) {
+  if (msgTokens.size() < 2) {
+    listener.playerSendMessageToChat(id, "Ingrese correctamente el comando");
+    return;
+  }
+  if (ChatMessageParser::parseGold(msgTokens[1]) == ORO) {
+    if (msgTokens.size() < 3 || !ChatMessageParser::isANumber(msgTokens[2])) {
+      listener.playerSendMessageToChat(id, "Ingrese correctamente el comando");
+      return;
+    }
+    handleGoldDeposit(id, std::stoi(msgTokens[2]), npc);
+  } else {
+    if (!ChatMessageParser::isANumber(msgTokens[1])) {
+      listener.playerSendMessageToChat(id, "Ingrese el numero de slot");
+      return;
+    }
+    handleItemDeposit(id, std::stoi(msgTokens[1]), npc);
+  }
+  return;
+}
+
+void ServerEventHandler::handleSubstraction(
+    int id, NPC* npc, std::vector<std::string>& msgTokens) {
+  if (msgTokens.size() < 2) {
+    listener.playerSendMessageToChat(id, "Ingrese el comando correctamente");
+    return;  // FALTA MANEJAR LA EXTRACCION DE ORO
+  }
+  if (ChatMessageParser::parseGold(msgTokens[1]) == ORO) {
+    if (msgTokens.size() < 3 || !ChatMessageParser::isANumber(msgTokens[2])) {
+      listener.playerSendMessageToChat(id, "Ingrese correctamente el comando");
+      return;
+    }
+    handleGoldSubstraction(id, std::stoi(msgTokens[2]), npc);
+  } else {
+    if (!ChatMessageParser::isANumber(msgTokens[1])) {
+      listener.playerSendMessageToChat(
+          id, "Ingrese el numero de item correctamente");
+      return;
+    }
+    handleItemSubstraction(id, std::stoi(msgTokens[1]), npc);
+  }
+  return;
+}
+
+void ServerEventHandler::handleNpcCommand(int id, PlayerNet* player,
+                                          int messageCode,
+                                          std::vector<std::string>& msgTokens) {
   if (!npcHandleVerification(id)) {
     return;
   }
@@ -214,46 +244,10 @@ void ServerEventHandler::handle(MessageSent& ev) {
     handleHeal(id, npc);
     return;
   } else if (messageCode == DEPOSITAR) {
-    // if (msgTokens.size())
-    
-    if (msgTokens.size() < 2) {
-      listener.playerSendMessageToChat(id, "Ingrese correctamente el comando");
-      return;  // FALTA MANEJAR EL DEPOSITO DE ORO
-    }
-    if (ChatMessageParser::parseGold(msgTokens[1]) == ORO){
-      if (msgTokens.size() < 3 || !ChatMessageParser::isANumber(msgTokens[2])){
-        listener.playerSendMessageToChat(id,"Ingrese correctamente el comando");
-        return;
-      }
-      handleGoldDeposit(id,std::stoi(msgTokens[2]),npc);
-    } else {
-      if (!ChatMessageParser::isANumber(msgTokens[1])){
-        listener.playerSendMessageToChat(id,"Ingrese el numero de slot");
-        return;
-      }
-      handleItemDeposit(id, std::stoi(msgTokens[1]), npc);
-    }
+    handleDeposit(id, npc, msgTokens);
     return;
   } else if (messageCode == RETIRAR) {
-    if (msgTokens.size() < 2) {
-      listener.playerSendMessageToChat(
-          id, "Ingrese el comando correctamente");
-      return;  // FALTA MANEJAR LA EXTRACCION DE ORO
-    }
-    if (ChatMessageParser::parseGold(msgTokens[1]) == ORO){
-      if (msgTokens.size() < 3 || !ChatMessageParser::isANumber(msgTokens[2])){
-        listener.playerSendMessageToChat(id,"Ingrese correctamente el comando");
-        return;
-      }
-      handleGoldSubstraction(id,std::stoi(msgTokens[2]),npc);
-    } else {
-      if (!ChatMessageParser::isANumber(msgTokens[1])){
-        listener.playerSendMessageToChat(
-          id, "Ingrese el numero de item correctamente");
-        return;
-      }
-      handleItemSubstraction(id, std::stoi(msgTokens[1]), npc);
-    }  
+    handleSubstraction(id, npc, msgTokens);
     return;
   } else if (messageCode == COMPRAR) {
     if (msgTokens.size() < 2 || !ChatMessageParser::isANumber(msgTokens[1])) {
@@ -276,6 +270,36 @@ void ServerEventHandler::handle(MessageSent& ev) {
   }
 }
 
+void ServerEventHandler::handle(MessageSent& ev) {
+  std::string& msg = ev.getMsg();
+  PlayerNet* player = world.getPlayer(ev.getUser());
+  if (player == nullptr) {
+    std::cerr << "No se encontro el usuario\n";
+    return;
+  }
+  int id = player->getId();
+
+  std::vector<std::string> msgTokens = ChatMessageParser::parseTokens(msg);
+  int messageCode = NO_COMMAND;
+  if (msgTokens.size() > 0) {
+    messageCode = ChatMessageParser::parse(msgTokens[0]);
+  }
+
+  if (messageCode == NO_COMMAND) {
+    listener.playerSendMessageToChat(id, "Comando incorrecto");
+    return;
+  }
+
+  if (ChatMessageParser::isUserCommand(messageCode)) {
+    handleUserCommand(id, messageCode, msgTokens);
+    return;
+  }
+
+  // Si llego aca es porque es un mensaje dirigido a algun NPC
+  handleNpcCommand(id, player, messageCode, msgTokens);
+  return;
+}
+
 bool ServerEventHandler::npcHandleVerification(int playerId) {
   PlayerNet* player = world.getPlayer(playerId);
   if (player == nullptr) {
@@ -286,7 +310,7 @@ bool ServerEventHandler::npcHandleVerification(int playerId) {
     return false;
   }
   if (world.getNpc(player->getSelectedNpc()) == nullptr) {
-    std::cerr << "Fatal: NPC no encontrado\n";  // Caso muy raro
+    std::cerr << "Fatal: NPC no encontrado\n";
     return false;
   }
   return true;
@@ -301,15 +325,16 @@ void ServerEventHandler::handleMeditation(int playerId) {
   if (player->isAlive()) {
     listener.playerMeditating(player->getId());
     player->changeState(&PlayerState::meditating);
-    listener.playerSendMessageToChat(player->getId(),"Meditando...");
+    listener.playerSendMessageToChat(player->getId(), "Meditando...");
   }
-
 }
 
 void ServerEventHandler::handleResurrect(int playerId) {
   PlayerNet* player = world.getPlayer(playerId);
-  if (player->isAlive()) { return; }
-  listener.playerSendMessageToChat(player->getId(),"Resucitando...");
+  if (player->isAlive()) {
+    return;
+  }
+  listener.playerSendMessageToChat(player->getId(), "Resucitando...");
   int selectedNPC = player->getSelectedNpc();
   if (selectedNPC == -1 ||
       world.getNpc(selectedNPC)->getNpcType() != PRIEST_TYPE) {
@@ -318,7 +343,7 @@ void ServerEventHandler::handleResurrect(int playerId) {
     float secondsToWait =
         (config.getConfigValue("resurrectWaitTimeFactor") * distance) / 1000;
     int updatesToWait = (secondsToWait * config.getFPS()) /
-                       config.getConfigValue("framesBetweenUpdate");
+                        config.getConfigValue("framesBetweenUpdate");
 
     player->changeState(&PlayerState::immobilized);
     player->setImmobilizedTime(updatesToWait);
@@ -338,7 +363,8 @@ void ServerEventHandler::handleItemDeposit(int playerId, int slotChoice,
   PlayerNet* player = world.getPlayer(playerId);
 
   Inventory& inventory = player->getInventory();
-  if (slotChoice < 0 || slotChoice >= inventory.getSize() - inventory.getSpaceLeft()) {
+  if (slotChoice < 0 ||
+      slotChoice >= inventory.getSize() - inventory.getSpaceLeft()) {
     listener.playerSendMessageToChat(player->getId(),
                                      "Ingrese un numero correcto de slot");
     return;
@@ -348,12 +374,12 @@ void ServerEventHandler::handleItemDeposit(int playerId, int slotChoice,
     return;
   }
   npc->depositItem(item, playerId);
-  handleRemoveInventoryItem(playerId,slotChoice);
+  handleRemoveInventoryItem(playerId, slotChoice);
 }
 
 void ServerEventHandler::handleGoldDeposit(int playerId, int amount, NPC* npc) {
   npc->goldDeposit(world.getPlayer(playerId), amount);
-  listener.goldUpdate(playerId,world.getPlayer(playerId)->getGold());
+  listener.goldUpdate(playerId, world.getPlayer(playerId)->getGold());
 }
 
 void ServerEventHandler::handleItemSubstraction(int playerId, int itemChoice,
@@ -375,13 +401,12 @@ void ServerEventHandler::handleItemSubstraction(int playerId, int itemChoice,
   } else {
     player->addItemToInventory(item);
   }
-  
 }
 
 void ServerEventHandler::handleGoldSubstraction(int playerId, int amount,
                                                 NPC* npc) {
   npc->goldExtraction(world.getPlayer(playerId), amount);
-  listener.goldUpdate(playerId,world.getPlayer(playerId)->getGold());
+  listener.goldUpdate(playerId, world.getPlayer(playerId)->getGold());
 }
 
 void ServerEventHandler::handleListItems(int playerId, NPC* npc) {
@@ -443,7 +468,7 @@ void ServerEventHandler::handleTake(int playerId) {
   if (inv.isFull() && item->getItemType() != GOLDDROP_TYPE) {
     return;
   }
-  
+
   int exitCode = item->beTaken(player);
   if (exitCode == MUST_BE_ERASED || exitCode == MUST_BE_DELETED) {
     world.rmItem(item->getId());
@@ -483,7 +508,9 @@ void ServerEventHandler::handleEquip(int playerId) {
   }
   Inventory& inventory = player->getInventory();
   Item* item = inventory.getItem(slot);
-  if (item == nullptr) { return; } // Se clickeo un slot vacio
+  if (item == nullptr) {
+    return;
+  }  // Se clickeo un slot vacio
   int itemStatus = item->beEquiped(player);
   if (itemStatus < 0) {  // El objeto se elimina del inventario
     handleRemoveInventoryItem(playerId, slot);

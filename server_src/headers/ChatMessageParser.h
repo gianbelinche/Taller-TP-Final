@@ -36,6 +36,8 @@ std::string makeMsgFromTokens(std::vector<std::string>& tokens);
 bool isANumber(std::string& s);
 
 int parseGold(std::string& str_command);
+
+bool isUserCommand(int messageCode);
 } // namespace ChatMessageParser
 
 

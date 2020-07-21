@@ -1,16 +1,16 @@
 #include "../headers/ChatMessageParser.h"
 
-#include <sstream>
 #include <iostream>
+#include <sstream>
 
 int ChatMessageParser::parse(std::string& str_command) {
-  if (str_command.length() == 0){
+  if (str_command.length() == 0) {
     return NO_COMMAND;
   }
   if (str_command[0] == '@') {
     return PLAYER_MSG;
   } else if (str_command[0] == '/') {
-    if (str_command.substr(1) == "meditar"){
+    if (str_command.substr(1) == "meditar") {
       return MEDITAR;
     }
     if (str_command.substr(1) == "resucitar") {
@@ -22,19 +22,19 @@ int ChatMessageParser::parse(std::string& str_command) {
     if (str_command.substr(1) == "equipar") {
       return EQUIPAR;
     }
-    if (str_command.substr(1,str_command.find(" ") - 1) == "depositar") {
+    if (str_command.substr(1, str_command.find(" ") - 1) == "depositar") {
       return DEPOSITAR;
     }
-    if (str_command.substr(1,str_command.find(" ") - 1) == "retirar") {
+    if (str_command.substr(1, str_command.find(" ") - 1) == "retirar") {
       return RETIRAR;
     }
     if (str_command.substr(1) == "listar") {
       return LISTAR;
     }
-    if (str_command.substr(1,str_command.find(" ") - 1) == "comprar") {
+    if (str_command.substr(1, str_command.find(" ") - 1) == "comprar") {
       return COMPRAR;
     }
-    if (str_command.substr(1,str_command.find(" ") - 1) =="vender") {
+    if (str_command.substr(1, str_command.find(" ") - 1) == "vender") {
       return VENDER;
     }
     if (str_command.substr(1) == "tomar") {
@@ -42,7 +42,7 @@ int ChatMessageParser::parse(std::string& str_command) {
     }
     if (str_command.substr(1) == "tirar") {
       return TIRAR;
-    }  
+    }
     return NO_COMMAND;
   }
   return NO_COMMAND;
@@ -66,9 +66,10 @@ std::vector<std::string> ChatMessageParser::parseTokens(std::string& message) {
   return tokens;
 }
 
-std::string ChatMessageParser::makeMsgFromTokens(std::vector<std::string>& tokens) {
+std::string ChatMessageParser::makeMsgFromTokens(
+    std::vector<std::string>& tokens) {
   std::string joinedStr;
-  for (auto &elem: tokens) {
+  for (auto& elem : tokens) {
     joinedStr.append(elem + " ");
   }
   return joinedStr;
@@ -78,9 +79,15 @@ bool ChatMessageParser::isANumber(std::string& s) {
   return !s.empty() && s.find_first_not_of("0123456789") == std::string::npos;
 }
 
-int ChatMessageParser::parseGold(std::string& str_command){
-  if (str_command.substr(0,str_command.find(" ")) == "oro"){
+int ChatMessageParser::parseGold(std::string& str_command) {
+  if (str_command.substr(0, str_command.find(" ")) == "oro") {
     return ORO;
   }
   return NO_ORO;
+}
+
+bool ChatMessageParser::isUserCommand(int messageCode) {
+  return (messageCode == MEDITAR || messageCode == PLAYER_MSG ||
+          messageCode == TOMAR || messageCode == TIRAR ||
+          messageCode == RESUCITAR || messageCode == EQUIPAR);
 }

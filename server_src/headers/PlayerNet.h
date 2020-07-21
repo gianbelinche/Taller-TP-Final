@@ -187,6 +187,8 @@ class PlayerNet : public Entity {
   void updateMaxGold();
 
   void updateMaxExp();
+
+  void die();
 };
 
 #endif  // PLAYERNET_H

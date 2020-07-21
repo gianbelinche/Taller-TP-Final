@@ -159,29 +159,33 @@ int PlayerNet::takeDamage(int dmgToTake, bool canDodge) {
   }
   listener.lifeUpdate(id, hp, maxHp);
   if (hp == 0) {
-    changeState(&PlayerState::dead);
-    mana = 0;
-    listener.playerDied(id);
-    listener.manaUpdate(id, mana, maxMana);
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> desp(-15, 15);
-    // Los items se dispersan una distancia random del personaje que murio
-    for (int i = 0; i < inventory.getSize(); i++) {
-      int despX = desp(gen);
-      int despY = desp(gen);
-      dropItem(0, x + despX, y + despY);
-      removeItemFromInventory(0);
-    }
-    if (gold > excessGold) {
-      GoldDrop* droppedGold = world.generateDroppableGold(gold - excessGold);
-      world.dropItem(droppedGold, x, y);
-      listener.dropSpawn(droppedGold->getId(), droppedGold->getItemType(), x,
-                         y);
-      substractGold(gold - excessGold);
-    }
+    die();
   }
   return oldHp - hp;  // Daño efectivo
+}
+
+void PlayerNet::die() {
+  changeState(&PlayerState::dead);
+  mana = 0;
+  listener.playerDied(id);
+  listener.manaUpdate(id, mana, maxMana);
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> desp(-15, 15);
+  // Los items se dispersan una distancia random del personaje que murio
+  for (int i = 0; i < inventory.getSize(); i++) {
+    int despX = desp(gen);
+    int despY = desp(gen);
+    dropItem(0, x + despX, y + despY);
+    removeItemFromInventory(0);
+  }
+  if (gold > excessGold) {
+    GoldDrop* droppedGold = world.generateDroppableGold(gold - excessGold);
+    world.dropItem(droppedGold, x, y);
+    listener.dropSpawn(droppedGold->getId(), droppedGold->getItemType(), x,
+                        y);
+    substractGold(gold - excessGold);
+  }
 }
 
 void PlayerNet::update() {

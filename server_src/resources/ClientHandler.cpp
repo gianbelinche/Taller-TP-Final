@@ -7,6 +7,7 @@
 #include <iostream>
 #include <msgpack.hpp>
 #include <sstream>
+
 #include "../headers/PlayerNet.h"
 #include "../headers/sha256.h"
 
@@ -35,9 +36,9 @@ void ClientHandler::run() {
   PlayerNet* player = nullptr;
   try {
     std::pair<std::string, std::vector<uint32_t>> playerDat =
-      std::move(getCredentials());
+        std::move(getCredentials());
     std::vector<uint32_t> playerInfo = playerDat.second;
-  
+
     sendMap();
 
     ServerSender sender(peer, outgoingMessages);
@@ -57,7 +58,7 @@ void ClientHandler::run() {
 
     player = world.getPlayer(playerInfo[0]);
     std::string username = world.getUsernameById(player->getId());
-    persistor.persistPlayer(std::move(player->getData()),username);
+    persistor.persistPlayer(std::move(player->getData()), username);
 
     world.rmPlayer(playerInfo[0]);  // Id
     world.rmIdUsr(playerInfo[0]);
@@ -65,8 +66,9 @@ void ClientHandler::run() {
 
     outgoingMessages.close();
     listener.entityDisappear(playerInfo[0]);
-    online = false;  
-  }catch(SocketException& e){}
+    online = false;
+  } catch (SocketException& e) {
+  }
   if (player != nullptr) {
     delete player;
   }
@@ -74,66 +76,76 @@ void ClientHandler::run() {
 
 bool ClientHandler::finished() { return !online; }
 
+void ClientHandler::recvUsrPass(std::string& user_s, std::string& pass_s) {
+  std::string len_s = receiveMsg(sizeof(uint32_t));
+  uint32_t len = *((uint32_t*)len_s.data());
+  len = ntohl(len);
+
+  if (len == 0) {
+    throw SocketException("Error al recibir");
+  }
+  std::string packedCred = receiveMsg(len);
+  std::vector<uint32_t> credentials;
+  msgpack::object_handle oh =
+      msgpack::unpack(packedCred.data(), packedCred.size());
+  oh.get().convert(credentials);
+
+  uint32_t usrSize = credentials[1];
+  std::vector<char> user(usrSize);
+  for (uint32_t i = 0; i < usrSize; i++) {
+    user[i] = credentials[i + 2];
+  }
+  std::vector<char> password(credentials.size() - usrSize - 2);
+  for (size_t j = (2 + usrSize); j < credentials.size(); j++) {
+    password[j - 2 - usrSize] = credentials[j];
+  }
+  user_s.append(user.data(), user.size());
+  pass_s.append(password.data(), password.size());
+}
+
+bool ClientHandler::checkUserStatus(std::string& user_s, std::string& pass_s,
+                                    bool& correctCredentials,
+                                    bool& creationNeeded) {
+  std::unordered_map<std::string, std::string>& passwords =
+      persistor.getPasswords();
+  if (world.isPlayerConnected(user_s)) {
+    sendFailedLogin();
+    user_s.clear();
+    pass_s.clear();
+    return false;
+  }
+
+  if (passwords.find(user_s) != passwords.end()) {
+    if (passwords[user_s] == sha256(pass_s)) {  // Aplicar SHA
+      sendSuccesfulLogin();
+      correctCredentials = true;
+      return true;
+    } else {
+      sendFailedLogin();
+      user_s.clear();
+      pass_s.clear();
+      return false;
+    }
+  } else {
+    sendPlayerCreationNeeded();
+    correctCredentials = true;
+    creationNeeded = true;
+    return true;
+  }
+}
+
 std::pair<std::string, std::vector<uint32_t>> ClientHandler::getCredentials() {
   std::string user_s;
   std::string pass_s;
-  std::unordered_map<std::string, std::string>& passwords =
-      persistor.getPasswords();
   bool correctCredentials = false;
   bool creationNeeded = false;
 
   while (!correctCredentials) {
-    std::string len_s = receiveMsg(sizeof(uint32_t));
-    uint32_t len = *((uint32_t*)len_s.data());
-    len = ntohl(len);
-
-    if(len == 0){
-      throw SocketException("Error al recibir");
-    }
-
-    std::string packedCred = receiveMsg(len);
-
-    std::vector<uint32_t> credentials;
-    msgpack::object_handle oh =
-        msgpack::unpack(packedCred.data(), packedCred.size());
-    oh.get().convert(credentials);
-
-    uint32_t usrSize = credentials[1];
-    std::vector<char> user(usrSize);
-    for (uint32_t i = 0; i < usrSize; i++) {
-      user[i] = credentials[i + 2];
-    }
-    std::vector<char> password(credentials.size() - usrSize - 2);
-    for (size_t j = (2 + usrSize); j < credentials.size(); j++) {
-      password[j - 2 - usrSize] = credentials[j];
-    }
-    user_s.append(user.data(), user.size());
-    pass_s.append(password.data(), password.size());
-
-    if (world.isPlayerConnected(user_s)){
-      sendFailedLogin();
-      user_s.clear();
-      pass_s.clear();
+    recvUsrPass(user_s, pass_s);
+    if (!checkUserStatus(user_s, pass_s, correctCredentials, creationNeeded)) {
       continue;
     }
-
-    if (passwords.find(user_s) != passwords.end()) {
-      if (passwords[user_s] == sha256(pass_s)) {  // Aplicar SHA
-        sendSuccesfulLogin();
-        correctCredentials = true;
-      } else {
-        sendFailedLogin();
-        user_s.clear();
-        pass_s.clear();
-        continue;
-      }
-    } else {
-      sendPlayerCreationNeeded();
-      correctCredentials = true;
-      creationNeeded = true;
-    }
   }
-
   if (creationNeeded) {
     handleNewPlayer(user_s);
     persistor.addPassword(user_s, std::move(sha256(pass_s)));
@@ -222,17 +234,17 @@ void ClientHandler::sendPlayerCreationNeeded() {
   sendMsg(loginBufferStr);
 }
 
-void ClientHandler::setInitialState(std::vector<uint32_t>& playerInfo, 
+void ClientHandler::setInitialState(std::vector<uint32_t>& playerInfo,
                                     std::vector<uint32_t>& choices) {
-  playerInfo.push_back(idGenerator++);                                // Id
-  playerInfo.push_back(config.getValues("Player")["initialX"]);       // X
-  playerInfo.push_back(config.getValues("Player")["initialY"]);       // Y
-  playerInfo.push_back(config.getValues("Player")["initialLevel"]);   // Nivel
-  playerInfo.push_back(config.getValues("Player")["initialExp"]);     // Exp
-  playerInfo.push_back(choices[1]);                                   // Raza
-  playerInfo.push_back(choices[2]);                                   // Clase
-  playerInfo.push_back(config.getValues("Player")["initialGold"]);    // Oro
-  playerInfo.push_back(config.getValues("Player")["initialState"]);   // Estado
+  playerInfo.push_back(idGenerator++);                               // Id
+  playerInfo.push_back(config.getValues("Player")["initialX"]);      // X
+  playerInfo.push_back(config.getValues("Player")["initialY"]);      // Y
+  playerInfo.push_back(config.getValues("Player")["initialLevel"]);  // Nivel
+  playerInfo.push_back(config.getValues("Player")["initialExp"]);    // Exp
+  playerInfo.push_back(choices[1]);                                  // Raza
+  playerInfo.push_back(choices[2]);                                  // Clase
+  playerInfo.push_back(config.getValues("Player")["initialGold"]);   // Oro
+  playerInfo.push_back(config.getValues("Player")["initialState"]);  // Estado
 }
 
 void ClientHandler::setInitialInventory(std::vector<uint32_t>& playerInfo) {
@@ -246,21 +258,21 @@ void ClientHandler::setInitialInventory(std::vector<uint32_t>& playerInfo) {
   playerInfo.push_back(initial_shield);  // Escudo
 
   int invItem = 0;
-  
-  if (initial_weapon != 0){
-    playerInfo.push_back(initial_weapon); //Arma en el inventario
+
+  if (initial_weapon != 0) {
+    playerInfo.push_back(initial_weapon);  // Arma en el inventario
     invItem++;
   }
-  if (initial_helmet != 0){
-    playerInfo.push_back(initial_helmet); //Casco en el inventario
+  if (initial_helmet != 0) {
+    playerInfo.push_back(initial_helmet);  // Casco en el inventario
     invItem++;
   }
-  if (initial_armor != 0){
-    playerInfo.push_back(initial_armor);  //Armadura en el inventario
+  if (initial_armor != 0) {
+    playerInfo.push_back(initial_armor);  // Armadura en el inventario
     invItem++;
   }
-  if (initial_shield != 0){
-    playerInfo.push_back(initial_shield); //Escudo en el inventario
+  if (initial_shield != 0) {
+    playerInfo.push_back(initial_shield);  // Escudo en el inventario
     invItem++;
   }
 
@@ -274,7 +286,7 @@ void ClientHandler::handleNewPlayer(std::string& user) {
   uint32_t len = *((uint32_t*)len_s.data());
   len = ntohl(len);
 
-  if (len == 0){
+  if (len == 0) {
     throw SocketException("Error al recibir");
   }
 

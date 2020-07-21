@@ -40,7 +40,7 @@ class ClientHandler : public Thread {
   ServerEventListener& listener;
   Configuration& config;
 
-  void setInitialState(std::vector<uint32_t>& playerInfo, 
+  void setInitialState(std::vector<uint32_t>& playerInfo,
                        std::vector<uint32_t>& choices);
   void setInitialInventory(std::vector<uint32_t>& playerInfo);
 
@@ -59,6 +59,11 @@ class ClientHandler : public Thread {
 
   // Devuelve un vector con los datos necesarios para crear al Player
   std::pair<std::string, std::vector<uint32_t>> getCredentials();
+
+  void recvUsrPass(std::string& user_s, std::string& pass_s);
+
+  bool checkUserStatus(std::string& user_s, std::string& pass_s,
+                       bool& correctCredentials, bool& creationNeeded);
 
   void sendMap();
 
@@ -82,7 +87,8 @@ class ClientHandler : public Thread {
 
   void handleNewPlayer(std::string& user);
 
-  std::vector<uint32_t> getSendablePlayerInfo(std::vector<uint32_t>& playerData);
+  std::vector<uint32_t> getSendablePlayerInfo(
+      std::vector<uint32_t>& playerData);
 };
 
 #endif  // CLIENTHANDLER_H

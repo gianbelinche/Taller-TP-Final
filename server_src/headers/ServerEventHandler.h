@@ -80,6 +80,15 @@ class ServerEventHandler {
 
   void handleRemoveInventoryItem(int playerId, int slot);
 
+  void handleUserCommand(int id, int messageCode,
+                         std::vector<std::string> &msgTokens);
+
+  void handleNpcCommand(int id, PlayerNet *player, int messageCode,
+                        std::vector<std::string> &msgTokens);
+
+  void handleDeposit(int id, NPC* npc, std::vector<std::string> &msgTokens);
+
+  void handleSubstraction(int id, NPC* npc, std::vector<std::string> &msgTokens);
 };
 
 #endif  // SERVEREVENTHANDLER_H
