@@ -246,6 +246,7 @@ void PlayerNet::levelUp() {
   mana = maxMana;
   listener.playerLeveledUp(id);
   listener.levelUpdate(id, level);
+  listener.expUpdate(id, exp, maxExp);
 }
 
 bool PlayerNet::canBeAttackedBy(Entity* ent) {
