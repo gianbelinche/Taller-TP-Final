@@ -223,12 +223,14 @@ int PlayerNet::getLevel() { return level; }
 void PlayerNet::updateMaxHp() {
   maxHp = equation::playerMaxHp(getConstitution(), playerClass->getHpFactor(),
                                 playerRace->getHpFactor(), level);
+  listener.lifeUpdate(id, hp, maxHp);
 }
 
 void PlayerNet::updateMaxMana() {
   maxMana =
       equation::playerMaxMana(getIntelligence(), playerClass->getManaFactor(),
                               playerRace->getManaFactor(), level);
+  listener.manaUpdate(id, mana, maxMana);
 }
 
 float PlayerNet::getConstitution() {
