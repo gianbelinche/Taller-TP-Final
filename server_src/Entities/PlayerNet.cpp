@@ -77,7 +77,7 @@ float PlayerNet::getIntelligence() {
 }
 
 float PlayerNet::getStrength() {
-  int baseStrength =
+  float baseStrength =
       playerRace->getStrength() * playerClass->getStrengthFactor();
   return equation::getCurrentLevelStrength(baseStrength, level);
 }
@@ -233,7 +233,7 @@ void PlayerNet::updateMaxMana() {
   listener.manaUpdate(id, mana, maxMana);
 }
 
-int PlayerNet::getConstitution() {
+float PlayerNet::getConstitution() {
   return playerClass->getConstitutionFactor() * playerRace->getConstitution();
 }
 

@@ -9,10 +9,10 @@ class Race {
   float hpFactor;
   float recoveryFactor;
   float manaFactor;
-  int constitution;
-  int strength;
-  int intelligence;
-  int agility;
+  float constitution;
+  float strength;
+  float intelligence;
+  float agility;
   int race_type;
 
  public:
@@ -26,13 +26,13 @@ class Race {
 
   float getManaFactor();
 
-  int getConstitution();
+  float getConstitution();
 
-  int getStrength();
+  float getStrength();
 
-  int getIntelligence();
+  float getIntelligence();
 
-  int getAgility();
+  float getAgility();
 
   int getRaceT();
 };
