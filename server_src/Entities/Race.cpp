@@ -18,12 +18,12 @@ float Race::getRecoveryFactor() { return recoveryFactor; }
 
 float Race::getManaFactor() { return manaFactor; }
 
-int Race::getConstitution() { return constitution; }
+float Race::getConstitution() { return constitution; }
 
-int Race::getStrength() { return strength; }
+float Race::getStrength() { return strength; }
 
-int Race::getIntelligence() { return intelligence; }
+float Race::getIntelligence() { return intelligence; }
 
-int Race::getAgility() { return agility; }
+float Race::getAgility() { return agility; }
 
 int Race::getRaceT() { return race_type; }

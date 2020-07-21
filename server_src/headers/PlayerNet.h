@@ -60,7 +60,7 @@ class PlayerNet : public Entity {
 
   int getDamage();
 
-  int getConstitution();
+  float getConstitution();
 
   int getCurrFrame();
 

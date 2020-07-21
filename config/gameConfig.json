@@ -10,29 +10,29 @@
   "Player": {
     "initialX": 5656,
     "initialY": 2453,
-    "initialLevel": 20,
-    "initialExp": 5000,
-    "initialGold": 98,
+    "initialLevel": 1,
+    "initialExp": 0,
+    "initialGold": 10,
     "initialState": 0,
-    "initialWeapon": 2,
-    "initialHelmet": 14,
-    "initialArmor": 11,
-    "initialShield": 15
+    "initialWeapon": 0,
+    "initialHelmet": 0,
+    "initialArmor": 0,
+    "initialShield": 0
   },
   "goblin": {
-    "hp": 30,
-    "damage": 7,
-    "level": 3,
+    "hp": 50,
+    "damage": 4,
+    "level": 5,
     "velocity": 7,
-    "attackRange": 20,
-    "pursuitDistance": 100,
+    "attackRange": 25,
+    "pursuitDistance": 150,
     "attackCooldown": 3,
     "maxStepsPerDirection": 8
   },
   "spider": {
-    "hp": 15,
-    "damage": 15,
-    "level": 5,
+    "hp": 200,
+    "damage": 20,
+    "level": 10,
     "velocity": 6,
     "attackRange": 25,
     "pursuitDistance": 200,
@@ -40,9 +40,9 @@
     "maxStepsPerDirection": 8
   },
   "skeleton": {
-    "hp": 30,
-    "damage": 10,
-    "level": 4,
+    "hp": 500,
+    "damage": 55,
+    "level": 20,
     "velocity": 4,
     "attackRange": 20,
     "pursuitDistance": 200,
@@ -50,9 +50,9 @@
     "maxStepsPerDirection": 10
   },
   "zombie": {
-    "hp": 40,
-    "damage": 30,
-    "level": 9,
+    "hp": 1000,
+    "damage": 100,
+    "level": 30,
     "velocity": 3,
     "attackRange": 20,
     "pursuitDistance": 200,
@@ -60,49 +60,49 @@
     "maxStepsPerDirection": 12
   },
   "human": {
-    "hpFactor": 2,
+    "hpFactor": 2.5,
     "recoveryFactor": 1,
     "manaFactor": 1,
-    "constitution": 6,
-    "strength": 5,
+    "constitution": 3,
+    "strength": 4.6,
     "intelligence": 4,
-    "agility": 5
+    "agility": 7
   },
   "elf": {
-    "hpFactor": 1,
+    "hpFactor": 1.8,
     "recoveryFactor": 4,
     "manaFactor": 2,
-    "constitution": 4,
-    "strength": 3,
-    "intelligence": 8,
+    "constitution": 2,
+    "strength": 3.8,
+    "intelligence": 6.5,
     "agility": 7
   },
   "dwarf": {
-    "hpFactor": 3,
+    "hpFactor": 2.5,
     "recoveryFactor": 3,
     "manaFactor": 0.7,
-    "constitution": 7,
-    "strength": 7,
+    "constitution": 4,
+    "strength": 4.4,
     "intelligence": 3,
-    "agility": 2
+    "agility": 1
   },
   "gnome": {
-    "hpFactor": 1,
+    "hpFactor": 2,
     "recoveryFactor": 4,
     "manaFactor": 1,
-    "constitution": 4,
+    "constitution": 2.5,
     "strength": 4,
-    "intelligence": 4,
-    "agility": 8
+    "intelligence": 5,
+    "agility": 3
   },
   "warrior": {
-    "hpFactor": 2,
+    "hpFactor": 1.8,
     "manaFactor": 0,
     "meditFac": 0,
     "strengthFactor": 1.4,
     "constitutionFactor": 1.3,
     "intelligenceFactor": 1,
-    "agilityFactor": 1.2
+    "agilityFactor": 1.3
   },
   "wizard": {
     "hpFactor": 1,
@@ -111,19 +111,19 @@
     "strengthFactor": 0.8,
     "constitutionFactor": 0.9,
     "intelligenceFactor": 2,
-    "agilityFactor": 0.9
+    "agilityFactor": 0.8
   },
   "cleric": {
-    "hpFactor": 1.5,
+    "hpFactor": 1.2,
     "manaFactor": 2,
     "meditFac": 1.6,
     "strengthFactor": 1,
     "constitutionFactor": 1.1,
     "intelligenceFactor": 1.4,
-    "agilityFactor": 1
+    "agilityFactor": 1.1
   },
   "paladin": {
-    "hpFactor": 2,
+    "hpFactor": 1.5,
     "manaFactor": 2,
     "meditFac": 1,
     "strengthFactor": 1.7,
@@ -142,94 +142,94 @@
     "sellPrice": 0
   },
   "Espada": {
-    "minDmg": 8,
-    "maxDmg": 15,
-    "range": 25,
+    "minDmg": 4,
+    "maxDmg": 6,
+    "range": 30,
     "manaRequired": 0,
-    "buyPrice": 30,
-    "sellPrice": 20
+    "buyPrice": 10,
+    "sellPrice": 5
   },
   "Hacha": {
-    "minDmg": 10,
-    "maxDmg": 18,
-    "range": 50,
+    "minDmg": 20,
+    "maxDmg": 30,
+    "range": 30,
     "manaRequired": 0,
-    "buyPrice": 40,
+    "buyPrice": 65,
     "sellPrice": 25
   },
   "Martillo": {
-    "minDmg": 6,
-    "maxDmg": 8,
-    "range": 25,
-    "manaRequired": 0,
-    "buyPrice": 20,
-    "sellPrice": 10
-  },
-  "Vara de Fresno": {
     "minDmg": 10,
-    "maxDmg": 14,
-    "range": 100,
-    "manaRequired": 5,
-    "buyPrice": 35,
+    "maxDmg": 15,
+    "range": 35,
+    "manaRequired": 0,
+    "buyPrice": 50,
     "sellPrice": 20
   },
+  "Vara de Fresno": {
+    "minDmg": 3,
+    "maxDmg": 6,
+    "range": 100,
+    "manaRequired": 8,
+    "buyPrice": 10,
+    "sellPrice": 5
+  },
   "Flauta Elfica": {
-    "minDmg": -40,
-    "maxDmg": -10,
+    "minDmg": -50,
+    "maxDmg": -20,
     "range": 0,
     "manaRequired": 100,
-    "buyPrice": 50,
-    "sellPrice": 30
+    "buyPrice": 70,
+    "sellPrice": 25
   },
   "Baculo Nudoso": {
-    "minDmg": 12,
-    "maxDmg": 17,
-    "range": 115,
-    "manaRequired": 15,
-    "buyPrice": 50,
+    "minDmg": 15,
+    "maxDmg": 30,
+    "range": 120,
+    "manaRequired": 40,
+    "buyPrice": 60,
     "sellPrice": 20
   },
   "Baculo Engarzado": {
-    "minDmg": 15,
-    "maxDmg": 30,
+    "minDmg": 20,
+    "maxDmg": 50,
     "range": 130,
     "manaRequired": 30,
     "buyPrice": 70,
     "sellPrice": 40
   },
   "Arco Simple": {
-    "minDmg": 10,
-    "maxDmg": 15,
-    "range": 100,
+    "minDmg": 5,
+    "maxDmg": 10,
+    "range": 90,
     "manaRequired": 0,
-    "buyPrice": 30,
-    "sellPrice": 15
+    "buyPrice": 50,
+    "sellPrice": 20
   },
   "Arco Compuesto": {
     "minDmg": 15,
     "maxDmg": 20,
     "range": 140,
     "manaRequired": 0,
-    "buyPrice": 50,
-    "sellPrice": 25
+    "buyPrice": 80,
+    "sellPrice": 30
   },
   "Armadura de Cuero": {
     "minDef": 3,
     "maxDef": 5,
     "buyPrice": 30,
-    "sellPrice": 20
+    "sellPrice": 10
   },
   "Armadura de Placas": {
     "minDef": 5,
     "maxDef": 9,
     "buyPrice": 50,
-    "sellPrice": 30
+    "sellPrice": 20
   },
   "Tunica Azul": {
     "minDef": 1,
     "maxDef": 2,
     "buyPrice": 30,
-    "sellPrice": 20
+    "sellPrice": 10
   },
   "Capucha": {
     "minDef": 1,
@@ -241,25 +241,25 @@
     "minDef": 2,
     "maxDef": 4,
     "buyPrice": 30,
-    "sellPrice": 20
+    "sellPrice": 10
   },
   "Sombrero Magico": {
     "minDef": 2,
     "maxDef": 2,
     "buyPrice": 25,
-    "sellPrice": 15
+    "sellPrice": 10
   },
   "Escudo Tortuga": {
     "minDef": 4,
     "maxDef": 7,
     "buyPrice": 35,
-    "sellPrice": 20
+    "sellPrice": 15
   },
   "Escudo de Hierro": {
     "minDef": 6,
     "maxDef": 10,
     "buyPrice": 50,
-    "sellPrice": 30
+    "sellPrice": 20
   },
   "Pocion de mana": {
     "recovery": 50,
@@ -267,7 +267,7 @@
     "sellPrice": 10
   },
   "Pocion de vida": {
-    "recovery": 50,
+    "recovery": 30,
     "buyPrice": 20,
     "sellPrice": 10
   },
