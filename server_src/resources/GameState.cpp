@@ -232,17 +232,6 @@ void GameState::sendState(int id) {
   }
 }
 
-void GameState::spawnUnParDeMobs() {
-  Monster* newSpider = factory.newSpider(4000, 2550, *this);
-  entities[newSpider->getId()] = newSpider;
-  Monster* newZombie = factory.newZombie(3801, 2540, *this);
-  entities[newZombie->getId()] = newZombie;
-  listener.npcSpawn(newSpider->getId(), newSpider->getNpcType(),
-                    newSpider->getX(), newSpider->getY());
-  listener.npcSpawn(newZombie->getId(), newZombie->getNpcType(),
-                    newZombie->getX(), newZombie->getY());
-}
-
 void GameState::rmPlayer(int id) {
   std::unique_lock<std::mutex> l(entitiesMapMutex);
   entities.erase(id);

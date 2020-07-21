@@ -19,7 +19,6 @@
 #include "PlayerState.h"
 
 #define TILE_SIZE 32
-#define MAX_AMOUNT_NPC 500
 
 class MasterFactory;
 class Monster;
@@ -111,8 +110,6 @@ class GameState {
   bool isEntitiy(int id);
 
   bool isDroppedItem(int id);
-
-  void spawnUnParDeMobs();
 
   void dropItem(Item* item, int x, int y);
 
