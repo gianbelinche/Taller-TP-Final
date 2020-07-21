@@ -21,7 +21,7 @@ void Text::loadText(std::string text,TTF_Font* gFont){
     this->free();
 
     SDL_Texture *newTexture = NULL;
-    SDL_Color textColor = {red, green, blue};
+    SDL_Color textColor = {red, green, blue, 255};
 
     SDL_Surface* textSurface = TTF_RenderText_Blended(gFont, text.c_str(), textColor);
     if (textSurface == NULL) {
